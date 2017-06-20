@@ -50,10 +50,7 @@ public class DeathEventListener implements Listener {
 				ePlayer killer = ePlayer.get(e.getEntity().getKiller());
 				KitPlayer kitKiller = KitPlayer.get(killer.getUniqueId());
 				killer.addKill();
-				if(kp.hasKit(Kit.PVP))
-					killer.addExp((p.getPrestige() + 1) * 100 + ((p.getPrestige() * 100) / 2));
-				else
-					killer.addExp((p.getPrestige() + 1) * 100);
+				p.addExpToDamagers();
 				Inventory inv = killer.getPlayer().getInventory();
 				int soups = 0;
 				for (int i = 0; i < inv.getSize(); i++) {

@@ -68,6 +68,8 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(GeneralLanguage.LEVEL_UP, "&6Level Up!");
 
+                lang.addLangNode(GeneralLanguage.DAMAGE_PERCENT, "&aYou were responsible for &6%percent%\n&aof the damage dealt to %player&a. ");
+
                 lang.addLangNode(GeneralLanguage.RANK_SET, "&7%z is now a %rank&7.");
                 lang.addLangNode(GeneralLanguage.RANK_SET_YOU, "&6You are now a %rank&6.");
                 lang.addLangNode(GeneralLanguage.RANK_INVALID, "&cThat rank does not exist.");

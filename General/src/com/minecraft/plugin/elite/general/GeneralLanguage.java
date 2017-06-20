@@ -40,6 +40,8 @@ public enum GeneralLanguage implements LanguageNode {
 
     LEVEL_UP,
 
+    DAMAGE_PERCENT,
+
     STAFF_UPDATED,
     STAFF_NULL,
     STAFF_USAGE,

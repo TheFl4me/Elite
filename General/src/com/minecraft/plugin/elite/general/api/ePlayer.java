@@ -16,6 +16,7 @@ import com.minecraft.plugin.elite.general.api.events.stats.ExpChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.PrestigeChangeEvent;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
+import com.minecraft.plugin.elite.general.api.special.PlayerHit;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
@@ -48,11 +49,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -76,6 +81,7 @@ public class ePlayer {
 	private boolean pendingAgree;
 	private boolean spy;
 	private int killStreak;
+	private List<PlayerHit> hits;
 
 	public static ePlayer get(Player player) {
 		return get(player.getUniqueId());
@@ -130,6 +136,7 @@ public class ePlayer {
 	    this.pendingAgree = false;
 	    this.killStreak = 0;
 		this.spy = false;
+		this.hits = new ArrayList<>();
 
 		Database db = General.getDB();
 		try {
@@ -426,7 +433,8 @@ public class ePlayer {
     	this.getPlayer().setMaxHealth(20);
     	this.getPlayer().setExp(0);
     	this.getPlayer().setLevel(0);
-		ClearPlayerEvent event = new ClearPlayerEvent(this);
+    	this.clearHits();
+    	ClearPlayerEvent event = new ClearPlayerEvent(this);
 		Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -909,6 +917,48 @@ public class ePlayer {
 		ExpChangeEvent event = new ExpChangeEvent(this, exp);
 		db.update(General.DB_PLAYERS, "exp", exp, "uuid", this.getUniqueId());
 		Bukkit.getPluginManager().callEvent(event);
+	}
+
+	public void addExpToDamagers() {
+		DecimalFormat df = new DecimalFormat("00.0");
+		double totalDamage = 0.0;
+		HashMap<UUID, Double> damagePerPlayer = new HashMap<>();
+		for(PlayerHit hit : this.getHits()) {
+			totalDamage += hit.getDamage();
+			if(!damagePerPlayer.containsKey(hit.getDamager())) {
+				damagePerPlayer.put(hit.getDamager(), hit.getDamage());
+			} else {
+				final double dmg = damagePerPlayer.get(hit.getDamager());
+				damagePerPlayer.remove(hit.getDamager());
+				damagePerPlayer.put(hit.getDamager(), hit.getDamage() + dmg);
+			}
+		}
+
+		for(UUID uuid : damagePerPlayer.keySet()) {
+			ePlayer z = ePlayer.get(uuid);
+			if(z != null) {
+				double exp = damagePerPlayer.get(uuid) * ((this.getPrestige() + 1) * 100) / totalDamage;
+				double percent = damagePerPlayer.get(uuid) * 100 / totalDamage;
+				z.addExp(Math.round(exp));
+				z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.DAMAGE_PERCENT)
+						.replaceAll("%percent", df.format(percent))
+						.replaceAll("%player", this.getChatName()));
+			}
+		}
+	}
+
+	public List<PlayerHit> getHits() {
+		List<PlayerHit> tempList = new ArrayList<>();
+		tempList.addAll(this.hits);
+		return tempList;
+	}
+
+	public void saveHit(PlayerHit hit) {
+		this.hits.add(hit);
+	}
+
+	public void clearHits() {
+		this.hits.clear();
 	}
 
 

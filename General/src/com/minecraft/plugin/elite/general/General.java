@@ -62,6 +62,7 @@ import com.minecraft.plugin.elite.general.database.MySQLCore;
 import com.minecraft.plugin.elite.general.listeners.AFKEventsListener;
 import com.minecraft.plugin.elite.general.listeners.AchievementEventListener;
 import com.minecraft.plugin.elite.general.listeners.AgreeEventsListener;
+import com.minecraft.plugin.elite.general.listeners.DamageEventListener;
 import com.minecraft.plugin.elite.general.listeners.EventListener;
 import com.minecraft.plugin.elite.general.listeners.GUIEventListener;
 import com.minecraft.plugin.elite.general.listeners.JoinQuitEventsListener;
@@ -232,6 +233,7 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LoginEventListener(), this);
         getServer().getPluginManager().registerEvents(new ReportEventListener(), this);
         getServer().getPluginManager().registerEvents(new InfoEventListener(), this);
+        getServer().getPluginManager().registerEvents(new DamageEventListener(), this);
     }
 
     private void loadFiles() {
