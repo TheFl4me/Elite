@@ -142,8 +142,8 @@ public class HaxPlayer extends ePlayer {
                     cancel();
                 if (p.isCombatLog()) {
                     p.sendMessage(NoHaxLanguage.COMBATLOG_SAFE);
-                    p.setCombatLogTask(null);
                     p.getCombatLogTask().cancel();
+                    p.setCombatLogTask(null);
                 }
             }
         });
