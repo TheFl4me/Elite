@@ -34,7 +34,7 @@ public class DamageEventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void clearOnDeath(PlayerDeathEvent e) {
         ePlayer p = ePlayer.get(e.getEntity());
         p.clearHits();
