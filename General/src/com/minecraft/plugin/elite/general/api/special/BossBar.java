@@ -75,12 +75,12 @@ public class BossBar {
     public void show(String string) {
         Location loc = this.getViewer().getPlayer().getLocation();
 
-        this.getDragon().setLocation(loc.getX(), 0, loc.getZ(), 0, 0);
+        this.getDragon().setLocation(loc.getX(), loc.getY() - 10, loc.getZ(), 0, 0);
+        this.getDragon().b(true);//remove sound
 
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(this.getDragon());
 
         this.getDragon().setCustomName(string);
-        this.getDragon().setInvisible(true);
 
         ((CraftPlayer) this.getViewer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
     }
