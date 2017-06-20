@@ -28,11 +28,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/MC related/Server versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://D:/MC related/Server versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
