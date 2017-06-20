@@ -10,6 +10,7 @@ import com.minecraft.plugin.elite.kitpvp.commands.FreeKitsCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
 import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.KitEventListener;
@@ -69,6 +70,7 @@ public class KitPvP extends JavaPlugin {
 		//world.getWorldBorder().setCenter(world.getSpawnLocation());
 		//world.getWorldBorder().setSize(100);
 	}
+
 	
     private void loadCmds() {		
 		new KitCommand();
@@ -92,6 +94,7 @@ public class KitPvP extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new LevelUpEventListener(), this);
 		getServer().getPluginManager().registerEvents(new ScoreboardEventListener(), this);
 		getServer().getPluginManager().registerEvents(new BossBarEventListener(), this);
+		getServer().getPluginManager().registerEvents(new BuildEventListener(), this);
     }
 
 	private void loadDatabase() {

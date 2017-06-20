@@ -148,6 +148,8 @@ public class General extends JavaPlugin {
             Scoreboard board = players.getScoreboard();
             board.getTeams().forEach(Team::unregister);
             ePlayer all = ePlayer.get(players);
+            System.out.print("disable--------------------------------------------------");
+            all.clear();
             final String msg = all.getLanguage().get(GeneralLanguage.RELOAD);
             all.getPlayer().kickPlayer(msg);
         }

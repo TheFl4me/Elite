@@ -62,7 +62,10 @@ import java.util.UUID;
 
 public class KitEventListener implements Listener {
 
+
+	@EventHandler
 	public void cleanup(ClearPlayerEvent e) {
+		System.out.print("cleanup--------------------------------------------------");
 		ePlayer p = e.getPlayer();
 		if(chargeTask.containsKey(p.getUniqueId())) {
 			chargeTask.get(p.getUniqueId()).cancel();
@@ -1046,7 +1049,7 @@ public class KitEventListener implements Listener {
 				KitPlayer p = KitPlayer.get(e.getPlayer());
 				KitPlayer z = KitPlayer.get((Player) e.getRightClicked());
 				ePlayer ez = ePlayer.get(z.getUniqueId());
-				if(p.hasKit(Kit.HULK) && !p.isNearRogue() && p.getPlayer().getPassenger().isEmpty() && z.getPlayer().getPassenger().isEmpty() && !ez.isAdminMode() && !ez.isWatching() && !z.getPlayer().isSneaking()) {
+				if(p.hasKit(Kit.HULK) && !p.isNearRogue() && p.getPlayer().getPassenger() != null && z.getPlayer().getPassenger() != null && !ez.isAdminMode() && !ez.isWatching() && !z.getPlayer().isSneaking()) {
 					if(p.isInRegion(KitPvP.SPAWN_REGION))
 						return;
 					HaxPlayer.get(z.getPlayer()).setCanFly(true);
@@ -1062,7 +1065,7 @@ public class KitEventListener implements Listener {
 			KitPlayer p = KitPlayer.get((Player) e.getDamager());
 			ItemStack item = p.getPlayer().getItemInHand();
 			if(item.getType() == Material.AIR || item == null) {
-				if(!p.getPlayer().getPassenger().isEmpty() && !p.isNearRogue()) {
+				if(p.getPlayer().getPassenger() != null && !p.isNearRogue()) {
 					e.setCancelled(true);
 					Vector v = p.getPlayer().getEyeLocation().getDirection();
 					v.setY(1);
