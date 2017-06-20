@@ -9,6 +9,7 @@ import com.minecraft.plugin.elite.general.database.MySQLCore;
 import com.minecraft.plugin.elite.kitpvp.commands.FreeKitsCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
+import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.KitEventListener;
@@ -90,6 +91,7 @@ public class KitPvP extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new LanguageEventListener(), this);
 		getServer().getPluginManager().registerEvents(new LevelUpEventListener(), this);
 		getServer().getPluginManager().registerEvents(new ScoreboardEventListener(), this);
+		getServer().getPluginManager().registerEvents(new BossBarEventListener(), this);
     }
 
 	private void loadDatabase() {
