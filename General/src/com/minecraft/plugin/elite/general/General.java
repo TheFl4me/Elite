@@ -103,8 +103,6 @@ import java.util.List;
 
 public class General extends JavaPlugin {
 
-    //YOU SUCK ASS
-
     public static final String DIRECTORY_GENERAL = "plugins" + File.separator + "General";
     public static final String DIRECTORY_DATABASE = DIRECTORY_GENERAL + File.separator + "Database.yml";
     public static final String DIRECTORY_PERMISSIONS = DIRECTORY_GENERAL + File.separator + "Permissions.yml";
