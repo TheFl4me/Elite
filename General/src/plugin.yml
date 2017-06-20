@@ -1,0 +1,81 @@
+name: General
+author: TheFl4me
+version: 10.0.4
+depend: [WorldEdit, WorldGuard]
+main: com.minecraft.plugin.elite.general.General
+commands:
+    status:
+    setrank:
+    setstaff:
+    clearstaff:
+    admin:
+    invisible:
+      aliases: [invis]
+    visible:
+      aliases: [vis]
+    watch:
+    invsee:
+      aliases: [inv]
+    speed:
+    pvp:
+    gamemode:
+      aliases: [gm]
+    build:
+    ping:
+      aliases: [lag, ms]
+    spawn:
+    setspawn:
+    head:
+      aliases: [skull]
+    day:
+      aliases: [d]
+    night:
+      aliases: [n]
+    help:
+    clearlag:
+      aliases: [cll, cllag]
+    afk:
+    stats:
+    clear:
+    clan:
+    clanchat:
+      aliases: [c]
+    skit:
+    agree:
+    tell:
+      aliases: [msg, message]
+    reply:
+      aliases: [r, answer]
+    say:
+    clearchat:
+      aliases: [cc]
+    globalmute:
+      aliases: [gmute, chatmute, cmute, chat]
+    chatlog:
+      aliases: [clog]
+    party:
+    partychat:
+      aliases: [p]
+    language:
+      aliases: [lang, sprache]
+    spy:
+    support:
+    suicide:
+    lag:
+    killall:
+    ban:
+    unban:
+    checkinfo:
+      aliases: [seen, muteinfo, baninfo]
+    ipinfo:
+      aliases: [ip]
+    kick:
+    mute:
+      aliases: [silence]
+    unmute:
+      aliases: [unsilence]
+    report:
+    reportlist:
+      aliases: [reports]
+    reportclear:
+      aliases: [repclear, repcl, clearreports, clearrep, clrep]

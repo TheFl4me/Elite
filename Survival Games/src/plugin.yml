@@ -1,0 +1,14 @@
+name: SurvivalGames
+author: TheFl4me
+version: 3.3.4
+main: com.minecraft.plugin.elite.survivalgames.SurvivalGames
+depend: [General]
+softdepend: [General]
+commands:
+    pod:
+    setmap:
+    start:
+    center:
+    border:
+    mapteleport:
+      aliases: [maptp, arenateleport, arenatp]

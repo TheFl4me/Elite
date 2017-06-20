@@ -1,0 +1,11 @@
+name: KitPvP
+author: TheFl4me
+version: 8.0.2
+main: com.minecraft.plugin.elite.kitpvp.KitPvP
+depend: [General]
+softdepend: [General, Punish, NoHax]
+commands:
+    freekits:
+    kit:
+    kitinfo:
+      aliases: [checkkit]

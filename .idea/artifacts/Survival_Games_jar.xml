@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Survival Games:jar">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="Survival Games.jar">
+      <element id="module-output" name="Survival Games" />
+    </root>
+  </artifact>
+</component>

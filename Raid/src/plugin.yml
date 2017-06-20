@@ -1,0 +1,19 @@
+name: Raid
+author: TheFl4me
+version: 2.2.0
+main: com.minecraft.plugin.elite.raid.Raid
+depend: [General]
+softdepend: [General]
+commands:
+    warp:
+    warplist:
+      aliases: [warps]
+    setwarp:
+    deletewarp:
+      aliases: [delwarp]
+    setclanwarp:
+    deleteclanwarp:
+      aliases: [delclanwarp]
+    track:
+    randomspawn:
+      aliases: [rspawn, random]

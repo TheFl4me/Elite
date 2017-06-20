@@ -1,0 +1,125 @@
+package com.minecraft.plugin.elite.general.api.special;
+
+import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.ePlayer;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_8_R3.World;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
+
+public class Hologram {
+
+    private static HashSet<Hologram> holograms = new HashSet<>();
+    private static final double distance = 0.23;
+
+    private Collection<String> lines = new ArrayList<>();
+    private List<Integer> ids = new ArrayList<>();
+    private Location location;
+    private UUID viewer;
+
+    public static Hologram[] getAll() {
+        return holograms.toArray(new Hologram[holograms.size()]);
+    }
+
+    public static Hologram get(ePlayer p, Location loc) {
+        for(Hologram holo : getAll())
+            if(holo.getLocation().equals(loc) && holo.getViewer().getUniqueId().equals(p.getUniqueId()))
+                return holo;
+        return null;
+    }
+
+    public Hologram(ePlayer p, String text) {
+        this.viewer = p.getUniqueId();
+        String[] lines = text.split("\n");
+        this.lines.addAll(Arrays.asList(lines));
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
+
+    public ePlayer getViewer() {
+        return ePlayer.get(this.viewer);
+    }
+
+    public void destroy() {
+        int[] ints = new int[this.ids.size()];
+        for (int j = 0; j < ints.length; j++)
+            ints[j] = ids.get(j);
+        Packet packet = new PacketPlayOutEntityDestroy(ints);
+        ((CraftPlayer) this.getViewer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
+        this.location = null;
+        holograms.remove(this);
+    }
+
+    public void change(String text) {
+        final ePlayer p = this.getViewer();
+        final Location loc = this.getLocation();
+        Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
+            boolean online = false;
+            for(Player players : Bukkit.getOnlinePlayers()) {
+                if(players.getUniqueId().equals(p.getUniqueId())) {
+                    online = true;
+                    break;
+                }
+            }
+            if(online) {
+                Hologram holo = new Hologram(p, text);
+                holo.show(loc);
+            }
+        }, 20);
+        this.destroy();
+    }
+
+    public void show(Location loc) {
+        Location first = loc.clone().add(0, (this.lines.size() / 2) * distance, 0);
+        for(String line : this.lines) {
+            this.ids.add(this.showLine(first.clone(), line));
+            first.subtract(0, distance, 0);
+        }
+        this.location = loc;
+        holograms.add(this);
+    }
+
+    public void show(Location loc, long ticks) {
+        this.show(loc);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                destroy();
+            }
+        }.runTaskLater(General.getPlugin(), ticks);
+    }
+
+    private int showLine(Location loc, String text) {
+        World world = ((CraftWorld) loc.getWorld()).getHandle();
+
+        EntityArmorStand as = new EntityArmorStand(world);
+        as.setLocation(loc.getX(), loc.getY(), loc.getZ(), 0, 0);
+        as.setCustomName(ChatColor.translateAlternateColorCodes('&', text));
+        as.setCustomNameVisible(true);
+        as.setInvisible(true);
+        Packet packet = new PacketPlayOutSpawnEntityLiving(as);
+        EntityPlayer nmsPlayer = ((CraftPlayer) this.getViewer().getPlayer()).getHandle();
+        PlayerConnection connection = nmsPlayer.playerConnection;
+        connection.sendPacket(packet);
+        return as.getId();
+    }
+}

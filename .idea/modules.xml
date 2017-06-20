@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Elite.iml" filepath="$PROJECT_DIR$/Elite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/General/General.iml" filepath="$PROJECT_DIR$/General/General.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Hub/Hub.iml" filepath="$PROJECT_DIR$/Hub/Hub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KitPvP/KitPvP.iml" filepath="$PROJECT_DIR$/KitPvP/KitPvP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NoHax/NoHax.iml" filepath="$PROJECT_DIR$/NoHax/NoHax.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Raid/Raid.iml" filepath="$PROJECT_DIR$/Raid/Raid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Survival Games/Survival Games.iml" filepath="$PROJECT_DIR$/Survival Games/Survival Games.iml" />
+    </modules>
+  </component>
+</project>
