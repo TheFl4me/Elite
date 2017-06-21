@@ -22,7 +22,6 @@ import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
 import com.minecraft.plugin.elite.general.api.special.party.PartyManager;
 import com.minecraft.plugin.elite.general.database.Database;
-import com.mojang.authlib.GameProfile;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -50,7 +49,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;

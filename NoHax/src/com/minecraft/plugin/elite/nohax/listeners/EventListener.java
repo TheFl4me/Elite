@@ -2,14 +2,12 @@ package com.minecraft.plugin.elite.nohax.listeners;
 
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
-import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
 import com.minecraft.plugin.elite.nohax.manager.alert.AlertManager;
 import com.minecraft.plugin.elite.nohax.manager.SpamCheck;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerClick;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerDamage;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerMove;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
