@@ -69,6 +69,7 @@ import com.minecraft.plugin.elite.general.listeners.JoinQuitEventsListener;
 import com.minecraft.plugin.elite.general.listeners.LanguageEventListener;
 import com.minecraft.plugin.elite.general.listeners.PvPToggleEventListener;
 import com.minecraft.plugin.elite.general.listeners.RankChangeEventListener;
+import com.minecraft.plugin.elite.general.listeners.RegionChangeEventListener;
 import com.minecraft.plugin.elite.general.listeners.SignEventsListener;
 import com.minecraft.plugin.elite.general.listeners.SoupEventListener;
 import com.minecraft.plugin.elite.general.listeners.SpecialModeEventListener;
@@ -234,7 +235,7 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ReportEventListener(), this);
         getServer().getPluginManager().registerEvents(new InfoEventListener(), this);
         getServer().getPluginManager().registerEvents(new DamageEventListener(), this);
-        getServer().getPluginManager().registerEvents(new RankChangeEventListener(), this);
+        getServer().getPluginManager().registerEvents(new RegionChangeEventListener(), this);
     }
 
     private void loadFiles() {

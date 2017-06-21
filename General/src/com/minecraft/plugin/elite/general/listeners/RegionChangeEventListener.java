@@ -35,7 +35,6 @@ public class RegionChangeEventListener implements Listener {
         final ApplicableRegionSet oldRegions = manager.getApplicableRegions(from);
         final ApplicableRegionSet newRegions = manager.getApplicableRegions(to);
 
-
         for(ProtectedRegion reg : oldRegions) {
             if(!newRegions.getRegions().contains(reg)) {
                 RegionLeaveEvent event = new RegionLeaveEvent(p, reg);
