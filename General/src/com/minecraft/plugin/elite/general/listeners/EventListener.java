@@ -3,7 +3,13 @@ package com.minecraft.plugin.elite.general.listeners;
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.events.region.RegionEnterEvent;
+import com.minecraft.plugin.elite.general.api.events.region.RegionLeaveEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
@@ -21,6 +27,7 @@ import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventListener implements Listener {
@@ -93,5 +100,30 @@ public class EventListener implements Listener {
     public void manipulate(PlayerArmorStandManipulateEvent e) {
         if(!e.getRightClicked().isVisible())
             e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void callRegionChange(PlayerMoveEvent e) {
+        WorldGuardPlugin wgp = WorldGuardPlugin.inst();
+        RegionManager manager = wgp.getRegionManager(e.getPlayer().getWorld());
+
+        final ApplicableRegionSet oldRegions = manager.getApplicableRegions(e.getFrom());
+        final ApplicableRegionSet newRegions = manager.getApplicableRegions(e.getTo());
+
+        ePlayer p = ePlayer.get(e.getPlayer());
+
+        for(ProtectedRegion reg : oldRegions) {
+            if(!newRegions.getRegions().contains(reg)) {
+                RegionLeaveEvent event = new RegionLeaveEvent(p, reg);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        }
+
+        for(ProtectedRegion reg : newRegions) {
+            if(!oldRegions.getRegions().contains(reg)) {
+                RegionEnterEvent event = new RegionEnterEvent(p, reg);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        }
     }
 }
