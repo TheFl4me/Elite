@@ -101,29 +101,4 @@ public class EventListener implements Listener {
         if(!e.getRightClicked().isVisible())
             e.setCancelled(true);
     }
-
-    @EventHandler
-    public void callRegionChange(PlayerMoveEvent e) {
-        WorldGuardPlugin wgp = WorldGuardPlugin.inst();
-        RegionManager manager = wgp.getRegionManager(e.getPlayer().getWorld());
-
-        final ApplicableRegionSet oldRegions = manager.getApplicableRegions(e.getFrom());
-        final ApplicableRegionSet newRegions = manager.getApplicableRegions(e.getTo());
-
-        ePlayer p = ePlayer.get(e.getPlayer());
-
-        for(ProtectedRegion reg : oldRegions) {
-            if(!newRegions.getRegions().contains(reg)) {
-                RegionLeaveEvent event = new RegionLeaveEvent(p, reg);
-                Bukkit.getPluginManager().callEvent(event);
-            }
-        }
-
-        for(ProtectedRegion reg : newRegions) {
-            if(!oldRegions.getRegions().contains(reg)) {
-                RegionEnterEvent event = new RegionEnterEvent(p, reg);
-                Bukkit.getPluginManager().callEvent(event);
-            }
-        }
-    }
 }

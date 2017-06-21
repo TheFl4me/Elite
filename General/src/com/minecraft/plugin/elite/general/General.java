@@ -236,6 +236,7 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ReportEventListener(), this);
         getServer().getPluginManager().registerEvents(new InfoEventListener(), this);
         getServer().getPluginManager().registerEvents(new DamageEventListener(), this);
+        getServer().getPluginManager().registerEvents(new RankChangeEventListener(), this);
     }
 
     private void loadFiles() {
