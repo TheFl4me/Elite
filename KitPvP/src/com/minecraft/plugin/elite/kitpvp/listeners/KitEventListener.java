@@ -63,10 +63,8 @@ import java.util.UUID;
 public class KitEventListener implements Listener {
 
 
-	@EventHandler
-	public void cleanup(ClearPlayerEvent e) {
+	public void cleanUp(ePlayer p ) {
 		System.out.print("cleanup--------------------------------------------------");
-		ePlayer p = e.getPlayer();
 		if(chargeTask.containsKey(p.getUniqueId())) {
 			chargeTask.get(p.getUniqueId()).cancel();
 			chargeTask.remove(p.getUniqueId());
@@ -132,6 +130,12 @@ public class KitEventListener implements Listener {
 			levels.remove(p.getUniqueId());
 		}
 		cleanUpGladiator(p);
+	}
+
+	@EventHandler
+	public void cleanOnClear(ClearPlayerEvent e) {
+		ePlayer p = e.getPlayer();
+		cleanUp(p);
 	}
 	
 	//Anchor

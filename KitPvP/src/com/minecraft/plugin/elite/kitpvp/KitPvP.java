@@ -50,6 +50,14 @@ public class KitPvP extends JavaPlugin {
     
 	private static KitPvP plugin;
 	private static Database db;
+
+	public void onDisable() {
+		KitEventListener kitListener = new KitEventListener();
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			ePlayer p = ePlayer.get(all);
+			kitListener.cleanUp(p);
+		}
+	}
 	
 	public void onEnable() {
 		
