@@ -433,10 +433,8 @@ public class ePlayer {
     	this.getPlayer().setExp(0);
     	this.getPlayer().setLevel(0);
     	this.clearHits();
-		System.out.print("clear--------------------------------------------------");
     	ClearPlayerEvent event = new ClearPlayerEvent(this);
 		Bukkit.getPluginManager().callEvent(event);
-		System.out.print("event called--------------------------------------------------");
     }
 
     public void setAgree(boolean agree) {

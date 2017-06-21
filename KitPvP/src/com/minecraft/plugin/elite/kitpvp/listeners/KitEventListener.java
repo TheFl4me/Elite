@@ -64,7 +64,6 @@ public class KitEventListener implements Listener {
 
 
 	public void cleanUp(ePlayer p ) {
-		System.out.print("cleanup--------------------------------------------------");
 		if(chargeTask.containsKey(p.getUniqueId())) {
 			chargeTask.get(p.getUniqueId()).cancel();
 			chargeTask.remove(p.getUniqueId());
