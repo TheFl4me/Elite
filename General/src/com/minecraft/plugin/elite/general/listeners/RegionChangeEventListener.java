@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.events.mode.ModeChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionEnterEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionLeaveEvent;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -10,6 +11,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -26,6 +28,25 @@ public class RegionChangeEventListener implements Listener {
     public void callRegionChange(PlayerTeleportEvent e) {
         ePlayer p = ePlayer.get(e.getPlayer());
         check(p, e.getFrom(), e.getTo());
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onModeChange(ModeChangeEvent e) {
+        ePlayer p = e.getPlayer();
+        WorldGuardPlugin wgp = WorldGuardPlugin.inst();
+        RegionManager manager = wgp.getRegionManager(p.getPlayer().getWorld());
+        ApplicableRegionSet regions = manager.getApplicableRegions(p.getPlayer().getLocation());
+        if(e.isToMode()) {
+            for(ProtectedRegion reg : regions) {
+                RegionLeaveEvent event = new RegionLeaveEvent(p, reg);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        } else {
+            for(ProtectedRegion reg : regions) {
+                RegionEnterEvent event = new RegionEnterEvent(p, reg);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        }
     }
 
     private void check(ePlayer p, Location from, Location to) {

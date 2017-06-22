@@ -3,16 +3,10 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
-import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelRequest;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelSelectorTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelectorTool;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,7 +35,7 @@ public class DuelEventListener implements Listener {
 						if(item.getItemMeta().hasDisplayName()) {
 							String itemName = item.getItemMeta().getDisplayName();
 							if(itemName.equalsIgnoreCase(tool.getName())) {
-								if(tool instanceof CustomDuelSelector) {
+								/*if(tool instanceof CustomDuelSelector) {
 									Duel duel = DuelManager.get(z);
 									if(duel != null)
 										p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_ALREADY)
@@ -68,7 +62,7 @@ public class DuelEventListener implements Listener {
 								}
 								if(tool instanceof NormalDuelSelectorTool) {
 
-								}
+								}*/
 							}
 							return;
 						}

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.kitpvp.manager;
 
-import com.avaje.ebean.validation.NotNull;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
@@ -29,7 +28,7 @@ public class KitPlayer extends ePlayer {
 	private int cooldownTime;
 	private BukkitRunnable cooldownTask;
 	private Kit kit;
-	private Kit lastKit;
+	private boolean spawnProtect;
 	
 	private static Map<UUID, KitPlayer> players = new HashMap<>();
 	private static Map<UUID, KitPlayer> loggingInPlayers = new HashMap<>();
@@ -96,7 +95,7 @@ public class KitPlayer extends ePlayer {
 		this.cooldownTime = 0;
 		this.cooldownTask = null;
 		this.kit = null;
-		this.lastKit = null;
+		this.spawnProtect = true;
 	}
 	
 	public int getCooldownTime() {
@@ -149,6 +148,14 @@ public class KitPlayer extends ePlayer {
 		}
 		return false;
 	}
+
+	public boolean hasSpawnProtection() {
+		return this.spawnProtect;
+	}
+
+	public void setSpawnProtection(boolean protection) {
+		this.spawnProtect = protection;
+	}
 	
 	public Kit getKit() {
 		return this.kit;
@@ -165,14 +172,9 @@ public class KitPlayer extends ePlayer {
 	public boolean hasKitPermission(Kit kit) {
 		return kit.getPermissionType(this.getUniqueId()) > 0 || this.isMasterPrestige() || KitPvP.getFreeKits().contains(kit);
 	}
-
-	public Kit getLastKit() {
-		return this.lastKit;
-	}
 	
 	public void setKit(Kit kit) {
 		this.kit = kit;
-		this.lastKit = kit;
 		KitPvP.updateScoreboard();
 	}
 	
@@ -245,11 +247,13 @@ public class KitPlayer extends ePlayer {
 		inv.setItem(0, sword);
 
 		Server server = Server.get();
-		for(ItemStack item : this.getKit().getItems()) {
-			String name = this.getKit().getItemName(this.getLanguage());
-			if(name != null)
-				server.rename(item, name);
-			inv.addItem(item);
+		if(this.hasKit()) {
+			for(ItemStack item : this.getKit().getItems()) {
+				String name = this.getKit().getItemName(this.getLanguage());
+				if(name != null)
+					server.rename(item, name);
+				inv.addItem(item);
+			}
 		}
 
 		this.addDefaults(armor);

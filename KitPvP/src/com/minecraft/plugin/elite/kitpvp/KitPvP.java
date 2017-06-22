@@ -46,7 +46,7 @@ import java.util.Collection;
 
 public class KitPvP extends JavaPlugin {
 	
-	public static final String REGION_SPAWN = "spawn";
+	public static final String REGION_SPAWN= "spawn";
 	public static final String REGION_EHG = "ehg";
 	public static final String REGION_FEAST = "feast";
 	public static final String REGION_DUEL = "duel";

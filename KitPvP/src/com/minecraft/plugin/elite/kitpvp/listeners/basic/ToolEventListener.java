@@ -5,7 +5,6 @@ import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelSelectorTool;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
@@ -35,7 +34,7 @@ public class ToolEventListener implements Listener {
 		if(p.hasTool())
 			p.clearTools();
 		p.giveTool(new KitSelectorTool(p.getLanguage()));
-		p.giveTool(new DuelSelectorTool(p.getLanguage()));
+		//p.giveTool(new DuelSelectorTool(p.getLanguage()));
 		p.giveTool(new MenuTool(p.getLanguage()));
 	}
 	

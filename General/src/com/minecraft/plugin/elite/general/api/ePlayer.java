@@ -42,7 +42,6 @@ import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -67,7 +66,6 @@ public class ePlayer {
 
 	private Player player;
 
-	private ItemStack[] invItems;
 	private Rank invisTo;
 	private BukkitRunnable pendingAFK;
 	private GUI gui;
@@ -122,7 +120,6 @@ public class ePlayer {
 
 	public ePlayer(Player player) {
 	    this.player = player;
-	    this.invItems = null;
 	    this.invisTo = null;
 	    this.pendingAFK = null;
 	    this.gui = null;
@@ -461,33 +458,9 @@ public class ePlayer {
 		return this.pendingAgree;
 	}
 
-	public boolean hasSavedItems() {
-		return this.invItems != null;
-	}
-
-	public void saveItems() {
-		this.invItems = this.getPlayer().getInventory().getContents();
-	}
-
-	public void clearSavedItems() {
-		this.invItems = null;
-	}
-
-	public ItemStack[] getSavedItems() {
-		return this.invItems;
-	}
-
-	public void setSavedItems() {
-		if(this.hasSavedItems()) {
-			this.getPlayer().getInventory().setContents(this.getSavedItems());
-			this.clearSavedItems();
-		}
-	}
-
 	public void setAdminMode(boolean admin) {
 		this.adminMode = admin;
 		if(admin) {
-			this.saveItems();
 			this.getPlayer().getInventory().clear();
 			this.getPlayer().getInventory().setArmorContents(null);
 			this.getPlayer().setGameMode(GameMode.CREATIVE);
@@ -497,7 +470,6 @@ public class ePlayer {
 			if(!this.isInvis())
 				this.setInvis(true);
 		} else  {
-			this.setSavedItems();
 			this.getPlayer().setGameMode(GameMode.SURVIVAL);
 			if(this.isInvis())
 				this.setInvis(false);
@@ -512,7 +484,6 @@ public class ePlayer {
 		this.getPlayer().setFlying(watch);
 		this.setInvis(watch);
 		if(watch) {
-			this.saveItems();
 			this.getPlayer().getInventory().clear();
 			this.getPlayer().getInventory().setArmorContents(null);
 			for(PotionEffect effect : this.getPlayer().getActivePotionEffects())
@@ -520,8 +491,7 @@ public class ePlayer {
 			this.sendMessage(GeneralLanguage.WATCH_WATCHING);
 			this.getPlayer().setHealth(20);
 			this.getPlayer().setFoodLevel(20);
-		} else
-			this.setSavedItems();
+		}
 		WatchModeChangeEvent event = new WatchModeChangeEvent(this, watch);
 		Bukkit.getPluginManager().callEvent(event);
 	}

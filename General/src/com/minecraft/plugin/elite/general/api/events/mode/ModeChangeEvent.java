@@ -4,7 +4,7 @@ import com.minecraft.plugin.elite.general.api.ePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class ModeChangeEvent extends Event {
+public abstract class ModeChangeEvent extends Event {
 
     private ePlayer player;
     private boolean toMode;

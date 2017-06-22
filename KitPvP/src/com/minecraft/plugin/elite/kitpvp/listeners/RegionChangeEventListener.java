@@ -16,19 +16,31 @@ public class RegionChangeEventListener implements Listener {
     public void onSpawnLeave(RegionLeaveEvent e) {
         if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
             ePlayer p = e.getPlayer();
-            if(p.hasTool())
-                p.clearTools();
-            p.sendMessage(KitPvPLanguage.REGION_SPAWN_LEAVE);
+            if(!p.isAdminMode() && !p.isWatching()) {
+                if(p.hasTool())
+                    p.clearTools();
+                p.sendMessage(KitPvPLanguage.REGION_SPAWN_LEAVE);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onSpawnEnter(RegionEnterEvent e) {
+        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
+            ePlayer p = e.getPlayer();
+            KitPlayer kp = KitPlayer.get(e.getPlayer().getUniqueId());
         }
     }
 
     @EventHandler
     public void onEnterArena(RegionEnterEvent e) {
-        KitPlayer kp = KitPlayer.get(e.getPlayer().getUniqueId());
-        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_EHG)) {
-            kp.giveKitInv(false);
-        } else if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_FEAST)) {
-            kp.giveKitInv(true);
+        if(!e.getPlayer().isAdminMode() && !e.getPlayer().isWatching()) {
+            KitPlayer kp = KitPlayer.get(e.getPlayer().getUniqueId());
+            if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_EHG)) {
+                kp.giveKitInv(false);
+            } else if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_FEAST)) {
+                kp.giveKitInv(true);
+            }
         }
     }
 }
