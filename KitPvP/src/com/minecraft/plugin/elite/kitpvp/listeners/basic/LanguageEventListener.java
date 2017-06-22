@@ -19,6 +19,8 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(KitPvPLanguage.SCOREBOARD_KILLS, "&cKills:");
                 lang.addLangNode(KitPvPLanguage.SCOREBOARD_DEATHS, "&cDeaths:");
 
+                lang.addLangNode(KitPvPLanguage.REGION_SPAWN_LEAVE, "&7You no longer have spawn protection!");
+
                 lang.addLangNode(KitPvPLanguage.DUEL_REQUEST_RECEIVED, "&a%p has asked you for a duel!\nRight click him with the &bDuel Selector &ato accept the request.");
                 lang.addLangNode(KitPvPLanguage.DUEL_REQUEST_SENT, "&aYou asked %z for a duel!");
                 lang.addLangNode(KitPvPLanguage.DUEL_REQUEST_ACCEPTED, "&aYou are now dueling %z");

@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
+import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelSelectorTool;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
@@ -17,10 +18,12 @@ public class ClearPlayerEventListener implements Listener {
 		KitPlayer.get(p.getUniqueId()).clearKit();
 		if(p.hasTool())
 			p.clearTools();
-		if(!p.isAdminMode() && !p.isWatching()) {
-			p.giveTool(new DuelSelectorTool(p.getLanguage()));
-			p.giveTool(new KitSelectorTool(p.getLanguage()));
+		if(p.isInRegion(KitPvP.REGION_SPAWN)) {
+			if(!p.isAdminMode() && !p.isWatching()) {
+				p.giveTool(new DuelSelectorTool(p.getLanguage()));
+				p.giveTool(new KitSelectorTool(p.getLanguage()));
+			}
+			p.giveTool(new MenuTool(p.getLanguage()));
 		}
-		p.giveTool(new MenuTool(p.getLanguage()));
 	}
 }

@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.manager;
 
+import com.avaje.ebean.validation.NotNull;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
@@ -28,6 +29,7 @@ public class KitPlayer extends ePlayer {
 	private int cooldownTime;
 	private BukkitRunnable cooldownTask;
 	private Kit kit;
+	private Kit lastKit;
 	
 	private static Map<UUID, KitPlayer> players = new HashMap<>();
 	private static Map<UUID, KitPlayer> loggingInPlayers = new HashMap<>();
@@ -94,6 +96,7 @@ public class KitPlayer extends ePlayer {
 		this.cooldownTime = 0;
 		this.cooldownTask = null;
 		this.kit = null;
+		this.lastKit = null;
 	}
 	
 	public int getCooldownTime() {
@@ -162,9 +165,14 @@ public class KitPlayer extends ePlayer {
 	public boolean hasKitPermission(Kit kit) {
 		return kit.getPermissionType(this.getUniqueId()) > 0 || this.isMasterPrestige() || KitPvP.getFreeKits().contains(kit);
 	}
+
+	public Kit getLastKit() {
+		return this.lastKit;
+	}
 	
 	public void setKit(Kit kit) {
 		this.kit = kit;
+		this.lastKit = kit;
 		KitPvP.updateScoreboard();
 	}
 	
@@ -184,52 +192,25 @@ public class KitPlayer extends ePlayer {
 		}
 	}
 	
-	public void giveKit(Kit kit, boolean armor) {
+	public void giveKit(Kit kit) {
+		this.clearKit();
 		if(kit == Kit.SURPRISE) {
 			Random r = new Random();
 			int i = r.nextInt(Kit.values().length - 1);
 			kit = Kit.values()[i];
 		}
-    	Inventory inv = this.getPlayer().getInventory();
+
+		this.setKit(kit);
 
 		KitChangeEvent event = new KitChangeEvent(this, kit);
 		Bukkit.getPluginManager().callEvent(event);
-
-    	this.getPlayer().setGameMode(GameMode.SURVIVAL);
-		this.setKit(kit);
-		inv.clear();
-		this.getPlayer().getActivePotionEffects().clear();
-		this.getPlayer().getInventory().setArmorContents(null);
-		this.getPlayer().setFoodLevel(20);
-		this.getPlayer().setHealth(20);
-		this.getPlayer().setMaxHealth(20);
-		this.getPlayer().setExp(0);
-		this.getPlayer().setLevel(0);
-		
-		ItemStack sword;
-		if(armor)
-			sword = new ItemStack(Material.IRON_SWORD);
-		else
-			sword = new ItemStack(Material.STONE_SWORD);
-		inv.setItem(0, sword);
-
-		Server server = Server.get();
-		for(ItemStack item : kit.getItems()) {
-			String name = kit.getItemName(this.getLanguage());
-			if(name != null)
-				server.rename(item, name);
-			inv.addItem(item);
-		}
-
-		this.addDefaults(armor);
-		this.getPlayer().sendMessage(this.getLanguage().get(KitPvPLanguage.KIT_GIVE)
-				.replaceAll("%kit", kit.getName()));
 
 		HaxPlayer hp = HaxPlayer.get(this.getUniqueId());
 		switch(kit) {
 			case KANGAROO:
 				hp.setCanFly(true);
 				hp.setCanSpeed(true);
+				break;
 			case PHANTOM:
 				hp.setCanFly(true);
 				hp.setCanSpeed(true);
@@ -238,7 +219,41 @@ public class KitPlayer extends ePlayer {
 				hp.setCanNoKnockback(true);
 				break;
 		}
+
+		this.getPlayer().sendMessage(this.getLanguage().get(KitPvPLanguage.KIT_GIVE)
+				.replaceAll("%kit", kit.getName()));
     }
+
+    public void giveKitInv(boolean armor) {
+		Inventory inv = this.getPlayer().getInventory();
+
+		this.getPlayer().setGameMode(GameMode.SURVIVAL);
+		inv.clear();
+		this.getPlayer().getActivePotionEffects().clear();
+		this.getPlayer().getInventory().setArmorContents(null);
+		this.getPlayer().setFoodLevel(20);
+		this.getPlayer().setHealth(20);
+		this.getPlayer().setMaxHealth(20);
+		this.getPlayer().setExp(0);
+		this.getPlayer().setLevel(0);
+
+		ItemStack sword;
+		if(armor)
+			sword = new ItemStack(Material.IRON_SWORD);
+		else
+			sword = new ItemStack(Material.STONE_SWORD);
+		inv.setItem(0, sword);
+
+		Server server = Server.get();
+		for(ItemStack item : this.getKit().getItems()) {
+			String name = this.getKit().getItemName(this.getLanguage());
+			if(name != null)
+				server.rename(item, name);
+			inv.addItem(item);
+		}
+
+		this.addDefaults(armor);
+	}
 	
 	public void addDefaults(boolean armor) {
 		PlayerInventory inv = this.getPlayer().getInventory();

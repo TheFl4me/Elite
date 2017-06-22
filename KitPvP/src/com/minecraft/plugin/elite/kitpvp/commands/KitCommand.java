@@ -43,7 +43,7 @@ public class KitCommand extends eCommand implements TabCompleter {
 			return true;
 		}
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
-		if(kp.hasKit()) {
+		if(kp.hasKit() && !p.isInRegion(KitPvP.REGION_SPAWN)) {
 			p.sendMessage(KitPvPLanguage.KIT_ERROR_ALREADY);
 			return true;
 		}
@@ -59,7 +59,7 @@ public class KitCommand extends eCommand implements TabCompleter {
 							p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_ERROR_LOCKED)
 									.replaceAll("%level", Integer.toString(kit.getLevel())));
 						} else {
-							kp.giveKit(kit, false);
+							kp.giveKit(kit);
 						}
 					} else {
 						p.sendMessage(KitPvPLanguage.KIT_NOPERM);

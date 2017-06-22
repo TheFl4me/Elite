@@ -144,7 +144,7 @@ public class KitEventListener implements Listener {
 			final KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
 			if((hitter.hasKit(Kit.ANCHOR) || target.hasKit(Kit.ANCHOR)) && (!hitter.isNearRogue() && !target.isNearRogue())) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION) || target.isInRegion(KitPvP.SPAWN_REGION)) {
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN)) {
 					return;
 				}
 				target.getPlayer().setVelocity(new Vector());
@@ -196,7 +196,7 @@ public class KitEventListener implements Listener {
     		final KitPlayer caught = KitPlayer.get((Player) e.getCaught());
 			ePlayer cp = ePlayer.get(caught.getUniqueId());
     		if(p.hasKit(Kit.FISHERMAN) && !p.isNearRogue() && !cp.isAdminMode() && !cp.isWatching()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
     			caught.getPlayer().teleport(p.getPlayer().getLocation());
 				if(fight.containsKey(cp.getUniqueId()) && !fight.containsKey(p.getUniqueId()))
@@ -218,7 +218,7 @@ public class KitEventListener implements Listener {
 			if(item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_KANGAROO_ITEM)) && p.hasKit(Kit.KANGAROO)) {
 				e.setCancelled(true);
 				if (!jump.contains(p.getUniqueId()) && !p.isNearRogue()) {
-					if(p.isInRegion(KitPvP.SPAWN_REGION))
+					if(p.isInRegion(KitPvP.REGION_SPAWN))
 						return;
 					Location loc = p.getPlayer().getLocation();
 					Vector jumpVec = loc.getDirection();
@@ -278,7 +278,7 @@ public class KitEventListener implements Listener {
 			if(item == null)
 				return;
     		if(item.getType() == Material.FEATHER && p.hasKit(Kit.PHANTOM) && !p.isNearRogue()) {
-    			if(p.isInRegion(KitPvP.SPAWN_REGION))
+    			if(p.isInRegion(KitPvP.REGION_SPAWN))
     				return;
     			if(p.isCooldowned()) {
     				e.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
@@ -397,7 +397,7 @@ public class KitEventListener implements Listener {
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.SNAIL) && !hitter.isNearRogue() && !et.isWatching() && !et.isAdminMode()) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION))
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Random r = new Random();
 				int per = r.nextInt(100) + 1;
@@ -413,7 +413,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity() instanceof Player) {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity());
 			if(p.hasKit(Kit.STOMPER) && e.getCause() == DamageCause.FALL && !p.isNearRogue()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				p.getPlayer().getWorld().playSound(p.getPlayer().getLocation(), Sound.ANVIL_LAND, 1F, 1F);
 				List<Entity> nearby = p.getPlayer().getNearbyEntities(4, 4, 4);
@@ -443,7 +443,7 @@ public class KitEventListener implements Listener {
 			return;
 		if(item.getItemMeta().hasDisplayName()) {
 			if(p.hasKit(Kit.THOR) && (e.getAction() == Action.RIGHT_CLICK_BLOCK) && item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_THOR_ITEM)) && !p.isNearRogue()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				if(p.isCooldowned()) {
 					e.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
@@ -503,7 +503,7 @@ public class KitEventListener implements Listener {
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.VIPER) && !hitter.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION))
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Random r = new Random();
 				int per = r.nextInt(100) + 1;
@@ -528,7 +528,7 @@ public class KitEventListener implements Listener {
 			return;
 		if(item.getItemMeta().hasDisplayName()) {
 			if(e.getAction() == Action.RIGHT_CLICK_BLOCK && item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_ENDERMAGE_ITEM)) && !p.isCooldowned() && !teleportScanTimer.containsKey(p.getUniqueId()) && p.hasKit(Kit.ENDERMAGE) && !p.isNearRogue()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Block above = e.getClickedBlock().getRelative(BlockFace.UP);
 				if(!above.getType().isSolid() && !above.getRelative(BlockFace.UP).getType().isSolid()) {
@@ -612,7 +612,7 @@ public class KitEventListener implements Listener {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity());
 			Projectile proj = (Projectile) e.getDamager();
 			if(p.hasKit(Kit.NEO) && !p.isNearRogue()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				e.setCancelled(true);
 				final Vector v = proj.getVelocity().multiply(-1);
@@ -631,7 +631,7 @@ public class KitEventListener implements Listener {
 			KitPlayer target = KitPlayer.get((Player) e.getRightClicked());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.MONK) && hitter.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && !hitter.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION))
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				if(hitter.isCooldowned()) {
 					hitter.getPlayer().sendMessage(hitter.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
@@ -663,7 +663,7 @@ public class KitEventListener implements Listener {
 				public void run() {
 					KitPlayer pp = KitPlayer.get(p.getUniqueId());
 					if(pp != null && pp.hasKit(Kit.ROGUE)) {
-						if(pp.isInRegion(KitPvP.SPAWN_REGION))
+						if(pp.isInRegion(KitPvP.REGION_SPAWN))
 							return;
 						p.getPlayer().getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
 							KitPlayer all = KitPlayer.get((Player) entity);
@@ -694,7 +694,7 @@ public class KitEventListener implements Listener {
 				public void run() {
 					KitPlayer pp = KitPlayer.get(p.getUniqueId());
 					if(pp != null && pp.hasKit(Kit.POSEIDON)) {
-						if(pp.isInRegion(KitPvP.SPAWN_REGION))
+						if(pp.isInRegion(KitPvP.REGION_SPAWN))
 							return;
 						if(!pp.isNearRogue() &&  (pp.getPlayer().getLocation().getBlock().getType() == Material.WATER || pp.getPlayer().getLocation().getBlock().getType() == Material.STATIONARY_WATER)) {
 							pp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0));
@@ -723,7 +723,7 @@ public class KitEventListener implements Listener {
 			final KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.NINJA) && !et.isWatching() && !et.isAdminMode() && target.hasKit()) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION) || target.isInRegion(KitPvP.SPAWN_REGION))
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				if(tpTo.containsKey(hitter.getUniqueId()))
 					tpTo.remove(hitter.getUniqueId());
@@ -789,7 +789,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity() instanceof Snowball && e.getEntity().getShooter() instanceof Player) {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity().getShooter());
 			if(p.hasKit(Kit.SWITCHER)) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION)) {
+				if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 					e.setCancelled(true);
 					p.getPlayer().getInventory().addItem(new ItemStack(Material.SNOW_BALL));
 					return;
@@ -831,7 +831,7 @@ public class KitEventListener implements Listener {
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.MAGMA) && !hitter.isNearRogue() && !et.isWatching() && !et.isAdminMode()) {
-				if(hitter.isInRegion(KitPvP.SPAWN_REGION))
+				if(hitter.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Random r = new Random();
 				int per = r.nextInt(100) + 1;
@@ -854,7 +854,7 @@ public class KitEventListener implements Listener {
 				return;
 			if(item.getItemMeta().hasDisplayName()) {
 				if(hitter.hasKit(Kit.REAPER) && !hitter.isNearRogue() && item.getItemMeta().getDisplayName().equalsIgnoreCase(hitter.getLanguage().get(KitPvPLanguage.KIT_REAPER_ITEM)) && !et.isAdminMode() && !et.isWatching()) {
-					if(hitter.isInRegion(KitPvP.SPAWN_REGION))
+					if(hitter.isInRegion(KitPvP.REGION_SPAWN))
 						return;
 					target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));
 				}
@@ -874,7 +874,7 @@ public class KitEventListener implements Listener {
 				public void run() {
 					KitPlayer pp = KitPlayer.get(p.getUniqueId());
 					if(pp != null && pp.hasKit(Kit.FROSTY)) {
-						if(pp.isInRegion(KitPvP.SPAWN_REGION))
+						if(pp.isInRegion(KitPvP.REGION_SPAWN))
 							return;
 						Material block_below = pp.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
 						Material block = pp.getPlayer().getLocation().getBlock().getType();
@@ -910,7 +910,7 @@ public class KitEventListener implements Listener {
 					p.sendMessage(KitPvPLanguage.TITAN_ALREADY);
 					return;
 				}
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				if(empty.contains(p.getUniqueId())) {
 					p.sendMessage(KitPvPLanguage.TITAN_NEED_CHARGE);
@@ -940,7 +940,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity() instanceof Player) {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity());
 			if(p.hasKit(Kit.TITAN) && !p.isNearRogue() && invincibleTask.containsKey(p.getUniqueId())) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				e.setCancelled(true);
 				if(e instanceof EntityDamageByEntityEvent) {
@@ -959,7 +959,7 @@ public class KitEventListener implements Listener {
 	public void startTitanCharge(PlayerToggleSneakEvent e) {
 		KitPlayer p = KitPlayer.get(e.getPlayer());
 		if(p.hasKit(Kit.TITAN)) {
-			if(p.isInRegion(KitPvP.SPAWN_REGION))
+			if(p.isInRegion(KitPvP.REGION_SPAWN))
 				return;
 			if(e.isSneaking()) {
 				if(empty.contains(p.getUniqueId())) {
@@ -1006,7 +1006,7 @@ public class KitEventListener implements Listener {
 			final KitPlayer target = KitPlayer.get(e.getEntity().getPlayer());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if((killer.hasKit(Kit.TANK) || target.hasKit(Kit.TANK)) && !killer.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
-				if(killer.isInRegion(KitPvP.SPAWN_REGION) || target.isInRegion(KitPvP.SPAWN_REGION))
+				if(killer.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Location loc = e.getEntity().getPlayer().getLocation();
 				killer.getPlayer().getWorld().createExplosion(loc.getX(), loc.getY(), loc.getZ(), 5, false, false);
@@ -1019,7 +1019,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity() instanceof Player) {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity());
 			if(p.hasKit(Kit.TANK) && !p.isNearRogue()) {
-				if(p.isInRegion(KitPvP.SPAWN_REGION))
+				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				if(e.getCause() == DamageCause.BLOCK_EXPLOSION || e.getCause() == DamageCause.ENTITY_EXPLOSION)
 					e.setCancelled(true);
@@ -1035,7 +1035,7 @@ public class KitEventListener implements Listener {
 			KitPlayer target = KitPlayer.get(e.getEntity().getPlayer());
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(killer.hasKit(Kit.BERSERKER) && !killer.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
-				if(killer.isInRegion(KitPvP.SPAWN_REGION))
+				if(killer.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				killer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50, 1));
 				killer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 80, 3));
@@ -1053,7 +1053,7 @@ public class KitEventListener implements Listener {
 				KitPlayer z = KitPlayer.get((Player) e.getRightClicked());
 				ePlayer ez = ePlayer.get(z.getUniqueId());
 				if(p.hasKit(Kit.HULK) && !p.isNearRogue() && p.getPlayer().getPassenger() != null && z.getPlayer().getPassenger() != null && !ez.isAdminMode() && !ez.isWatching() && !z.getPlayer().isSneaking()) {
-					if(p.isInRegion(KitPvP.SPAWN_REGION))
+					if(p.isInRegion(KitPvP.REGION_SPAWN))
 						return;
 					HaxPlayer.get(z.getPlayer()).setCanFly(true);
 					p.getPlayer().setPassenger(z.getPlayer());
@@ -1095,7 +1095,7 @@ public class KitEventListener implements Listener {
 			ItemStack item = p.getPlayer().getItemInHand();
 			if(item != null) {
 				if(item.getType() == Material.ARROW && p.hasKit(Kit.RAIJIN)) {
-					if(p.isInRegion(KitPvP.SPAWN_REGION))
+					if(p.isInRegion(KitPvP.REGION_SPAWN))
 						return;
 					if(p.isCooldowned()) {
 						p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
@@ -1164,7 +1164,7 @@ public class KitEventListener implements Listener {
 	public void onSneak(PlayerToggleSneakEvent e) {
 		KitPlayer p = KitPlayer.get(e.getPlayer());
 		if(e.isSneaking() && p.hasKit(Kit.RAIJIN) && !p.isNearRogue() && locs.containsKey(p.getUniqueId())) {
-			if(p.isInRegion(KitPvP.SPAWN_REGION))
+			if(p.isInRegion(KitPvP.REGION_SPAWN))
 				return;
 			final float yaw = p.getPlayer().getLocation().getYaw();
 			p.getPlayer().teleport(locs.get(p.getUniqueId()).getLocation());
@@ -1203,7 +1203,7 @@ public class KitEventListener implements Listener {
 					if(e.getRightClicked() instanceof Player) {
 						ePlayer z = ePlayer.get((Player) e.getRightClicked());
 						if(!z.isAdminMode() && !z.isWatching()) {
-							if(p.isInRegion(KitPvP.SPAWN_REGION) || z.isInRegion(KitPvP.SPAWN_REGION))
+							if(p.isInRegion(KitPvP.REGION_SPAWN) || z.isInRegion(KitPvP.REGION_SPAWN))
 								return;
 							if(p.isNearRogue())
 								return;
@@ -1358,7 +1358,7 @@ public class KitEventListener implements Listener {
 			if(item.getType() != Material.AIR && item.getItemMeta().hasDisplayName() && p.hasKit(Kit.REPULSE)) {
 				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_REPULSE_ITEM))) {
 					if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-						if(p.isInRegion(KitPvP.SPAWN_REGION))
+						if(p.isInRegion(KitPvP.REGION_SPAWN))
 							return;
 						if(p.isNearRogue())
 							return;
@@ -1372,7 +1372,7 @@ public class KitEventListener implements Listener {
 						for(Entity ent : p.getPlayer().getNearbyEntities(1.5 * lvl, 1.5 * lvl, 1.5 * lvl)) {
 							if(ent instanceof Player) {
 								ePlayer ep = ePlayer.get(ent.getUniqueId());
-								if(ep.isAdminMode() || ep.isWatching() || ep.isInRegion(KitPvP.SPAWN_REGION))
+								if(ep.isAdminMode() || ep.isWatching() || ep.isInRegion(KitPvP.REGION_SPAWN))
 									continue;
 								HaxPlayer.get(ep.getUniqueId()).invalidate(10000);
 								ep.sendMessage(KitPvPLanguage.REPULSE_REPULSED);

@@ -54,7 +54,7 @@ public class GUIEventListener implements Listener {
 				for(Kit kit : Kit.values()) {
 					if (ChatColor.stripColor(gui.getInventory().getName()).equalsIgnoreCase(kit.getName())) {
 						if(itemMeta.getDisplayName().equalsIgnoreCase(p.getLanguage().getOnlyFirstLine(KitPvPLanguage.KIT_GUI_SELECTOR_SELECT))) {
-							kp.giveKit(kit, false);
+							kp.giveKit(kit);
 							p.getPlayer().closeInventory();
 							return;
 						}

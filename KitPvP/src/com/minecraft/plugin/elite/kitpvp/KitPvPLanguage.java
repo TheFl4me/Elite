@@ -9,6 +9,8 @@ public enum KitPvPLanguage implements LanguageNode {
     SCOREBOARD_KILLS,
     SCOREBOARD_DEATHS,
 
+    REGION_SPAWN_LEAVE,
+
     DUEL_REQUEST_RECEIVED,
     DUEL_REQUEST_SENT,
     DUEL_REQUEST_ACCEPTED,
