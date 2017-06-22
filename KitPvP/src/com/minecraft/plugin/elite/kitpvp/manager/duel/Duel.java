@@ -2,6 +2,8 @@ package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,11 +15,13 @@ import java.util.UUID;
 public class Duel {
 	
 	private List<UUID> players;
+	private DuelType type;
 	
 	public Duel(DuelRequest request) {
 		this.players = new ArrayList<>();
 		this.players.add(request.getInviter().getUniqueId());
 		this.players.add(request.getInvited().getUniqueId());
+		this.type = request.getType();
 		DuelManager.add(this);
 	}
 
@@ -84,5 +88,15 @@ public class Duel {
 				return ePlayer.get(uuid);
 		}
 		return null;
+	}
+
+	public DuelType getType() {
+		return this.type;
+	}
+
+	public enum DuelType {
+
+		NORMAL,
+		CUSTOM
 	}
 }

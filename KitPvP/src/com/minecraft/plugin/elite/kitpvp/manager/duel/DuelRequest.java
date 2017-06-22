@@ -8,10 +8,12 @@ public class DuelRequest {
 	
 	private UUID inviter;
 	private UUID invited;
+	private Duel.DuelType type;
 	
-	public DuelRequest(ePlayer inviter, ePlayer invited) {
+	public DuelRequest(ePlayer inviter, ePlayer invited, Duel.DuelType type) {
 		this.inviter = inviter.getUniqueId();
 		this.invited = invited.getUniqueId();
+		this.type = type;
 		DuelManager.addRequest(this);
 	}
 
@@ -34,6 +36,10 @@ public class DuelRequest {
 			return this.getInviter();
 		else
 			return null;
+	}
+
+	public Duel.DuelType getType() {
+		return this.type;
 	}
 
 }

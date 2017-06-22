@@ -39,7 +39,9 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(KitPvPLanguage.DUEL_GUI_STANDBY, "&a%p is WAITING");
                 lang.addLangNode(KitPvPLanguage.DUEL_GUI_RECRAFT, "Recraft");
 
-                lang.addLangNode(KitPvPLanguage.DUEL_TOOL, "&bDuel Selector");
+                lang.addLangNode(KitPvPLanguage.DUEL_TOOL, "&bDuel");
+                lang.addLangNode(KitPvPLanguage.DUEL_TOOL_DEFAULT, "&bDefault Duel Selector");
+                lang.addLangNode(KitPvPLanguage.DUEL_TOOL_CUSTOM, "&6Custom Duel Selector");
 
                 lang.addLangNode(KitPvPLanguage.DEATH, "&b%z[&7%kit&b] killed you with &c%health hearts &band &6%soups soups &bremaining.");
                 lang.addLangNode(KitPvPLanguage.KILL_STREAK, "&c%p is now on a &6%streak &ckillstreak!");

@@ -30,6 +30,8 @@ public enum KitPvPLanguage implements LanguageNode {
     DUEL_GUI_RECRAFT,
 
     DUEL_TOOL,
+    DUEL_TOOL_CUSTOM,
+    DUEL_TOOL_DEFAULT,
 
     DEATH,
     KILL_STREAK,

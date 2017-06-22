@@ -5,9 +5,9 @@ import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import org.bukkit.Material;
 
-public class DuelSelectorTool extends Tool {
+public class DuelTool extends Tool {
 
-	public DuelSelectorTool(Language lang) {
-		super(lang.get(KitPvPLanguage.DUEL_TOOL), Material.BLAZE_ROD, 8);
-	}
+    public DuelTool(Language lang) {
+        super(lang.get(KitPvPLanguage.DUEL_TOOL), Material.BLAZE_ROD, 8);
+    }
 }

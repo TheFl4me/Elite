@@ -1,8 +1,10 @@
-package com.minecraft.plugin.elite.kitpvp.manager.duel;
+package com.minecraft.plugin.elite.kitpvp.manager.duel.custom;
 
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
