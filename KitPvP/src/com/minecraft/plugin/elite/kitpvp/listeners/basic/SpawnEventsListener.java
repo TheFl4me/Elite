@@ -14,7 +14,7 @@ public class SpawnEventsListener implements Listener {
 	public void cancelDamageInSpawn(EntityDamageEvent e) {
 		if(e.getEntity() instanceof Player) {
 			ePlayer p = ePlayer.get((Player) e.getEntity());
-			if(p.isInRegion(KitPvP.SPAWN_REGION)) {
+			if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 				e.setCancelled(true);
 			}
 		}
@@ -24,7 +24,7 @@ public class SpawnEventsListener implements Listener {
 	public void invisToMobInSpawn(EntityTargetEvent e) {
 		if (e.getTarget() instanceof Player) {
 			ePlayer p = ePlayer.get((Player) e.getTarget());
-			if(p.isInRegion(KitPvP.SPAWN_REGION)) {
+			if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 				e.setCancelled(true);
 			}
 		}
