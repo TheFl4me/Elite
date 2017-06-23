@@ -19,10 +19,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -137,5 +137,12 @@ public class DuelEventListener implements Listener {
 			p.removeGUI();
 			setup.abort();
 		}
+	}
+
+	@EventHandler
+	public void foodChange(FoodLevelChangeEvent e) {
+		ePlayer p = ePlayer.get(e.getEntity().getUniqueId());
+		if(DuelManager.get(p) == null && p.isInRegion(KitPvP.REGION_DUEL))
+			e.setCancelled(true);
 	}
 }

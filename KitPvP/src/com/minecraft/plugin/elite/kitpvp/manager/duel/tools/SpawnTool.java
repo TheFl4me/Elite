@@ -8,6 +8,6 @@ import org.bukkit.Material;
 public class SpawnTool extends Tool {
 
     public SpawnTool(Language lang) {
-        super(lang.get(KitPvPLanguage.SPAWN_TOOL), Material.NETHER_BRICK, 8);
+        super(lang.get(KitPvPLanguage.SPAWN_TOOL), Material.NETHER_BRICK_ITEM, 8);
     }
 }

@@ -8,6 +8,6 @@ import org.bukkit.Material;
 public class CustomDuelSelector extends DuelSelector {
 
     public CustomDuelSelector(Language lang) {
-        super(lang.get(KitPvPLanguage.DUEL_TOOL_CUSTOM), Material.GOLD_AXE, 1);
+        super(lang.get(KitPvPLanguage.DUEL_TOOL_CUSTOM), Material.GOLD_SWORD, 1);
     }
 }

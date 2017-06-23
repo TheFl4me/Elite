@@ -8,6 +8,6 @@ import org.bukkit.Material;
 public class NormalDuelSelector extends DuelSelector {
 
 	public NormalDuelSelector(Language lang) {
-		super(lang.get(KitPvPLanguage.DUEL_TOOL_DEFAULT), Material.DIAMOND_AXE, 0);
+		super(lang.get(KitPvPLanguage.DUEL_TOOL_DEFAULT), Material.DIAMOND_SWORD, 0);
 	}
 }
