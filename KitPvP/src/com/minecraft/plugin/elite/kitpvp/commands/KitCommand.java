@@ -43,7 +43,7 @@ public class KitCommand extends eCommand implements TabCompleter {
 			return true;
 		}
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
-		if(kp.hasKit() && !kp.hasSpawnProtection()) {
+		if(kp.hasKit() && !kp.isInRegion(KitPvP.REGION_SPAWN)) {
 			p.sendMessage(KitPvPLanguage.KIT_ERROR_ALREADY);
 			return true;
 		}

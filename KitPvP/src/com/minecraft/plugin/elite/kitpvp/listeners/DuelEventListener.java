@@ -3,10 +3,16 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
+import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelRequest;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelSelector;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelector;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +20,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -32,39 +37,44 @@ public class DuelEventListener implements Listener {
 			if(!p.isAdminMode() && !p.isWatching() && !z.isAdminMode() && !z.isWatching() && p.isInRegion(KitPvP.REGION_DUEL) && z.isInRegion(KitPvP.REGION_DUEL)) {
 				if(p.hasTool()) {
 					for(Tool tool : p.getTools()) {
-						if(item.getItemMeta().hasDisplayName()) {
-							String itemName = item.getItemMeta().getDisplayName();
-							if(itemName.equalsIgnoreCase(tool.getName())) {
-								/*if(tool instanceof CustomDuelSelector) {
-									Duel duel = DuelManager.get(z);
-									if(duel != null)
-										p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_ALREADY)
-												.replaceAll("%z1", z.getName())
-												.replaceAll("%z2", duel.getOpponent(z).getName()));
-									DuelRequest valid_request = DuelManager.getRequest(z, p);
-									if(valid_request != null && valid_request.getType() == Duel.DuelType.CUSTOM) {
-										Duel new_duel = new Duel(valid_request);
-										new_duel.openGUI();
-										return;
-									}
-									if(DuelManager.getRequest(p, z) == null) {
-										DuelRequest reqOld = DuelManager.getRequest(p);
-										if(reqOld != null)
-											reqOld.delete();
-										final DuelRequest request = new DuelRequest(p, z);
-										z.getPlayer().sendMessage(z.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_RECEIVED)
-												.replaceAll("%p", p.getName()));
-										p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_SENT)
-												.replaceAll("%z", z.getName()));
-										Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getPlugin(), request::delete, 200);
-									} else
-										p.sendMessage(KitPvPLanguage.DUEL_REQUEST_COOLDOWN);
-								}
-								if(tool instanceof NormalDuelSelectorTool) {
-
-								}*/
+						if(item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase(tool.getName()) && tool instanceof DuelSelector) {
+							Duel duel = DuelManager.get(z);
+							if(duel != null) {
+								p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_ALREADY)
+										.replaceAll("%z1", z.getName())
+										.replaceAll("%z2", duel.getOpponent(z).getName()));
+								return;
 							}
-							return;
+							Duel.DuelType type = null;
+							if(tool instanceof CustomDuelSelector)
+								type = Duel.DuelType.CUSTOM;
+							else if(tool instanceof NormalDuelSelector)
+								type = Duel.DuelType.NORMAL;
+							if(type != null) {
+								DuelRequest request_by_z = DuelManager.getRequest(z, p);
+								if(request_by_z != null && request_by_z.getType() == type) {
+									Duel new_duel = new Duel(request_by_z);
+									new_duel.accepted();
+									return;
+								}
+								DuelRequest request_by_p = DuelManager.getRequest(p, z);
+								if(request_by_p == null) {
+									DuelRequest other_request_by_p = DuelManager.getRequest(p);
+									if(other_request_by_p != null)
+										other_request_by_p.delete();
+									final DuelRequest new_request_by_p = new DuelRequest(p, z, type);
+									z.getPlayer().sendMessage(z.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_RECEIVED)
+											.replaceAll("%p", p.getName())
+											.replaceAll("%type", type.toString()));
+									p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_SENT)
+											.replaceAll("%z", z.getName())
+											.replaceAll("%type", type.toString()));
+									Bukkit.getScheduler().runTaskLater(KitPvP.getPlugin(), new_request_by_p::delete, 200);
+								} else {
+									p.sendMessage(KitPvPLanguage.DUEL_REQUEST_COOLDOWN);
+								}
+							}
+							break;
 						}
 					}
 				}
@@ -115,14 +125,6 @@ public class DuelEventListener implements Listener {
 				duel.end(z, p);
 			}
 		}
-	}
-	
-	@EventHandler
-	public void remove1v1Drops(PlayerDropItemEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
-		Duel duel = DuelManager.get(p);
-		if(duel != null)
-			e.getItemDrop().remove();
 	}
 	
 	@EventHandler

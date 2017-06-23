@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 
 public class RegionChangeEventListener implements Listener {
 
-
     @EventHandler
     public void onSpawnLeave(RegionLeaveEvent e) {
         if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
@@ -28,7 +27,15 @@ public class RegionChangeEventListener implements Listener {
     public void onSpawnEnter(RegionEnterEvent e) {
         if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
             ePlayer p = e.getPlayer();
-            KitPlayer kp = KitPlayer.get(e.getPlayer().getUniqueId());
+            p.clear();
+        }
+    }
+
+    @EventHandler
+    public void onDuelEnter(RegionEnterEvent e) {
+        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_DUEL)) {
+            ePlayer p = e.getPlayer();
+            p.clear();
         }
     }
 

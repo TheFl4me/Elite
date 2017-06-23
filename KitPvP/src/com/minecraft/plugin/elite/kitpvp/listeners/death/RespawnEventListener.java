@@ -10,7 +10,7 @@ public class RespawnEventListener implements Listener {
 		
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
-		final ePlayer p = ePlayer.get(e.getPlayer());
+		ePlayer p = ePlayer.get(e.getPlayer());
 		p.clear();
 		e.setRespawnLocation(Bukkit.getWorld("world").getSpawnLocation());
 	}

@@ -28,7 +28,6 @@ public class KitPlayer extends ePlayer {
 	private int cooldownTime;
 	private BukkitRunnable cooldownTask;
 	private Kit kit;
-	private boolean spawnProtect;
 	
 	private static Map<UUID, KitPlayer> players = new HashMap<>();
 	private static Map<UUID, KitPlayer> loggingInPlayers = new HashMap<>();
@@ -95,7 +94,6 @@ public class KitPlayer extends ePlayer {
 		this.cooldownTime = 0;
 		this.cooldownTask = null;
 		this.kit = null;
-		this.spawnProtect = true;
 	}
 	
 	public int getCooldownTime() {
@@ -147,14 +145,6 @@ public class KitPlayer extends ePlayer {
 			}
 		}
 		return false;
-	}
-
-	public boolean hasSpawnProtection() {
-		return this.spawnProtect;
-	}
-
-	public void setSpawnProtection(boolean protection) {
-		this.spawnProtect = protection;
 	}
 	
 	public Kit getKit() {

@@ -2,17 +2,19 @@ package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DuelManager {
 
     private static Set<Duel> duels = new HashSet<>();
-    private static Collection<DuelRequest> requests = new HashSet<>();
+    private static Set<DuelRequest> requests = new HashSet<>();
 
     public static Duel[] getAll() {
         return duels.toArray(new Duel[duels.size()]);
+    }
+    public static DuelRequest[] getAllRequests() {
+        return requests.toArray(new DuelRequest[requests.size()]);
     }
 
     public static Duel get(ePlayer p) {
@@ -23,7 +25,7 @@ public class DuelManager {
     }
 
     public static DuelRequest getRequest(ePlayer inviter, ePlayer invited) {
-        for(DuelRequest request : requests) {
+        for(DuelRequest request : getAllRequests()) {
             if(request.getInviter().getUniqueId().equals(inviter.getUniqueId()) && request.getInvited().getUniqueId().equals(invited.getUniqueId())) {
                 return request;
             }
@@ -32,7 +34,7 @@ public class DuelManager {
     }
 
     public static DuelRequest getRequest(ePlayer inviter) {
-        for(DuelRequest request : requests) {
+        for(DuelRequest request : getAllRequests()) {
             if(request.getInviter().getUniqueId().equals(inviter.getUniqueId()))
                 return request;
         }

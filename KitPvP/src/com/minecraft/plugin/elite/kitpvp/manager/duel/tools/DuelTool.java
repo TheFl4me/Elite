@@ -1,4 +1,4 @@
-package com.minecraft.plugin.elite.kitpvp.manager.duel;
+package com.minecraft.plugin.elite.kitpvp.manager.duel.tools;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.enums.Language;
