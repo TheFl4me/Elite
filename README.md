@@ -2,4 +2,5 @@
 
 TODO:
 - FF Check
-- Recode Duel (add Default Duel and Duel Queue)
+- add Duel Qeue
+- Ranked Duel Qeue (with ELO)
