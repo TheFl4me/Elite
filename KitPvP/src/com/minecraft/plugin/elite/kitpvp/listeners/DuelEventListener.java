@@ -2,7 +2,6 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
