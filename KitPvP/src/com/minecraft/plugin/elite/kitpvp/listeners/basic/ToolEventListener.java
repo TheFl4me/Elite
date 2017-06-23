@@ -5,6 +5,8 @@ import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelTool;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.SpawnTool;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
@@ -26,16 +28,9 @@ public class ToolEventListener implements Listener {
 			KitGUI kitgui = new KitGUI(p.getLanguage());
 			p.openGUI(kitgui, kitgui.selector(KitPlayer.get(p.getUniqueId()), 1));
 		}
-	}
-	
-	@EventHandler
-	public void onRespawn(PlayerRespawnEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
-		if(p.hasTool())
-			p.clearTools();
-		p.giveTool(new KitSelectorTool(p.getLanguage()));
-		//p.giveTool(new DuelSelectorTool(p.getLanguage()));
-		p.giveTool(new MenuTool(p.getLanguage()));
+		if(e.getTool() instanceof SpawnTool) {
+			p.getPlayer().teleport(p.getPlayer().getWorld().getSpawnLocation());
+		}
 	}
 	
 	@EventHandler
