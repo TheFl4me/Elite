@@ -113,14 +113,6 @@ public class SpecialModeEventListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onWatch(ModeChangeEvent e) {
-        if(e.isToMode()) {
-            ePlayer p = e.getPlayer();
-            p.getPlayer().getInventory().setHelmet(new ItemStack(Material.GLASS));
-        }
-    }
-
     @EventHandler
     public void hungerOnWatch(FoodLevelChangeEvent e) {
         ePlayer p = ePlayer.get((Player) e.getEntity());

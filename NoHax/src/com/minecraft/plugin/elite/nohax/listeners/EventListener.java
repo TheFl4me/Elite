@@ -61,7 +61,7 @@ public class EventListener implements Listener {
             p.showAlerts(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerQuit(PlayerQuitEvent e) {
         HaxPlayer p = HaxPlayer.get(e.getPlayer());
         if (p.isCombatLog())

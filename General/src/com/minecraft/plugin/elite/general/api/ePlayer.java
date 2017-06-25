@@ -38,10 +38,12 @@ import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -432,6 +434,9 @@ public class ePlayer {
     	this.clearHits();
     	ClearPlayerEvent event = new ClearPlayerEvent(this);
 		Bukkit.getPluginManager().callEvent(event);
+
+		if(this.isAdminMode() || this.isWatching())
+			this.getPlayer().getInventory().setHelmet(new ItemStack(Material.GLASS));
     }
 
     public void setAgree(boolean agree) {

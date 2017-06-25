@@ -1,6 +1,6 @@
 name: KitPvP
 author: TheFl4me
-version: 8.2.3
+version: 8.2.10
 main: com.minecraft.plugin.elite.kitpvp.KitPvP
 depend: [General, WorldEdit, WorldGuard]
 softdepend: [General, Punish, NoHax, WorldEdit, WorldGuard]

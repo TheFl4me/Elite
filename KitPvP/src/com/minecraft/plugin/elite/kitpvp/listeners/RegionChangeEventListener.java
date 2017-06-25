@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
+import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.region.RegionEnterEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionLeaveEvent;
@@ -13,6 +14,7 @@ import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.DuelQueueTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.SpawnTool;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -32,33 +34,13 @@ public class RegionChangeEventListener implements Listener {
 
     @EventHandler
     public void onSpawnEnter(RegionEnterEvent e) {
-        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
+        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN) || e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_DUEL)) {
             ePlayer p = e.getPlayer();
-            p.getPlayer().setFoodLevel(20);
-            if(p.hasTool())
-                p.clearTools();
-            p.giveTool(new MenuTool(p.getLanguage()));
-            p.giveTool(new DuelTool(p.getLanguage()));
-            if(!p.isAdminMode() && !p.isWatching()) {
-                p.giveTool(new KitSelectorTool(p.getLanguage()));
-            }
-        }
-    }
-
-    @EventHandler
-    public void onDuelEnter(RegionEnterEvent e) {
-        if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_DUEL)) {
-            ePlayer p = e.getPlayer();
-            p.getPlayer().setFoodLevel(20);
-            if(p.hasTool())
-                p.clearTools();
-            p.giveTool(new MenuTool(p.getLanguage()));
-            p.giveTool(new SpawnTool(p.getLanguage()));
-            if(!p.isAdminMode() && !p.isWatching()) {
-                p.giveTool(new CustomDuelSelector(p.getLanguage()));
-                p.giveTool(new NormalDuelSelector(p.getLanguage()));
-                p.giveTool(new DuelQueueTool(p.getLanguage()));
-            }
+            Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
+                if(p != null) {
+                    p.clear();
+                }
+            }, 1);
         }
     }
 

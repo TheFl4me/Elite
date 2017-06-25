@@ -119,18 +119,24 @@ public class DuelEventListener implements Listener {
 			
 			ePlayer p = ePlayer.get((Player) e.getDamager());
 			ePlayer z = ePlayer.get((Player) e.getEntity());
-			
-			//fighter hits spec
-			Duel duel = DuelManager.get(p);
-			if(duel != null)
-				if(!duel.getOpponent(p).getUniqueId().equals(z.getUniqueId()))
+
+			if(p.isInRegion(KitPvP.REGION_DUEL) && z.isInRegion(KitPvP.REGION_DUEL)) {
+				//fighter hits spec
+				Duel duel = DuelManager.get(p);
+				if(duel == null)
 					e.setCancelled(true);
-			
-			//spec hits fighter
-			Duel duel2 = DuelManager.get(z);
-			if(duel != null)
-				if(!duel2.getOpponent(z).getUniqueId().equals(p.getUniqueId()))
+				if(duel != null)
+					if(!duel.getOpponent(p).getUniqueId().equals(z.getUniqueId()))
+						e.setCancelled(true);
+
+				//spec hits fighter
+				Duel duel2 = DuelManager.get(z);
+				if(duel2 == null)
 					e.setCancelled(true);
+				if(duel2 != null)
+					if(!duel2.getOpponent(z).getUniqueId().equals(p.getUniqueId()))
+						e.setCancelled(true);
+			}
 		}
 	} 
 	

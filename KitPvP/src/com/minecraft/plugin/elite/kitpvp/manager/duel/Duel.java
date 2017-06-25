@@ -80,6 +80,13 @@ public class Duel {
 	}
 
 	public void queueStart() {
+		ePlayer p1 = ePlayer.get(this.getPlayers().get(0));
+		ePlayer p2 = ePlayer.get(this.getPlayers().get(1));
+		p1.getPlayer().sendMessage(p1.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
+				.replaceAll("%z", p2.getName()));
+		p2.getPlayer().sendMessage(p2.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
+				.replaceAll("%z", p1.getName()));
+
 		for(UUID uuid : this.getPlayers()) {
 			ePlayer p = ePlayer.get(uuid);
 			p.getPlayer().closeInventory();
@@ -89,6 +96,10 @@ public class Duel {
 			KitPlayer kp = KitPlayer.get(uuid);
 			kp.addDefaults(true);
 			kp.getPlayer().getInventory().setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+
+			DuelRequest request = DuelManager.getRequest(p);
+			if(request != null)
+				request.delete();
 		}
 		this.start();
 	}
