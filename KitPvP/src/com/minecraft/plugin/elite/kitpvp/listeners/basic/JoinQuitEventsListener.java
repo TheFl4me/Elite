@@ -6,6 +6,7 @@ import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -25,7 +26,7 @@ public class JoinQuitEventsListener implements Listener {
 		KitPvP.updateScoreboard();
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerQuit(PlayerQuitEvent e) {		
 		ePlayer p = ePlayer.get(e.getPlayer());
 		p.clear();

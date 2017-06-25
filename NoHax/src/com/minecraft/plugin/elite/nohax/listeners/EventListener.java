@@ -8,12 +8,14 @@ import com.minecraft.plugin.elite.nohax.manager.SpamCheck;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerClick;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerDamage;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerMove;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -66,8 +68,6 @@ public class EventListener implements Listener {
         HaxPlayer p = HaxPlayer.get(e.getPlayer());
         if (p.isCombatLog())
             p.getPlayer().setHealth(0);
-        p.getPlayer().getInventory().setArmorContents(null);
-        p.getPlayer().getInventory().clear();
         if(p.isCombatLog()) {
             p.getCombatLogTask().cancel();
             p.setCombatLogTask(null);
@@ -116,7 +116,7 @@ public class EventListener implements Listener {
             HaxPlayer target = HaxPlayer.get((Player) e.getEntity());
             if (!hitter.isAdminMode() && !hitter.isWatching() && !target.isAdminMode() && !target.isWatching()) {
                 hitter.setCombatLog();
-                hitter.setCombatLog();
+                target.setCombatLog();
             }
         }
     }

@@ -9,6 +9,7 @@ import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelector;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.DuelQueueTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.SpawnTool;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
@@ -56,6 +57,7 @@ public class RegionChangeEventListener implements Listener {
             if(!p.isAdminMode() && !p.isWatching()) {
                 p.giveTool(new CustomDuelSelector(p.getLanguage()));
                 p.giveTool(new NormalDuelSelector(p.getLanguage()));
+                p.giveTool(new DuelQueueTool(p.getLanguage()));
             }
         }
     }

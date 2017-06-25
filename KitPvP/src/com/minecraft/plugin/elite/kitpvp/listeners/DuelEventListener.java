@@ -2,10 +2,13 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelRequest;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.CancelQueueTool;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.DuelQueueTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
@@ -26,6 +29,33 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class DuelEventListener implements Listener {
+
+	@EventHandler
+	public void onQueueClick(ToolClickEvent e) {
+		ePlayer p = e.getPlayer();
+		if(e.getTool() instanceof DuelQueueTool) {
+			if(DuelManager.getQueue().isEmpty()) {
+				DuelManager.addToQueue(p.getUniqueId());
+				if(p.hasTool())
+					p.clearTools();
+				p.giveTool(new CancelQueueTool(p.getLanguage()));
+			} else {
+				ePlayer z = ePlayer.get(DuelManager.getQueue().get(0));
+				Duel duel = new Duel(z, p, Duel.DuelType.NORMAL);
+				duel.queueStart();
+				DuelManager.removeFromQueue(z.getUniqueId());
+			}
+		}
+	}
+
+	@EventHandler
+	public void onQueueCancelClick(ToolClickEvent e) {
+		ePlayer p = e.getPlayer();
+		if(e.getTool() instanceof CancelQueueTool) {
+			DuelManager.removeFromQueue(p.getUniqueId());
+			p.clear();
+		}
+	}
 
 	@EventHandler
 	public void onDuelSelectorClick(PlayerInteractEntityEvent e) {

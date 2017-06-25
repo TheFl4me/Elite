@@ -29,6 +29,14 @@ public class Duel {
 		DuelManager.add(this);
 	}
 
+	public Duel(ePlayer inviter, ePlayer invited, DuelType type) {
+		this.players = new ArrayList<>();
+		this.players.add(inviter.getUniqueId());
+		this.players.add(invited.getUniqueId());
+		this.type = type;
+		DuelManager.add(this);
+	}
+
 	public void delete() {
 		DuelManager.remove(this);
 	}
@@ -70,6 +78,20 @@ public class Duel {
 		request.delete();
 
 	}
+
+	public void queueStart() {
+		for(UUID uuid : this.getPlayers()) {
+			ePlayer p = ePlayer.get(uuid);
+			p.getPlayer().closeInventory();
+			p.getPlayer().setGameMode(GameMode.SURVIVAL);
+			p.clear();
+			p.clearTools();
+			KitPlayer kp = KitPlayer.get(uuid);
+			kp.addDefaults(true);
+			kp.getPlayer().getInventory().setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+		}
+		this.start();
+	}
 	
 	public void start() {
 		for(Player players : Bukkit.getOnlinePlayers()) {
@@ -101,6 +123,7 @@ public class Duel {
 				}
 			}
 		}
+		winner.clearHits();
 		this.delete();
 	}
 	
