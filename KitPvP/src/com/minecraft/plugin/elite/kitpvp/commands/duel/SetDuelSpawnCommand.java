@@ -19,9 +19,9 @@ public class SetDuelSpawnCommand extends eCommand {
 
         ePlayer p = ePlayer.get((Player) cs);
         Database db = KitPvP.getDB();
-        db.update(KitPvP.DB_DUEL, "loc-x", p.getPlayer().getLocation().getX(), "location", "duelspawn");
-        db.update(KitPvP.DB_DUEL, "loc-y", p.getPlayer().getLocation().getY(), "location", "duelspawn");
-        db.update(KitPvP.DB_DUEL, "loc-z", p.getPlayer().getLocation().getZ(), "location", "duelspawn");
+        db.update(KitPvP.DB_DUEL, "locx", p.getPlayer().getLocation().getX(), "location", "duelspawn");
+        db.update(KitPvP.DB_DUEL, "locy", p.getPlayer().getLocation().getY(), "location", "duelspawn");
+        db.update(KitPvP.DB_DUEL, "locz", p.getPlayer().getLocation().getZ(), "location", "duelspawn");
         p.sendMessage(KitPvPLanguage.DUEL_SET_SPAWN);
         return true;
     }

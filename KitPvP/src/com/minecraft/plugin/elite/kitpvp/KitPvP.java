@@ -153,15 +153,14 @@ public class KitPvP extends JavaPlugin {
 			if(!db.hasTable(DB_DUEL)) {
 				String query = "CREATE TABLE " + DB_DUEL + " (" +
 						"location TEXT(100) NOT NULL," +
-						"loc-x DOUBLE NOT NULL," +
-						"loc-y DOUBLE NOT NULL," +
-						"loc-z DOUBLE NOT NULL);";
+						"locx DOUBLE NOT NULL," +
+						"locy DOUBLE NOT NULL," +
+						"locz DOUBLE NOT NULL);";
 				db.createTable(query, DB_DUEL);
+				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "duelspawn", 100.0, 0.0, 0.0);
+				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc1", 100.0, 0.0, 0.0);
+				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc2", 100.0, 0.0, 0.0);
 			}
-
-			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "duelspawn", 100.0, 0.0, 0.0);
-			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "loc1", 100.0, 0.0, 0.0);
-			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "loc2", 100.0, 0.0, 0.0);
 
 			System.out.println(prefix + " Set up done!");
 		} catch (SQLException e) {

@@ -87,7 +87,7 @@ public class DuelManager {
         try {
             ResultSet res = db.select(KitPvP.DB_DUEL, "location", "duelspawn");
             if(res.next())
-                return new Location(Bukkit.getWorld("world"), res.getDouble("loc-x"), res.getDouble("loc-y"), res.getDouble("loc-z"));
+                return new Location(Bukkit.getWorld("world"), res.getDouble("locx"), res.getDouble("locy"), res.getDouble("locz"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -115,8 +115,8 @@ public class Duel {
 		}
 		this.start();
 	}
-	
-	private void start() {
+
+	public void start() {
 		Database db = General.getDB();
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			if(!this.getPlayers().contains(players.getUniqueId()))
@@ -129,7 +129,7 @@ public class Duel {
 			try {
 				ResultSet res = db.select(KitPvP.DB_DUEL, "location", "loc" + Integer.toString(i++));
 				if(res.next())
-					loc = new Location(Bukkit.getWorld("world"), res.getDouble("loc-x"), res.getDouble("loc-y"), res.getDouble("loc-z"));
+					loc = new Location(Bukkit.getWorld("world"), res.getDouble("locx"), res.getDouble("locy"), res.getDouble("locz"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
