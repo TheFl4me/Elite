@@ -1,17 +1,23 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
+import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.database.Database;
+import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,12 +26,14 @@ public class Duel {
 	
 	private List<UUID> players;
 	private DuelType type;
+	private boolean started;
 	
 	public Duel(DuelRequest request) {
 		this.players = new ArrayList<>();
 		this.players.add(request.getInviter().getUniqueId());
 		this.players.add(request.getInvited().getUniqueId());
 		this.type = request.getType();
+		this.started = false;
 		DuelManager.add(this);
 	}
 
@@ -43,6 +51,10 @@ public class Duel {
 	
 	public List<UUID> getPlayers() {
 		return this.players;
+	}
+
+	public boolean hasStarted() {
+		return this.started;
 	}
 
 	public void accepted() {
@@ -104,14 +116,27 @@ public class Duel {
 		this.start();
 	}
 	
-	public void start() {
+	private void start() {
+		Database db = General.getDB();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
-			if(!this.getPlayers().contains(all.getUniqueId())) {
+			if(!this.getPlayers().contains(players.getUniqueId()))
 				for(UUID uuid : this.getPlayers())
-					ePlayer.get(uuid).getPlayer().hidePlayer(all.getPlayer());
-			}
+					ePlayer.get(uuid).getPlayer().hidePlayer(players.getPlayer());
 		}
+		for(int i = 0; i < this.getPlayers().size(); i++) {
+			ePlayer p = ePlayer.get(this.getPlayers().get(i));
+			Location loc = null;
+			try {
+				ResultSet res = db.select(KitPvP.DB_DUEL, "location", "loc" + Integer.toString(i++));
+				if(res.next())
+					loc = new Location(Bukkit.getWorld("world"), res.getDouble("loc-x"), res.getDouble("loc-y"), res.getDouble("loc-z"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			if(loc != null)
+				p.getPlayer().teleport(loc);
+		}
+		this.started = true;
 	}
 	
 	public void end(ePlayer winner, ePlayer loser) {
@@ -134,7 +159,11 @@ public class Duel {
 				}
 			}
 		}
+		Location loc = DuelManager.getDuelSpawn();
+		if(loc != null)
+			winner.getPlayer().teleport(loc);
 		winner.clearHits();
+		this.started = false;
 		this.delete();
 	}
 	

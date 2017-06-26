@@ -25,6 +25,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -147,6 +148,17 @@ public class DuelEventListener implements Listener {
 		if(duel != null) {
 			ePlayer z = duel.getOpponent(p);
 			duel.end(z, p);
+		}
+	}
+
+	@EventHandler
+	public void onOtherJoinHideFromDuel(PlayerJoinEvent e) {
+		ePlayer p = ePlayer.get(e.getPlayer());
+		for(Player players : Bukkit.getOnlinePlayers()) {
+			ePlayer z = ePlayer.get(players);
+			Duel duel = DuelManager.get(z);
+			if(duel != null && duel.hasStarted())
+				z.getPlayer().hidePlayer(p.getPlayer());
 		}
 	}
 	

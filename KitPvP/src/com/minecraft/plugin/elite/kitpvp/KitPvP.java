@@ -9,6 +9,8 @@ import com.minecraft.plugin.elite.general.database.MySQLCore;
 import com.minecraft.plugin.elite.kitpvp.commands.FreeKitsCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
+import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelLocationCommand;
+import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelSpawnCommand;
 import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.RegionChangeEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
@@ -52,6 +54,7 @@ public class KitPvP extends JavaPlugin {
 	public static final String REGION_DUEL = "duel";
 	
 	public static final String DB_KITS = "kits";
+	public static final String DB_DUEL = "duels";
     
 	private static KitPvP plugin;
 	private static Database db;
@@ -89,6 +92,8 @@ public class KitPvP extends JavaPlugin {
 		new KitCommand();
 		new KitInfoCommand();
 		new FreeKitsCommand();
+		new SetDuelSpawnCommand();
+		new SetDuelLocationCommand();
 	}
 	
     private void loadEvents() {		
@@ -144,6 +149,19 @@ public class KitPvP extends JavaPlugin {
 			for(Kit kit : Kit.values())
 				if(!db.hasColumn(DB_KITS, kit.getName().toLowerCase()))
 					db.execute("ALTER TABLE " + DB_KITS + " ADD " + kit.getName().toLowerCase() + " INT NOT NULL DEFAULT 0");
+
+			if(!db.hasTable(DB_DUEL)) {
+				String query = "CREATE TABLE " + DB_DUEL + " (" +
+						"location TEXT(100) NOT NULL," +
+						"loc-x DOUBLE NOT NULL," +
+						"loc-y DOUBLE NOT NULL," +
+						"loc-z DOUBLE NOT NULL);";
+				db.createTable(query, DB_DUEL);
+			}
+
+			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "duelspawn", 100.0, 0.0, 0.0);
+			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "loc1", 100.0, 0.0, 0.0);
+			db.execute("INSERT INTO " + DB_DUEL + " (location, loc-x, loc-y, loc-z) VALUES (?, ?, ?, ?);", "loc2", 100.0, 0.0, 0.0);
 
 			System.out.println(prefix + " Set up done!");
 		} catch (SQLException e) {

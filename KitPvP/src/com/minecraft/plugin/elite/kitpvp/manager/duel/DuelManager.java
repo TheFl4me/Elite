@@ -1,7 +1,14 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
+import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.database.Database;
+import com.minecraft.plugin.elite.kitpvp.KitPvP;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -73,5 +80,17 @@ public class DuelManager {
 
     public static void removeFromQueue(UUID uuid) {
         queue.remove(uuid);
+    }
+
+    public static Location getDuelSpawn() {
+        Database db = General.getDB();
+        try {
+            ResultSet res = db.select(KitPvP.DB_DUEL, "location", "duelspawn");
+            if(res.next())
+                return new Location(Bukkit.getWorld("world"), res.getDouble("loc-x"), res.getDouble("loc-y"), res.getDouble("loc-z"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

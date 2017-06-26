@@ -21,6 +21,10 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(KitPvPLanguage.REGION_SPAWN_LEAVE, "&7You no longer have spawn protection!");
 
+                lang.addLangNode(KitPvPLanguage.DUEL_SET_SPAWN, "&7Duel spawn set.");
+                lang.addLangNode(KitPvPLanguage.DUEL_SET_LOCATION_SET, "&7Duel location %loc set.");
+                lang.addLangNode(KitPvPLanguage.DUEL_SET_LOCATION_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/setduelloc <1 : 2>");
+
                 lang.addLangNode(KitPvPLanguage.SPAWN_TOOL, "&cBack to Spawn");
 
                 lang.addLangNode(KitPvPLanguage.DUEL_REQUEST_RECEIVED, "&a%p has asked you for a %type duel!\nRight click him with your &bDuel Selector &ato accept the request.");

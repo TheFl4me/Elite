@@ -13,6 +13,10 @@ public enum KitPvPLanguage implements LanguageNode {
 
     SPAWN_TOOL,
 
+    DUEL_SET_SPAWN,
+    DUEL_SET_LOCATION_SET,
+    DUEL_SET_LOCATION_USAGE,
+
     DUEL_REQUEST_RECEIVED,
     DUEL_REQUEST_SENT,
     DUEL_REQUEST_ACCEPTED,

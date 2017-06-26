@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.mode.ModeChangeEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.EnderPearl;
@@ -10,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;

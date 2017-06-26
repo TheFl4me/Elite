@@ -42,6 +42,7 @@
       <w>delwarp</w>
       <w>devastation</w>
       <w>dont</w>
+      <w>duelspawn</w>
       <w>eban</w>
       <w>egeneral</w>
       <w>ekitpvp</w>
@@ -113,6 +114,10 @@
       <w>senpai</w>
       <w>sentreports</w>
       <w>setclanwarp</w>
+      <w>setduel</w>
+      <w>setduelloc</w>
+      <w>setduellocation</w>
+      <w>setduelspawn</w>
       <w>setmap</w>
       <w>setrank</w>
       <w>setspawn</w>
