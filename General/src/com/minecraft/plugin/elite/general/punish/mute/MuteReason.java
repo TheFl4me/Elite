@@ -5,17 +5,17 @@ import java.util.List;
 
 public enum MuteReason {
 	
-	SPAM("spam", "Spam", 1, true),
-	INSULT("insult", "Insult", 2, true),
-	RACISM("racism", "Racism", 3, true),
-	NAZISM("nazism", "Nazism", 3, true),
-	ADULT_CONTENT("adult-content", "Sharing adult content", 5, true),
-	PROVOCATION("provocation", "Provocation", 3, true);
-	
-	public int modifier;
-	public String reason;
-	public String displayReason;
-	public boolean temp;
+	SPAM("spam", "Spam", 0.05, true),
+	INSULT("insult", "Insult", 0.1, true),
+	RACISM("racism", "Racism", 0.2, true),
+	NAZISM("nazism", "Nazism", 0.3, true),
+	ADULT_CONTENT("adult-content", "Sharing adult content", 0.5, true),
+	PROVOCATION("provocation", "Provocation", 0.1, true);
+
+	private double modifier;
+	private String reason;
+	private String displayReason;
+	private boolean temp;
 	
 	public static MuteReason get(String args) {
 		for(MuteReason reason : MuteReason.values()) {
@@ -32,7 +32,7 @@ public enum MuteReason {
 		return list;
 	}
 	
-	MuteReason(String reason, String displayReason, int modifier, boolean temp) {
+	MuteReason(String reason, String displayReason, double modifier, boolean temp) {
 		this.reason = reason;
 		this.displayReason = displayReason;
 		this.modifier = modifier;
@@ -47,7 +47,7 @@ public enum MuteReason {
 		return this.displayReason;
 	}
 	
-	public int getModifier() {
+	public double getModifier() {
 		return this.modifier;
 	}
 	

@@ -51,7 +51,7 @@ public class BanManager {
     }
 	
 	public static void ban(String bannerName, OfflinePlayer target, BanReason reason, String banDetails) {
-		
+
 		String kick_screen;
 		long time = 0;
 		UUID id = PunishManager.generateUUID();
@@ -60,7 +60,7 @@ public class BanManager {
 		if(tempbans.containsKey(target.getUniqueId()))
 			tempbans.remove(target.getUniqueId());
 		if(reason.isTemp()) {
-			time = reason.getModifier() * (PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1L) * (1000L * 60L * 60L);
+			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1), reason.getModifier());
 			TempBan ban = new TempBan(bannerName, target.getUniqueId(), reason.toDisplayString(), banDetails, time, System.currentTimeMillis(), id);
 			tempbans.put(target.getUniqueId(), ban);
 			kick_screen = ban.getKickMessage();

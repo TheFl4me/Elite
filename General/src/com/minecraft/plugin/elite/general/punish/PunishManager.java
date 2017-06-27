@@ -269,4 +269,17 @@ public class PunishManager {
 			return null;
 		}
 	}
+
+	public static long computeTime(double x, double modifier) {
+		if(modifier == 0)
+			return 0;
+
+		double a = 0.2 + modifier;
+		double b = 1.4 + modifier;
+		double c = modifier;
+		double y = a * Math.pow(b, x) + c;
+
+		//y = days
+		return Math.round(y) * (1000L * 60L * 60L);
+	}
 }

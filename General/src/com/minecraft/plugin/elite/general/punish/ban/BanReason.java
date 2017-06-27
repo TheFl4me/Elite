@@ -12,19 +12,19 @@ public enum BanReason {
 	SECURITY_RISK("security-risk", "Security risk", 0, false),
 	DDOS("ddos", "Ddos threat", 0, false),
 
-	THREAT("threat", "Threat", 3, true),
-	MALICIOUS_LINK("malicious-link", "Sending a malicious link/url", 10, true),
-	BUG_ABUSE("bug-abuse", "Bug abuse", 5, true),
-	TEAM("big-team", "More than 2 players in team", 1, true),
-	STATS_MANIPULATION("stats-manipulation", "Manipulating stats", 3, true),
-	ADVERTISING("advertising", "Advertising", 8, true),
-	INFO_LEAK("information-leak", "Leaking private information", 10, true),
-	FALSE_APPLICATION("falsified-application", "Falsifying application", 8, true);
+	THREAT("threat", "Threat", 0.5, true),
+	MALICIOUS_LINK("malicious-link", "Sending a malicious link/url", 2.0, true),
+	BUG_ABUSE("bug-abuse", "Bug abuse", 0.7, true),
+	TEAM("big-team", "More than 2 players in team", 0.7, true),
+	STATS_MANIPULATION("stats-manipulation", "Manipulating stats", 0.7, true),
+	ADVERTISING("advertising", "Advertising", 3.0, true),
+	INFO_LEAK("information-leak", "Leaking private information", 2.0, true),
+	FALSE_APPLICATION("falsified-application", "Falsifying application", 1.5, true);
 	
-	public int modifier;
-	public String reason;
-	public String displayReason;
-	public boolean tempban;
+	private double modifier;
+	private String reason;
+	private String displayReason;
+	private boolean tempban;
 	
 	public static BanReason get(String args) {
 		for(BanReason reason : values()) {
@@ -40,7 +40,7 @@ public enum BanReason {
 		return list;
 	}
 	
-	BanReason(String reason, String displayReason, int modifier, boolean tempban) {
+	BanReason(String reason, String displayReason, double modifier, boolean tempban) {
 		this.reason = reason;
 		this.displayReason = displayReason;
 		this.modifier = modifier;
@@ -55,7 +55,7 @@ public enum BanReason {
 		return this.displayReason;
 	}
 	
-	public int getModifier() {
+	public double getModifier() {
 		return this.modifier;
 	}
 	
