@@ -327,6 +327,7 @@ public class General extends JavaPlugin {
                         + " prestige INT NOT NULL DEFAULT 0,"
                         + " level INT NOT NULL DEFAULT 0,"
                         + " exp BIGINT NOT NULL DEFAULT 0,"
+                        + " elo BIGINT NOT NULL DEFAULT 0,"
                         + " sentreports INT NOT NULL DEFAULT 0,"
                         + " truereports INT NOT NULL DEFAULT 0,"
                         + " clan TEXT(5),"

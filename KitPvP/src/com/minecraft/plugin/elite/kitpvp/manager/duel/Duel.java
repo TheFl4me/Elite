@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
@@ -140,11 +141,16 @@ public class Duel {
 	}
 	
 	public void end(ePlayer winner, ePlayer loser) {
+		Server server = Server.get();
+		server.computeELO(winner, loser, 1 , 0, 32);
+
 		loser.getPlayer().sendMessage(loser.getLanguage().get(KitPvPLanguage.DUEL_LOSE)
 				.replaceAll("%z", winner.getName()));
 		winner.getPlayer().sendMessage(winner.getLanguage().get(KitPvPLanguage.DUEL_WIN)
 				.replaceAll("%z", loser.getName()));
+
 		winner.clear();
+
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			ePlayer all = ePlayer.get(players);
 			if(!all.isInvis()) {
@@ -159,9 +165,11 @@ public class Duel {
 				}
 			}
 		}
+
 		Location loc = DuelManager.getDuelSpawn();
 		if(loc != null)
 			winner.getPlayer().teleport(loc);
+
 		winner.clearHits();
 		this.started = false;
 		this.delete();

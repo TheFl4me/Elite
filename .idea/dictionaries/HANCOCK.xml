@@ -82,6 +82,9 @@
       <w>lastjoin</w>
       <w>lastonline</w>
       <w>locs</w>
+      <w>locx</w>
+      <w>locy</w>
+      <w>locz</w>
       <w>maged</w>
       <w>mapteleport</w>
       <w>maptp</w>

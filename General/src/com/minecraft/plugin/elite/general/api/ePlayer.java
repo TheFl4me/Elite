@@ -12,6 +12,7 @@ import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.general.api.events.InvisChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.mode.AdminModeChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.mode.WatchModeChangeEvent;
+import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.ExpChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.PrestigeChangeEvent;
@@ -160,8 +161,8 @@ public class ePlayer {
 		Database db = General.getDB();
 		if(!db.containsValue(General.DB_PLAYERS, "uuid", this.getUniqueId().toString())) {
 			this.setLanguage(Language.ENGLISH);
-			db.execute("INSERT INTO " + General.DB_PLAYERS + " (uuid, name, rank, ip, agreed, language, firstjoin, lastjoin, playtime, kills, deaths, tokens, prestige, level, exp, sentreports, truereports, clan, clanrank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, Language.ENGLISH.toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 0, 0, "", "");
+			db.execute("INSERT INTO " + General.DB_PLAYERS + " (uuid, name, rank, ip, agreed, language, firstjoin, lastjoin, playtime, kills, deaths, tokens, prestige, level, exp, elo, sentreports, truereports, clan, clanrank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, Language.ENGLISH.toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, "", "");
 			Rank.set(Bukkit.getOfflinePlayer(this.getUniqueId()), Rank.NORMAL);
 		} else {
 			db.update(General.DB_PLAYERS, "name", this.getName(), "uuid", this.getUniqueId());
@@ -684,11 +685,10 @@ public class ePlayer {
 			ResultSet res = db.select(General.DB_PLAYERS, "uuid", this.getUniqueId().toString());
 			if(res.next())
 				return res.getInt("kills");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 	public int getDeaths() {
 		Database db = General.getDB();
@@ -696,11 +696,10 @@ public class ePlayer {
 			ResultSet res = db.select(General.DB_PLAYERS, "uuid", this.getUniqueId().toString());
 			if(res.next())
 				return res.getInt("deaths");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 	public double getKDR() {
 		if(this.getDeaths() == 0)
@@ -735,11 +734,10 @@ public class ePlayer {
 		try {
 			if(res.next())
 				return res.getLong("tokens");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
 	public void setTokens(long amount) {
@@ -757,11 +755,10 @@ public class ePlayer {
 		try {
 			if(res.next())
 				return res.getLong("prestigetokens");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
 	public void setPrestigeTokens(long amount) {
@@ -775,11 +772,10 @@ public class ePlayer {
 		try {
 			if(res.next())
 				return res.getInt("prestige");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
 	public ChatColor getPrestigePrefix() {
@@ -827,11 +823,10 @@ public class ePlayer {
 		try {
 			if(res.next())
 				return res.getInt("level");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
 	public boolean isMaxLevel() {
@@ -855,11 +850,10 @@ public class ePlayer {
 		try {
 			if(res.next())
 				return res.getInt("exp");
-			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
 	public void addExp(long exp) {
@@ -919,6 +913,25 @@ public class ePlayer {
 						.replaceAll("%player", this.getChatName()));
 			}
 		}
+	}
+
+	public long getELO() {
+		Database db = General.getDB();
+		ResultSet res = db.select(General.DB_PLAYERS, "uuid", this.getUniqueId().toString());
+		try {
+			if(res.next())
+				return res.getLong("elo");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 2000;
+	}
+
+	public void setELO(long elo) {
+		Database db = General.getDB();
+		ELOChangeEvent event = new ELOChangeEvent(this, elo);
+		db.update(General.DB_PLAYERS, "elo", elo, "uuid", this.getUniqueId());
+		Bukkit.getPluginManager().callEvent(event);
 	}
 
 	public List<PlayerHit> getHits() {

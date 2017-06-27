@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
+import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
@@ -191,5 +192,10 @@ public class DuelEventListener implements Listener {
 		ePlayer p = ePlayer.get(e.getEntity().getUniqueId());
 		if(DuelManager.get(p) == null && p.isInRegion(KitPvP.REGION_DUEL))
 			e.setCancelled(true);
+	}
+
+	@EventHandler
+	public void ELOChange(ELOChangeEvent e) {
+		KitPvP.updateScoreboard();
 	}
 }

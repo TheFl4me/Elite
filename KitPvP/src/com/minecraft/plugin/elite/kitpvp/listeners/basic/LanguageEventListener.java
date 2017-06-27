@@ -18,6 +18,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(KitPvPLanguage.SCOREBOARD_KIT, "&cKit:");
                 lang.addLangNode(KitPvPLanguage.SCOREBOARD_KILLS, "&cKills:");
                 lang.addLangNode(KitPvPLanguage.SCOREBOARD_DEATHS, "&cDeaths:");
+                lang.addLangNode(KitPvPLanguage.SCOREBOARD_ELO, "&cELO:");
 
                 lang.addLangNode(KitPvPLanguage.REGION_SPAWN_LEAVE, "&7You no longer have spawn protection!");
 

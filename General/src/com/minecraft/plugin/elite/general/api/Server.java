@@ -210,4 +210,20 @@ public class Server {
         head.setItemMeta(meta);
         return head;
     }
+
+    public void computeELO(ePlayer p1, ePlayer p2, double S1, double S2, double K) {
+        //K = 32 chess, 20 Basketball
+
+        final double r1 = p1.getELO();
+        final double r2 = p2.getELO();
+
+        final double E1 = 1 / (1 + Math.pow(10, (r2 - r1) / 400));
+        final double E2 = 1 / (1 + Math.pow(10, (r1 - r2) / 400));
+
+        final long f1 = Math.round(r1 + K * (S1 - E1));
+        final long f2 = Math.round(r2 + K * (S2 - E2));
+
+        p1.setELO(f1);
+        p2.setELO(f2);
+    }
 }
