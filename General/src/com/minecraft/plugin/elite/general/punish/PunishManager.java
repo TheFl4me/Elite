@@ -271,15 +271,15 @@ public class PunishManager {
 	}
 
 	public static long computeTime(double x, double modifier) {
-		if(modifier == 0)
-			return 0;
 
-		double a = 0.2 + modifier;
-		double b = 1.4 + modifier;
-		double c = modifier;
-		double y = a * Math.pow(b, x) + c;
+		final double a = 0.5D + modifier;
+		final double b = 0.9D;
+		final double c = 0D - modifier;
+		final double d = -0.5D + modifier;
+		final double z = -3D - modifier;
+		final double y = a * Math.pow(b, z * x + c) + d;
 
 		//y = days
-		return Math.round(y) * (1000L * 60L * 60L);
+		return Math.round(y * (1000L * 60L * 60L * 24L));
 	}
 }

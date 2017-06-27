@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.general.punish.ban;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.Temporary;
 
 import java.util.UUID;
@@ -21,12 +22,17 @@ public class TempBan extends Ban implements Temporary {
 	
 	public String getKickMessage() {
 		Server server = Server.get();
-		ePlayer p = ePlayer.get(this.getTarget());
-		return p.getLanguage().get(GeneralLanguage.BAN_SCREEN)
+		Language lang;
+		ePlayer target = ePlayer.get(this.getTarget());
+		if(target != null)
+			lang = target.getLanguage();
+		else
+			lang = Language.ENGLISH;
+		return lang.get(GeneralLanguage.BAN_SCREEN)
 				.replaceAll("%name", server.getName())
 				.replaceAll("%reason", this.getReason())
-				.replaceAll("%duration", server.getTime(this.getTime(), p.getLanguage()))
-				.replaceAll("%remaining", server.getTimeUntil(this.getExpireDate(), p.getLanguage()))
+				.replaceAll("%duration", server.getTime(this.getTime(), lang))
+				.replaceAll("%remaining", server.getTimeUntil(this.getExpireDate(), lang))
 				.replaceAll("%bandate", server.getDate(this.getDate()))
 				.replaceAll("%id", this.getUniqueId().toString())
 				.replaceAll("%currentdate", server.getDate())

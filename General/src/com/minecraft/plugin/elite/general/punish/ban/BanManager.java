@@ -60,7 +60,7 @@ public class BanManager {
 		if(tempbans.containsKey(target.getUniqueId()))
 			tempbans.remove(target.getUniqueId());
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1), reason.getModifier());
+			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1D), reason.getModifier());
 			TempBan ban = new TempBan(bannerName, target.getUniqueId(), reason.toDisplayString(), banDetails, time, System.currentTimeMillis(), id);
 			tempbans.put(target.getUniqueId(), ban);
 			kick_screen = ban.getKickMessage();

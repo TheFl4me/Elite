@@ -12,11 +12,11 @@ public enum BanReason {
 	SECURITY_RISK("security-risk", "Security risk", 0, false),
 	DDOS("ddos", "Ddos threat", 0, false),
 
-	THREAT("threat", "Threat", 0.5, true),
-	MALICIOUS_LINK("malicious-link", "Sending a malicious link/url", 2.0, true),
-	BUG_ABUSE("bug-abuse", "Bug abuse", 0.7, true),
-	TEAM("big-team", "More than 2 players in team", 0.7, true),
-	STATS_MANIPULATION("stats-manipulation", "Manipulating stats", 0.7, true),
+	THREAT("threat", "Threat", 1.0, true),
+	MALICIOUS_LINK("malicious-link", "Sending a malicious link/url", 3.0, true),
+	BUG_ABUSE("bug-abuse", "Bug abuse", 1.0, true),
+	TEAM("big-team", "More than 2 players in team", 1.0, true),
+	STATS_MANIPULATION("stats-manipulation", "Manipulating stats", 1.0, true),
 	ADVERTISING("advertising", "Advertising", 3.0, true),
 	INFO_LEAK("information-leak", "Leaking private information", 2.0, true),
 	FALSE_APPLICATION("falsified-application", "Falsifying application", 1.5, true);
