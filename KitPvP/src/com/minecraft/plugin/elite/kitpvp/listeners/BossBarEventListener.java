@@ -19,7 +19,7 @@ public class BossBarEventListener implements Listener {
     @EventHandler
     public void showBarOnViewPlayerWithKit(PlayerMoveEvent e) {
         ePlayer p = ePlayer.get(e.getPlayer());
-        if(p.isInRegion(KitPvP.REGION_FEAST) || p.isInRegion(KitPvP.REGION_EHG)) {
+        if(p.isInRegion(KitPvP.REGION_FEAST) || p.isInRegion(KitPvP.REGION_EHG) || p.isInRegion(KitPvP.REGION_DUEL)) {
             ePlayer nearest = null;
             List<ePlayer> possible = new ArrayList<>();
             for(Entity ent : p.getPlayer().getNearbyEntities(3,3,3)) {
@@ -45,13 +45,22 @@ public class BossBarEventListener implements Listener {
 
             if(nearest != null) {
                 KitPlayer kz = KitPlayer.get(nearest.getUniqueId());
-                if(kz.hasKit() && !nearest.isAdminMode() && !nearest.isWatching()) {
-                    BossBar bar = BossBar.get(p);
-                    if(bar == null) {
-                        BossBar newBar = new BossBar(p);
-                        newBar.show(nearest.getName() + " - " + kz.getKit().getName(), 10);
-                    } else {
-                        bar.changeTo(nearest.getName() + " - " + kz.getKit().getName(), 10);
+                if(!nearest.isAdminMode() && !nearest.isWatching()) {
+                    String text = null;
+                    if(p.isInRegion(KitPvP.REGION_DUEL)) {
+                        text = Long.toString(nearest.getELO()) + " ELO";
+                    } else if(kz.hasKit()) {
+                       text = kz.getKit().getName();
+                    }
+
+                    if(text != null) {
+                        BossBar bar = BossBar.get(p);
+                        if(bar == null) {
+                            BossBar newBar = new BossBar(p);
+                            newBar.show(nearest.getName() + " - " + text, 10);
+                        } else {
+                            bar.changeTo(nearest.getName() + " - " + text, 10);
+                        }
                     }
                 }
             }
