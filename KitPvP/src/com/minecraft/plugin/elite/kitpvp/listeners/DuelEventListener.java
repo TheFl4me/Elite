@@ -45,7 +45,6 @@ public class DuelEventListener implements Listener {
 				ePlayer z = ePlayer.get(DuelManager.getQueue().get(0));
 				Duel duel = new Duel(z, p, Duel.DuelType.NORMAL);
 				duel.queueStart();
-				DuelManager.removeFromQueue(z.getUniqueId());
 			}
 		}
 	}

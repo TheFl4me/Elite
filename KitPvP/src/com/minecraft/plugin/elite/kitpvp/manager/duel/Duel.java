@@ -126,6 +126,7 @@ public class Duel {
 		}
 		for(int i = 0; i < this.getPlayers().size(); i++) {
 			ePlayer p = ePlayer.get(this.getPlayers().get(i));
+			DuelManager.removeFromQueue(p.getUniqueId());
 			Location loc = null;
 			try {
 				ResultSet res = db.select(KitPvP.DB_DUEL, "location", "loc" + Integer.toString(i++));

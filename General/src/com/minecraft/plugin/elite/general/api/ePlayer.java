@@ -930,7 +930,7 @@ public class ePlayer {
 	public void setELO(long elo) {
 		Database db = General.getDB();
 		ELOChangeEvent event = new ELOChangeEvent(this, elo);
-		db.update(General.DB_PLAYERS, "elo", elo, "uuid", this.getUniqueId());
+		db.update(General.DB_PLAYERS, "elo", (elo < 0 ? 0 : elo), "uuid", this.getUniqueId());
 		Bukkit.getPluginManager().callEvent(event);
 	}
 
