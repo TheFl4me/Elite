@@ -1,6 +1,6 @@
 name: General
 author: TheFl4me
-version: 10.5.22
+version: 10.5.25
 depend: [WorldEdit, WorldGuard]
 main: com.minecraft.plugin.elite.general.General
 commands:

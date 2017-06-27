@@ -5,12 +5,12 @@ import java.util.List;
 
 public enum MuteReason {
 	
-	SPAM("spam", "Spam", 0.001, true),
-	INSULT("insult", "Insult", 0.001, true),
-	RACISM("racism", "Racism", 0.02, true),
-	NAZISM("nazism", "Nazism", 0.03, true),
-	ADULT_CONTENT("adult-content", "Sharing adult content", 0.5, true),
-	PROVOCATION("provocation", "Provocation", 0.01, true);
+	SPAM("spam", "Spam", 0.1, true),
+	INSULT("insult", "Insult", 0.1, true),
+	RACISM("racism", "Racism", 0.5, true),
+	NAZISM("nazism", "Nazism", 0.5, true),
+	ADULT_CONTENT("adult-content", "Sharing adult content", 1.0, true),
+	PROVOCATION("provocation", "Provocation", 0.1, true);
 
 	private double modifier;
 	private String reason;

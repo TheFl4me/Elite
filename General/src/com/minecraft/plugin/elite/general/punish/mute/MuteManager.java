@@ -50,7 +50,7 @@ public class MuteManager {
 		UUID id = PunishManager.generateUUID();
 		long time = 0;
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier());
+			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), true);
 			TempMute mute = new TempMute(muterName, target.getUniqueId(), reason.toDisplayString(), muteDetails, time, System.currentTimeMillis(), id);
 			tempmutes.put(target.getUniqueId(), mute);
 		} else {

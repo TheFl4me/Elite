@@ -270,7 +270,7 @@ public class PunishManager {
 		}
 	}
 
-	public static long computeTime(double x, double modifier) {
+	public static long computeTime(double x, double modifier, boolean hours) {
 
 		final double a = 0.5D + modifier;
 		final double b = 0.9D;
@@ -280,6 +280,6 @@ public class PunishManager {
 		final double y = a * Math.pow(b, z * x + c) + d;
 
 		//y = days
-		return Math.round(y * (1000L * 60L * 60L * 24L));
+		return Math.round(y * (1000L * 60L * 60L * (hours ? 1L : 24L)));
 	}
 }
