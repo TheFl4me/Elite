@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.players;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
+import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import com.minecraft.plugin.elite.survivalgames.manager.alive.PlayerGUI;
 import com.minecraft.plugin.elite.survivalgames.manager.alive.PlayerTool;
 import org.bukkit.event.EventHandler;

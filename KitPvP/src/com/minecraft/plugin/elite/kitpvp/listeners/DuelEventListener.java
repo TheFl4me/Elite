@@ -2,9 +2,9 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
+import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
@@ -33,6 +33,12 @@ public class DuelEventListener implements Listener {
 	@EventHandler
 	public void onQueueClick(ToolClickEvent e) {
 		ePlayer p = e.getPlayer();
+		if(e.getTool() instanceof CancelQueueTool) {
+			DuelManager.removeFromQueue(p.getUniqueId());
+			p.clear();
+			return;
+		}
+
 		if(e.getTool() instanceof DuelQueueTool) {
 			if(DuelManager.getQueue().isEmpty()) {
 				DuelManager.addToQueue(p.getUniqueId());
@@ -44,15 +50,6 @@ public class DuelEventListener implements Listener {
 				Duel duel = new Duel(z, p, Duel.DuelType.NORMAL);
 				duel.queueStart();
 			}
-		}
-	}
-
-	@EventHandler
-	public void onQueueCancelClick(ToolClickEvent e) {
-		ePlayer p = e.getPlayer();
-		if(e.getTool() instanceof CancelQueueTool) {
-			DuelManager.removeFromQueue(p.getUniqueId());
-			p.clear();
 		}
 	}
 
