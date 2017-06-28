@@ -1,4 +1,0 @@
-# Elite
-
-TODO:
-- FF Check
