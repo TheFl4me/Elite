@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners.menu;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
+import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuGUI;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import org.bukkit.event.EventHandler;

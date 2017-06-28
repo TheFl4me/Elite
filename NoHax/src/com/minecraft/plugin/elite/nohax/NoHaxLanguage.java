@@ -9,6 +9,8 @@ public enum NoHaxLanguage implements LanguageNode {
 
     SPAMCHECK_STAFF,
 
+    CHECK_FF_TOOL,
+
     COMBATLOG_SAFE,
 
     ALERT_HACKS,

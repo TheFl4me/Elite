@@ -2,7 +2,8 @@ package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.events.ToolClickEvent;
+import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
+import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,7 +36,28 @@ public class ToolEventListener implements Listener {
                     for (Tool tool : p.getTools()) {
                         if (tool.getItem().getItemMeta().hasDisplayName() && item.getItemMeta().hasDisplayName()) {
                             if (tool.getName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
-                                ToolClickEvent event = new ToolClickEvent(e, tool);
+                                ToolClickEvent event = new ToolClickEvent(p, tool);
+                                Bukkit.getPluginManager().callEvent(event);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void callToolClickEntityEvent(PlayerInteractEntityEvent e) {
+        ePlayer p = ePlayer.get(e.getPlayer());
+        ItemStack item = p.getPlayer().getItemInHand();
+        if(item != null) {
+            if(item.getType() != Material.AIR) {
+                if(p.hasTool()) {
+                    for (Tool tool : p.getTools()) {
+                        if (tool.getItem().getItemMeta().hasDisplayName() && item.getItemMeta().hasDisplayName()) {
+                            if (tool.getName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
+                                ToolClickEntityEvent event = new ToolClickEntityEvent(p, tool, e.getRightClicked());
                                 Bukkit.getPluginManager().callEvent(event);
                                 break;
                             }

@@ -1,10 +1,9 @@
-package com.minecraft.plugin.elite.general.api.events;
+package com.minecraft.plugin.elite.general.api.events.tool;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ToolClickEvent extends Event {
 
@@ -13,8 +12,8 @@ public class ToolClickEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public ToolClickEvent(PlayerInteractEvent e, Tool tool) {
-        this.player = ePlayer.get(e.getPlayer());
+    public ToolClickEvent(ePlayer p, Tool tool) {
+        this.player = p;
         this.tool = tool;
     }
 
