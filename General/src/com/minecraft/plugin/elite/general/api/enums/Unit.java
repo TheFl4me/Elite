@@ -20,4 +20,8 @@ public enum Unit {
     public long toSeconds() {
         return this.modifier;
     }
+
+    public long toMS() {
+        return this.toSeconds() * 1000L;
+    }
 }

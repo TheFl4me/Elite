@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.general.api.enums.Unit;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
@@ -60,7 +61,7 @@ public class BanManager {
 		if(tempbans.containsKey(target.getUniqueId()))
 			tempbans.remove(target.getUniqueId());
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), false);
+			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), Unit.DAYS);
 			TempBan ban = new TempBan(bannerName, target.getUniqueId(), reason.toDisplayString(), banDetails, time, System.currentTimeMillis(), id);
 			tempbans.put(target.getUniqueId(), ban);
 			kick_screen = ban.getKickMessage();

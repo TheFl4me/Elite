@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.general.api.enums.Unit;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import org.bukkit.Bukkit;
@@ -50,7 +51,7 @@ public class MuteManager {
 		UUID id = PunishManager.generateUUID();
 		long time = 0;
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), true);
+			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), Unit.HOURS);
 			TempMute mute = new TempMute(muterName, target.getUniqueId(), reason.toDisplayString(), muteDetails, time, System.currentTimeMillis(), id);
 			tempmutes.put(target.getUniqueId(), mute);
 		} else {
