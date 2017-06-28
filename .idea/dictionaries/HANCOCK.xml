@@ -41,7 +41,6 @@
       <w>deletewarp</w>
       <w>delwarp</w>
       <w>devastation</w>
-      <w>dont</w>
       <w>duelspawn</w>
       <w>eban</w>
       <w>egeneral</w>
@@ -154,7 +153,6 @@
       <w>votekick</w>
       <w>warplist</w>
       <w>whitelist</w>
-      <w>zuuid</w>
     </words>
   </dictionary>
 </component>

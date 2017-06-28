@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.general.api;
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.general.api.enums.Unit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -104,6 +105,7 @@ public class Server {
         return this.soup;
     }
 
+
     public String getDate() {
         SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         return date.format(new Date());
@@ -120,37 +122,45 @@ public class Server {
     }
 
     public String getTime(long ms, Language lang) {
-        long sec = ms / 1000;
+        long sec = ms / Unit.SECONDS.toSeconds();
+
+        final long unitMin = Unit.MINUTES.toSeconds();
+        final long unitHours = Unit.HOURS.toSeconds();
+        final long unitDays = Unit.DAYS.toSeconds();
+        final long unitWeeks = Unit.WEEKS.toSeconds();
+        final long unitMonths = Unit.MONTHS.toSeconds();
+        final long unitYears = Unit.YEARS.toSeconds();
+
         StringBuilder sb = new StringBuilder(40);
-        if (sec / 31449600 > 0) {
-            long years = sec / 31449600;
+        long years = sec / unitYears;
+        if (years > 0) {
             sb.append(years + (years == 1 ? lang.get(GeneralLanguage.UNIT_YEAR) : lang.get(GeneralLanguage.UNIT_YEAR_PLURAL)));
-            sec -= years * 31449600;
+            sec -= years * unitYears;
         }
-        if (sec / 2620800 > 0) {
-            long months = sec / 2620800;
+        long months = sec / unitMonths;
+        if (months > 0) {
             sb.append(months + (months == 1 ? lang.get(GeneralLanguage.UNIT_MONTH) : lang.get(GeneralLanguage.UNIT_MONTH_PLURAL)));
-            sec -= months * 2620800;
+            sec -= months * unitMonths;
         }
-        if (sec / 604800 > 0) {
-            long weeks = sec / 604800;
+        long weeks = sec / unitWeeks;
+        if (weeks > 0) {
             sb.append(weeks + (weeks == 1 ? lang.get(GeneralLanguage.UNIT_WEEK) : lang.get(GeneralLanguage.UNIT_WEEK_PLURAL)));
-            sec -= weeks * 604800;
+            sec -= weeks * unitWeeks;
         }
-        if (sec / 86400 > 0) {
-            long days = sec / 86400;
+        long days = sec / unitDays;
+        if (days > 0) {
             sb.append(days + (days == 1 ? lang.get(GeneralLanguage.UNIT_DAY) : lang.get(GeneralLanguage.UNIT_DAY_PLURAL)));
-            sec -= days * 86400;
+            sec -= days * unitDays;
         }
-        if (sec / 3600 > 0) {
-            long hours = sec / 3600;
+        long hours = sec / unitHours;
+        if (hours > 0) {
             sb.append(hours + (hours == 1 ? lang.get(GeneralLanguage.UNIT_HOUR) : lang.get(GeneralLanguage.UNIT_HOUR_PLURAL)));
-            sec -= hours * 3600;
+            sec -= hours * unitHours;
         }
-        if (sec / 60 > 0) {
-            long minutes = sec / 60;
+        long minutes = sec / unitMin;
+        if (minutes > 0) {
             sb.append(minutes + (minutes == 1 ? lang.get(GeneralLanguage.UNIT_MINUTE) : lang.get(GeneralLanguage.UNIT_MINUTE_PLURAL)));
-            sec -= minutes * 60;
+            sec -= minutes * unitMin;
         }
         if (sec > 0) {
             sb.append(sec + (sec == 1 ? lang.get(GeneralLanguage.UNIT_SECOND) : lang.get(GeneralLanguage.UNIT_SECOND_PLURAL)));
@@ -170,12 +180,14 @@ public class Server {
 
     public String getTimeDigital(long ms) {
         StringBuilder sb = new StringBuilder(40);
-        long sec = ms / 1000;
+        long sec = ms / Unit.SECONDS.toSeconds();
 
-        if (sec / 60 > 0) {
-            long minutes = sec / 60;
+        final long unitMin = Unit.MINUTES.toSeconds();
+
+        long minutes = sec / unitMin;
+        if (minutes > 0) {
             sb.append(minutes < 10 ? "0" + minutes + ":" : minutes + ":");
-            sec -= minutes * 60;
+            sec -= minutes * unitMin;
         } else {
             sb.append("00:");
         }
