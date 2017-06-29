@@ -170,17 +170,17 @@ public class HaxPlayer extends ePlayer {
     }
 
     public PlayerDamage getDamageAgo(int x) {
-        if (this.damageCount - x < 0)
+        if (this.getDamageCount() - x < 0)
             return null;
-        int index = Math.abs(this.damageCount - x) % this.damages.length;
-        return this.damages[index];
+        int index = Math.abs(this.getDamageCount() - x) % this.getDamages().length;
+        return this.getDamages()[index];
     }
 
     public PlayerClick getClicksAgo(int x) {
-        if (this.clickCount - x < 0)
+        if (this.getClickCount() - x < 0)
             return null;
-        int index = Math.abs(this.clickCount - x) % this.clicks.length;
-        return this.clicks[index];
+        int index = Math.abs(this.getClickCount() - x) % this.getClicks().length;
+        return this.getClicks()[index];
     }
 
     public void invalidate() {

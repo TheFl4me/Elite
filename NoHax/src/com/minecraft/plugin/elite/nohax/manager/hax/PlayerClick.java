@@ -28,8 +28,9 @@ public class PlayerClick {
             HaxPlayer p = HaxPlayer.get(e.getWhoClicked().getUniqueId());
             PlayerClick click = new PlayerClick(p);
             Server server = Server.get();
-            if (!click.getPlayer().isLagging() && !click.getPlayer().canBypassChecks() && !server.isLagging())
+            if (!click.getPlayer().isLagging() && !click.getPlayer().canBypassChecks() && !server.isLagging()) {
                 AutoClickHack.check(click);
+            }
         }
     }
 

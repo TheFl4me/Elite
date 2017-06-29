@@ -70,7 +70,7 @@ public class Server {
     }
 
     public boolean isLagging() {
-        return this.getTPS() < 19;
+        return this.getTPS() < 15;
     }
 
     public double getTPS() {

@@ -10,7 +10,7 @@ public class SpeedHack {
 
     public static void check(PlayerMove move) {
         HaxPlayer p = move.getPlayer();
-        double index = 0.7;
+        double index = 0.8;
         if (!p.getPlayer().hasPotionEffect(PotionEffectType.SPEED) && !p.isCanSpeed() && !move.isOnIce())
             if (move.getHorizontalDistance() > index)
                 AlertManager.set(p, AlertType.SPEED, 5, move.getHorizontalDistance() - index);
