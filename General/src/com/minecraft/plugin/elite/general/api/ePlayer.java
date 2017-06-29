@@ -42,6 +42,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -50,6 +51,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.util.Vector;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -981,5 +983,19 @@ public class ePlayer {
 		this.getPlayer().playSound(this.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
 		this.addExp(achievement.getExp());
 		this.addTokens(achievement.getTokens());
+	}
+
+	public float getLineOfSightAngleTo(Entity ent) {
+		Vector p2p = ent.getLocation().toVector().subtract(this.getPlayer().getLocation().toVector()).normalize();
+		Vector sight = this.getPlayer().getEyeLocation().getDirection().normalize();
+		return sight.angle(p2p);
+	}
+
+	public boolean hasLineOfSight(Entity ent) {
+		return this.hasLineOfSight(ent, 20);
+	}
+
+	public boolean hasLineOfSight(Entity ent, double degree) {
+		return this.getLineOfSightAngleTo(ent) < Math.toRadians(degree);
 	}
 }

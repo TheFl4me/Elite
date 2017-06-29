@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +21,10 @@ public class BossBarEventListener implements Listener {
         if(p.isInRegion(KitPvP.REGION_FEAST) || p.isInRegion(KitPvP.REGION_EHG) || p.isInRegion(KitPvP.REGION_DUEL)) {
             ePlayer nearest = null;
             List<ePlayer> possible = new ArrayList<>();
-            for(Entity ent : p.getPlayer().getNearbyEntities(3,3,3)) {
-                if(ent instanceof Player) {
-                    ePlayer z = ePlayer.get((Player) ent);
-
-                    Vector p2p = z.getPlayer().getLocation().toVector().subtract(p.getPlayer().getLocation().toVector()).normalize();
-                    Vector sight = p.getPlayer().getEyeLocation().getDirection().normalize();
-                    float angle = sight.angle(p2p);
-                    boolean lineOfSight = false;
-                    if(angle < Math.toRadians(20))
-                        lineOfSight = true;
-
-                    if(lineOfSight) {
-                        possible.add(z);
-                    }
-                }
-            }
+            for(Entity ent : p.getPlayer().getNearbyEntities(3, 3, 3))
+                if(ent instanceof Player)
+                    if(p.hasLineOfSight(ent))
+                        possible.add(ePlayer.get((Player) ent));
 
             for(ePlayer near : possible)
                 if(nearest == null || p.getPlayer().getLocation().distance(near.getPlayer().getLocation()) < p.getPlayer().getLocation().distance(nearest.getPlayer().getLocation()))
