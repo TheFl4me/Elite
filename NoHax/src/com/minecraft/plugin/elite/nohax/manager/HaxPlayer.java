@@ -47,7 +47,7 @@ public class HaxPlayer extends ePlayer {
 
         this.moves = new PlayerMove[50];
         this.damages = new PlayerDamage[20];
-        this.clicks = new PlayerClick[200];
+        this.clicks = new PlayerClick[150];
 
         this.moveCount = 0;
         this.damageCount = 0;
