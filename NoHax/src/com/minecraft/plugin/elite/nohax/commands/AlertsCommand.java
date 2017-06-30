@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.nohax.commands;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
 import com.minecraft.plugin.elite.nohax.manager.alert.Alert;
 import com.minecraft.plugin.elite.nohax.manager.alert.AlertManager;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class AlertsCommand extends eCommand {
 
     public AlertsCommand() {
-        super("alerts", "enohax.alerts", false);
+        super("alerts", NoHax.ALERTS_PERM, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

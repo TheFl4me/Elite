@@ -101,8 +101,7 @@ public class ePlayer {
 	public static ePlayer get(String name) {
 		@SuppressWarnings("deprecation") Player p = Bukkit.getPlayer(name);
 		if(p != null) {
-			UUID uuid = p.getUniqueId();
-			ePlayer result = get(uuid);
+			ePlayer result = get(p.getUniqueId());
 			return result;
 		}
 		return null;

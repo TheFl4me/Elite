@@ -80,9 +80,9 @@ public class HaxPlayer extends ePlayer {
     }
 
     public static HaxPlayer get(String name) {
-        @SuppressWarnings("deprecation") UUID uuid = Bukkit.getPlayer(name).getUniqueId();
-        if (uuid != null) {
-            HaxPlayer result = get(uuid);
+        @SuppressWarnings("deprecation") Player player = Bukkit.getPlayer(name);
+        if (player != null) {
+            HaxPlayer result = get(player.getUniqueId());
             if (result != null)
                 return result;
         }
@@ -162,27 +162,6 @@ public class HaxPlayer extends ePlayer {
         this.combatLogTask = runnable;
     }
 
-    public PlayerMove getMovesAgo(int x) {
-        if (this.getMoveCount() - x < 0)
-            return null;
-        int index = Math.abs(this.getMoveCount() - x) % this.getMoves().length;
-        return this.getMoves()[index];
-    }
-
-    public PlayerDamage getDamageAgo(int x) {
-        if (this.getDamageCount() - x < 0)
-            return null;
-        int index = Math.abs(this.getDamageCount() - x) % this.getDamages().length;
-        return this.getDamages()[index];
-    }
-
-    public PlayerClick getClicksAgo(int x) {
-        if (this.getClickCount() - x < 0)
-            return null;
-        int index = Math.abs(this.getClickCount() - x) % this.getClicks().length;
-        return this.getClicks()[index];
-    }
-
     public void invalidate() {
         this.invalidate(2000);
     }
@@ -236,6 +215,14 @@ public class HaxPlayer extends ePlayer {
         this.moves = moves;
     }
 
+    public PlayerMove getMovesAgo(int x) {
+        if (this.getMoveCount() - x < 0)
+            return null;
+        int index = Math.abs(this.getMoveCount() - x) % this.getMoves().length;
+        return this.getMoves()[index];
+    }
+
+
 
     public PlayerDamage[] getDamages() {
         return this.damages;
@@ -249,6 +236,13 @@ public class HaxPlayer extends ePlayer {
         this.damageCount = i;
     }
 
+    public PlayerDamage getDamageAgo(int x) {
+        if (this.getDamageCount() - x < 0)
+            return null;
+        int index = Math.abs(this.getDamageCount() - x) % this.getDamages().length;
+        return this.getDamages()[index];
+    }
+
     public PlayerClick[] getClicks() {
         return this.clicks;
     }
@@ -259,6 +253,13 @@ public class HaxPlayer extends ePlayer {
 
     public void setClickCount(int i) {
         this.clickCount = i;
+    }
+
+    public PlayerClick getClicksAgo(int x) {
+        if (this.getClickCount() - x < 0)
+            return null;
+        int index = Math.abs(this.getClickCount() - x) % this.getClicks().length;
+        return this.getClicks()[index];
     }
 
 

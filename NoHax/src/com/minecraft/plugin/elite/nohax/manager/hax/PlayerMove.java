@@ -171,10 +171,7 @@ public class PlayerMove {
 
         this.moveSpeed = e.getFrom().distance(e.getTo());
 
-        if (p.isCanFly() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
-            this.isValid = false;
-
-        if (!p.isValid())
+        if (!p.isValid() || p.isCanFly() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
             this.isValid = false;
     }
 

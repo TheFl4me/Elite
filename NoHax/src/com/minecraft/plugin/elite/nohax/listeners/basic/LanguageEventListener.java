@@ -1,4 +1,4 @@
-package com.minecraft.plugin.elite.nohax.listeners;
+package com.minecraft.plugin.elite.nohax.listeners.basic;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.enums.Language;
