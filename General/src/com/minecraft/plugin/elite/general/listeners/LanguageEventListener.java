@@ -138,10 +138,12 @@ public class LanguageEventListener implements Listener {
                         "&cYou can buy &6Premium &cto join anyway!\n\n" +
                         "&6Store: &b&uwww.%domain/store");
 
-                lang.addLangNode(GeneralLanguage.BAN_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/ban <player> <reason> <details>");
+                lang.addLangNode(GeneralLanguage.PUNISH_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/punish <player> <reason> <details>");
+                lang.addLangNode(GeneralLanguage.PUNISH_NOPERM, "&cYou cannot punish this player.");
+                lang.addLangNode(GeneralLanguage.PUNISH_BAN_NOPERM, "&cYou are not too low ranked to punish for that reason.");
+
                 lang.addLangNode(GeneralLanguage.BAN_WARNING, "&4&cYOU HAVE BEEN BANNED!");
                 lang.addLangNode(GeneralLanguage.BAN_BANNED, "&7%z has been banned.");
-                lang.addLangNode(GeneralLanguage.BAN_NOPERM, "&cYou cannot ban this player.");
                 lang.addLangNode(GeneralLanguage.BAN_SCREEN, "&cYou were banned from %name\n\n" +
                         "&8Ban-ID: &f%id\n" +
                         "&8Reason: &f%reason\n" +
@@ -165,14 +167,12 @@ public class LanguageEventListener implements Listener {
                         "&8Reason: &f%reason");
                 lang.addLangNode(GeneralLanguage.KICK_NOPERM, "&cYou cannot kick this player.");
 
-                lang.addLangNode(GeneralLanguage.MUTE_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/mute <player> <reason> <details>");
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED, "&7%z has been muted.");
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED_ON_TALK, "&cYOU ARE MUTED!");
                 lang.addLangNode(GeneralLanguage.MUTE_INFO, "&8Mute-ID: &f%id\n" +
                         "&8Reason: &f%reason\n" +
                         "&8Duration: &f%duration\n" +
                         "&8Remaining: &f%remaining");
-                lang.addLangNode(GeneralLanguage.MUTE_NOPERM, "&cYou cannot mute this player.");
 
                 lang.addLangNode(GeneralLanguage.UNMUTE_UNMUTED, "&7%z has been unmuted.");
                 lang.addLangNode(GeneralLanguage.UNMUTE_UNMUTED_YOU, "&aYou have been unmuted.");

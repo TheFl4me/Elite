@@ -18,7 +18,7 @@ public class LoginEventListener implements Listener {
 		if(Bukkit.getServer().hasWhitelist())
 			if(!p.getPlayer().isWhitelisted())
 				e.disallow(Result.KICK_WHITELIST, p.getLanguage().get(GeneralLanguage.JOIN_WHITELIST));
-		if(Bukkit.getServer().getMaxPlayers() <= Bukkit.getOnlinePlayers().size() && !p.getPlayer().hasPermission("eban.joinfull"))
+		if(Bukkit.getServer().getMaxPlayers() <= Bukkit.getOnlinePlayers().size() && !p.getPlayer().hasPermission("egeneral.joinfull"))
 			e.disallow(Result.KICK_FULL, p.getLanguage().get(GeneralLanguage.JOIN_FULL)
 					.replaceAll("%domain", server.getDomain()));
 	}

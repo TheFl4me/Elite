@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.nohax.manager.alert;
 
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
-import com.minecraft.plugin.elite.general.punish.ban.BanManager;
-import com.minecraft.plugin.elite.general.punish.ban.BanReason;
+import com.minecraft.plugin.elite.general.punish.PunishManager;
+import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
 import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
@@ -42,10 +42,6 @@ public class AlertManager {
         alerts.removeAll(list);
     }
 
-    public static void set(ePlayer p, AlertType type) {
-        set(p, type, 1);
-    }
-
     public static void set(ePlayer p, AlertType type, double count) {
         set(p, type, 1, count);
     }
@@ -82,7 +78,7 @@ public class AlertManager {
                     .replaceAll("%chance", df.format(chance) + "%"));
         }
         if (confirmed == 10 * sensitivity) {
-            BanManager.ban("System - AutoBan", Bukkit.getOfflinePlayer(p.getUniqueId()), BanReason.CHEATING, alert.toString() + " ");
+            PunishManager.punish("System - AutoBan", Bukkit.getOfflinePlayer(p.getUniqueId()), PunishReason.CHEATING, alert.toString() + " ");
             alerts.remove(alert);
         }
 

@@ -3,8 +3,7 @@ package com.minecraft.plugin.elite.nohax.manager;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
-import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
-import com.minecraft.plugin.elite.general.punish.mute.MuteReason;
+import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -85,14 +84,14 @@ public class SpamCheck {
             long time = this.getMessages().get(0).getWhen() - this.getMessages().get(2).getWhen();
             // if they sent 3 msgs in 1.5 seconds, they are spamming
             isSpamming = time < 1500;
-            // if they sent the same message 3 times in a row within 3 seconds, they are spamming
-            isSpamming = isSpamming || (time < 3000 && same);
+            // if they sent the same message 3 times in a row within 5 seconds, they are spamming
+            isSpamming = isSpamming || (time < 5000 && same);
         }
         if (isSpamming) {
             if (HaxPlayer.get(p.getUniqueId()).canBypassChecks()) {
                 p.sendMessage(NoHaxLanguage.SPAMCHECK_STAFF);
             } else {
-                MuteManager.mute("System - SpamCheck", Bukkit.getOfflinePlayer(this.getPlayer().getUniqueId()), MuteReason.SPAM, "Detected spamming chat by SpamCheck.");
+                PunishManager.punish("System - SpamCheck", Bukkit.getOfflinePlayer(this.getPlayer().getUniqueId()), PunishReason.CHAT_SPAM, "Detected spamming chat by SpamCheck.");
                 this.clear();
             }
         }

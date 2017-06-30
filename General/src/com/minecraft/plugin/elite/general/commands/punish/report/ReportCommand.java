@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class ReportCommand extends eCommand {
 
 	public ReportCommand() {
-		super("report", "eban.report", false);
+		super("report", "egeneral.report", false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

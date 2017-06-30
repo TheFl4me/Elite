@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class CheckInfoCommand extends eCommand {
 	
 	public CheckInfoCommand() {
-		super("checkinfo", "eban.checkinfo", false);
+		super("checkinfo", "egeneral.checkinfo", false);
 	}
 	
 	@SuppressWarnings("deprecation")

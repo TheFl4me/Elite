@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 public class UnbanCommand extends eCommand {
 
 	public UnbanCommand() {
-		super("unban", "eban.unban", true);
+		super("unban", "egeneral.unban", true);
 	}
 
 	@SuppressWarnings("deprecation")

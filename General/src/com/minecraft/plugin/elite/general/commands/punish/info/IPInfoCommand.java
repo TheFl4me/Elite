@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class IPInfoCommand extends eCommand {
 	
 	public IPInfoCommand() {
-		super("ipinfo", "eban.ipinfo", false);
+		super("ipinfo", "egeneral.ipinfo", false);
 	}
 	
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

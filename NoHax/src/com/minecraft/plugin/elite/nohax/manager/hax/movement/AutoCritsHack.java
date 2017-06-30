@@ -10,6 +10,9 @@ public class AutoCritsHack {
     public static void check(PlayerMove move) {
         HaxPlayer p = move.getPlayer();
         double jumpHeight = move.getJumpHeight();
+        final double min = 0.1;
+        final double max = 0.21;
+
         if (!move.isUnderBlock() && !move.isInLadder() && !move.isNextToBlock()  && !move.isOnBlockEdge() && move.isOnGround() && !move.isOnSlab() && p.getLastOnGround().getLocation().getY() == move.getLocation().getY()) {
             for (int i = 1; i < p.getLastOnGroundMovesAgo(); i++) {
                 PlayerMove other = p.getMovesAgo(i);
@@ -19,8 +22,8 @@ public class AutoCritsHack {
                     jumpHeight = other.getJumpHeight();
                 }
             }
-            if (jumpHeight <= 0.21 && jumpHeight > 0.1) {
-                AlertManager.set(p, AlertType.AUTOCRITS, 3);
+            if (jumpHeight <= max && jumpHeight >= min) {
+                AlertManager.set(p, AlertType.AUTOCRITS, 3, (jumpHeight - min) / (max - min));
             }
         }
     }

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class KickCommand extends eCommand {
 	
 	public KickCommand() {
-		super("kick", "eban.kick", true);
+		super("kick", "egeneral.kick", true);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

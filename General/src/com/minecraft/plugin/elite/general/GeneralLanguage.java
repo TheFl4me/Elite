@@ -109,6 +109,8 @@ public enum GeneralLanguage implements LanguageNode {
     PUNISH_USAGE,
     PUNISH_NOPERM,
 
+    PUNISH_BAN_NOPERM,
+
     BAN_WARNING,
     BAN_BANNED,
     BAN_SCREEN,

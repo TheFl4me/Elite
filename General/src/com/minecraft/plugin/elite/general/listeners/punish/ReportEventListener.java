@@ -48,7 +48,7 @@ public class ReportEventListener implements Listener {
 					Report report = new Report(z.getUniqueId(), p.getUniqueId(), p.getLanguage().getNode(itemMeta.getDisplayName(), true), System.currentTimeMillis());
 					report.saveToDB();
 					PunishManager.addSentReport(p.getUniqueId());
-					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eban.report.list")).forEach(players -> players.sendMessage(ePlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
+					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("egeneral.report.list")).forEach(players -> players.sendMessage(ePlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
                             .replaceAll("%hacker", z.getName())
                             .replaceAll("%reason", itemMeta.getDisplayName().substring(2))
                             .replaceAll("%reporter", p.getName())));

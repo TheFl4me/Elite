@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class ReportListCommand extends eCommand {
 
 	public ReportListCommand() {
-		super("reportlist", "eban.report.list", false);
+		super("reportlist", "egeneral.report.list", false);
 	}
 
 	@SuppressWarnings("deprecation")

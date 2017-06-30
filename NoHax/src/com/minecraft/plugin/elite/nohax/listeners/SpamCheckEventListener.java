@@ -33,13 +33,14 @@ public class SpamCheckEventListener implements Listener {
         for(String string : cmdNames) {
             Command cmd = General.getPlugin().getCommand(string);
             if(cmd != null) {
-                blacklist.add(cmd.getName());
-                blacklist.addAll(cmd.getAliases());
+                blacklist.add("/" + cmd.getName());
+                for(String alias : cmd.getAliases())
+                    blacklist.add("/" + alias);
             }
         }
 
         for (String cmd : blacklist)
-            if (e.getMessage().startsWith(cmd) && !PunishManager.isMuted(p.getUniqueId()))
+            if (e.getMessage().toLowerCase().startsWith(cmd.toLowerCase()) && !PunishManager.isMuted(p.getUniqueId()))
                 SpamCheck.onPlayerCommand(e);
     }
 }

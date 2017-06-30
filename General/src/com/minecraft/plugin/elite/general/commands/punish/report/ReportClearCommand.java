@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class ReportClearCommand extends eCommand {
 
     public ReportClearCommand() {
-        super("reportclear", "epunish.report.clear", false);
+        super("reportclear", "egeneral.report.clear", false);
     }
 
     @SuppressWarnings("deprecation")

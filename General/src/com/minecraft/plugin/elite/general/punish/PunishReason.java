@@ -2,10 +2,6 @@ package com.minecraft.plugin.elite.general.punish;
 
 import com.minecraft.plugin.elite.general.api.enums.Unit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum PunishReason {
 
     CHEATING(PunishType.BAN, null, 0),
@@ -36,12 +32,6 @@ public enum PunishReason {
                 return reason;
         }
         return null;
-    }
-
-    public static List<String> getAllReasons() {
-        List<String> list = new ArrayList<>();
-        Arrays.stream(values()).forEach((reason) -> list.add(reason.toString()));
-        return list;
     }
 
     PunishReason(PunishType type, Unit unit, double modifier) {

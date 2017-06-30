@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 public class UnmuteCommand extends eCommand {
 	
 	public UnmuteCommand() {
-		super("unmute", "eban.unmute", true);
+		super("unmute", "egeneral.unmute", true);
 	}
 
 	@SuppressWarnings("deprecation")
