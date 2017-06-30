@@ -1,6 +1,6 @@
 name: General
 author: TheFl4me
-version: 10.6.0
+version: 11.0.0
 depend: [WorldEdit, WorldGuard]
 main: com.minecraft.plugin.elite.general.General
 commands:
@@ -63,15 +63,13 @@ commands:
     suicide:
     lag:
     killall:
-    ban:
+    punish:
     unban:
     checkinfo:
       aliases: [seen, muteinfo, baninfo]
     ipinfo:
       aliases: [ip]
     kick:
-    mute:
-      aliases: [silence]
     unmute:
       aliases: [unsilence]
     report:

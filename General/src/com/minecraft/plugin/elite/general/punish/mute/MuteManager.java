@@ -4,9 +4,9 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
-import com.minecraft.plugin.elite.general.api.enums.Unit;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
+import com.minecraft.plugin.elite.general.punish.PunishReason;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -43,19 +43,18 @@ public class MuteManager {
 		return null;
 	}
 	
-	public static void mute(String muterName, OfflinePlayer target, MuteReason reason, String muteDetails) {
+	public static void mute(UUID id, String muterName, OfflinePlayer target, PunishReason reason, String muteDetails) {
 		if(mutes.containsKey(target.getUniqueId())) 
 			mutes.remove(target.getUniqueId());
 		if(tempmutes.containsKey(target.getUniqueId()))
 			tempmutes.remove(target.getUniqueId());
-		UUID id = PunishManager.generateUUID();
 		long time = 0;
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), Unit.HOURS);
-			TempMute mute = new TempMute(muterName, target.getUniqueId(), reason.toDisplayString(), muteDetails, time, System.currentTimeMillis(), id);
+			time = PunishManager.computeTime((PunishManager.getPastMuteIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), reason.getUnit());
+			TempMute mute = new TempMute(muterName, target.getUniqueId(), reason.toDisplay(), muteDetails, time, System.currentTimeMillis(), id);
 			tempmutes.put(target.getUniqueId(), mute);
 		} else {
-			Mute mute = new Mute(muterName, target.getUniqueId(), reason.toDisplayString(), muteDetails, System.currentTimeMillis(), id);
+			Mute mute = new Mute(muterName, target.getUniqueId(), reason.toDisplay(), muteDetails, System.currentTimeMillis(), id);
 			mutes.put(target.getUniqueId(), mute);
 		}
 

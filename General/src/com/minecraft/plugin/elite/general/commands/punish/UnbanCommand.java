@@ -1,4 +1,4 @@
-package com.minecraft.plugin.elite.general.commands.punish.ban;
+package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.eCommand;

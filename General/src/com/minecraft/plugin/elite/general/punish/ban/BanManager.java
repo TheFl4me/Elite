@@ -4,9 +4,9 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
-import com.minecraft.plugin.elite.general.api.enums.Unit;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
+import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -51,22 +51,21 @@ public class BanManager {
     	return null;
     }
 	
-	public static void ban(String bannerName, OfflinePlayer target, BanReason reason, String banDetails) {
+	public static void ban(UUID id, String bannerName, OfflinePlayer target, PunishReason reason, String banDetails) {
 
 		String kick_screen;
 		long time = 0;
-		UUID id = PunishManager.generateUUID();
 		if(bans.containsKey(target.getUniqueId())) 
 			bans.remove(target.getUniqueId());
 		if(tempbans.containsKey(target.getUniqueId()))
 			tempbans.remove(target.getUniqueId());
 		if(reason.isTemp()) {
-			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), Unit.DAYS);
-			TempBan ban = new TempBan(bannerName, target.getUniqueId(), reason.toDisplayString(), banDetails, time, System.currentTimeMillis(), id);
+			time = PunishManager.computeTime((PunishManager.getPastBanIDs(target.getUniqueId()).size() + 1D), reason.getModifier(), reason.getUnit());
+			TempBan ban = new TempBan(bannerName, target.getUniqueId(), reason.toDisplay(), banDetails, time, System.currentTimeMillis(), id);
 			tempbans.put(target.getUniqueId(), ban);
 			kick_screen = ban.getKickMessage();
 		} else {
-			Ban ban = new Ban(bannerName, target.getUniqueId(), reason.toDisplayString(), banDetails, System.currentTimeMillis(), id);
+			Ban ban = new Ban(bannerName, target.getUniqueId(), reason.toDisplay(), banDetails, System.currentTimeMillis(), id);
 			bans.put(target.getUniqueId(), ban);
 			kick_screen = ban.getKickMessage();
 		}

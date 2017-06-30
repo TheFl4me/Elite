@@ -106,10 +106,11 @@ public enum GeneralLanguage implements LanguageNode {
     JOIN_FULL,
     JOIN_WHITELIST,
 
-    BAN_USAGE,
+    PUNISH_USAGE,
+    PUNISH_NOPERM,
+
     BAN_WARNING,
     BAN_BANNED,
-    BAN_NOPERM,
     BAN_SCREEN,
 
     UNBAN_UNBANNED,
@@ -123,11 +124,9 @@ public enum GeneralLanguage implements LanguageNode {
     KICK_SCREEN,
     KICK_NOPERM,
 
-    MUTE_USAGE,
     MUTE_MUTED,
     MUTE_MUTED_ON_TALK,
     MUTE_INFO,
-    MUTE_NOPERM,
 
     UNMUTE_UNMUTED,
     UNMUTE_UNMUTED_YOU,

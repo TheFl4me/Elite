@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.nohax.manager;
 
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
@@ -72,6 +73,9 @@ public class SpamCheck {
 
     public void checkSpamming() {
         ePlayer p = this.getPlayer();
+        Server server = Server.get();
+        if(server.isLagging() || p.isLagging())
+            return;
         boolean isSpamming = false;
         if (this.getMessages().size() >= 3) {
             String msg = this.getMessages().get(0).getMessage();

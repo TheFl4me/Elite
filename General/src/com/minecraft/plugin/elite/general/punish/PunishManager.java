@@ -20,18 +20,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class PunishManager {
-
-	public static UUID generateUUID() {
-		UUID uuid = UUID.randomUUID();
-		boolean exists = true;
-		Database db = General.getDB();
-		while(exists)
-			if(!db.containsValue(General.DB_BANS, "id", uuid.toString()) && !db.containsValue(General.DB_BANHISTORY, "id", uuid.toString())&& !db.containsValue(General.DB_MUTES, "id", uuid.toString())&& !db.containsValue(General.DB_MUTEHISTORY, "id", uuid.toString()))
-				exists = false;
-			else
-				uuid = UUID.randomUUID();
-		return uuid;
-	}
 	
 	public static boolean isMuted(UUID target) {
 		Mute mute = MuteManager.getMute(target);
@@ -273,14 +261,40 @@ public class PunishManager {
 
 	public static long computeTime(double x, double modifier, Unit unit) {
 
-		final double a = 0.5D + modifier;
+		final double temp_z = -3D - modifier;
+		final double temp_a = 0.5D + modifier;
+		final double temp_c = 0D - modifier;
+		final double temp_d = modifier - 0.5D;
+
+		final double z = (temp_z < -10D ? -10D : temp_z);
+		final double a = (temp_a > 10D ? 10D : temp_a);
 		final double b = 0.9D;
-		final double c = 0D - modifier;
-		final double d = -0.5D + modifier;
-		final double z = -3D - modifier;
+		final double c = (temp_c < -10D ? -10D : temp_c);
+		final double d = (temp_d > 10D ? 10D : temp_d);
+
 		final double y = a * Math.pow(b, z * x + c) + d;
 
 		//y = days
 		return Math.round(y * unit.toMS());
+	}
+
+	public static void punish(String punisherName, OfflinePlayer target, PunishReason reason, String punishDetails) {
+		UUID uuid = UUID.randomUUID();
+		boolean exists = true;
+		Database db = General.getDB();
+		while(exists)
+			if(!db.containsValue(General.DB_BANS, "id", uuid.toString()) && !db.containsValue(General.DB_BANHISTORY, "id", uuid.toString())&& !db.containsValue(General.DB_MUTES, "id", uuid.toString())&& !db.containsValue(General.DB_MUTEHISTORY, "id", uuid.toString()))
+				exists = false;
+			else
+				uuid = UUID.randomUUID();
+
+		switch(reason.getType()) {
+			case BAN:
+				BanManager.ban(uuid, punisherName, target, reason, punishDetails);
+				break;
+			case MUTE:
+				MuteManager.mute(uuid, punisherName, target, reason, punishDetails);
+				break;
+		}
 	}
 }
