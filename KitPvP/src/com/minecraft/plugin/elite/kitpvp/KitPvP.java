@@ -214,7 +214,7 @@ public class KitPvP extends JavaPlugin {
 			Score eloTitle = obj.getScore(p.getLanguage().get(KitPvPLanguage.SCOREBOARD_ELO));
 			eloTitle.setScore(5);
 
-			Score eloValue = obj.getScore(color + Long.toString(p.getELO()));
+			Score eloValue = obj.getScore(color + Long.toString(p.getELO()) + " ");
 			eloValue.setScore(4);
 
 			Score killsTitle = obj.getScore(p.getLanguage().get(KitPvPLanguage.SCOREBOARD_KILLS));
