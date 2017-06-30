@@ -136,7 +136,8 @@ public class MenuGUI extends GUI {
 		server.rename(pvp, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_ACTIVITY)
 				.replaceAll("%kills", Long.toString(p.getKills()))
 				.replaceAll("%deaths", Long.toString(p.getDeaths()))
-				.replaceAll("%kdr", format.format(p.getKDR())));
+				.replaceAll("%kdr", format.format(p.getKDR()))
+				.replaceAll("%elo", Long.toString(p.getELO())));
 		
 		ItemStack time = new ItemStack(Material.WATCH);
 		server.rename(time, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_TIME)

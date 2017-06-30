@@ -5,7 +5,6 @@ import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -33,7 +32,6 @@ public class StatsCommand extends eCommand {
         if(args.length == 0) {
             p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.STATS)
                     .replaceAll("%player", p.getName())
-                    .replaceAll("%rank", p.getRank().getDisplayName())
                     .replaceAll("%level", Integer.toString(p.getLevel()))
                     .replaceAll("%prestige", Integer.toString(p.getPrestige()))
                     .replaceAll("%joindate", server.getDate(p.getFirstJoin()))
@@ -41,7 +39,8 @@ public class StatsCommand extends eCommand {
                     .replaceAll("%playtime", server.getTime(p.getPlayTime(), p.getLanguage()))
                     .replaceAll("%kills", Integer.toString(p.getKills()))
                     .replaceAll("%deaths", Integer.toString(p.getDeaths()))
-                    .replaceAll("%kdr", df.format(p.getKDR())));
+                    .replaceAll("%kdr", df.format(p.getKDR()))
+                    .replaceAll("%elo", Long.toString(p.getELO())));
             return true;
         } else {
             try {
@@ -58,7 +57,6 @@ public class StatsCommand extends eCommand {
                             kdr = df.format((double) res.getInt("kills") / (double) res.getInt("deaths"));
                         p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.STATS)
                                 .replaceAll("%player", z.getName())
-                                .replaceAll("%rank", Rank.get(z).getDisplayName())
                                 .replaceAll("%level", Integer.toString(res.getInt("level")))
                                 .replaceAll("%prestige", Integer.toString(res.getInt("prestige")))
                                 .replaceAll("%joindate", server.getDate(res.getLong("firstjoin")))
@@ -66,7 +64,8 @@ public class StatsCommand extends eCommand {
                                 .replaceAll("%playtime", server.getTime(res.getLong("playtime"), p.getLanguage()))
                                 .replaceAll("%kills", Integer.toString(res.getInt("kills")))
                                 .replaceAll("%deaths", Integer.toString(res.getInt("deaths")))
-                                .replaceAll("%kdr", kdr));
+                                .replaceAll("%kdr", kdr)
+                                .replaceAll("%elo", Long.toString(res.getLong("elo"))));
                         return true;
                     }
                     return true;

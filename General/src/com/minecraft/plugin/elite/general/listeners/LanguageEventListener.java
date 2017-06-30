@@ -121,15 +121,15 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(GeneralLanguage.STATS, "&a" + General.SPACER + "\n" +
                         "&aStats of %player:\n" +
-                        "&aRank -> &r%rank\n" +
                         "&aLevel -> &r%level\n" +
                         "&aPrestige -> &r%prestige\n" +
+                        "&aKills -> &r%kills\n" +
+                        "&aDeaths -> &r%deaths\n" +
+                        "&aKDR -> &r%kdr\n" +
+                        "&aELO -> &r%elo\n" +
                         "&aJoin date -> &r%joindate\n" +
                         "&aLast online -> &r%lastonline\n" +
                         "&aPlaytime -> &r%playtime\n" +
-                        "&aKills -> &r%kills\n" +
-                        "&aDeaths -> &r%deaths\n" +
-                        "&aK/D ratio -> &r%kdr\n" +
                         "&a" + General.SPACER);
 
                 lang.addLangNode(GeneralLanguage.JOIN_WHITELIST, "&cThe server is currently in maintenance.\n" +
@@ -219,7 +219,8 @@ public class LanguageEventListener implements Listener {
                         "&aClan: &r%clan\n" +
                         "&aKills: &r%kills\n" +
                         "&aDeaths: &r%deaths\n" +
-                        "&aKDR: &r%kdr");
+                        "&aKDR: &r%kdr\n" +
+                        "&aELO: &r%elo");
                 lang.addLangNode(GeneralLanguage.INFO_GUI_MUTES, "&cMutes");
                 lang.addLangNode(GeneralLanguage.INFO_GUI_BANS, "&cBans");
                 lang.addLangNode(GeneralLanguage.INFO_GUI_REPORTS, "&6Reports");
@@ -426,7 +427,8 @@ public class LanguageEventListener implements Listener {
                         "&cExp: %exp");
                 lang.addLangNode(GeneralLanguage.MENU_GUI_STATS_ACTIVITY, "&aKills: &f%kills\n" +
                         "&aDeaths: &f%deaths\n" +
-                        "&aKDR: &f%kdr");
+                        "&aKDR: &f%kdr\n" +
+                        "&aELO: &f%elo");
                 lang.addLangNode(GeneralLanguage.MENU_GUI_STATS_TIME, "&bFirst join: &f%firstjoin\n" +
                         "&bLast join: &f%lastjoin\n" +
                         "&bPlay time: &f%playtime");

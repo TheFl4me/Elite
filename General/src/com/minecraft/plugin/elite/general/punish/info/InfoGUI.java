@@ -142,6 +142,7 @@ public class InfoGUI extends GUI {
 
             server.rename(stats, this.getLanguage().get(GeneralLanguage.INFO_GUI_STATS)
                     .replaceAll("%level", Integer.toString(res.getInt("level")))
+                    .replaceAll("%elo", Long.toString(res.getLong("elo")))
                     .replaceAll("%prestige", Integer.toString(res.getInt("prestige")))
                     .replaceAll("%tokens", Long.toString(res.getLong("tokens")))
                     .replaceAll("%clan", (clan == null ? "" : clan.getName()))
