@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
@@ -28,7 +27,6 @@ public class GUIEventListener implements Listener {
     @EventHandler
     public void callGUIClickEvent(InventoryClickEvent e) {
         ePlayer p = ePlayer.get((Player) e.getWhoClicked());
-        p.getLanguage().get(GeneralLanguage.RELOAD);
         if (p.isInGUI()) {
             if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
                 return;

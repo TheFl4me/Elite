@@ -12,12 +12,13 @@ import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelLocationCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelSpawnCommand;
 import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.RegionChangeEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.KitEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.KitSettingsEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.LevelUpEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.RegionChangeEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.basic.ClearPlayerEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.basic.GUIEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.basic.JoinQuitEventsListener;
@@ -55,6 +56,7 @@ public class KitPvP extends JavaPlugin {
 	
 	public static final String DB_KITS = "kits";
 	public static final String DB_DUEL = "duels";
+	public static final String DB_SETTINGS = "kitsettings";
     
 	private static KitPvP plugin;
 	private static Database db;
@@ -114,6 +116,7 @@ public class KitPvP extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BossBarEventListener(), this);
 		getServer().getPluginManager().registerEvents(new BuildEventListener(), this);
 		getServer().getPluginManager().registerEvents(new RegionChangeEventListener(), this);
+		getServer().getPluginManager().registerEvents(new KitSettingsEventListener(), this);
     }
 
 	private void loadDatabase() {
@@ -160,6 +163,17 @@ public class KitPvP extends JavaPlugin {
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "duelspawn", 100.0, 0.0, 0.0);
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc1", 100.0, 0.0, 0.0);
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc2", 100.0, 0.0, 0.0);
+			}
+
+			if(!db.hasTable(DB_SETTINGS)) {
+				String query = "CREATE TABLE " + DB_SETTINGS + " (" +
+						"uuid TEXT(50) NOT NULL," +
+						"sword INT NOT NULL DEFAULT 0," +
+						"kititem INT NOT NULL DEFAULT 0," +
+						"redmushroom INT NOT NULL DEFAULT 0," +
+						"brownmushroom INT NOT NULL DEFAULT 0," +
+						"bowl INT NOT NULL DEFAULT 0);";
+				db.createTable(query, DB_DUEL);
 			}
 
 			System.out.println(prefix + " Set up done!");

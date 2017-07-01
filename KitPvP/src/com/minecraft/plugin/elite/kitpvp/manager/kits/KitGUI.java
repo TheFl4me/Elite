@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import org.bukkit.ChatColor;
@@ -40,16 +41,21 @@ public class KitGUI extends GUI {
 		ItemStack shop = new ItemStack(Material.GOLD_INGOT);
 		server.rename(shop, this.getLanguage().get(KitPvPLanguage.KIT_GUI_SHOP_TITLE));
 
+		ItemStack settings = new ItemStack(Material.REDSTONE_COMPARATOR);
+		server.rename(settings, this.getLanguage().get(KitPvPLanguage.KIT_GUI_SETTINGS_TITLE));
+
 		for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
 			if(i >= kits.size())
 				break;
 			Kit kit = kits.get(i);
 			ItemStack item = kit.getIcon(ChatColor.GREEN);
-			if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige())
+			if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige() && !KitPvP.getFreeKits().contains(kit))
 				server.rename(item, item.getItemMeta().getDisplayName() + "\n" + this.getLanguage().get(KitPvPLanguage.KIT_GUI_SELECTOR_LOCKED).replaceAll("%level", Integer.toString(kit.getLevel())));
 			this.getInventory().addItem(item);
 		}
-		this.getInventory().setItem(4, shop);
+		this.getInventory().setItem(3, settings);
+		this.getInventory().setItem(4, this.glass());
+		this.getInventory().setItem(5, shop);
 		return this.getInventory();
 	}
 	
@@ -71,7 +77,7 @@ public class KitGUI extends GUI {
 
 		ItemStack play;
 
-		if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige()) {
+		if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige() && !KitPvP.getFreeKits().contains(kit)) {
 			if(p.getPrestigeTokens() > 0) {
 				play = new ItemStack(Material.DIAMOND);
 				server.rename(play, this.getLanguage().get(KitPvPLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN)
@@ -90,8 +96,7 @@ public class KitGUI extends GUI {
 		this.getInventory().setItem(23, abil);
 		this.getInventory().setItem(36, start);
 		this.getInventory().setItem(44, play);
-		for(int i = 0; i < kit.getItems().size(); i++)
-			this.getInventory().setItem(i + 45, kit.getItems().get(i));
+		this.getInventory().setItem(45, kit.getItem());
 		return this.getInventory();
 	}
 	
@@ -168,9 +173,7 @@ public class KitGUI extends GUI {
 		if(p.getPrestigeTokens() >= 1)
 			this.getInventory().setItem(43, prestige);
 		
-		for(int i = 0; i < kit.getItems().size(); i++) {
-			this.getInventory().setItem(i + 45, kit.getItems().get(i));
-		}
+		this.getInventory().setItem(45, kit.getItem());
 		return this.getInventory();
 	}
 }

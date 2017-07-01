@@ -13,58 +13,56 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public enum Kit {
 	
 	PVP(5, 1, null, null, new ItemStack(Material.DIAMOND_SWORD), KitPvPLanguage.KIT_PVP_ABILITY, KitPvPLanguage.KIT_PVP_DESCRIPTION),
-	ARCHER(5, 1, Arrays.asList(new ItemStack(Material.BOW), new ItemStack(Material.ARROW, 10)), null, new ItemStack(Material.BOW), KitPvPLanguage.KIT_ARCHER_ABILITY, KitPvPLanguage.KIT_ARCHER_DESCRIPTION),
-	BACKUP(5, 2, Arrays.asList(new ItemStack(Material.BOOK)), KitPvPLanguage.KIT_BACKUP_ITEM, new ItemStack(Material.BOOK), KitPvPLanguage.KIT_BACKUP_ABILITY, KitPvPLanguage.KIT_BACKUP_DESCRIPTION),
-	FISHERMAN(5, 18, Arrays.asList(new ItemStack(Material.FISHING_ROD)), null, new ItemStack(Material.FISHING_ROD), KitPvPLanguage.KIT_FISHERMAN_ABILITY, KitPvPLanguage.KIT_FISHERMAN_DESCRIPTION),
-	KANGAROO(5, 46, Arrays.asList(new ItemStack(Material.FIREWORK)), KitPvPLanguage.KIT_KANGAROO_ITEM, new ItemStack(Material.FIREWORK), KitPvPLanguage.KIT_KANGAROO_ABILITY, KitPvPLanguage.KIT_KANGAROO_DESCRIPTION),
-	PHANTOM(5, 32, Arrays.asList(new ItemStack(Material.FEATHER)), null, new ItemStack(Material.FEATHER), KitPvPLanguage.KIT_PHANTOM_ABILITY, KitPvPLanguage.KIT_PHANTOM_DESCRIPTION),
-	THOR(5, 34, Arrays.asList(new ItemStack(Material.WOOD_AXE)), KitPvPLanguage.KIT_THOR_ITEM, new ItemStack(Material.WOOD_AXE), KitPvPLanguage.KIT_THOR_ABILITY, KitPvPLanguage.KIT_THOR_DESCRIPTION),
+	ARCHER(5, 1, new ItemStack(Material.BOW), null, new ItemStack(Material.BOW), KitPvPLanguage.KIT_ARCHER_ABILITY, KitPvPLanguage.KIT_ARCHER_DESCRIPTION),
+	BACKUP(5, 2, new ItemStack(Material.BOOK), KitPvPLanguage.KIT_BACKUP_ITEM, new ItemStack(Material.BOOK), KitPvPLanguage.KIT_BACKUP_ABILITY, KitPvPLanguage.KIT_BACKUP_DESCRIPTION),
+	FISHERMAN(5, 18, new ItemStack(Material.FISHING_ROD), null, new ItemStack(Material.FISHING_ROD), KitPvPLanguage.KIT_FISHERMAN_ABILITY, KitPvPLanguage.KIT_FISHERMAN_DESCRIPTION),
+	KANGAROO(5, 46, new ItemStack(Material.FIREWORK), KitPvPLanguage.KIT_KANGAROO_ITEM, new ItemStack(Material.FIREWORK), KitPvPLanguage.KIT_KANGAROO_ABILITY, KitPvPLanguage.KIT_KANGAROO_DESCRIPTION),
+	PHANTOM(5, 32, new ItemStack(Material.FEATHER), null, new ItemStack(Material.FEATHER), KitPvPLanguage.KIT_PHANTOM_ABILITY, KitPvPLanguage.KIT_PHANTOM_DESCRIPTION),
+	THOR(5, 34, new ItemStack(Material.WOOD_AXE), KitPvPLanguage.KIT_THOR_ITEM, new ItemStack(Material.WOOD_AXE), KitPvPLanguage.KIT_THOR_ABILITY, KitPvPLanguage.KIT_THOR_DESCRIPTION),
 	TURTLE(5, 6, null, null, new ItemStack(Material.DIAMOND_CHESTPLATE), KitPvPLanguage.KIT_TURTLE_ABILITY, KitPvPLanguage.KIT_TURTLE_DESCRIPTION),
 	ANCHOR(5, 22, null, null, new ItemStack(Material.ANVIL), KitPvPLanguage.KIT_ANCHOR_ABILITY, KitPvPLanguage.KIT_ANCHOR_DESCRIPTION),
 	VIPER(5, 28, null, null, new ItemStack(Material.INK_SACK, 1, (short) 2), KitPvPLanguage.KIT_VIPER_ABILITY, KitPvPLanguage.KIT_VIPER_DESCRIPTION),
 	SNAIL(5, 24, null, null, new ItemStack(Material.WEB), KitPvPLanguage.KIT_SNAIL_ABILITY, KitPvPLanguage.KIT_SNAIL_DESCRIPTION),
 	STOMPER(5, 54, null, null, new ItemStack(Material.DIAMOND_BOOTS), KitPvPLanguage.KIT_STOMPER_ABILITY, KitPvPLanguage.KIT_STOMPER_DESCRIPTION),
-	ENDERMAGE(5, 42, Arrays.asList(new ItemStack(Material.NETHER_BRICK_ITEM)), KitPvPLanguage.KIT_ENDERMAGE_ITEM, new ItemStack(Material.ENDER_PORTAL_FRAME), KitPvPLanguage.KIT_ENDERMAGE_ABILITY, KitPvPLanguage.KIT_ENDERMAGE_DESCRIPTION),
+	ENDERMAGE(5, 42, new ItemStack(Material.NETHER_BRICK_ITEM), KitPvPLanguage.KIT_ENDERMAGE_ITEM, new ItemStack(Material.ENDER_PORTAL_FRAME), KitPvPLanguage.KIT_ENDERMAGE_ABILITY, KitPvPLanguage.KIT_ENDERMAGE_DESCRIPTION),
 	ROGUE(5, 48, null, null, new ItemStack(Material.REDSTONE), KitPvPLanguage.KIT_ROGUE_ABILITY, KitPvPLanguage.KIT_ROGUE_DESCRIPTION),
 	NEO(5, 20, null, null, new ItemStack(Material.IRON_CHESTPLATE), KitPvPLanguage.KIT_NEO_ABILITY, KitPvPLanguage.KIT_NEO_DESCRIPTION),
-	MONK(5, 10, Arrays.asList(new ItemStack(Material.BLAZE_ROD)), null, new ItemStack(Material.BLAZE_ROD), KitPvPLanguage.KIT_MONK_ABILITY, KitPvPLanguage.KIT_MONK_DESCRIPTION),
+	MONK(5, 10, new ItemStack(Material.BLAZE_ROD), null, new ItemStack(Material.BLAZE_ROD), KitPvPLanguage.KIT_MONK_ABILITY, KitPvPLanguage.KIT_MONK_DESCRIPTION),
 	SURPRISE(5, 8, null, null, new ItemStack(Material.CAKE), KitPvPLanguage.KIT_SURPRISE_ABILITY, KitPvPLanguage.KIT_SURPRISE_DESCRIPTION),
 	POSEIDON(5, 14, null, null, new ItemStack(Material.WATER_BUCKET), KitPvPLanguage.KIT_POSEIDON_ABILITY, KitPvPLanguage.KIT_POSEIDON_DESCRIPTION),
 	NINJA(5, 52, null, null, new ItemStack(Material.NETHER_STAR), KitPvPLanguage.KIT_NINJA_ABILITY, KitPvPLanguage.KIT_NINJA_DESCRIPTION),
-	SWITCHER(5, 16, Arrays.asList(new ItemStack(Material.SNOW_BALL, 10)), null, new ItemStack(Material.SNOW_BALL), KitPvPLanguage.KIT_SWITCHER_ABILITY, KitPvPLanguage.KIT_SWITCHER_DESCRIPTION),
+	SWITCHER(5, 16, new ItemStack(Material.SNOW_BALL, 10), null, new ItemStack(Material.SNOW_BALL), KitPvPLanguage.KIT_SWITCHER_ABILITY, KitPvPLanguage.KIT_SWITCHER_DESCRIPTION),
 	MAGMA(5, 26, null, null, new ItemStack(Material.LAVA_BUCKET), KitPvPLanguage.KIT_MAGMA_ABILITY, KitPvPLanguage.KIT_MAGMA_DESCRIPTION),
-	REAPER(5, 30, Arrays.asList(new ItemStack(Material.STONE_HOE)), KitPvPLanguage.KIT_REAPER_ITEM, new ItemStack(Material.STONE_HOE), KitPvPLanguage.KIT_REAPER_ABILITY, KitPvPLanguage.KIT_REAPER_DESCRIPTION),
+	REAPER(5, 30, new ItemStack(Material.STONE_HOE), KitPvPLanguage.KIT_REAPER_ITEM, new ItemStack(Material.STONE_HOE), KitPvPLanguage.KIT_REAPER_ABILITY, KitPvPLanguage.KIT_REAPER_DESCRIPTION),
 	FROSTY(5, 12, null, null, new ItemStack(Material.SNOW_BLOCK), KitPvPLanguage.KIT_FROSTY_ABILITY, KitPvPLanguage.KIT_FROSTY_DESCRIPTION),
-	GRANDPA(5, 4, Arrays.asList(new ItemStack(Material.STICK)), KitPvPLanguage.KIT_GRANDPA_ITEM, new ItemStack(Material.STICK), KitPvPLanguage.KIT_GRANDPA_ABILITY, KitPvPLanguage.KIT_GRANDPA_DESCRIPTION),
-	TITAN(5, 50, Arrays.asList(new ItemStack(Material.BEDROCK)), KitPvPLanguage.KIT_TITAN_ITEM, new ItemStack(Material.BEDROCK), KitPvPLanguage.KIT_TITAN_ABILITY, KitPvPLanguage.KIT_TITAN_DESCRIPTION),
+	GRANDPA(5, 4, new ItemStack(Material.STICK), KitPvPLanguage.KIT_GRANDPA_ITEM, new ItemStack(Material.STICK), KitPvPLanguage.KIT_GRANDPA_ABILITY, KitPvPLanguage.KIT_GRANDPA_DESCRIPTION),
+	TITAN(5, 50, new ItemStack(Material.BEDROCK), KitPvPLanguage.KIT_TITAN_ITEM, new ItemStack(Material.BEDROCK), KitPvPLanguage.KIT_TITAN_ABILITY, KitPvPLanguage.KIT_TITAN_DESCRIPTION),
 	TANK(5, 44, null, null, new ItemStack(Material.TNT), KitPvPLanguage.KIT_TANK_ABILITY, KitPvPLanguage.KIT_TANK_DESCRIPTION),
 	BERSERKER(5, 40, null, null, new ItemStack(Material.POTION, 1, (short) 9), KitPvPLanguage.KIT_BERSERKER_ABILITY, KitPvPLanguage.KIT_BERSERKER_DESCRIPTION),
 	HULK(5, 36, null, null, new ItemStack(Material.SADDLE), KitPvPLanguage.KIT_HULK_ABILITY, KitPvPLanguage.KIT_HULK_DESCRIPTION),
-	RAIJIN(5, 38, Arrays.asList(new ItemStack(Material.ARROW, 5)), null, new ItemStack(Material.ARROW), KitPvPLanguage.KIT_RAIJIN_ABILITY, KitPvPLanguage.KIT_RAIJIN_DESCRIPTION),
-	GLADIATOR(5, 55, Arrays.asList(new ItemStack(Material.IRON_FENCE)), KitPvPLanguage.KIT_GLADIATOR_ITEM, new ItemStack(Material.IRON_FENCE), KitPvPLanguage.KIT_GLADIATOR_ABILITY, KitPvPLanguage.KIT_GLADIATOR_DESCRIPTION),
-	REPULSE(5, 33, Arrays.asList(new ItemStack(Material.FIREWORK_CHARGE)), KitPvPLanguage.KIT_REPULSE_ITEM, new ItemStack(Material.FIREWORK_CHARGE), KitPvPLanguage.KIT_REPULSE_ABILITY, KitPvPLanguage.KIT_REPULSE_DESCRIPTION);
+	RAIJIN(5, 38, new ItemStack(Material.ARROW, 5), null, new ItemStack(Material.ARROW), KitPvPLanguage.KIT_RAIJIN_ABILITY, KitPvPLanguage.KIT_RAIJIN_DESCRIPTION),
+	GLADIATOR(5, 55, new ItemStack(Material.IRON_FENCE), KitPvPLanguage.KIT_GLADIATOR_ITEM, new ItemStack(Material.IRON_FENCE), KitPvPLanguage.KIT_GLADIATOR_ABILITY, KitPvPLanguage.KIT_GLADIATOR_DESCRIPTION),
+	REPULSE(5, 33, new ItemStack(Material.FIREWORK_CHARGE), KitPvPLanguage.KIT_REPULSE_ITEM, new ItemStack(Material.FIREWORK_CHARGE), KitPvPLanguage.KIT_REPULSE_ABILITY, KitPvPLanguage.KIT_REPULSE_DESCRIPTION);
 	//TODO: Madman, Grappler, Glider, Blink, Spectre, Planetary Devastation, Cannibal,
 	
 	private int price;
 	private int level;
+	private ItemStack icon;
 	private ItemStack item;
-	private List<ItemStack> items;
 	private LanguageNode itemName;
 	private LanguageNode desc;
 	private LanguageNode abil;
 
-	Kit(int price, int level, List<ItemStack> items, LanguageNode itemName, ItemStack item, LanguageNode abil, LanguageNode desc) {
+	Kit(int price, int level, ItemStack item, LanguageNode itemName, ItemStack icon, LanguageNode abil, LanguageNode desc) {
 		this.price = price;
 		this.level = level;
-		this.items = items;
 		this.item = item;
+		this.icon = icon;
 		this.itemName = itemName;
 		this.abil = abil;
 		this.desc = desc;
@@ -83,15 +81,18 @@ public enum Kit {
 		return this.level;
 	}
 	
-	public List<ItemStack> getItems() {
-		if(this.items == null)
-			return Arrays.asList();
-		this.items.stream().filter(item -> this == GRANDPA && item.getType() == Material.STICK).forEach(item -> item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2));
-		return this.items;
+	public ItemStack getItem() {
+		if(this.item != null) {
+			if(this == GRANDPA) {
+				this.item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+			}
+			return this.item;
+		}
+		return null;
 	}
 	
 	public ItemStack getIcon(ChatColor color) {
-		ItemStack item = this.item;
+		ItemStack item = this.icon;
 		Server server = Server.get();
 		server.rename(item, color + this.getName());
 		return item;

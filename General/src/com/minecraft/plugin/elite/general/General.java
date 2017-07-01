@@ -45,9 +45,9 @@ import com.minecraft.plugin.elite.general.commands.party.PartyCommand;
 import com.minecraft.plugin.elite.general.commands.punish.KickCommand;
 import com.minecraft.plugin.elite.general.commands.punish.PunishCommand;
 import com.minecraft.plugin.elite.general.commands.punish.UnbanCommand;
+import com.minecraft.plugin.elite.general.commands.punish.UnmuteCommand;
 import com.minecraft.plugin.elite.general.commands.punish.info.CheckInfoCommand;
 import com.minecraft.plugin.elite.general.commands.punish.info.IPInfoCommand;
-import com.minecraft.plugin.elite.general.commands.punish.UnmuteCommand;
 import com.minecraft.plugin.elite.general.commands.punish.report.ReportClearCommand;
 import com.minecraft.plugin.elite.general.commands.punish.report.ReportCommand;
 import com.minecraft.plugin.elite.general.commands.punish.report.ReportListCommand;
@@ -89,7 +89,10 @@ import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
@@ -150,6 +153,13 @@ public class General extends JavaPlugin {
             ePlayer all = ePlayer.get(players);
             final String msg = all.getLanguage().get(GeneralLanguage.RELOAD);
             all.getPlayer().kickPlayer(msg);
+        }
+        for (World world : Bukkit.getWorlds()) {
+            List<Entity> entList = world.getEntities();
+            entList.forEach((drops) -> {
+                if (drops instanceof Item)
+                    drops.remove();
+            });
         }
     }
 

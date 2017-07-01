@@ -43,15 +43,10 @@ public class ToolEventListener implements Listener {
 	@EventHandler
 	public void onKitItemDrop(PlayerDropItemEvent e) {
 		KitPlayer p = KitPlayer.get(e.getPlayer());
-		if(p.hasKit()) {
-			for(Kit kit : Kit.values()) {
-				if(p.hasKit(kit)) {
-					kit.getItems().forEach((item) -> {
-						if(e.getItemDrop().getItemStack().getType() == item.getType())
-							e.setCancelled(true);
-					});
-				}
-			}
-		}
+		if(p.hasKit())
+			for(Kit kit : Kit.values())
+				if(p.hasKit(kit))
+					if(e.getItemDrop().getItemStack().getType() == kit.getItem().getType())
+						e.setCancelled(true);
 	}
 }

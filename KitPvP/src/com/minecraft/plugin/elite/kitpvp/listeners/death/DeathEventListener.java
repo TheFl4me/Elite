@@ -30,10 +30,8 @@ public class DeathEventListener implements Listener {
 		if(kp.hasKit()) {
 			for(Kit kit : Kit.values()) {
 				if(kp.hasKit(kit)) {
-					for(ItemStack item : kit.getItems()) {
-						List<ItemStack> list = e.getDrops();
-						list.removeIf(drop -> item.getType() == drop.getType());
-					}
+					List<ItemStack> list = e.getDrops();
+					list.removeIf(drop -> kit.getItem().getType() == drop.getType());
 					break;
 				}
 			}

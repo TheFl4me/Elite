@@ -1,7 +1,9 @@
 package com.minecraft.plugin.elite.kitpvp.manager;
 
+import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
@@ -18,20 +20,23 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
 public class KitPlayer extends ePlayer {
-	
+
 	private int cooldownTime;
 	private BukkitRunnable cooldownTask;
 	private Kit kit;
-	
+	private boolean editing;
+
 	private static Map<UUID, KitPlayer> players = new HashMap<>();
 	private static Map<UUID, KitPlayer> loggingInPlayers = new HashMap<>();
-	
+
 	public static KitPlayer get(Player player) {
 		return get(player.getUniqueId());
 	}
@@ -57,22 +62,22 @@ public class KitPlayer extends ePlayer {
 		}
 		return null;
 	}
-	
+
 	public static KitPlayer getPlayerLoggingIn(Player player) {
 		return getPlayerLoggingIn(player.getUniqueId());
 	}
-	
+
 	public static KitPlayer getPlayerLoggingIn(UUID uuid) {
 		return loggingInPlayers.get(uuid);
 	}
 
-    @SuppressWarnings("UnusedReturnValue")
+	@SuppressWarnings("UnusedReturnValue")
 	public static KitPlayer login(Player player) {
 		KitPlayer p = new KitPlayer(player);
 		loggingInPlayers.put(player.getUniqueId(), p);
 		return p;
 	}
-	
+
 	@Override
 	public void logout() {
 		loggingInPlayers.remove(this.getUniqueId());
@@ -88,31 +93,32 @@ public class KitPlayer extends ePlayer {
 	public void leave() {
 		players.remove(this.getUniqueId());
 	}
-	
+
 	public KitPlayer(Player player) {
 		super(player);
 		this.cooldownTime = 0;
 		this.cooldownTask = null;
 		this.kit = null;
+		this.editing = false;
 	}
-	
+
 	public int getCooldownTime() {
 		return this.cooldownTime;
 	}
-	
+
 	public void setCooldownTime(int seconds) {
 		this.cooldownTime = seconds;
 		this.sendActionBar((seconds > 0 ? ChatColor.RED.toString() + ChatColor.BOLD + Integer.toString(seconds) : " "));
 	}
-	
+
 	public BukkitRunnable getCooldownTask() {
 		return this.cooldownTask;
 	}
-	
+
 	public boolean isCooldowned() {
 		return this.cooldownTask != null;
 	}
-	
+
 	public void startCooldown(int seconds) {
 		final KitPlayer p = this;
 		this.setCooldownTime(seconds);
@@ -128,7 +134,7 @@ public class KitPlayer extends ePlayer {
 		};
 		this.cooldownTask.runTaskTimer(KitPvP.getPlugin(), 0, 20);
 	}
-	
+
 	public void stopCooldown() {
 		if(this.getCooldownTask() != null)
 			this.getCooldownTask().cancel();
@@ -146,30 +152,30 @@ public class KitPlayer extends ePlayer {
 		}
 		return false;
 	}
-	
+
 	public Kit getKit() {
 		return this.kit;
 	}
-	
+
 	public boolean hasKit() {
 		return this.kit != null;
 	}
-	
+
 	public boolean hasKit(Kit kit) {
 		return this.getKit() != null && this.getKit() == kit;
 	}
-	
+
 	public boolean hasKitPermission(Kit kit) {
 		return kit.getPermissionType(this.getUniqueId()) > 0 || this.isMasterPrestige() || KitPvP.getFreeKits().contains(kit);
 	}
-	
+
 	public void setKit(Kit kit) {
 		this.kit = kit;
 		KitPvP.updateScoreboard();
 	}
-	
+
 	public void clearKit() {
-    	if(this.hasKit()) {
+		if(this.hasKit()) {
 			if(this.hasKit(Kit.PHANTOM)) {
 				this.getPlayer().setFlying(false);
 				this.getPlayer().setAllowFlight(false);
@@ -183,7 +189,7 @@ public class KitPlayer extends ePlayer {
 			hp.setCanNoKnockback(false);
 		}
 	}
-	
+
 	public void giveKit(Kit kit) {
 		this.clearKit();
 		if(kit == Kit.SURPRISE) {
@@ -214,9 +220,9 @@ public class KitPlayer extends ePlayer {
 
 		this.getPlayer().sendMessage(this.getLanguage().get(KitPvPLanguage.KIT_GIVE)
 				.replaceAll("%kit", kit.getName()));
-    }
+	}
 
-    public void giveKitInv(boolean armor) {
+	public void giveKitInv(boolean armor) {
 		Inventory inv = this.getPlayer().getInventory();
 
 		this.getPlayer().setGameMode(GameMode.SURVIVAL);
@@ -234,24 +240,27 @@ public class KitPlayer extends ePlayer {
 			sword = new ItemStack(Material.IRON_SWORD);
 		else
 			sword = new ItemStack(Material.STONE_SWORD);
-		inv.setItem(0, sword);
+		inv.setItem(this.getSlotID(SlotType.SWORD), sword);
 
 		Server server = Server.get();
 		if(this.hasKit()) {
-			for(ItemStack item : this.getKit().getItems()) {
+			ItemStack item = this.getKit().getItem();
+			if(item != null) {
 				String name = this.getKit().getItemName(this.getLanguage());
 				if(name != null)
 					server.rename(item, name);
-				inv.addItem(item);
+				inv.setItem(this.getSlotID(SlotType.KIT_ITEM), item);
 			}
+			if(this.getKit() == Kit.ARCHER)
+				inv.addItem(new ItemStack(Material.ARROW, 10));
 		}
 
 		this.addDefaults(armor);
 	}
-	
+
 	public void addDefaults(boolean armor) {
 		PlayerInventory inv = this.getPlayer().getInventory();
-		
+
 		if(armor) {
 			inv.setArmorContents(null);
 			inv.setHelmet(new ItemStack(Material.IRON_HELMET));
@@ -259,12 +268,90 @@ public class KitPlayer extends ePlayer {
 			inv.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
 			inv.setBoots(new ItemStack(Material.IRON_BOOTS));
 		}
-		
-		inv.setItem(13, (new ItemStack(Material.BOWL, 32)));
-		inv.setItem(14, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
-		inv.setItem(15, (new ItemStack(Material.RED_MUSHROOM, 32)));
-		
-		for (int i = 0; i < inv.getSize(); i++)
+
+		inv.setItem(this.getSlotID(SlotType.BOWL), (new ItemStack(Material.BOWL, 32)));
+		inv.setItem(this.getSlotID(SlotType.BROWN_MUSHROOM), (new ItemStack(Material.BROWN_MUSHROOM, 32)));
+		inv.setItem(this.getSlotID(SlotType.RED_MUSHROOM), (new ItemStack(Material.RED_MUSHROOM, 32)));
+
+		for(int i = 0; i < inv.getSize(); i++)
 			inv.addItem(new ItemStack(Material.MUSHROOM_SOUP));
+	}
+
+	public int getSlotID(SlotType mat) {
+		Database db = General.getDB();
+		try {
+			ResultSet res = db.select(KitPvP.DB_SETTINGS, "uuid", this.getUniqueId().toString());
+			if(res.next()) {
+				switch(mat) {
+					case SWORD:
+						return res.getInt("sword");
+					case KIT_ITEM:
+						return res.getInt("kititem");
+					case RED_MUSHROOM:
+						return res.getInt("redmushroom");
+					case BROWN_MUSHROOM:
+						return res.getInt("brownmushroom");
+					case BOWL:
+						return res.getInt("bowl");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		switch(mat) {
+			case SWORD:
+				return 0;
+			case KIT_ITEM:
+				return 1;
+			case RED_MUSHROOM:
+				return 15;
+			case BROWN_MUSHROOM:
+				return 16;
+			case BOWL:
+				return 17;
+			default:
+				return 0;
+		}
+	}
+
+	public void setSlotID(Material mat, int id) {
+		Database db = General.getDB();
+		String column = null;
+		switch(mat) {
+			case STONE_SWORD:
+				column = "sword";
+				break;
+			case NETHER_STAR:
+				column = "kititem";
+				break;
+			case RED_MUSHROOM:
+				column = "redmushroom";
+				break;
+			case BROWN_MUSHROOM:
+				column = "brownmushroom";
+				break;
+			case BOWL:
+				column = "bowl";
+				break;
+		}
+		if(column != null) {
+			db.update(KitPvP.DB_SETTINGS, column, id, "uuid", this.getUniqueId());
+		}
+	}
+
+	public void setEditing(boolean editing) {
+		this.editing = editing;
+	}
+
+	public boolean isEditing() {
+		return this.editing;
+	}
+
+	public enum SlotType {
+		SWORD,
+		KIT_ITEM,
+		RED_MUSHROOM,
+		BROWN_MUSHROOM,
+		BOWL,
 	}
 }

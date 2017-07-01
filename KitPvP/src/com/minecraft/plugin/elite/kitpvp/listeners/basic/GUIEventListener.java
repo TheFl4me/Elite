@@ -11,11 +11,13 @@ import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,6 +26,7 @@ public class GUIEventListener implements Listener {
 	@EventHandler
 	public void clickItemInGUI(GUIClickEvent e) {
 		ePlayer p = e.getPlayer();
+		Server server = Server.get();
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
 		ItemStack item = e.getItem();
 		ItemMeta itemMeta = item.getItemMeta();
@@ -63,6 +66,34 @@ public class GUIEventListener implements Listener {
 				if(itemMeta.getDisplayName().equalsIgnoreCase(p.getLanguage().getOnlyFirstLine(KitPvPLanguage.KIT_GUI_SHOP_TITLE))) {
 					p.getPlayer().closeInventory();
 					p.openGUI(kitgui, kitgui.shop(kp, 1));
+					return;
+				}
+
+				if(itemMeta.getDisplayName().equalsIgnoreCase(p.getLanguage().getOnlyFirstLine(KitPvPLanguage.KIT_GUI_SETTINGS_TITLE))) {
+					p.getPlayer().closeInventory();
+					Inventory inv = Bukkit.createInventory(null, 36, p.getLanguage().get(KitPvPLanguage.KIT_GUI_SETTINGS_TITLE));
+					inv.clear();
+
+					ItemStack sword = new ItemStack(Material.STONE_SWORD);
+					ItemStack red = new ItemStack(Material.RED_MUSHROOM);
+					ItemStack brown = new ItemStack(Material.BROWN_MUSHROOM);
+					ItemStack bowl = new ItemStack(Material.BOWL);
+
+					ItemStack kitItem = new ItemStack(Material.NETHER_STAR);
+					server.rename(kitItem, p.getLanguage().get(KitPvPLanguage.KIT_GUI_SETTINGS_ITEM_KIT));
+
+					ItemStack info = new ItemStack(Material.ENCHANTED_BOOK);
+					server.rename(info, p.getLanguage().get(KitPvPLanguage.KIT_GUI_SETTINGS_ITEM_INFO));
+
+					inv.setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), sword);
+					inv.setItem(kp.getSlotID(KitPlayer.SlotType.KIT_ITEM), kitItem);
+					inv.setItem(kp.getSlotID(KitPlayer.SlotType.RED_MUSHROOM), red);
+					inv.setItem(kp.getSlotID(KitPlayer.SlotType.BROWN_MUSHROOM), brown);
+					inv.setItem(kp.getSlotID(KitPlayer.SlotType.BOWL), bowl);
+					inv.addItem(info);
+
+					p.getPlayer().openInventory(inv);
+					kp.setEditing(true);
 					return;
 				}
 

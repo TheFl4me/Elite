@@ -228,7 +228,7 @@ public class KitEventListener implements Listener {
 					for(Entity entity : p.getPlayer().getNearbyEntities(5, 5, 5)) {
 						if(entity instanceof Player) {
 							ePlayer z = ePlayer.get(entity.getUniqueId());
-							if(!z.isAdminMode() && !z.isWatching()) {
+							if(!z.isAdminMode() && !z.isWatching() && !z.isInRegion(KitPvP.REGION_SPAWN)) {
 								nearby = true;
 								break;
 							}
@@ -553,7 +553,7 @@ public class KitEventListener implements Listener {
 									int pY = pLoc.getBlockY();
 									if(zY - pY < 3 && zY - pY > -3)
 										continue;
-									if(!targets.contains(ent.getUniqueId()) && !z.isAdminMode() && !z.isWatching() && !z.getUniqueId().equals(p.getUniqueId()))
+									if(!targets.contains(ent.getUniqueId()) && !z.isAdminMode() && !z.isWatching() && !z.getUniqueId().equals(p.getUniqueId()) && !z.isInRegion(KitPvP.REGION_SPAWN))
 										targets.add(ent.getUniqueId());
 								}
 							}
@@ -815,7 +815,7 @@ public class KitEventListener implements Listener {
 			ePlayer et = ePlayer.get(target.getUniqueId());
 			if(proj.getShooter() instanceof Player && proj instanceof Snowball) {
 				KitPlayer thrower = KitPlayer.get((Player) proj.getShooter());
-				if(thrower.hasKit(Kit.SWITCHER) && !thrower.isNearRogue() && !et.isAdminMode() && !et.isWatching() && !thrower.isInRegion(KitPvP.REGION_SPAWN)) {
+				if(thrower.hasKit(Kit.SWITCHER) && !thrower.isNearRogue() && !et.isAdminMode() && !et.isWatching() && !thrower.isInRegion(KitPvP.REGION_SPAWN) && !et.isInRegion(KitPvP.REGION_SPAWN)) {
 					final Location switcherLoc = thrower.getPlayer().getLocation();
 					final Location targetLoc = target.getPlayer().getLocation();
 					thrower.getPlayer().teleport(targetLoc);
@@ -856,7 +856,7 @@ public class KitEventListener implements Listener {
 				return;
 			if(item.getItemMeta().hasDisplayName()) {
 				if(hitter.hasKit(Kit.REAPER) && !hitter.isNearRogue() && item.getItemMeta().getDisplayName().equalsIgnoreCase(hitter.getLanguage().get(KitPvPLanguage.KIT_REAPER_ITEM)) && !et.isAdminMode() && !et.isWatching()) {
-					if(hitter.isInRegion(KitPvP.REGION_SPAWN))
+					if(hitter.isInRegion(KitPvP.REGION_SPAWN) || et.isInRegion(KitPvP.REGION_SPAWN))
 						return;
 					target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 1));
 				}

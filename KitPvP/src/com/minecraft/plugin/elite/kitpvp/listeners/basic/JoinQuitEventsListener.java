@@ -23,6 +23,9 @@ public class JoinQuitEventsListener implements Listener {
 			for (Kit kit : Kit.values())
 				db.update(KitPvP.DB_KITS, kit.getName().toLowerCase(), 0, "uuid", p.getUniqueId());
 		}
+		if(!db.containsValue(KitPvP.DB_SETTINGS, "uuid", p.getUniqueId().toString())) {
+			db.execute("INSERT INTO " + KitPvP.DB_SETTINGS + " (uuid, sword, kititem, redmushroom, brownmushroom, bowl) VALUES (?, ?, ?, ?, ?, ?);", p.getUniqueId(), 0, 1, 15, 16, 17);
+		}
 		KitPvP.updateScoreboard();
 	}
 	
