@@ -154,6 +154,7 @@ public class General extends JavaPlugin {
             final String msg = all.getLanguage().get(GeneralLanguage.RELOAD);
             all.getPlayer().kickPlayer(msg);
         }
+        
         for (World world : Bukkit.getWorlds()) {
             List<Entity> entList = world.getEntities();
             entList.forEach((drops) -> {
