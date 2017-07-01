@@ -24,6 +24,7 @@ public class KitSettingsEventListener implements Listener {
                     continue;
                 kp.setSlotID(item.getType(), i);
             }
+            kp.getPlayer().setItemOnCursor(null);
             kp.setEditing(false);
             ePlayer.get(kp.getUniqueId()).clear();
         }
@@ -40,7 +41,7 @@ public class KitSettingsEventListener implements Listener {
     }
 
     @EventHandler
-    public void onDropo(PlayerDropItemEvent e) {
+    public void onDrop(PlayerDropItemEvent e) {
         KitPlayer kp = KitPlayer.get(e.getPlayer());
         if(kp.isEditing()) {
             e.setCancelled(true);

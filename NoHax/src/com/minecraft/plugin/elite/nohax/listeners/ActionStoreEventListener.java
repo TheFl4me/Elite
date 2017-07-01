@@ -26,7 +26,7 @@ public class ActionStoreEventListener implements Listener {
         PlayerDamage.store(e);
         if(e.getEntity() instanceof Player) {
             HaxPlayer p = HaxPlayer.get((Player) e.getEntity());
-            p.invalidate(40);
+            p.invalidate();
         }
     }
 

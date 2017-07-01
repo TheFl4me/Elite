@@ -121,7 +121,7 @@ public class LanguageEventListener implements Listener {
                         " \n" +
                         "&cYou have &b%prestigetokens &cprestige token(s)");
 
-                lang.addLangNode(KitPvPLanguage.KIT_GUI_SETTINGS_TITLE, "&cSettings");
+                lang.addLangNode(KitPvPLanguage.KIT_GUI_SETTINGS_TITLE, "&cInventory Organisation");
                 lang.addLangNode(KitPvPLanguage.KIT_GUI_SETTINGS_ITEM_KIT, "&6Kit Item");
                 lang.addLangNode(KitPvPLanguage.KIT_GUI_SETTINGS_ITEM_INFO, "&aINFO:\n" +
                         "&7Drag the items to your desired slot.\n" +

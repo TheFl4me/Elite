@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.kitpvp.manager.duel.custom;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
 import org.bukkit.GameMode;
@@ -197,16 +198,18 @@ public class DuelSetup {
             inv.setLeggings((leg.getType() == Material.BARRIER ? null : leg));
             inv.setBoots((boots.getType() == Material.BARRIER ? null : boots));
 
+            KitPlayer kp = KitPlayer.get(p.getUniqueId());
+
             if(sword.getType() != Material.BARRIER)
-                inv.setItem(0, sword);
+                inv.setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), sword);
             if(fishing.getType() != Material.BARRIER)
-                inv.setItem(1, fishing);
+                inv.setItem(kp.getSlotID(KitPlayer.SlotType.KIT_ITEM), fishing);
 
             if(soup.getType() != Material.BARRIER) {
                 if(recraft) {
-                    inv.setItem(13, (new ItemStack(Material.BOWL, 32)));
-                    inv.setItem(14, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
-                    inv.setItem(15, (new ItemStack(Material.RED_MUSHROOM, 32)));
+                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.BOWL), (new ItemStack(Material.BOWL, 32)));
+                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.BROWN_MUSHROOM), (new ItemStack(Material.BROWN_MUSHROOM, 32)));
+                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.RED_MUSHROOM), (new ItemStack(Material.RED_MUSHROOM, 32)));
                 }
                 for (int i = 0; i < inv.getSize(); i++)
                     inv.addItem(soup);

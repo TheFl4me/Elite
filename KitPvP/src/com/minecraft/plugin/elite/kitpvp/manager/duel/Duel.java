@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
-import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -118,7 +117,6 @@ public class Duel {
 	}
 
 	public void start() {
-		Database db = General.getDB();
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			if(!this.getPlayers().contains(players.getUniqueId()))
 				for(UUID uuid : this.getPlayers())
@@ -127,16 +125,19 @@ public class Duel {
 		for(int i = 0; i < this.getPlayers().size(); i++) {
 			ePlayer p = ePlayer.get(this.getPlayers().get(i));
 			DuelManager.removeFromQueue(p.getUniqueId());
-			Location loc = null;
-			try {
-				ResultSet res = db.select(KitPvP.DB_DUEL, "location", "loc" + Integer.toString(i++));
-				if(res.next())
-					loc = new Location(Bukkit.getWorld("world"), res.getDouble("locx"), res.getDouble("locy"), res.getDouble("locz"));
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			Location loc = this.getLocation(i + 1);
 			if(loc != null)
 				p.getPlayer().teleport(loc);
+		}
+		for(UUID uuid : this.getPlayers()) {
+			ePlayer p = ePlayer.get(uuid);
+			ePlayer z = this.getOpponent(p);
+
+			Location p1 = p.getPlayer().getLocation();
+			Location z1 = z.getPlayer().getLocation();
+
+			p1.setDirection(z1.toVector().subtract(p1.toVector()));
+			p.getPlayer().teleport(p1);
 		}
 		this.started = true;
 	}
@@ -180,6 +181,18 @@ public class Duel {
 		for(UUID uuid : this.getPlayers()) {
 			if(!uuid.equals(p.getUniqueId()))
 				return ePlayer.get(uuid);
+		}
+		return null;
+	}
+
+	public Location getLocation(int x) {
+		Database db = KitPvP.getDB();
+		try {
+			ResultSet res = db.select(KitPvP.DB_DUEL, "location", "loc" + Integer.toString(x));
+			if(res.next())
+				return new Location(Bukkit.getWorld("world"), res.getDouble("locx"), res.getDouble("locy"), res.getDouble("locz"));
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
