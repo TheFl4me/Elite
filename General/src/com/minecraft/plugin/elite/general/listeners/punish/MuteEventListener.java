@@ -43,8 +43,9 @@ public class MuteEventListener implements Listener {
 		}
 
 		boolean msg = false;
+		String message = e.getMessage().split(" ")[0];
 		for(String string : blacklist) {
-			if(e.getMessage().toLowerCase().startsWith(string.toLowerCase())) {
+			if(message.toLowerCase().equalsIgnoreCase(string.toLowerCase())) {
 				msg = true;
 				break;
 			}

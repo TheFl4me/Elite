@@ -18,7 +18,7 @@ public enum PunishReason {
     HARASSMENT(PunishType.MUTE, Unit.DAYS, 2.0),
     NSFW(PunishType.MUTE, Unit.DAYS, 2.0),
 
-    CHAT_SPAM(PunishType.MUTE, Unit.MINUTES, 5.0),
+    CHAT_SPAM(PunishType.MUTE, Unit.MINUTES, 3.0),
     CHAT_INSULT(PunishType.MUTE, Unit.HOURS, 0.1);
 
     private double modifier;

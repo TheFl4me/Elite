@@ -39,8 +39,9 @@ public class SpamCheckEventListener implements Listener {
             }
         }
 
+        String message = e.getMessage().split(" ")[0];
         for (String cmd : blacklist)
-            if (e.getMessage().toLowerCase().startsWith(cmd.toLowerCase()) && !PunishManager.isMuted(p.getUniqueId()))
+            if (message.toLowerCase().equalsIgnoreCase(cmd.toLowerCase()) && !PunishManager.isMuted(p.getUniqueId()))
                 SpamCheck.onPlayerCommand(e);
     }
 }

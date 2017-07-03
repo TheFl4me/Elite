@@ -124,13 +124,13 @@ public class MuteManager {
 			}
 			ResultSet pastMuteRes = db.select(General.DB_MUTEHISTORY);
 			while(pastMuteRes.next()) {
-				String muter = muteRes.getString("muter");
-				UUID target = UUID.fromString(muteRes.getString("target"));
-				PunishReason reason = PunishReason.valueOf(muteRes.getString("reason").toUpperCase());
-				String details = muteRes.getString("details");
-				long time = muteRes.getLong("time");
-				long date = muteRes.getLong("date");
-				UUID id = UUID.fromString(muteRes.getString("id"));
+				String muter = pastMuteRes.getString("muter");
+				UUID target = UUID.fromString(pastMuteRes.getString("target"));
+				PunishReason reason = PunishReason.valueOf(pastMuteRes.getString("reason").toUpperCase());
+				String details = pastMuteRes.getString("details");
+				long time = pastMuteRes.getLong("time");
+				long date = pastMuteRes.getLong("date");
+				UUID id = UUID.fromString(pastMuteRes.getString("id"));
 				String unmuter = pastMuteRes.getString("unmuter");
 				long unmutedate = pastMuteRes.getLong("unmutedate");
 
@@ -144,37 +144,43 @@ public class MuteManager {
 	}
 	
     public static void unmutePlayer(String unmuter, OfflinePlayer z) {
-		
-		Mute mute = getMute(z.getUniqueId());
 
-		final long currentTime = System.currentTimeMillis();
-		final long time = (mute instanceof Temporary ? ((Temporary) mute).getTime() : 0);
-		Database db = General.getDB();
-
-		db.execute("INSERT INTO " + General.DB_MUTEHISTORY + " (tempmute, time, muter, id, reason, details, date, target, unmuter, unmutedate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				(mute instanceof Temporary ? 1 : 0), time, mute.getPunisher(), mute.getUniqueId(), mute.getReason().toString(), mute.getDetails(), mute.getDate(), mute.getTarget(), unmuter, currentTime);
-
-		PastMute pastMute = new PastMute(mute.getUniqueId(), mute.getTarget(), mute.getReason(), mute.getDetails(), mute.getDate(), time, mute.getPunisher(), unmuter, currentTime);
-		addPastMute(z.getUniqueId(), pastMute);
-
-		db.delete(General.DB_MUTES, "target", z.getUniqueId());
-
+		Mute mute = null;
 		if(mutes.containsKey(z.getUniqueId()))
-			mutes.remove(z.getUniqueId());
-		if(tempmutes.containsKey(z.getUniqueId()))
-			tempmutes.remove(z.getUniqueId());
+			mute = mutes.get(z.getUniqueId());
+		else if(tempmutes.containsKey(z.getUniqueId()))
+			mute = tempmutes.get(z.getUniqueId());
 
-		System.out.println(Language.ENGLISH.get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
-		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
-			all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter), "/checkinfo " + z.getName(), true);
+		if(mute != null) {
+			final long currentTime = System.currentTimeMillis();
+			final long time = (mute instanceof Temporary ? ((Temporary) mute).getTime() : 0);
+			Database db = General.getDB();
+
+			db.execute("INSERT INTO " + General.DB_MUTEHISTORY + " (tempmute, time, muter, id, reason, details, date, target, unmuter, unmutedate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+					(mute instanceof Temporary ? 1 : 0), time, mute.getPunisher(), mute.getUniqueId(), mute.getReason().toString(), mute.getDetails(), mute.getDate(), mute.getTarget(), unmuter, currentTime);
+
+			PastMute pastMute = new PastMute(mute.getUniqueId(), mute.getTarget(), mute.getReason(), mute.getDetails(), mute.getDate(), time, mute.getPunisher(), unmuter, currentTime);
+			addPastMute(z.getUniqueId(), pastMute);
+
+			db.delete(General.DB_MUTES, "target", z.getUniqueId());
+
+			if(mutes.containsKey(z.getUniqueId()))
+				mutes.remove(z.getUniqueId());
+			if(tempmutes.containsKey(z.getUniqueId()))
+				tempmutes.remove(z.getUniqueId());
+
+			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
+			for(Player players : Bukkit.getOnlinePlayers()) {
+				ePlayer all = ePlayer.get(players);
+				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter), "/checkinfo " + z.getName(), true);
+			}
 		}
 	}
 
 	public static void addPastMute(UUID uuid, PastMute pastMute) {
 		Collection<PastMute> pastMuteList = getPastMutes(uuid);
 		Collection<PastMute> tempPastMutes = new ArrayList<>();
-		if(!pastMuteList.isEmpty())
+		if(pastMuteList != null && !pastMuteList.isEmpty())
 			tempPastMutes.addAll(pastMuteList);
 		tempPastMutes.add(pastMute);
 		if(pastmutes.containsKey(uuid))

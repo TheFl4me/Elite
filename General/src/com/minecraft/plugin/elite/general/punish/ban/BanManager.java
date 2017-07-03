@@ -160,30 +160,35 @@ public class BanManager {
 	}
  	
     public static void unbanPlayer(String unbanner, OfflinePlayer z) {
-
-		Ban ban = getBan(z.getUniqueId());
-
-		Database db = General.getDB();
-		final long currentTime = System.currentTimeMillis();
-		final long time = (ban instanceof Temporary ? ((Temporary) ban).getTime() : 0);
-
-		db.execute("INSERT INTO " + General.DB_BANHISTORY + " (tempban, time, banner, id, reason, details, date, target, unbanner, unbandate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				(ban instanceof Temporary ? 1 : 0), time, ban.getPunisher(), ban.getUniqueId(), ban.getReason().toString(), ban.getDetails(), ban.getDate(), ban.getTarget(), unbanner, currentTime);
-
-		PastBan pastBan = new PastBan(ban.getUniqueId(), ban.getTarget(), ban.getReason(), ban.getDetails(), ban.getDate(), time, ban.getPunisher(), unbanner, currentTime);
-		addPastBan(z.getUniqueId(), pastBan);
-
-		db.delete(General.DB_BANS, "target", z.getUniqueId());
-
+		Ban ban = null;
 		if(bans.containsKey(z.getUniqueId()))
-			bans.remove(z.getUniqueId());
-		if(tempbans.containsKey(z.getUniqueId()))
-			tempbans.remove(z.getUniqueId());
+			ban = bans.get(z.getUniqueId());
+		else if(tempbans.containsKey(z.getUniqueId()))
+			ban = tempbans.get(z.getUniqueId());
 
-		System.out.println(Language.ENGLISH.get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
-		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
-			all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner), "/checkinfo " + z.getName(), true);
+		if(ban != null) {
+			Database db = General.getDB();
+			final long currentTime = System.currentTimeMillis();
+			final long time = (ban instanceof Temporary ? ((Temporary) ban).getTime() : 0);
+
+			db.execute("INSERT INTO " + General.DB_BANHISTORY + " (tempban, time, banner, id, reason, details, date, target, unbanner, unbandate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+					(ban instanceof Temporary ? 1 : 0), time, ban.getPunisher(), ban.getUniqueId(), ban.getReason().toString(), ban.getDetails(), ban.getDate(), ban.getTarget(), unbanner, currentTime);
+
+			PastBan pastBan = new PastBan(ban.getUniqueId(), ban.getTarget(), ban.getReason(), ban.getDetails(), ban.getDate(), time, ban.getPunisher(), unbanner, currentTime);
+			addPastBan(z.getUniqueId(), pastBan);
+
+			db.delete(General.DB_BANS, "target", z.getUniqueId());
+
+			if(bans.containsKey(z.getUniqueId()))
+				bans.remove(z.getUniqueId());
+			if(tempbans.containsKey(z.getUniqueId()))
+				tempbans.remove(z.getUniqueId());
+
+			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
+			for(Player players : Bukkit.getOnlinePlayers()) {
+				ePlayer all = ePlayer.get(players);
+				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner), "/checkinfo " + z.getName(), true);
+			}
 		}
 	}
 
