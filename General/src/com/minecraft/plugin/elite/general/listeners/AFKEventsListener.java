@@ -42,7 +42,7 @@ public class AFKEventsListener implements Listener {
     public void onCommandRemoveAFK(PlayerCommandPreprocessEvent e) {
         ePlayer p = ePlayer.get(e.getPlayer());
         String message = e.getMessage().toLowerCase();
-        if (!message.startsWith("/afk") && p.isAFK()) {
+        if (p.isAFK()) {
             p.setAFK(false);
             p.sendMessage(GeneralLanguage.AFK_FALSE);
         }

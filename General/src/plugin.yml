@@ -1,6 +1,6 @@
 name: General
 author: TheFl4me
-version: 11.1.10
+version: 11.2.0
 depend: [WorldEdit, WorldGuard]
 main: com.minecraft.plugin.elite.general.General
 commands:
@@ -34,7 +34,6 @@ commands:
     help:
     clearlag:
       aliases: [cll, cllag]
-    afk:
     stats:
     clear:
     clan:

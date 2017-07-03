@@ -5,7 +5,6 @@ import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
-import com.minecraft.plugin.elite.general.commands.AFKCommand;
 import com.minecraft.plugin.elite.general.commands.AgreeCommand;
 import com.minecraft.plugin.elite.general.commands.ClearCommand;
 import com.minecraft.plugin.elite.general.commands.HelpCommand;
@@ -175,7 +174,6 @@ public class General extends JavaPlugin {
         new GamemodeCommand();
         new BuildCommand();
         new PingCommand();
-        new AFKCommand();
         new SpawnCommand();
         new SetSpawnCommand();
         new HeadCommand();
