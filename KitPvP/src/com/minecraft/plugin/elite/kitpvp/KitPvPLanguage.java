@@ -14,6 +14,11 @@ public enum KitPvPLanguage implements LanguageNode {
 
     SPAWN_TOOL,
 
+    HOLOGRAM_USAGE,
+    HOLOGRAM_SET,
+    HOLOGRAM_FEAST,
+    HOLOGRAM_EHG,
+
     DUEL_SET_SPAWN,
     DUEL_SET_LOCATION_SET,
     DUEL_SET_LOCATION_USAGE,

@@ -22,6 +22,11 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(KitPvPLanguage.REGION_SPAWN_LEAVE, "&7You no longer have spawn protection!");
 
+                lang.addLangNode(KitPvPLanguage.HOLOGRAM_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/sethologram <feast : ehg>");
+                lang.addLangNode(KitPvPLanguage.HOLOGRAM_SET, "&7%holo hologram set.");
+                lang.addLangNode(KitPvPLanguage.HOLOGRAM_FEAST, "&aFeast");
+                lang.addLangNode(KitPvPLanguage.HOLOGRAM_EHG, "&eEarlyHG");
+
                 lang.addLangNode(KitPvPLanguage.DUEL_SET_SPAWN, "&7Duel spawn set.");
                 lang.addLangNode(KitPvPLanguage.DUEL_SET_LOCATION_SET, "&7Duel location %loc set.");
                 lang.addLangNode(KitPvPLanguage.DUEL_SET_LOCATION_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/setduelloc <1 : 2>");

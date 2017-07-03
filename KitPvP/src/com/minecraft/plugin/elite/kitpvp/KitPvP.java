@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.kitpvp;
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.special.Hologram;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.database.DatabaseCore;
 import com.minecraft.plugin.elite.general.database.MySQLCore;
@@ -11,6 +12,7 @@ import com.minecraft.plugin.elite.kitpvp.commands.KitCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelLocationCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelSpawnCommand;
+import com.minecraft.plugin.elite.kitpvp.commands.holograms.SetHologramCommand;
 import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
@@ -33,6 +35,7 @@ import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -43,6 +46,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.File;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +61,7 @@ public class KitPvP extends JavaPlugin {
 	public static final String DB_KITS = "kits";
 	public static final String DB_DUEL = "duels";
 	public static final String DB_SETTINGS = "kitsettings";
+	public static final String DB_HOLOGRAMS = "holograms";
     
 	private static KitPvP plugin;
 	private static Database db;
@@ -96,6 +101,7 @@ public class KitPvP extends JavaPlugin {
 		new FreeKitsCommand();
 		new SetDuelSpawnCommand();
 		new SetDuelLocationCommand();
+		new SetHologramCommand();
 	}
 	
     private void loadEvents() {		
@@ -163,6 +169,15 @@ public class KitPvP extends JavaPlugin {
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "duelspawn", 100.0, 0.0, 0.0);
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc1", 100.0, 0.0, 0.0);
 				db.execute("INSERT INTO " + DB_DUEL + " (location, locx, locy, locz) VALUES (?, ?, ?, ?);", "loc2", 100.0, 0.0, 0.0);
+			}
+
+			if(!db.hasTable(DB_HOLOGRAMS)) {
+				String query = "CREATE TABLE " + DB_HOLOGRAMS + " (" +
+						"name TEXT(100) NOT NULL," +
+						"locx DOUBLE NOT NULL," +
+						"locy DOUBLE NOT NULL," +
+						"locz DOUBLE NOT NULL);";
+				db.createTable(query, DB_HOLOGRAMS);
 			}
 
 			if(!db.hasTable(DB_SETTINGS)) {
@@ -242,6 +257,41 @@ public class KitPvP extends JavaPlugin {
 
 			Score deathsValue = obj.getScore(color + Integer.toString(p.getDeaths()));
 			deathsValue.setScore(0);
+		}
+	}
+
+	public static void reloadHolograms() {
+		for(Hologram holo : Hologram.getAll())
+			holo.destroy();
+
+		World world = Bukkit.getWorld("world");
+		Database db = KitPvP.getDB();
+		for(Player players : Bukkit.getOnlinePlayers()) {
+			ePlayer all = ePlayer.get(players);
+			loadHolograms(all);
+		}
+	}
+
+	public static void loadHolograms(ePlayer p) {
+		Database db = KitPvP.getDB();
+		World world = Bukkit.getWorld("world");
+
+		try {
+			ResultSet feastRes = db.select(DB_HOLOGRAMS, "name", "feast");
+			if(feastRes.next()) {
+				Location holoLoc = new Location(world, feastRes.getDouble("locx"), feastRes.getDouble("locy"), feastRes.getDouble("locz"));
+				Hologram holo = new Hologram(p, p.getLanguage().get(KitPvPLanguage.HOLOGRAM_FEAST));
+				holo.show(holoLoc);
+			}
+
+			ResultSet ehgRes = db.select(DB_HOLOGRAMS, "name", "ehg");
+			if(ehgRes.next()) {
+				Location holoLoc = new Location(world, ehgRes.getDouble("locx"), ehgRes.getDouble("locy"), ehgRes.getDouble("locz"));
+				Hologram holo = new Hologram(p, p.getLanguage().get(KitPvPLanguage.HOLOGRAM_EHG));
+				holo.show(holoLoc);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }

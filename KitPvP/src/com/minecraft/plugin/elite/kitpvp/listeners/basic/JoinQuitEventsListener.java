@@ -27,6 +27,7 @@ public class JoinQuitEventsListener implements Listener {
 			db.execute("INSERT INTO " + KitPvP.DB_SETTINGS + " (uuid, sword, kititem, redmushroom, brownmushroom, bowl) VALUES (?, ?, ?, ?, ?, ?);", p.getUniqueId(), 0, 1, 15, 16, 17);
 		}
 		KitPvP.updateScoreboard();
+		KitPvP.loadHolograms(p);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)

@@ -1,6 +1,6 @@
 name: KitPvP
 author: TheFl4me
-version: 8.6.12
+version: 8.7.10
 main: com.minecraft.plugin.elite.kitpvp.KitPvP
 depend: [General, WorldEdit, WorldGuard]
 softdepend: [General, Punish, NoHax, WorldEdit, WorldGuard]
@@ -12,3 +12,5 @@ commands:
     setduelspawn:
     setduellocation:
       aliases: [setduelloc]
+    sethologram:
+      aliases: [setholo]
