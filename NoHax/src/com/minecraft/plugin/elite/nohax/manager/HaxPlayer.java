@@ -3,8 +3,8 @@ package com.minecraft.plugin.elite.nohax.manager;
 import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
+import com.minecraft.plugin.elite.nohax.manager.hax.PlayerAttack;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerClick;
-import com.minecraft.plugin.elite.nohax.manager.hax.PlayerDamage;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerMove;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,19 +25,19 @@ public class HaxPlayer extends ePlayer {
     private PlayerMove lastOnGround;
 
     private PlayerMove[] moves;
-    private PlayerDamage[] damages;
+    private PlayerAttack[] attacks;
     private PlayerClick[] clicks;
 
     private int moveCount;
-    private int damageCount;
+    private int attackCount;
     private int clickCount;
     private int lastOnGroundMovesAgo;
 
     private boolean canFly;
-    private boolean canNoKnockback;
     private boolean canSpeed;
 
     private BukkitRunnable combatLogTask;
+    private BukkitRunnable knockbackTask;
 
     private long invalid;
 
@@ -46,21 +46,21 @@ public class HaxPlayer extends ePlayer {
         this.showAlerts = false;
 
         this.moves = new PlayerMove[50];
-        this.damages = new PlayerDamage[20];
+        this.attacks = new PlayerAttack[5];
         this.clicks = new PlayerClick[150];
 
         this.moveCount = 0;
-        this.damageCount = 0;
+        this.attackCount = 0;
         this.clickCount = 0;
         this.lastOnGroundMovesAgo = 0;
 
         this.invalid = 0;
 
         this.canFly = false;
-        this.canNoKnockback = false;
         this.canSpeed = false;
 
         this.combatLogTask = null;
+        this.knockbackTask = null;
     }
 
     public static HaxPlayer get(Player player) {
@@ -162,6 +162,18 @@ public class HaxPlayer extends ePlayer {
         this.combatLogTask = runnable;
     }
 
+    public boolean isKnockbacked() {
+        return this.knockbackTask != null;
+    }
+
+    public BukkitRunnable getKnockbackTask() {
+        return this.knockbackTask;
+    }
+
+    public void setKnockbackTask(BukkitRunnable runnable) {
+        this.knockbackTask = runnable;
+    }
+
     public void invalidate() {
         this.invalidate(2000);
     }
@@ -224,23 +236,23 @@ public class HaxPlayer extends ePlayer {
 
 
 
-    public PlayerDamage[] getDamages() {
-        return this.damages;
+    public PlayerAttack[] getAttacks() {
+        return this.attacks;
     }
 
-    public int getDamageCount() {
-        return this.damageCount;
+    public int getAttackCount() {
+        return this.attackCount;
     }
 
-    public void setDamageCount(int i) {
-        this.damageCount = i;
+    public void setAttackCount(int i) {
+        this.attackCount = i;
     }
 
-    public PlayerDamage getDamageAgo(int x) {
-        if (this.getDamageCount() - x < 0)
+    public PlayerAttack getDamageAgo(int x) {
+        if (this.getAttackCount() - x < 0)
             return null;
-        int index = Math.abs(this.getDamageCount() - x) % this.getDamages().length;
-        return this.getDamages()[index];
+        int index = Math.abs(this.getAttackCount() - x) % this.getAttacks().length;
+        return this.getAttacks()[index];
     }
 
     public PlayerClick[] getClicks() {
@@ -267,20 +279,12 @@ public class HaxPlayer extends ePlayer {
         return this.canFly || this.getPlayer().getAllowFlight();
     }
 
-    public boolean isCanNoKnockback() {
-        return canNoKnockback;
-    }
-
     public boolean isCanSpeed() {
         return canSpeed;
     }
 
     public void setCanFly(boolean fly) {
         this.canFly = fly;
-    }
-
-    public void setCanNoKnockback(boolean can) {
-        this.canNoKnockback = can;
     }
 
     public void setCanSpeed(boolean speed) {

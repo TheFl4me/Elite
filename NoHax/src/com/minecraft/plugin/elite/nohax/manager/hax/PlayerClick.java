@@ -12,13 +12,15 @@ public class PlayerClick {
 
     private HaxPlayer player;
     private double timestamp;
+    private boolean isValid;
 
     public static void storeHitClick(PlayerInteractEvent e) {
         if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
             HaxPlayer p = HaxPlayer.get(e.getPlayer().getUniqueId());
+
             PlayerClick click = new PlayerClick(p);
-            Server server = Server.get();
-            if (!click.getPlayer().isLagging() && !click.getPlayer().canBypassChecks() && !server.isLagging())
+
+            if (click.isValid())
                 AutoClickHack.check(click);
         }
     }
@@ -26,19 +28,26 @@ public class PlayerClick {
     public static void storeInvClick(InventoryClickEvent e) {
         if(e.getClick() == ClickType.LEFT || e.getClick() == ClickType.SHIFT_LEFT) {
             HaxPlayer p = HaxPlayer.get(e.getWhoClicked().getUniqueId());
+            if(p.canBypassChecks())
+                return;
+
             PlayerClick click = new PlayerClick(p);
-            Server server = Server.get();
-            if (!click.getPlayer().isLagging() && !click.getPlayer().canBypassChecks() && !server.isLagging()) {
+
+            if (click.isValid())
                 AutoClickHack.check(click);
-            }
         }
     }
 
     public PlayerClick(HaxPlayer p) {
         this.player = p;
         this.timestamp = System.currentTimeMillis();
+        this.isValid = true;
         this.getPlayer().getClicks()[this.getPlayer().getClickCount() % this.getPlayer().getClicks().length] = this;
         this.getPlayer().setClickCount(this.getPlayer().getClickCount() + 1);
+
+        Server server = Server.get();
+        if(server.isLagging() || p.isLagging() || !p.isValid() || p.canBypassChecks())
+            this.isValid = false;
     }
 
     public HaxPlayer getPlayer() {
@@ -47,5 +56,9 @@ public class PlayerClick {
 
     public double getTime() {
         return this.timestamp;
+    }
+
+    public boolean isValid() {
+        return this.isValid;
     }
 }

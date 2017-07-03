@@ -186,7 +186,6 @@ public class KitPlayer extends ePlayer {
 			HaxPlayer hp = HaxPlayer.get(this.getUniqueId());
 			hp.setCanFly(false);
 			hp.setCanSpeed(false);
-			hp.setCanNoKnockback(false);
 		}
 	}
 
@@ -212,9 +211,6 @@ public class KitPlayer extends ePlayer {
 			case PHANTOM:
 				hp.setCanFly(true);
 				hp.setCanSpeed(true);
-				break;
-			case ANCHOR:
-				hp.setCanNoKnockback(true);
 				break;
 		}
 

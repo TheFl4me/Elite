@@ -1,6 +1,6 @@
 name: NoHax
 author: TheFl4me
-version: 4.1.2
+version: 4.2.0
 main: com.minecraft.plugin.elite.nohax.NoHax
 depend: [General]
 softdepend: [General]

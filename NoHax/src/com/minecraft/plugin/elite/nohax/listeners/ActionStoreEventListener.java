@@ -1,18 +1,20 @@
 package com.minecraft.plugin.elite.nohax.listeners;
 
+import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
+import com.minecraft.plugin.elite.nohax.manager.hax.PlayerAttack;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerClick;
-import com.minecraft.plugin.elite.nohax.manager.hax.PlayerDamage;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerMove;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ActionStoreEventListener implements Listener {
 
@@ -22,11 +24,34 @@ public class ActionStoreEventListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void storeDamage(EntityDamageEvent e) {
-        PlayerDamage.store(e);
-        if(e.getEntity() instanceof Player) {
-            HaxPlayer p = HaxPlayer.get((Player) e.getEntity());
-            p.invalidate();
+    public void storeDamage(EntityDamageByEntityEvent e) {
+        PlayerAttack.store(e);
+    }
+
+    @EventHandler
+    public void cancelMoveDetectOnHit(EntityDamageByEntityEvent e) {
+        if (e.isCancelled() || e.getDamage() == 0)
+            return;
+        if (e.getEntity() instanceof Player) {
+            HaxPlayer target = HaxPlayer.get((Player) e.getEntity());
+            if (!target.canBypassChecks()) {
+                if(target.isKnockbacked()) {
+                    target.getKnockbackTask().cancel();
+                    target.setKnockbackTask(null);
+                }
+                target.setKnockbackTask(new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if(target == null)
+                            cancel();
+                        if(target.isKnockbacked()) {
+                            target.getKnockbackTask().cancel();
+                            target.setKnockbackTask(null);
+                        }
+                    }
+                });
+                target.getKnockbackTask().runTaskLater(NoHax.getPlugin(), 40);
+            }
         }
     }
 

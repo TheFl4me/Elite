@@ -14,7 +14,7 @@ public class AutoClickHack {
         long cps = 0;
         for(PlayerClick pastClick : p.getClicks())
             if(pastClick != null)
-                if(time - pastClick.getTime() <= 1000)
+                if(time - pastClick.getTime() <= 1000 && pastClick.isValid())
                     cps++;
 
         if(cps > index)

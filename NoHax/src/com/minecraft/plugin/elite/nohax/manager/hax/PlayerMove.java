@@ -6,7 +6,6 @@ import com.minecraft.plugin.elite.nohax.manager.hax.movement.AutoCritsHack;
 import com.minecraft.plugin.elite.nohax.manager.hax.movement.FastLadderHack;
 import com.minecraft.plugin.elite.nohax.manager.hax.movement.FlyHack;
 import com.minecraft.plugin.elite.nohax.manager.hax.movement.SpeedHack;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,13 +48,6 @@ public class PlayerMove {
         if (e.isCancelled())
             return;
 
-        HaxPlayer p = HaxPlayer.get(e.getPlayer());
-        if (p == null)
-            return;
-        Server server = Server.get();
-        if (p.getPlayer().getGameMode() == GameMode.CREATIVE || p.canBypassChecks() || p.isLagging() || server.isLagging())
-            return;
-
         PlayerMove move = new PlayerMove(e);
 
         if(!move.isValid())
@@ -67,10 +59,10 @@ public class PlayerMove {
         AutoCritsHack.check(move);
 
         if (move.isOnGround()) {
-            p.setLastOnGround(move);
-            p.setLastOnGroundMovesAgo(0);
+            move.getPlayer().setLastOnGround(move);
+            move.getPlayer().setLastOnGroundMovesAgo(0);
         } else {
-            p.setLastOnGroundMovesAgo(p.getLastOnGroundMovesAgo() + 1);
+            move.getPlayer().setLastOnGroundMovesAgo(move.getPlayer().getLastOnGroundMovesAgo() + 1);
         }
     }
 
@@ -171,7 +163,8 @@ public class PlayerMove {
 
         this.moveSpeed = e.getFrom().distance(e.getTo());
 
-        if (!p.isValid() || p.isCanFly() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
+        Server server = Server.get();
+        if (!p.isValid() || p.isCanFly() || p.isKnockbacked() || p.isLagging() || server.isLagging() || p.canBypassChecks() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
             this.isValid = false;
     }
 
