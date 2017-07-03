@@ -11,6 +11,12 @@ import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
+import com.minecraft.plugin.elite.general.punish.ban.Ban;
+import com.minecraft.plugin.elite.general.punish.ban.BanManager;
+import com.minecraft.plugin.elite.general.punish.ban.PastBan;
+import com.minecraft.plugin.elite.general.punish.mute.Mute;
+import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
+import com.minecraft.plugin.elite.general.punish.mute.PastMute;
 import com.minecraft.plugin.elite.general.punish.report.Report;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
 import org.bukkit.Bukkit;
@@ -25,6 +31,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,13 +48,23 @@ public class InfoGUI extends GUI {
         this.uuid = uuid;
 
         List<UUID> banIds = new ArrayList<>();
-        banIds.addAll(PunishManager.getPastBanIDs(this.getPlayer().getUniqueId()));
-        banIds.addAll(PunishManager.getActiveBanIDs(this.getPlayer().getUniqueId()));
+        Ban ban = BanManager.getBan(this.getPlayer().getUniqueId());
+        Collection<PastBan> pastBans = BanManager.getPastBans(this.getPlayer().getUniqueId());
+        if(ban != null)
+            banIds.add(ban.getUniqueId());
+        if(pastBans != null)
+            for(PastBan pastBan : pastBans)
+                banIds.add(pastBan.getUniqueId());
         this.banList = banIds;
 
         List<UUID> muteIds = new ArrayList<>();
-        muteIds.addAll(PunishManager.getPastMuteIDs(this.getPlayer().getUniqueId()));
-        muteIds.addAll(PunishManager.getActiveMuteIDs(this.getPlayer().getUniqueId()));
+        Mute mute = MuteManager.getMute(this.getPlayer().getUniqueId());
+        Collection<PastMute> pastMutes = MuteManager.getPastMutes(this.getPlayer().getUniqueId());
+        if(mute != null)
+            muteIds.add(mute.getUniqueId());
+        if(pastMutes != null)
+            for(PastMute pastMute : pastMutes)
+                muteIds.add(pastMute.getUniqueId());
         this.muteList = muteIds;
 
         Database db = General.getDB();
@@ -179,36 +196,30 @@ public class InfoGUI extends GUI {
         this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_BANS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getBanList().size(), this.glass());
 
         Server server = Server.get();
+        Ban ban = BanManager.getBan(this.getPlayer().getUniqueId());
 
         for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
             if(i >= this.getBanList().size())
                 break;
             UUID id = this.getBanList().get(i);
-            Database db = General.getDB();
-            ItemStack ban = new ItemStack(Material.BARRIER);
+            PastBan pastBan = BanManager.getPastBan(id);
+            ItemStack block = new ItemStack(Material.BARRIER);
+            server.rename(block, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
             try {
-                if(db.containsValue(General.DB_BANS, "id", id.toString())) {
-                    ResultSet res = db.select(General.DB_BANS, "id", id.toString());
-                    if(res.next()) {
-                        ban = new ItemStack(Material.GOLD_BLOCK);
-                        server.rename(ban, PunishManager.banIDInfo(id, this.getLanguage()));
-                    }
-                } else if(db.containsValue(General.DB_BANHISTORY, "id", id.toString())) {
-                    ResultSet res = db.select(General.DB_BANHISTORY, "id", id.toString());
-                    if(res.next()) {
-                        if(res.getBoolean("tempban"))
-                            ban = new ItemStack(Material.EMERALD_BLOCK);
-                        else
-                            ban = new ItemStack(Material.DIAMOND_BLOCK);
-                        server.rename(ban, PunishManager.banIDInfo(id, this.getLanguage()));
-                    }
+                if(ban != null && id.equals(ban.getUniqueId())) {
+                    block = new ItemStack(Material.GOLD_BLOCK);
+                    server.rename(block, ban.getInfo(GeneralLanguage.BAN_INFO, this.getLanguage()));
+                } else if(pastBan != null){
+                    if(pastBan.isTemp())
+                        block = new ItemStack(Material.EMERALD_BLOCK);
+                    else
+                        block = new ItemStack(Material.DIAMOND_BLOCK);
+                    server.rename(block, pastBan.getInfo(GeneralLanguage.BAN_INFO_PAST, this.getLanguage()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                ban = new ItemStack(Material.BARRIER);
-                server.rename(ban, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
             }
-            this.getInventory().addItem(ban);
+            this.getInventory().addItem(block);
         }
         return this.getInventory();
     }
@@ -217,36 +228,30 @@ public class InfoGUI extends GUI {
         this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_MUTES) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getMuteList().size() , this.glass());
 
         Server server = Server.get();
+        Mute mute = MuteManager.getMute(this.getPlayer().getUniqueId());
 
         for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
             if(i >= this.getMuteList().size())
                 break;
             UUID id = this.getMuteList().get(i);
-            Database db = General.getDB();
-            ItemStack mute = new ItemStack(Material.BARRIER);
+            PastMute pastMute = MuteManager.getPastMute(id);
+            ItemStack block = new ItemStack(Material.BARRIER);
+            server.rename(block, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
             try {
-                if(db.containsValue(General.DB_MUTES, "id", id.toString())) {
-                    ResultSet res = db.select(General.DB_MUTES, "id", id.toString());
-                    if(res.next()) {
-                        mute = new ItemStack(Material.GOLD_BLOCK);
-                        server.rename(mute, PunishManager.muteIDInfo(id, this.getLanguage()));
-                    }
-                } else if(db.containsValue(General.DB_MUTEHISTORY, "id", id.toString())) {
-                    ResultSet res = db.select(General.DB_MUTEHISTORY, "id", id.toString());
-                    if(res.next()) {
-                        if(res.getBoolean("tempmute"))
-                            mute = new ItemStack(Material.EMERALD_BLOCK);
-                        else
-                            mute = new ItemStack(Material.DIAMOND_BLOCK);
-                        server.rename(mute, PunishManager.muteIDInfo(id, this.getLanguage()));
-                    }
+                if(mute != null && id.equals(mute.getUniqueId())) {
+                    block = new ItemStack(Material.GOLD_BLOCK);
+                    server.rename(block, mute.getInfo(GeneralLanguage.MUTE_INFO, this.getLanguage()));
+                } else if(pastMute != null){
+                    if(pastMute.isTemp())
+                        block = new ItemStack(Material.EMERALD_BLOCK);
+                    else
+                        block = new ItemStack(Material.DIAMOND_BLOCK);
+                    server.rename(block, pastMute.getInfo(GeneralLanguage.MUTE_INFO_PAST, this.getLanguage()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                mute = new ItemStack(Material.BARRIER);
-                server.rename(mute, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
             }
-            this.getInventory().addItem(mute);
+            this.getInventory().addItem(block);
         }
         return this.getInventory();
     }

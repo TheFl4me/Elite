@@ -2,9 +2,11 @@ package com.minecraft.plugin.elite.general.punish.ban;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
+import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.Temporary;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
@@ -14,29 +16,36 @@ public class TempBan extends Ban implements Temporary {
 	private long expireDate;
 	
 	
-	public TempBan(String bannerName, UUID targetUuid, String banReason, String banDetails, long banTime, long banDate, UUID id) {
+	public TempBan(String bannerName, UUID targetUuid, PunishReason banReason, String banDetails, long banTime, long banDate, UUID id) {
 		super(bannerName, targetUuid, banReason, banDetails, banDate, id);
 		this.time = banTime;
 		this.expireDate = banTime + banDate;
 	}
 	
-	public String getKickMessage() {
+	public String getKickMessage(Language lang) {
 		Server server = Server.get();
-		Language lang;
-		ePlayer target = ePlayer.get(this.getTarget());
-		if(target != null)
-			lang = target.getLanguage();
-		else
-			lang = Language.ENGLISH;
 		return lang.get(GeneralLanguage.BAN_SCREEN)
 				.replaceAll("%name", server.getName())
-				.replaceAll("%reason", this.getReason())
+				.replaceAll("%reason", this.getReason().toString())
 				.replaceAll("%duration", server.getTime(this.getTime(), lang))
 				.replaceAll("%remaining", server.getTimeUntil(this.getExpireDate(), lang))
 				.replaceAll("%bandate", server.getDate(this.getDate()))
 				.replaceAll("%id", this.getUniqueId().toString())
 				.replaceAll("%currentdate", server.getDate())
 				.replaceAll("%domain", server.getDomain());
+	}
+
+	public String getInfo(LanguageNode node, Language lang) {
+		Server server = Server.get();
+		return lang.get(node)
+				.replaceAll("%id", this.getUniqueId().toString())
+				.replaceAll("%target", Bukkit.getOfflinePlayer(this.getTarget()).getName())
+				.replaceAll("%reason", this.getReason().toString())
+				.replaceAll("%details", this.getDetails())
+				.replaceAll("%duration", server.getTime(this.getTime(), lang))
+				.replaceAll("%remaining", server.getTimeUntil(this.getExpireDate(), lang))
+				.replaceAll("%date", server.getDate(this.getDate()))
+				.replaceAll("%punisher", this.getPunisher());
 	}
 	
 	public long getTime() {

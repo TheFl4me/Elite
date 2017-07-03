@@ -28,7 +28,7 @@ public class UnmuteCommand extends eCommand {
 		if(args.length == 1) {
 			OfflinePlayer z = Bukkit.getOfflinePlayer(args[0]);
 			if(PunishManager.isMuted(z.getUniqueId())) {
-				MuteManager.unmutePlayer(cs, z);
+				MuteManager.unmutePlayer(cs.getName(), z);
 				if(z.isOnline())
 					ePlayer.get(z.getUniqueId()).sendMessage(GeneralLanguage.UNMUTE_UNMUTED_YOU);
 				return true;

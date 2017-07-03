@@ -114,6 +114,8 @@ public enum GeneralLanguage implements LanguageNode {
     BAN_WARNING,
     BAN_BANNED,
     BAN_SCREEN,
+    BAN_INFO,
+    BAN_INFO_PAST,
 
     UNBAN_UNBANNED,
     UNBAN_NOT_BANNED,
@@ -128,7 +130,9 @@ public enum GeneralLanguage implements LanguageNode {
 
     MUTE_MUTED,
     MUTE_MUTED_ON_TALK,
+    MUTE_DISPLAY,
     MUTE_INFO,
+    MUTE_INFO_PAST,
 
     UNMUTE_UNMUTED,
     UNMUTE_UNMUTED_YOU,

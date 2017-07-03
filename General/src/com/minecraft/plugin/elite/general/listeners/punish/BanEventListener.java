@@ -15,7 +15,7 @@ public class BanEventListener implements Listener {
 		ePlayer p = ePlayer.get(e.getPlayer());
 		Ban ban = BanManager.getBan(p.getUniqueId());
 		if(ban != null) {
-			e.disallow(Result.KICK_BANNED, ban.getKickMessage());
+			e.disallow(Result.KICK_BANNED, ban.getKickMessage(p.getLanguage()));
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class MuteEventListener implements Listener {
 		Mute mute = MuteManager.getMute(p.getUniqueId());
 		if(mute != null) {
 			e.setCancelled(true);
-			p.sendHoverMessage(mute.getMuteMessage(), mute.getMuteDisplayMessage());
+			p.sendHoverMessage(mute.getMuteMessage(p.getLanguage()), mute.getMuteDisplayMessage(p.getLanguage()));
 		}
 	}
 
@@ -54,7 +54,7 @@ public class MuteEventListener implements Listener {
 			Mute mute = MuteManager.getMute(p.getUniqueId());
 			if(mute != null) {
 				e.setCancelled(true);
-				p.sendHoverMessage(mute.getMuteMessage(), mute.getMuteDisplayMessage());
+				p.sendHoverMessage(mute.getMuteMessage(p.getLanguage()), mute.getMuteDisplayMessage(p.getLanguage()));
 			}
 		}
 	}

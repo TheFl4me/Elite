@@ -28,7 +28,7 @@ public class UnbanCommand extends eCommand {
 		if(args.length == 1) {
 			OfflinePlayer z = Bukkit.getOfflinePlayer(args[0]);
 			if(PunishManager.isBanned(z.getUniqueId())) {
-				BanManager.unbanPlayer(cs, z);
+				BanManager.unbanPlayer(cs.getName(), z);
 				return true;
 			} else {
 				cs.sendMessage(lang.get(GeneralLanguage.UNBAN_NOT_BANNED).replaceAll("%z", z.getName()));

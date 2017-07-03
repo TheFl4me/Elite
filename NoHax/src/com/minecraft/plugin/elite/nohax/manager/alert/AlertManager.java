@@ -78,7 +78,7 @@ public class AlertManager {
                     .replaceAll("%chance", df.format(chance) + "%"));
         }
         if (confirmed == 10 * sensitivity) {
-            PunishManager.punish("System - AutoBan", Bukkit.getOfflinePlayer(p.getUniqueId()), PunishReason.CHEATING, alert.toString() + " ");
+            PunishManager.punish("System - AutoBan", Bukkit.getOfflinePlayer(p.getUniqueId()), PunishReason.CHEATING, alert.toString());
             alerts.remove(alert);
         }
 

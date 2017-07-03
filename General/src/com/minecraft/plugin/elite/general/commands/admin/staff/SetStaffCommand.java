@@ -41,7 +41,7 @@ public class SetStaffCommand extends eCommand implements TabCompleter {
                 StringBuilder details = new StringBuilder();
                 for(int i = 2; i < args.length; i++)
                     details.append(args[i]).append(" ");
-                String role = details.toString().substring(0, details.toString().length() - 1);
+                String role = details.toString().trim();
                 Database db = General.getDB();
                 db.update(General.DB_STAFF, "uuid", z.getUniqueId(), "rank", slot);
                 db.update(General.DB_STAFF, "role", role, "rank", slot);

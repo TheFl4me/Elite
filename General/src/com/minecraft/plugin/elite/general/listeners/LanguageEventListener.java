@@ -152,6 +152,23 @@ public class LanguageEventListener implements Listener {
                         "&8Ban date: &f%bandate\n" +
                         "&8Current date: &f%currentdate\n\n" +
                         "&8You can make an unban request at: &fwww.%domain/unban");
+                lang.addLangNode(GeneralLanguage.BAN_INFO, "&8Ban-ID: &f%id\n" +
+                        "&8Target: &f%target\n" +
+                        "&8Reason: &f%reason\n" +
+                        "&8Details: &f%details\n" +
+                        "&8Duration: &f%duration\n" +
+                        "&8Remaining: &f%remaining\n" +
+                        "&8Punish Date: &f%date\n" +
+                        "&8Punisher: &f%punisher");
+                lang.addLangNode(GeneralLanguage.BAN_INFO_PAST, "&8Ban-ID: &f%id\n" +
+                        "&8Target: &f%target\n" +
+                        "&8Reason: &f%reason\n" +
+                        "&8Details: &f%details\n" +
+                        "&8Duration: &f%duration\n" +
+                        "&8Punish Date: &f%date\n" +
+                        "&8Punisher: &f%punisher\n" +
+                        "&8Pardoner: &f%pardoner\n" +
+                        "&8Pardon Date: &f%pardondate");
 
                 lang.addLangNode(GeneralLanguage.INFO_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/checkinfo <player>");
 
@@ -169,10 +186,27 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED, "&7%z has been muted.");
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED_ON_TALK, "&cYOU ARE MUTED!");
-                lang.addLangNode(GeneralLanguage.MUTE_INFO, "&8Mute-ID: &f%id\n" +
+                lang.addLangNode(GeneralLanguage.MUTE_DISPLAY, "&8Mute-ID: &f%id\n" +
                         "&8Reason: &f%reason\n" +
                         "&8Duration: &f%duration\n" +
                         "&8Remaining: &f%remaining");
+                lang.addLangNode(GeneralLanguage.MUTE_INFO, "&8Mute-ID: &f%id\n" +
+                        "&8Target: &f%target\n" +
+                        "&8Reason: &f%reason\n" +
+                        "&8Details: &f%details\n" +
+                        "&8Duration: &f%duration\n" +
+                        "&8Remaining: &f%remaining\n" +
+                        "&8Punish Date: &f%date\n" +
+                        "&8Punisher: &f%punisher");
+                lang.addLangNode(GeneralLanguage.MUTE_INFO_PAST, "&8Mute-ID: &f%id\n" +
+                        "&8Target: &f%target\n" +
+                        "&8Reason: &f%reason\n" +
+                        "&8Details: &f%details\n" +
+                        "&8Duration: &f%duration\n" +
+                        "&8Punish Date: &f%date\n" +
+                        "&8Punisher: &f%punisher\n" +
+                        "&8Pardoner: &f%pardoner\n" +
+                        "&8Pardon Date: &f%pardondate");
 
                 lang.addLangNode(GeneralLanguage.UNMUTE_UNMUTED, "&7%z has been unmuted.");
                 lang.addLangNode(GeneralLanguage.UNMUTE_UNMUTED_YOU, "&aYou have been unmuted.");
