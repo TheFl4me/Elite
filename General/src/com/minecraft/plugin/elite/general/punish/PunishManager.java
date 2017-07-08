@@ -77,7 +77,6 @@ public class PunishManager {
 
 		final double y = a * Math.pow(b, z * x + c) + d;
 
-		//y = days
 		return Math.round(y * unit.toMS());
 	}
 

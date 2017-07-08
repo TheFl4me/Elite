@@ -28,18 +28,23 @@ public abstract class Punishment {
 	public UUID getTarget() {
 		return this.target;
 	}
+
 	public String getPunisher() {
 		return this.punisher;
 	}
+
 	public PunishReason getReason() {
 		return this.reason;
 	}
+
 	public String getDetails() {
 		return this.details;
 	}
+
 	public long getDate() {
 		return this.date;
 	}
+
 	public UUID getUniqueId() {
 		return this.id;
 	}

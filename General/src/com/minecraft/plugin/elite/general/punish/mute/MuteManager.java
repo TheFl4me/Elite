@@ -90,7 +90,7 @@ public class MuteManager {
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			ePlayer all = ePlayer.get(players);
 			String msg = all.getLanguage().get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName());
-			if(all.getPlayer().hasPermission("eban.checkinfo"))
+			if(all.getPlayer().hasPermission("egeneral.checkinfo"))
 				all.sendHoverMessage(msg, mute.getInfo(GeneralLanguage.MUTE_INFO, all.getLanguage()));
 			else
 				all.getPlayer().sendMessage(msg);
