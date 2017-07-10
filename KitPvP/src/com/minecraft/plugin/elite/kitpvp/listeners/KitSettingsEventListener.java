@@ -22,7 +22,7 @@ public class KitSettingsEventListener implements Listener {
                 ItemStack item = e.getInventory().getItem(i);
                 if (item == null || item.getType() == Material.AIR)
                     continue;
-                kp.setSlotID(item.getType(), i);
+                kp.setSlot(item.getType(), i);
             }
             kp.getPlayer().setItemOnCursor(null);
             kp.setEditing(false);

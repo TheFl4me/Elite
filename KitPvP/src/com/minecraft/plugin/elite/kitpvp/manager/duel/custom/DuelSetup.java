@@ -201,15 +201,15 @@ public class DuelSetup {
             KitPlayer kp = KitPlayer.get(p.getUniqueId());
 
             if(sword.getType() != Material.BARRIER)
-                inv.setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), sword);
+                kp.setItem(KitPlayer.SlotType.SWORD, sword);
             if(fishing.getType() != Material.BARRIER)
-                inv.setItem(kp.getSlotID(KitPlayer.SlotType.KIT_ITEM), fishing);
+                kp.setItem(KitPlayer.SlotType.KIT_ITEM, fishing);
 
             if(soup.getType() != Material.BARRIER) {
                 if(recraft) {
-                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.BOWL), (new ItemStack(Material.BOWL, 32)));
-                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.BROWN_MUSHROOM), (new ItemStack(Material.BROWN_MUSHROOM, 32)));
-                    inv.setItem(kp.getSlotID(KitPlayer.SlotType.RED_MUSHROOM), (new ItemStack(Material.RED_MUSHROOM, 32)));
+                    kp.setItem(KitPlayer.SlotType.BOWL, (new ItemStack(Material.BOWL, 32)));
+                    kp.setItem(KitPlayer.SlotType.BROWN_MUSHROOM, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
+                    kp.setItem(KitPlayer.SlotType.RED_MUSHROOM, (new ItemStack(Material.RED_MUSHROOM, 32)));
                 }
                 for (int i = 0; i < inv.getSize(); i++)
                     inv.addItem(soup);

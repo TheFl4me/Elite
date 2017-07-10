@@ -83,7 +83,7 @@ public class Duel {
 				p.clearTools();
 				KitPlayer kp = KitPlayer.get(uuid);
 				kp.addDefaults(true);
-				kp.getPlayer().getInventory().setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), new ItemStack(Material.DIAMOND_SWORD));
+				kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
 			}
 			this.start();
 		}
@@ -107,7 +107,7 @@ public class Duel {
 			p.clearTools();
 			KitPlayer kp = KitPlayer.get(uuid);
 			kp.addDefaults(true);
-			kp.getPlayer().getInventory().setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), new ItemStack(Material.DIAMOND_SWORD));
+			kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
 
 			DuelRequest request = DuelManager.getRequest(p);
 			if(request != null)

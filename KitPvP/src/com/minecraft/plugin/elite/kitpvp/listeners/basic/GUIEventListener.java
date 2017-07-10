@@ -85,11 +85,11 @@ public class GUIEventListener implements Listener {
 					ItemStack info = new ItemStack(Material.ENCHANTED_BOOK);
 					server.rename(info, p.getLanguage().get(KitPvPLanguage.KIT_GUI_SETTINGS_ITEM_INFO));
 
-					inv.setItem(kp.getSlotID(KitPlayer.SlotType.SWORD), sword);
-					inv.setItem(kp.getSlotID(KitPlayer.SlotType.KIT_ITEM), kitItem);
-					inv.setItem(kp.getSlotID(KitPlayer.SlotType.RED_MUSHROOM), red);
-					inv.setItem(kp.getSlotID(KitPlayer.SlotType.BROWN_MUSHROOM), brown);
-					inv.setItem(kp.getSlotID(KitPlayer.SlotType.BOWL), bowl);
+					inv.setItem(kp.getSlot(KitPlayer.SlotType.SWORD), sword);
+					inv.setItem(kp.getSlot(KitPlayer.SlotType.KIT_ITEM), kitItem);
+					inv.setItem(kp.getSlot(KitPlayer.SlotType.RED_MUSHROOM), red);
+					inv.setItem(kp.getSlot(KitPlayer.SlotType.BROWN_MUSHROOM), brown);
+					inv.setItem(kp.getSlot(KitPlayer.SlotType.BOWL), bowl);
 					inv.addItem(info);
 
 					p.getPlayer().openInventory(inv);

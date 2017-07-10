@@ -236,7 +236,7 @@ public class KitPlayer extends ePlayer {
 			sword = new ItemStack(Material.IRON_SWORD);
 		else
 			sword = new ItemStack(Material.STONE_SWORD);
-		inv.setItem(this.getSlotID(SlotType.SWORD), sword);
+		this.setItem(SlotType.SWORD, sword);
 
 		Server server = Server.get();
 		if(this.hasKit()) {
@@ -245,7 +245,7 @@ public class KitPlayer extends ePlayer {
 				String name = this.getKit().getItemName(this.getLanguage());
 				if(name != null)
 					server.rename(item, name);
-				inv.setItem(this.getSlotID(SlotType.KIT_ITEM), item);
+				this.setItem(SlotType.KIT_ITEM, item);
 			}
 			if(this.getKit() == Kit.ARCHER)
 				inv.addItem(new ItemStack(Material.ARROW, 10));
@@ -265,15 +265,15 @@ public class KitPlayer extends ePlayer {
 			inv.setBoots(new ItemStack(Material.IRON_BOOTS));
 		}
 
-		inv.setItem(this.getSlotID(SlotType.BOWL), (new ItemStack(Material.BOWL, 32)));
-		inv.setItem(this.getSlotID(SlotType.BROWN_MUSHROOM), (new ItemStack(Material.BROWN_MUSHROOM, 32)));
-		inv.setItem(this.getSlotID(SlotType.RED_MUSHROOM), (new ItemStack(Material.RED_MUSHROOM, 32)));
+		this.setItem(SlotType.BOWL, (new ItemStack(Material.BOWL, 32)));
+		this.setItem(SlotType.BROWN_MUSHROOM, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
+		this.setItem(SlotType.RED_MUSHROOM, (new ItemStack(Material.RED_MUSHROOM, 32)));
 
 		for(int i = 0; i < inv.getSize(); i++)
 			inv.addItem(new ItemStack(Material.MUSHROOM_SOUP));
 	}
 
-	public int getSlotID(SlotType mat) {
+	public int getSlot(SlotType mat) {
 		Database db = General.getDB();
 		try {
 			ResultSet res = db.select(KitPvP.DB_SETTINGS, "uuid", this.getUniqueId().toString());
@@ -310,7 +310,7 @@ public class KitPlayer extends ePlayer {
 		}
 	}
 
-	public void setSlotID(Material mat, int id) {
+	public void setSlot(Material mat, int id) {
 		Database db = General.getDB();
 		String column = null;
 		switch(mat) {
@@ -333,6 +333,10 @@ public class KitPlayer extends ePlayer {
 		if(column != null) {
 			db.update(KitPvP.DB_SETTINGS, column, id, "uuid", this.getUniqueId());
 		}
+	}
+
+	public void setItem(SlotType slot, ItemStack item) {
+		this.getPlayer().getInventory().setItem(this.getSlot(slot), item);
 	}
 
 	public void setEditing(boolean editing) {
