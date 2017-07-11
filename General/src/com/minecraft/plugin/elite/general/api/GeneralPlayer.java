@@ -60,7 +60,7 @@ public class GeneralPlayer {
 	private Rank invisTo;
 	private BukkitRunnable pendingAFK;
 	private GUI gui;
-	private HashSet<Tool> tools;
+	private Set<Tool> tools;
 	private boolean adminMode;
 	private boolean watching;
 	private boolean building;
@@ -147,9 +147,8 @@ public class GeneralPlayer {
 		players.put(this.getUniqueId(), this);
 		Database db = General.getDB();
 		if(!db.containsValue(General.DB_PLAYERS, "uuid", this.getUniqueId().toString())) {
-			this.setLanguage(Language.ENGLISH);
 			db.execute("INSERT INTO " + General.DB_PLAYERS + " (uuid, name, rank, ip, agreed, language, firstjoin, lastjoin, playtime, kills, deaths, tokens, prestige, level, exp, elo, sentreports, truereports, clan, clanrank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, this.getLanguage().toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, "", "");
+					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, Language.ENGLISH.toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, "", "");
 			Rank.set(Bukkit.getOfflinePlayer(this.getUniqueId()), Rank.NORMAL);
 		} else {
 			db.update(General.DB_PLAYERS, "name", this.getName(), "uuid", this.getUniqueId());
@@ -586,8 +585,7 @@ public class GeneralPlayer {
 			board.getTeams().forEach(teams -> teams.removeEntry(this.getName()));
 		}
 	}
-
-
+	
 	public boolean canAdminMode() {
 		return this.getPlayer().hasPermission("egeneral.admin");
 	}
@@ -600,6 +598,7 @@ public class GeneralPlayer {
 	public boolean isWatching() {
 		return this.watching;
 	}
+
 	public boolean isInvis() {
 		return this.invis;
 	}
@@ -612,6 +611,7 @@ public class GeneralPlayer {
 	public boolean isPendingAFK() {
 		return this.pendingAFK != null;
 	}
+
 	public boolean canSpy() {
 		return this.getPlayer().hasPermission("egeneral.spy");
 	}
