@@ -4,13 +4,14 @@ import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.Punishment;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
 public class Mute extends Punishment {
 	
-	public Mute(String muterName, UUID targetUuid, PunishReason muteReason, String muteDetails, long muteDate, UUID id) {
-		super(targetUuid, muterName, muteReason, muteDetails, muteDate, id);
+	public Mute(String muterName, OfflinePlayer target, PunishReason muteReason, String muteDetails, long muteDate, UUID id) {
+		super(target, muterName, muteReason, muteDetails, muteDate, id);
 	}
 	
 	public String getMuteMessage(Language lang) {

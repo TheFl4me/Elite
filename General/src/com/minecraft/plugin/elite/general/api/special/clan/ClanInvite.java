@@ -1,16 +1,19 @@
 package com.minecraft.plugin.elite.general.api.special.clan;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+
 import java.util.UUID;
 
 public class ClanInvite {
 
-    private UUID inviter;
-    private UUID invited;
+    private OfflinePlayer inviter;
+    private OfflinePlayer invited;
     private Clan clan;
 
     public ClanInvite(UUID inviter, UUID invited, Clan clan) {
-        this.inviter = inviter;
-        this.invited = invited;
+        this.inviter = Bukkit.getOfflinePlayer(inviter);
+        this.invited = Bukkit.getOfflinePlayer(invited);
         this.clan = clan;
         ClanManager.addInvite(this);
     }
@@ -19,11 +22,11 @@ public class ClanInvite {
         ClanManager.removeInvite(this);
     }
 
-    public UUID getInviter() {
+    public OfflinePlayer getInviter() {
         return this.inviter;
     }
 
-    public UUID getInvited() {
+    public OfflinePlayer getInvited() {
         return this.invited;
     }
 

@@ -3,16 +3,14 @@ package com.minecraft.plugin.elite.general.api.special.supportchat;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
-import java.util.UUID;
-
 public class SupportChat {
 	
-	private UUID staff;
-	private UUID user;
+	private GeneralPlayer staff;
+	private GeneralPlayer user;
 	
 	public SupportChat(GeneralPlayer staff, GeneralPlayer user) {
-		this.staff = staff.getUniqueId();
-		this.user = user.getUniqueId();
+		this.staff = staff;
+		this.user = user;
 		SupportChatManager.add(this);
 	}
 	
@@ -31,11 +29,11 @@ public class SupportChat {
 	}
 	
 	public GeneralPlayer getStaff() {
-		return GeneralPlayer.get(this.staff);
+		return this.staff;
 	}
 	
 	public GeneralPlayer getPlayer() {
-		return GeneralPlayer.get(this.user);
+		return this.user;
 	}
 	
 	public void sendMessage(String msg) {

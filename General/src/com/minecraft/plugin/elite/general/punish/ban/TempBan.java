@@ -6,7 +6,7 @@ import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.Temporary;
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
@@ -16,8 +16,8 @@ public class TempBan extends Ban implements Temporary {
 	private long expireDate;
 	
 	
-	public TempBan(String bannerName, UUID targetUuid, PunishReason banReason, String banDetails, long banTime, long banDate, UUID id) {
-		super(bannerName, targetUuid, banReason, banDetails, banDate, id);
+	public TempBan(String bannerName, OfflinePlayer target, PunishReason banReason, String banDetails, long banTime, long banDate, UUID id) {
+		super(bannerName, target, banReason, banDetails, banDate, id);
 		this.time = banTime;
 		this.expireDate = banTime + banDate;
 	}
@@ -39,7 +39,7 @@ public class TempBan extends Ban implements Temporary {
 		Server server = Server.get();
 		return lang.get(node)
 				.replaceAll("%id", this.getUniqueId().toString())
-				.replaceAll("%target", Bukkit.getOfflinePlayer(this.getTarget()).getName())
+				.replaceAll("%target", this.getTarget().getName())
 				.replaceAll("%reason", this.getReason().toString())
 				.replaceAll("%details", this.getDetails())
 				.replaceAll("%duration", server.getTime(this.getTime(), lang))

@@ -90,7 +90,7 @@ public class Clan {
     }
 
     public void sendMessage(String message, GeneralPlayer p) {
-        for (UUID uuid : getMembers()) {
+        for (UUID uuid : this.getMembers()) {
             GeneralPlayer all = GeneralPlayer.get(uuid);
             if (all != null)
                 all.getPlayer().sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "ClanChat" + ChatColor.GRAY + "] " + ChatColor.RESET + p.getChatName() + " > " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));

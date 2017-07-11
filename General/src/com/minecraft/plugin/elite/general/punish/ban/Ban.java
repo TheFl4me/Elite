@@ -5,13 +5,14 @@ import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.Punishment;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
 public class Ban extends Punishment {
 	
-	public Ban(String bannerName, UUID targetUuid, PunishReason banReason, String banDetails, long banDate, UUID id) {
-		super(targetUuid, bannerName, banReason, banDetails, banDate, id);
+	public Ban(String bannerName, OfflinePlayer target, PunishReason banReason, String banDetails, long banDate, UUID id) {
+		super(target, bannerName, banReason, banDetails, banDate, id);
 	}
 	
 	public String getKickMessage(Language lang) {

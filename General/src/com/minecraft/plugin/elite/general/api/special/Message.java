@@ -14,8 +14,8 @@ import java.util.UUID;
 
 public class Message {
 
-    private UUID sender;
-    private UUID target;
+    private GeneralPlayer sender;
+    private GeneralPlayer target;
     private String msg;
     private long date;
 
@@ -34,18 +34,18 @@ public class Message {
     }
 
     public Message(GeneralPlayer sender, GeneralPlayer target, String msg) {
-        this.sender = sender.getUniqueId();
-        this.target = target.getUniqueId();
+        this.sender = sender;
+        this.target = target;
         this.msg = msg;
         this.date = System.currentTimeMillis();
     }
 
     public GeneralPlayer getSender() {
-        return GeneralPlayer.get(this.sender);
+        return this.sender;
     }
 
     public GeneralPlayer getTarget() {
-        return GeneralPlayer.get(this.target);
+        return this.target;
     }
 
     public String getMessage() {

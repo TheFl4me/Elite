@@ -21,7 +21,7 @@ public class Hologram {
     private Collection<String> lines = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
     private Location location;
-    private UUID viewer;
+    private GeneralPlayer viewer;
 
     public static Hologram[] getAll() {
         return holograms.toArray(new Hologram[holograms.size()]);
@@ -35,7 +35,7 @@ public class Hologram {
     }
 
     public Hologram(GeneralPlayer p, String text) {
-        this.viewer = p.getUniqueId();
+        this.viewer = p;
         String[] lines = text.split("\n");
         this.lines.addAll(Arrays.asList(lines));
     }
@@ -45,7 +45,7 @@ public class Hologram {
     }
 
     public GeneralPlayer getViewer() {
-        return GeneralPlayer.get(this.viewer);
+        return this.viewer;
     }
 
     public void destroy() {

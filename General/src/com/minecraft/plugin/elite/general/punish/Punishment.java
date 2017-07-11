@@ -3,21 +3,21 @@ package com.minecraft.plugin.elite.general.punish;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
 public abstract class Punishment {
 	
-	protected UUID target;
+	protected OfflinePlayer target;
 	protected String punisher;
 	protected PunishReason reason;
 	protected String details;
 	protected long date;
 	protected UUID id;
 	
-	public Punishment(UUID targetUuid, String pName, PunishReason pReason, String pDetails, long pDate, UUID id) {
-		this.target = targetUuid;
+	public Punishment(OfflinePlayer target, String pName, PunishReason pReason, String pDetails, long pDate, UUID id) {
+		this.target = target;
 		this.punisher = pName;
 		this.reason = pReason;
 		this.details = pDetails;
@@ -25,7 +25,7 @@ public abstract class Punishment {
 		this.id = id;
 	}
 	
-	public UUID getTarget() {
+	public OfflinePlayer getTarget() {
 		return this.target;
 	}
 
@@ -53,7 +53,7 @@ public abstract class Punishment {
 		Server server = Server.get();
 		return lang.get(node)
 				.replaceAll("%id", this.getUniqueId().toString())
-				.replaceAll("%target", Bukkit.getOfflinePlayer(this.getTarget()).getName())
+				.replaceAll("%target", this.getTarget().getName())
 				.replaceAll("%reason", this.getReason().toString())
 				.replaceAll("%details", this.getDetails())
 				.replaceAll("%duration", "permanent")

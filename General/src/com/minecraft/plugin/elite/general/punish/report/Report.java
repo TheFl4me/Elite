@@ -10,14 +10,14 @@ import java.util.UUID;
 
 public class Report {
 	
-	private UUID hacker;
-	private UUID reporter;
+	private OfflinePlayer hacker;
+	private OfflinePlayer reporter;
 	private LanguageNode reason;
 	private long date;
 	
-	public Report(UUID hackerUuid, UUID reporterUuid, LanguageNode report, long date) {
-		this.hacker = hackerUuid;
-		this.reporter = reporterUuid;
+	public Report(UUID hacker, UUID reporter, LanguageNode report, long date) {
+		this.hacker = Bukkit.getOfflinePlayer(hacker);
+		this.reporter = Bukkit.getOfflinePlayer(reporter);
 		this.reason = report;
 		this.date = date;
 		ReportManager.add(this);
@@ -39,11 +39,11 @@ public class Report {
 	}
 	
 	public OfflinePlayer getReporter() {
-		return Bukkit.getOfflinePlayer(this.reporter);
+		return this.reporter;
 	}
 	
 	public OfflinePlayer getTarget() {
-		return Bukkit.getOfflinePlayer(this.hacker);
+		return this.hacker;
 	}
 	
 	public long getDate() {

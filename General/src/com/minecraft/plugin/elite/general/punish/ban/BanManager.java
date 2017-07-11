@@ -73,10 +73,10 @@ public class BanManager {
 		Ban ban;
 		if(reason.isTemp()) {
 			time = PunishManager.computeTime((BanManager.getPastBans(target.getUniqueId(), reason).size() + 1D), reason.getModifier(), reason.getUnit());
-			ban = new TempBan(bannerName, target.getUniqueId(), reason, banDetails, time, System.currentTimeMillis(), id);
+			ban = new TempBan(bannerName, target, reason, banDetails, time, System.currentTimeMillis(), id);
 			tempbans.put(target.getUniqueId(), (TempBan) ban);
 		} else {
-			ban = new Ban(bannerName, target.getUniqueId(), reason, banDetails, System.currentTimeMillis(), id);
+			ban = new Ban(bannerName, target, reason, banDetails, System.currentTimeMillis(), id);
 			bans.put(target.getUniqueId(), ban);
 		}
 
@@ -119,7 +119,7 @@ public class BanManager {
 			ResultSet banRes = db.select(General.DB_BANS);
 			while(banRes.next()) {
 				String banner = banRes.getString("banner");
-				UUID hacker = UUID.fromString(banRes.getString("target"));
+				OfflinePlayer hacker = Bukkit.getOfflinePlayer(UUID.fromString(banRes.getString("target")));
 				PunishReason reason = PunishReason.valueOf(banRes.getString("reason").toUpperCase());
 				String details = banRes.getString("details");
 				long date = banRes.getLong("date");
@@ -128,17 +128,17 @@ public class BanManager {
 				boolean isTemp = banRes.getBoolean("tempban");
 				if(isTemp) {
 					TempBan tempBan = new TempBan(banner, hacker, reason, details, time, date, id);
-					tempbans.put(hacker, tempBan);
+					tempbans.put(hacker.getUniqueId(), tempBan);
 				} else {
 					Ban ban = new Ban(banner, hacker, reason, details, date, id);
-					bans.put(hacker, ban);
+					bans.put(hacker.getUniqueId(), ban);
 				}
 			}
 
 			ResultSet pastBanRes = db.select(General.DB_BANHISTORY);
 			while(pastBanRes.next()) {
 				String banner = pastBanRes.getString("banner");
-				UUID hacker = UUID.fromString(pastBanRes.getString("target"));
+				OfflinePlayer hacker = Bukkit.getOfflinePlayer(UUID.fromString(pastBanRes.getString("target")));
 				PunishReason reason = PunishReason.valueOf(pastBanRes.getString("reason").toUpperCase());
 				String details = pastBanRes.getString("details");
 				long date = pastBanRes.getLong("date");
@@ -171,7 +171,7 @@ public class BanManager {
 					(ban instanceof Temporary ? 1 : 0), time, ban.getPunisher(), ban.getUniqueId(), ban.getReason().toString(), ban.getDetails(), ban.getDate(), ban.getTarget(), unbanner, currentTime);
 
 			PastBan pastBan = new PastBan(ban.getUniqueId(), ban.getTarget(), ban.getReason(), ban.getDetails(), ban.getDate(), time, ban.getPunisher(), unbanner, currentTime);
-			addPastBan(z.getUniqueId(), pastBan);
+			addPastBan(z, pastBan);
 
 			db.delete(General.DB_BANS, "target", z.getUniqueId());
 
@@ -188,14 +188,14 @@ public class BanManager {
 		}
 	}
 
-	public static void addPastBan(UUID uuid, PastBan pastBan) {
-		Collection<PastBan> pastBansList = getPastBans(uuid);
+	public static void addPastBan(OfflinePlayer hacker, PastBan pastBan) {
+		Collection<PastBan> pastBansList = getPastBans(hacker.getUniqueId());
 		Collection<PastBan> tempPastBans = new ArrayList<>();
 		if(pastBansList != null && !pastBansList.isEmpty())
 			tempPastBans.addAll(pastBansList);
 		tempPastBans.add(pastBan);
-		if(pastbans.containsKey(uuid))
-			pastbans.remove(uuid);
-		pastbans.put(uuid, tempPastBans);
+		if(pastbans.containsKey(hacker.getUniqueId()))
+			pastbans.remove(hacker.getUniqueId());
+		pastbans.put(hacker.getUniqueId(), tempPastBans);
 	}
 }

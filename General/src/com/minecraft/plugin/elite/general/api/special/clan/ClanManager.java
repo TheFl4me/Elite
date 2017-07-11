@@ -47,7 +47,7 @@ public class ClanManager {
     public static ClanInvite[] getInvites(UUID invited) {
         HashSet<ClanInvite> inv = new HashSet<>();
         for (ClanInvite invite : getInvites()) {
-            if (invite.getInvited().equals(invited))
+            if (invite.getInvited().getUniqueId().equals(invited))
                 inv.add(invite);
         }
         return inv.toArray(new ClanInvite[inv.size()]);

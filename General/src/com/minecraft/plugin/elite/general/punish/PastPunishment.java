@@ -3,7 +3,7 @@ package com.minecraft.plugin.elite.general.punish;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ public abstract class PastPunishment extends Punishment {
     private long pardonDate;
     private long time;
 
-    public PastPunishment(UUID id, UUID target, PunishReason reason, String details, long date, long time, String punisher, String pardoner, long pardonDate) {
+    public PastPunishment(UUID id, OfflinePlayer target, PunishReason reason, String details, long date, long time, String punisher, String pardoner, long pardonDate) {
         super(target, punisher, reason, details, date, id);
         this.pardoner = pardoner;
         this.pardonDate = pardonDate;
@@ -40,7 +40,7 @@ public abstract class PastPunishment extends Punishment {
         Server server = Server.get();
         return lang.get(node)
                 .replaceAll("%id", this.getUniqueId().toString())
-                .replaceAll("%target", Bukkit.getOfflinePlayer(this.getTarget()).getName())
+                .replaceAll("%target", this.getTarget().getName())
                 .replaceAll("%reason", this.getReason().toString())
                 .replaceAll("%details", this.getDetails())
                 .replaceAll("%duration", (this.isTemp() ? server.getTime(this.getDuration(), lang) : "permanent"))

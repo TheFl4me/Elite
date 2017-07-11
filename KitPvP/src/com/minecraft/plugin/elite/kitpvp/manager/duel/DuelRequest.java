@@ -2,17 +2,15 @@ package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
-import java.util.UUID;
-
 public class DuelRequest {
 	
-	private UUID inviter;
-	private UUID invited;
+	private GeneralPlayer inviter;
+	private GeneralPlayer invited;
 	private Duel.DuelType type;
 	
 	public DuelRequest(GeneralPlayer inviter, GeneralPlayer invited, Duel.DuelType type) {
-		this.inviter = inviter.getUniqueId();
-		this.invited = invited.getUniqueId();
+		this.inviter = inviter;
+		this.invited = invited;
 		this.type = type;
 		DuelManager.addRequest(this);
 	}
@@ -22,11 +20,11 @@ public class DuelRequest {
 	}
 	
 	public GeneralPlayer getInviter() {
-		return GeneralPlayer.get(this.inviter);
+		return this.inviter;
 	}
 	
 	public GeneralPlayer getInvited() {
-		return GeneralPlayer.get(this.invited);
+		return this.invited;
 	}
 	
 	public GeneralPlayer getOther(GeneralPlayer p) {

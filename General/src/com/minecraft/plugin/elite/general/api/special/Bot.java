@@ -20,7 +20,7 @@ public class Bot {
     private static HashSet<Bot> bots = new HashSet<>();
 
     private EntityPlayer entity;
-    private UUID viewer;
+    private GeneralPlayer viewer;
 
     public static Bot[] getAll() {
         return bots.toArray(new Bot[bots.size()]);
@@ -45,12 +45,12 @@ public class Bot {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) p.getPlayer().getWorld()).getHandle();
 
-        this.viewer = p.getUniqueId();
+        this.viewer = p;
         this.entity = new EntityPlayer(server, world, new GameProfile(offp.getUniqueId(), offp.getName()), new PlayerInteractManager(world));
     }
 
     public GeneralPlayer getViewer() {
-        return GeneralPlayer.get(this.viewer);
+        return this.viewer;
     }
 
     public EntityPlayer getEntity() {

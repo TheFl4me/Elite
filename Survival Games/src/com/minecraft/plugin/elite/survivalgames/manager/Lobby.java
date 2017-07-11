@@ -23,7 +23,7 @@ import java.util.*;
 
 public class Lobby {
 	
-	private List<UUID> players;
+	private List<GeneralPlayer> players;
 	private Arena arena;
 	private boolean active;
 	private int countdownTime;
@@ -47,11 +47,11 @@ public class Lobby {
 	}
 	
 	public Lobby() {
-		List<UUID> list = new ArrayList<>();
+		List<GeneralPlayer> list = new ArrayList<>();
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
 			if(!all.isInvis())
-				list.add(all.getUniqueId());
+				list.add(all);
 		}
 		this.players = list;
 		this.arena = null;
@@ -106,12 +106,12 @@ public class Lobby {
 	
 	public List<GeneralPlayer> getPlayers() {
 		List<GeneralPlayer> list = new ArrayList<>();
-		this.players.forEach((players) -> list.add(GeneralPlayer.get(players)));
+		list.addAll(this.players);
 		return list;
 	}
 	
 	public void addPlayer(GeneralPlayer p) {
-		this.players.add(p.getUniqueId());
+		this.players.add(p);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
 			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.JOINED).replaceAll("%p", p.getName()));
@@ -126,7 +126,7 @@ public class Lobby {
 	}
 	
 	public void removePlayer(GeneralPlayer p) {
-		this.players.remove(p.getUniqueId());
+		this.players.remove(p);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
 			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.LEFT).replaceAll("%p", p.getName()));

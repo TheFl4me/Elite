@@ -7,6 +7,7 @@ import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -123,11 +124,11 @@ public class ReportManager {
         try {
             ResultSet reportRes = db.select(General.DB_REPORTS);
             while(reportRes.next()) {
-                UUID reporter = UUID.fromString(reportRes.getString("reporter"));
-                UUID hacker = UUID.fromString(reportRes.getString("target"));
+                OfflinePlayer reporter = Bukkit.getOfflinePlayer(UUID.fromString(reportRes.getString("reporter")));
+                OfflinePlayer hacker = Bukkit.getOfflinePlayer(UUID.fromString(reportRes.getString("target")));
                 GeneralLanguage reason = GeneralLanguage.valueOf(reportRes.getString("reason").toUpperCase());
                 long date = reportRes.getLong("date");
-                new Report(hacker, reporter, reason, date);
+                new Report(hacker.getUniqueId(), reporter.getUniqueId(), reason, date);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -29,7 +29,6 @@ public class Arena {
 	private String name;
 	private World world;
 	private Collection<Chest> loadedChests;
-	private List<UUID> players;
 	private int startPlayerSize;
 	private List<Location> pods;
 	private Location center;
@@ -41,7 +40,7 @@ public class Arena {
 	private BukkitRunnable shrinkTask;
 	private long playTime;
 	private BukkitRunnable playTimeTask;
-	private HashMap<UUID, Integer> killCount;
+	private HashMap<GeneralPlayer, Integer> killCount;
 	private UUID winner;
 
 	public Arena(World world) {
@@ -52,15 +51,13 @@ public class Arena {
 		this.countdownTask = null;
 		this.playTimeTask = null;
 		this.winner = null;
-		this.killCount = new HashMap<>();
 		this.loadedChests = new ArrayList<>();
-		List<UUID> pList = new ArrayList<>();
+		this.killCount = new HashMap<>();
 		for(Player pall : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(pall);
-			if(!all.isInvis() && !pList.contains(all.getUniqueId()))
-				pList.add(all.getUniqueId());
+			if(!all.isInvis())
+				this.killCount.put(all, 0);
 		}
-		this.players = pList;
 		this.startPlayerSize = 0;
 		Database db = SurvivalGames.getDB();
 		List<Location> locList = new ArrayList<>();
@@ -99,18 +96,16 @@ public class Arena {
 
 	public List<GeneralPlayer> getPlayers() {
 		List<GeneralPlayer> list = new ArrayList<>();
-		this.players.forEach((players) -> list.add(GeneralPlayer.get(players)));
+		list.addAll(killCount.keySet());
 		return list;
 	}
 
 	public void addPlayer(GeneralPlayer p) {
-		this.players.add(p.getUniqueId());
-		this.killCount.put(p.getUniqueId(), 0);
+		this.killCount.put(p, 0);
 	}
 
 	public void removePlayer(GeneralPlayer p) {
-		this.players.remove(p.getUniqueId());
-		this.killCount.remove(p.getUniqueId());
+		this.killCount.remove(p);
 		/*if(this.getPlayers().size() <= this.getPods().size() / 10) {
 			this.startShrinking();
 		}*/
@@ -184,13 +179,13 @@ public class Arena {
 	}
 
 	public int getKills(GeneralPlayer p) {
-		return this.killCount.get(p.getUniqueId());
+		return this.killCount.get(p);
 	}
 
 	public void addKill(GeneralPlayer p) {
 		final int i = this.getKills(p);
-		this.killCount.remove(p.getUniqueId());
-		this.killCount.put(p.getUniqueId(), i + 1);
+		this.killCount.remove(p);
+		this.killCount.put(p, i + 1);
 		this.updateScoreboard();
 	}
 

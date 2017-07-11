@@ -32,7 +32,7 @@ public class DuelManager {
 
     public static Duel get(GeneralPlayer p) {
         for(Duel duel : getAll())
-            if(duel.getPlayers().contains(p.getUniqueId()))
+            if(duel.getPlayers().contains(p))
                 return duel;
         return null;
     }

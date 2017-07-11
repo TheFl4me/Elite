@@ -7,7 +7,7 @@ import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.general.punish.Temporary;
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
@@ -16,14 +16,14 @@ public class TempMute extends Mute implements Temporary {
 	private long time;
 	private long expireDate;
 	
-	public TempMute(String muterName, UUID targetUuid, PunishReason muteReason, String muteDetails, long muteTime, long muteDate, UUID id) {
-		super(muterName, targetUuid, muteReason, muteDetails, muteDate, id);
+	public TempMute(String muterName, OfflinePlayer target, PunishReason muteReason, String muteDetails, long muteTime, long muteDate, UUID id) {
+		super(muterName, target, muteReason, muteDetails, muteDate, id);
 		this.time = muteTime;
 		this.expireDate = muteTime + muteDate;
 	}
 
 	public String getMuteMessage() {
-		return GeneralPlayer.get(this.getTarget()).getLanguage().get(GeneralLanguage.MUTE_MUTED_ON_TALK);
+		return GeneralPlayer.get(this.getTarget().getUniqueId()).getLanguage().get(GeneralLanguage.MUTE_MUTED_ON_TALK);
 	}
 
 	public String getMuteDisplayMessage(Language lang) {
@@ -39,7 +39,7 @@ public class TempMute extends Mute implements Temporary {
 		Server server = Server.get();
 		return lang.get(node)
 				.replaceAll("%id", this.getUniqueId().toString())
-				.replaceAll("%target", Bukkit.getOfflinePlayer(this.getTarget()).getName())
+				.replaceAll("%target", this.getTarget().getName())
 				.replaceAll("%reason", this.getReason().toString())
 				.replaceAll("%details", this.getDetails())
 				.replaceAll("%duration", server.getTime(this.getTime(), lang))

@@ -14,11 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class DuelSetup {
 
-    private HashMap<UUID, Phase> phases;
+    private HashMap<GeneralPlayer, Phase> phases;
     private Duel duel;
     private boolean editing;
 
@@ -39,8 +38,7 @@ public class DuelSetup {
     }
 
     public GeneralPlayer getEditor() {
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
+        for(GeneralPlayer p : phases.keySet()) {
             if(this.getPhase(p) == Phase.EDITING || this.getPhase(p) == Phase.PENDING) {
                 return p;
             }
@@ -49,8 +47,7 @@ public class DuelSetup {
     }
 
     public GeneralPlayer getStandby() {
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
+        for(GeneralPlayer p : phases.keySet()) {
             if(this.getPhase(p) == Phase.STANDBY) {
                 return p;
             }
@@ -63,13 +60,13 @@ public class DuelSetup {
     }
 
     public void setPhase(GeneralPlayer p, Phase phase) {
-        if(phases.containsKey(p.getUniqueId()))
-            phases.remove(p.getUniqueId());
-        phases.put(p.getUniqueId(), phase);
+        if(phases.containsKey(p))
+            phases.remove(p);
+        phases.put(p, phase);
     }
 
     public Phase getPhase(GeneralPlayer p) {
-        return phases.get(p.getUniqueId());
+        return phases.get(p);
     }
 
     public void switchRoles() {
@@ -80,8 +77,7 @@ public class DuelSetup {
 
         Server server = Server.get();
 
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
+        for(GeneralPlayer p : phases.keySet()) {
 
             ItemStack glass = new ItemStack(Material.THIN_GLASS);
             Server.get().rename(glass, " ");
@@ -89,7 +85,7 @@ public class DuelSetup {
             ItemStack edit;
             ItemStack accept;
             ItemStack cancel;
-            if(phases.get(uuid) == Phase.STANDBY) {
+            if(phases.get(p) == Phase.STANDBY) {
                 cancel = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
                 server.rename(cancel, p.getLanguage().get(KitPvPLanguage.DUEL_GUI_WAIT)
                         .replaceAll("%z", this.getEditor().getName()));
@@ -146,9 +142,8 @@ public class DuelSetup {
         ItemStack glass = new ItemStack(Material.THIN_GLASS);
         Server.get().rename(glass, " ");
 
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
-            if(phases.get(uuid) == Phase.STANDBY) {
+        for(GeneralPlayer p : phases.keySet()) {
+            if(phases.get(p) == Phase.STANDBY) {
                 Inventory inv = p.getGUI().getInventory();
                 for(int i = 0; i < inv.getContents().length; i++)
                     if(inv.getItem(i).getType() == Material.STAINED_GLASS_PANE)
@@ -185,8 +180,7 @@ public class DuelSetup {
         final boolean recraft = editInv.getItem(Slot.RECRAFT.getSlot()).getType() != Material.BARRIER;
 
         this.setEditing(false);
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
+        for(GeneralPlayer p : phases.keySet()) {
             p.getPlayer().closeInventory();
             p.getPlayer().setGameMode(GameMode.SURVIVAL);
             p.clear();
@@ -301,10 +295,8 @@ public class DuelSetup {
     }
 
     public void change(int slot, ItemStack item) {
-        for(UUID uuid : phases.keySet()) {
-            GeneralPlayer p = GeneralPlayer.get(uuid);
+        for(GeneralPlayer p : phases.keySet())
             p.getGUI().getInventory().setItem(slot, item);
-        }
     }
 
     public enum Slot {

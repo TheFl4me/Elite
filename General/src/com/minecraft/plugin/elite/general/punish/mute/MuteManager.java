@@ -68,10 +68,10 @@ public class MuteManager {
 		Mute mute;
 		if(reason.isTemp()) {
 			time = PunishManager.computeTime((MuteManager.getPastMutes(target.getUniqueId(), reason).size() + 1D), reason.getModifier(), reason.getUnit());
-			mute = new TempMute(muterName, target.getUniqueId(), reason, muteDetails, time, System.currentTimeMillis(), id);
+			mute = new TempMute(muterName, target, reason, muteDetails, time, System.currentTimeMillis(), id);
 			tempmutes.put(target.getUniqueId(), (TempMute) mute);
 		} else {
-			mute = new Mute(muterName, target.getUniqueId(), reason, muteDetails, System.currentTimeMillis(), id);
+			mute = new Mute(muterName, target, reason, muteDetails, System.currentTimeMillis(), id);
 			mutes.put(target.getUniqueId(), mute);
 		}
 
@@ -103,7 +103,7 @@ public class MuteManager {
 			ResultSet muteRes = db.select(General.DB_MUTES);
 			while(muteRes.next()) {
 				String muter = muteRes.getString("muter");
-				UUID target = UUID.fromString(muteRes.getString("target"));
+				OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(muteRes.getString("target")));
 				PunishReason reason = PunishReason.valueOf(muteRes.getString("reason").toUpperCase());
 				String details = muteRes.getString("details");
 				long time = muteRes.getLong("time");
@@ -112,16 +112,16 @@ public class MuteManager {
 				boolean isTemp = muteRes.getBoolean("tempmute");
 				if(isTemp) {
 					TempMute tempMute = new TempMute(muter, target, reason, details, time, date, id);
-					tempmutes.put(target, tempMute);
+					tempmutes.put(target.getUniqueId(), tempMute);
 				} else {
 					Mute mute = new Mute(muter, target, reason, details, date, id);
-					mutes.put(target, mute);
+					mutes.put(target.getUniqueId(), mute);
 				}
 			}
 			ResultSet pastMuteRes = db.select(General.DB_MUTEHISTORY);
 			while(pastMuteRes.next()) {
 				String muter = pastMuteRes.getString("muter");
-				UUID target = UUID.fromString(pastMuteRes.getString("target"));
+				OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(pastMuteRes.getString("target")));
 				PunishReason reason = PunishReason.valueOf(pastMuteRes.getString("reason").toUpperCase());
 				String details = pastMuteRes.getString("details");
 				long time = pastMuteRes.getLong("time");
@@ -156,7 +156,7 @@ public class MuteManager {
 					(mute instanceof Temporary ? 1 : 0), time, mute.getPunisher(), mute.getUniqueId(), mute.getReason().toString(), mute.getDetails(), mute.getDate(), mute.getTarget(), unmuter, currentTime);
 
 			PastMute pastMute = new PastMute(mute.getUniqueId(), mute.getTarget(), mute.getReason(), mute.getDetails(), mute.getDate(), time, mute.getPunisher(), unmuter, currentTime);
-			addPastMute(z.getUniqueId(), pastMute);
+			addPastMute(z, pastMute);
 
 			db.delete(General.DB_MUTES, "target", z.getUniqueId());
 
@@ -173,14 +173,14 @@ public class MuteManager {
 		}
 	}
 
-	public static void addPastMute(UUID uuid, PastMute pastMute) {
-		Collection<PastMute> pastMuteList = getPastMutes(uuid);
+	public static void addPastMute(OfflinePlayer target, PastMute pastMute) {
+		Collection<PastMute> pastMuteList = getPastMutes(target.getUniqueId());
 		Collection<PastMute> tempPastMutes = new ArrayList<>();
 		if(pastMuteList != null && !pastMuteList.isEmpty())
 			tempPastMutes.addAll(pastMuteList);
 		tempPastMutes.add(pastMute);
-		if(pastmutes.containsKey(uuid))
-			pastmutes.remove(uuid);
-		pastmutes.put(uuid, tempPastMutes);
+		if(pastmutes.containsKey(target.getUniqueId()))
+			pastmutes.remove(target.getUniqueId());
+		pastmutes.put(target.getUniqueId(), tempPastMutes);
 	}
 }

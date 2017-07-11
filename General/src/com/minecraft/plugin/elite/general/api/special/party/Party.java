@@ -11,14 +11,14 @@ import java.util.UUID;
 public class Party {
 
     private UUID id;
-    private List<UUID> members;
-    private UUID creator;
+    private List<GeneralPlayer> members;
+    private GeneralPlayer creator;
 
     public Party(GeneralPlayer creator) {
         this.members = new ArrayList<>();
-        this.members.add(creator.getUniqueId());
+        this.members.add(creator);
         this.id = UUID.randomUUID();
-        this.creator = creator.getUniqueId();
+        this.creator = creator;
         PartyManager.add(this);
     }
 
@@ -28,7 +28,7 @@ public class Party {
 
     public Iterable<GeneralPlayer> getMembers() {
         List<GeneralPlayer> list = new ArrayList<>();
-        this.members.forEach((uuid) -> list.add(GeneralPlayer.get(uuid)));
+        list.addAll(this.members);
         return list;
     }
 
@@ -54,15 +54,15 @@ public class Party {
     }
 
     public GeneralPlayer getCreator() {
-        return GeneralPlayer.get(this.creator);
+        return this.creator;
     }
 
     public void add(GeneralPlayer p) {
-        this.members.add(p.getUniqueId());
+        this.members.add(p);
     }
 
     public void remove(GeneralPlayer p) {
-        this.members.remove(p.getUniqueId());
+        this.members.remove(p);
     }
 
     public boolean isCreator(GeneralPlayer p) {
