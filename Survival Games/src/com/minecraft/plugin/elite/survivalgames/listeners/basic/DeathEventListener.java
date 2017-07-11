@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -14,7 +14,7 @@ public class DeathEventListener implements Listener {
 	
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity().getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 		Lobby lobby = Lobby.get();
 		Arena arena = lobby.getArena();
 		e.setDeathMessage(null);
@@ -26,7 +26,7 @@ public class DeathEventListener implements Listener {
 				p.getPlayer().kickPlayer(p.getLanguage().get(SurvivalGamesLanguage.KICK_DEATH)
 						.replaceAll("%remaining", Integer.toString(arena.getPlayers().size())));
 			if(e.getEntity().getKiller() instanceof Player) {
-				ePlayer z = ePlayer.get(e.getEntity().getKiller());
+				GeneralPlayer z = GeneralPlayer.get(e.getEntity().getKiller());
 				if(arena.getPlayers().contains(z)) {
 					z.addExp((p.getPrestige() + 1) * 100);
 					arena.addKill(z);
@@ -37,7 +37,7 @@ public class DeathEventListener implements Listener {
 	
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Lobby lobby = Lobby.get();
 		p.clear();
 		if(!lobby.isActive())

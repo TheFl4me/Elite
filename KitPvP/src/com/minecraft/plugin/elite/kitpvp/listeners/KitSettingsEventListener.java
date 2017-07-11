@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class KitSettingsEventListener implements Listener {
             }
             kp.getPlayer().setItemOnCursor(null);
             kp.setEditing(false);
-            ePlayer.get(kp.getUniqueId()).clear();
+            GeneralPlayer.get(kp.getUniqueId()).clear();
         }
     }
 

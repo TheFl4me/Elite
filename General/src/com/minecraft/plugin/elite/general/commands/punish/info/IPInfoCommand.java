@@ -2,14 +2,14 @@ package com.minecraft.plugin.elite.general.commands.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class IPInfoCommand extends eCommand {
+public class IPInfoCommand extends GeneralCommand {
 	
 	public IPInfoCommand() {
 		super("ipinfo", "egeneral.ipinfo", false);
@@ -19,7 +19,7 @@ public class IPInfoCommand extends eCommand {
 		
 		ChatColor mainColor =  ChatColor.GRAY;
 		ChatColor secondColor = ChatColor.GOLD;
-		ePlayer p = ePlayer.get((Player) cs);
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length > 0) {
 			String info = mainColor + General.SPACER + "\n" +
 					"" + mainColor + "IP: " + secondColor + args[0] + "\n" +

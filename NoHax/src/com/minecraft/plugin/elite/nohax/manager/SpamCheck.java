@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.nohax.manager;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
@@ -9,27 +9,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SpamCheck {
 
     public static Map<UUID, SpamCheck> players = new Hashtable<>();
 
     public ArrayList<ChatMessage> messages;
-    public ePlayer player;
+    public GeneralPlayer player;
 
     public static void onPlayerChat(AsyncPlayerChatEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         SpamCheck check = players.computeIfAbsent(p.getUniqueId(), k -> new SpamCheck());
         check.addMessage(e);
     }
 
     public static void onPlayerCommand(PlayerCommandPreprocessEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         SpamCheck check = players.computeIfAbsent(p.getUniqueId(), k -> new SpamCheck());
         check.addMessage(e);
     }
@@ -39,7 +35,7 @@ public class SpamCheck {
     }
 
     public void addMessage(AsyncPlayerChatEvent e) {
-        this.player = ePlayer.get(e.getPlayer());
+        this.player = GeneralPlayer.get(e.getPlayer());
         ChatMessage message = new ChatMessage(this.getPlayer(), System.currentTimeMillis(), e.getMessage());
         this.messages.add(0, message);
         if (e.isCancelled())
@@ -55,7 +51,7 @@ public class SpamCheck {
     }
 
     public void addMessage(PlayerCommandPreprocessEvent e) {
-        this.player = ePlayer.get(e.getPlayer());
+        this.player = GeneralPlayer.get(e.getPlayer());
         ChatMessage message = new ChatMessage(this.getPlayer(), System.currentTimeMillis(), e.getMessage());
         this.messages.add(0, message);
         if (e.isCancelled())
@@ -71,7 +67,7 @@ public class SpamCheck {
     }
 
     public void checkSpamming() {
-        ePlayer p = this.getPlayer();
+        GeneralPlayer p = this.getPlayer();
         Server server = Server.get();
         if(server.isLagging() || p.isLagging())
             return;
@@ -101,7 +97,7 @@ public class SpamCheck {
         this.messages.clear();
     }
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 
@@ -110,17 +106,17 @@ public class SpamCheck {
     }
 
     public class ChatMessage {
-        public ePlayer player;
+        public GeneralPlayer player;
         public long when;
         public String message;
 
-        public ChatMessage(ePlayer p, long w, String msg) {
+        public ChatMessage(GeneralPlayer p, long w, String msg) {
             this.player = p;
             this.when = w;
             this.message = msg;
         }
 
-        public ePlayer getPlayer() {
+        public GeneralPlayer getPlayer() {
             return this.player;
         }
 

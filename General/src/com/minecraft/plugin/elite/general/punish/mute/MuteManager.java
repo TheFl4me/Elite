@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.punish.mute;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -14,11 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MuteManager {
 	
@@ -88,7 +84,7 @@ public class MuteManager {
 
 		System.out.println(Language.ENGLISH.get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName()));
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			String msg = all.getLanguage().get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName());
 			if(all.getPlayer().hasPermission("egeneral.checkinfo"))
 				all.sendHoverMessage(msg, mute.getInfo(GeneralLanguage.MUTE_INFO, all.getLanguage()));
@@ -171,7 +167,7 @@ public class MuteManager {
 
 			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
 			for(Player players : Bukkit.getOnlinePlayers()) {
-				ePlayer all = ePlayer.get(players);
+				GeneralPlayer all = GeneralPlayer.get(players);
 				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter), "/checkinfo " + z.getName(), true);
 			}
 		}

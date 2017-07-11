@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.kitpvp.manager.kits;
 
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -129,7 +129,7 @@ public class KitGUI extends GUI {
 		return this.getInventory();
 	}
 	
-	public Inventory shopSecond(ePlayer p, Kit kit) {
+	public Inventory shopSecond(GeneralPlayer p, Kit kit) {
 		this.build(54, ChatColor.GOLD + kit.getName());
 		Server server = Server.get();
 		

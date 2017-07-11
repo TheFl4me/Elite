@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
@@ -15,7 +15,7 @@ public class JoinQuitEventsListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(final PlayerJoinEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		p.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
 		Database db = KitPvP.getDB();
 		if(!db.containsValue(KitPvP.DB_KITS, "uuid", p.getUniqueId().toString())) {
@@ -31,8 +31,8 @@ public class JoinQuitEventsListener implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onPlayerQuit(PlayerQuitEvent e) {		
-		ePlayer p = ePlayer.get(e.getPlayer());
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		p.clear();
 	}
 }

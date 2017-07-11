@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +15,7 @@ public class SoupEventListener implements Listener {
 	public void onSoupGiveHealth(PlayerInteractEvent e){
 		Server server = Server.get();
 		if(server.hasSoups()) {
-			ePlayer p = ePlayer.get(e.getPlayer());
+			GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 			ItemStack item = p.getPlayer().getItemInHand();
 			if(item != null) {
 				if(item.getType() == Material.MUSHROOM_SOUP) {

@@ -1,22 +1,22 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelRequest;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
+import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelector;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.CancelQueueTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.DuelQueueTool;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelSelector;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.DuelManager;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelector;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +32,7 @@ public class DuelEventListener implements Listener {
 
 	@EventHandler
 	public void onQueueClick(ToolClickEvent e) {
-		ePlayer p = e.getPlayer();
+		GeneralPlayer p = e.getPlayer();
 		if(e.getTool() instanceof CancelQueueTool) {
 			DuelManager.removeFromQueue(p.getUniqueId());
 			p.clear();
@@ -46,7 +46,7 @@ public class DuelEventListener implements Listener {
 					p.clearTools();
 				p.giveTool(new CancelQueueTool(p.getLanguage()));
 			} else {
-				ePlayer z = ePlayer.get(DuelManager.getQueue().get(0));
+				GeneralPlayer z = GeneralPlayer.get(DuelManager.getQueue().get(0));
 				Duel duel = new Duel(z, p, Duel.DuelType.NORMAL);
 				duel.queueStart();
 			}
@@ -56,8 +56,8 @@ public class DuelEventListener implements Listener {
 	@EventHandler
 	public void onDuelSelectorClick(ToolClickEntityEvent e) {
 		if(e.getClickedEntity() instanceof Player) {
-			ePlayer p = e.getPlayer();
-			ePlayer z = ePlayer.get((Player) e.getClickedEntity());
+			GeneralPlayer p = e.getPlayer();
+			GeneralPlayer z = GeneralPlayer.get((Player) e.getClickedEntity());
 			Tool tool = e.getTool();
 			if(tool instanceof DuelSelector) {
 				if(!p.isAdminMode() && !p.isWatching() && !z.isAdminMode() && !z.isWatching() && p.isInRegion(KitPvP.REGION_DUEL) && z.isInRegion(KitPvP.REGION_DUEL)) {
@@ -105,9 +105,9 @@ public class DuelEventListener implements Listener {
 	@EventHandler
 	public void checkIfOneVsOne(EntityDamageByEntityEvent e) {
 		if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-			
-			ePlayer p = ePlayer.get((Player) e.getDamager());
-			ePlayer z = ePlayer.get((Player) e.getEntity());
+
+			GeneralPlayer p = GeneralPlayer.get((Player) e.getDamager());
+			GeneralPlayer z = GeneralPlayer.get((Player) e.getEntity());
 
 			if(p.isInRegion(KitPvP.REGION_DUEL) && z.isInRegion(KitPvP.REGION_DUEL)) {
 				//fighter hits spec
@@ -131,19 +131,19 @@ public class DuelEventListener implements Listener {
 	
 	@EventHandler
 	public void on1v1Quit(PlayerQuitEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Duel duel = DuelManager.get(p);
 		if(duel != null) {
-			ePlayer z = duel.getOpponent(p);
+			GeneralPlayer z = duel.getOpponent(p);
 			duel.end(z, p);
 		}
 	}
 
 	@EventHandler
 	public void onOtherJoinHideFromDuel(PlayerJoinEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer z = ePlayer.get(players);
+			GeneralPlayer z = GeneralPlayer.get(players);
 			Duel duel = DuelManager.get(z);
 			if(duel != null && duel.hasStarted())
 				z.getPlayer().hidePlayer(p.getPlayer());
@@ -153,8 +153,8 @@ public class DuelEventListener implements Listener {
 	@EventHandler
 	public void on1v1Death(PlayerDeathEvent e) {
 		if(e.getEntity().getKiller() instanceof Player) {
-			ePlayer z = ePlayer.get(e.getEntity().getKiller());
-			ePlayer p = ePlayer.get(e.getEntity().getPlayer());
+			GeneralPlayer z = GeneralPlayer.get(e.getEntity().getKiller());
+			GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 			Duel duel = DuelManager.get(p);
 			if(duel != null && duel.getOpponent(p).getUniqueId().equals(z.getUniqueId())) {
 				e.getDrops().clear();
@@ -166,7 +166,7 @@ public class DuelEventListener implements Listener {
 	
 	@EventHandler
 	public void invClose(InventoryCloseEvent e) {
-		ePlayer p = ePlayer.get((Player) e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get((Player) e.getPlayer());
 		if(p.isInGUI() && p.getGUI() instanceof DuelGUI) {
 			final DuelSetup setup = ((DuelGUI) p.getGUI()).getSetup();
 			p.removeGUI();
@@ -176,7 +176,7 @@ public class DuelEventListener implements Listener {
 
 	@EventHandler
 	public void foodChange(FoodLevelChangeEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity().getUniqueId());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity().getUniqueId());
 		if(DuelManager.get(p) == null && p.isInRegion(KitPvP.REGION_DUEL))
 			e.setCancelled(true);
 	}

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.api.special.clan;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.ChatColor;
 
@@ -89,9 +89,9 @@ public class Clan {
         return false;
     }
 
-    public void sendMessage(String message, ePlayer p) {
+    public void sendMessage(String message, GeneralPlayer p) {
         for (UUID uuid : getMembers()) {
-            ePlayer all = ePlayer.get(uuid);
+            GeneralPlayer all = GeneralPlayer.get(uuid);
             if (all != null)
                 all.getPlayer().sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "ClanChat" + ChatColor.GRAY + "] " + ChatColor.RESET + p.getChatName() + " > " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
         }

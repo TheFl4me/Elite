@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.raid.commands.warp;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.Raid;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
 import com.minecraft.plugin.elite.raid.manager.Warp;
@@ -10,15 +10,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class WarpCommand extends eCommand {
+public class WarpCommand extends GeneralCommand {
 	
 	public WarpCommand() {
 		super("warp", "eraid.warp", false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player)cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player)cs);
 		if(args.length > 0) {
 			if(WarpManager.getPlayerWarps(p).length > WarpManager.getMaxWarps(p)) {
 				p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.WARP_ERROR_TOO_MANY)

@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.commands.admin.staff;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.List;
 
-public class ClearStaffCommand extends eCommand implements TabCompleter {
+public class ClearStaffCommand extends GeneralCommand implements TabCompleter {
 
     public ClearStaffCommand() {
         super("clearstaff", "egeneral.setrank", true);

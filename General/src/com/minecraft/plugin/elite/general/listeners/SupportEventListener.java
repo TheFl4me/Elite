@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.supportchat.SupportChat;
 import com.minecraft.plugin.elite.general.api.special.supportchat.SupportChatManager;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -15,7 +15,7 @@ public class SupportEventListener implements Listener {
 	
 	@EventHandler
 	public void onSupportChat(AsyncPlayerChatEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		SupportChat chat = SupportChatManager.get(p);
 		if(chat != null) {
 			e.setCancelled(true);
@@ -27,7 +27,7 @@ public class SupportEventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		SupportChat chat = SupportChatManager.get(p);
 		if(chat != null)
 			chat.end();

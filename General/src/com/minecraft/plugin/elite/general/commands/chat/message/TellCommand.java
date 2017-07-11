@@ -1,14 +1,14 @@
 package com.minecraft.plugin.elite.general.commands.chat.message;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TellCommand extends eCommand {
+public class TellCommand extends GeneralCommand {
 
     public TellCommand() {
         super("tell", "egeneral.tell", false);
@@ -16,9 +16,9 @@ public class TellCommand extends eCommand {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length >= 2) {
-            ePlayer z = ePlayer.get(args[0]);
+            GeneralPlayer z = GeneralPlayer.get(args[0]);
             if (z != null) {
                 StringBuilder message = new StringBuilder();
                 for(int i = 1; i < args.length; i++)

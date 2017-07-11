@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.punish.mute;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
@@ -23,7 +23,7 @@ public class TempMute extends Mute implements Temporary {
 	}
 
 	public String getMuteMessage() {
-		return ePlayer.get(this.getTarget()).getLanguage().get(GeneralLanguage.MUTE_MUTED_ON_TALK);
+		return GeneralPlayer.get(this.getTarget()).getLanguage().get(GeneralLanguage.MUTE_MUTED_ON_TALK);
 	}
 
 	public String getMuteDisplayMessage(Language lang) {

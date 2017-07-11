@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.skit.SKit;
 import com.minecraft.plugin.elite.general.api.special.skit.SKitManager;
 import org.bukkit.ChatColor;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-public class SKitCommand extends eCommand implements TabCompleter {
+public class SKitCommand extends GeneralCommand implements TabCompleter {
 
     public SKitCommand() {
         super("skit", "egeneral.skit", false);
@@ -31,7 +31,7 @@ public class SKitCommand extends eCommand implements TabCompleter {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 2 && args[0].equalsIgnoreCase("apply"))
             try {
                 SKit skit = SKitManager.get(args[1]);
@@ -39,7 +39,7 @@ public class SKitCommand extends eCommand implements TabCompleter {
                     List<Entity> nearby = p.getPlayer().getNearbyEntities(Double.parseDouble(args[2]), Double.parseDouble(args[2]), Double.parseDouble(args[2]));
                     nearby.forEach((entity) -> {
                         if (entity instanceof Player) {
-                            ePlayer all = ePlayer.get((Player) entity);
+                            GeneralPlayer all = GeneralPlayer.get((Player) entity);
                             if (!all.isAdminMode() && !all.isInvis()) {
                                 all.clear();
                                 all.getPlayer().getInventory().setContents(skit.getContents());

@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.party;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
 import com.minecraft.plugin.elite.general.api.special.party.PartyInvite;
 import org.bukkit.command.Command;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-public class PartyCommand extends eCommand implements TabCompleter {
+public class PartyCommand extends GeneralCommand implements TabCompleter {
 
     public PartyCommand() {
         super("party", "egeneral.party", false);
@@ -27,10 +27,10 @@ public class PartyCommand extends eCommand implements TabCompleter {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 1) {
             if (args[0].equalsIgnoreCase("invite")) {
-                ePlayer z = ePlayer.get(args[1]);
+                GeneralPlayer z = GeneralPlayer.get(args[1]);
                 if (z != null) {
                     Party other = z.getParty();
                     if (other == null) {
@@ -69,7 +69,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                 Party party = p.getParty();
                 if (party != null) {
                     if (party.isCreator(p)) {
-                        ePlayer z = ePlayer.get(args[1]);
+                        GeneralPlayer z = GeneralPlayer.get(args[1]);
                         PartyInvite invite = party.getInvite(z);
                         if (invite != null) {
                             invite.delete();
@@ -90,7 +90,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                 }
             } else if (args[0].equalsIgnoreCase("accept")) {
                 if (p.getParty() == null) {
-                    Party party = ePlayer.get(args[1]).getParty();
+                    Party party = GeneralPlayer.get(args[1]).getParty();
                     if (party != null) {
                         PartyInvite invite = party.getInvite(p);
                         if (invite != null) {
@@ -112,7 +112,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("deny")) {
-                Party party = ePlayer.get(args[1]).getParty();
+                Party party = GeneralPlayer.get(args[1]).getParty();
                 if (party != null) {
                     PartyInvite invite = party.getInvite(p);
                     if (invite != null) {
@@ -129,7 +129,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("kick")) {
-                ePlayer z = ePlayer.get(args[1]);
+                GeneralPlayer z = GeneralPlayer.get(args[1]);
                 Party party = p.getParty();
                 if (party != null) {
                     if (party.isCreator(p)) {
@@ -162,7 +162,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_LEAVE)
                             .replaceAll("%p", party.getCreator().getName()));
                     if (party.isCreator(p)) {
-                        for (ePlayer members : party.getMembers())
+                        for (GeneralPlayer members : party.getMembers())
                             members.sendMessage(GeneralLanguage.PARTY_DELETED);
                         party.delete();
                         return true;
@@ -186,7 +186,7 @@ public class PartyCommand extends eCommand implements TabCompleter {
                 Party party = p.getParty();
                 if (party != null) {
                     if (party.isCreator(p)) {
-                        for (ePlayer members : party.getMembers())
+                        for (GeneralPlayer members : party.getMembers())
                             members.sendMessage(GeneralLanguage.PARTY_DELETED);
                         party.delete();
                         return true;

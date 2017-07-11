@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.general.punish.info.InfoGUI;
@@ -18,7 +18,7 @@ public class InfoEventListener implements Listener {
 
     @EventHandler
     public void onClickBack(GUIClickEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         ItemStack item = e.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         if(itemMeta.hasDisplayName() && e.getGUI() instanceof InfoGUI) {
@@ -39,7 +39,7 @@ public class InfoEventListener implements Listener {
 
     @EventHandler
     public void onClick(GUIClickEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         ItemStack item = e.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         if(itemMeta.hasDisplayName() && e.getGUI() instanceof InfoGUI) {

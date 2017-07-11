@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.raid.commands;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.Raid;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
 import org.bukkit.Location;
@@ -13,15 +13,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class TrackCommand extends eCommand {
+public class TrackCommand extends GeneralCommand {
 
 	public TrackCommand() {
 		super("track", "eraid.track", false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player) cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		Location loc = p.getPlayer().getLocation();
 		Block under = loc.getBlock().getRelative(BlockFace.DOWN);
 		if(under.getType() != Material.DIAMOND_BLOCK) {
@@ -37,11 +37,11 @@ public class TrackCommand extends eCommand {
 			return true;
 		}
 		double range = getRange(loc, BlockFace.NORTH);
-		ePlayer nearest = null;
+		GeneralPlayer nearest = null;
 		boolean sameClan = false;
 		for(Entity entity : p.getPlayer().getNearbyEntities(range, range, range)) {
 			if(entity instanceof Player) {
-				ePlayer potential = ePlayer.get((Player) entity);
+				GeneralPlayer potential = GeneralPlayer.get((Player) entity);
 				if(!potential.isAdminMode() && !potential.isInvis() && !potential.isInRegion(Raid.SPAWN)) {
 					if(p.getClan() != null && potential.getClan() != null && p.getClan().getName().equalsIgnoreCase(potential.getClan().getName())) {
 						sameClan = true;

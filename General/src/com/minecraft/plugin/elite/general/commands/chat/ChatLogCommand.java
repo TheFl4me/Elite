@@ -2,9 +2,9 @@ package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatLogCommand extends eCommand {
+public class ChatLogCommand extends GeneralCommand {
 
     public ChatLogCommand() {
         super("chatlog", "egeneral.chatlog", false);
@@ -27,7 +27,7 @@ public class ChatLogCommand extends eCommand {
     @SuppressWarnings("deprecation")
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 0) {
             Server server = Server.get();
             OfflinePlayer z = Bukkit.getOfflinePlayer(args[0]);

@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-public class GamemodeCommand extends eCommand implements TabCompleter {
+public class GamemodeCommand extends GeneralCommand implements TabCompleter {
 
     public GamemodeCommand() {
         super("gamemode", "egeneral.gamemode", false);
@@ -27,7 +27,7 @@ public class GamemodeCommand extends eCommand implements TabCompleter {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length == 0) {
             switch (p.getPlayer().getGameMode()) {
                 case SURVIVAL:
@@ -49,7 +49,7 @@ public class GamemodeCommand extends eCommand implements TabCompleter {
             setGameMode(p, args[0]);
             return true;
         } else if (args.length > 1) {
-            ePlayer z = ePlayer.get(args[1]);
+            GeneralPlayer z = GeneralPlayer.get(args[1]);
             if (z != null) {
                 if (p.getPlayer().hasPermission("egeneral.gamemode.other") && p.getRank().ordinal() > z.getRank().ordinal()) {
                     setGameMode(z, args[0]);
@@ -69,7 +69,7 @@ public class GamemodeCommand extends eCommand implements TabCompleter {
         return true;
     }
 
-    private void setGameMode(ePlayer p, String gm) {
+    private void setGameMode(GeneralPlayer p, String gm) {
         switch (gm.toLowerCase()) {
             case "survival":
                 p.getPlayer().setGameMode(GameMode.SURVIVAL);

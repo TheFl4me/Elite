@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.BossBar;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -17,16 +17,16 @@ public class BossBarEventListener implements Listener {
 
     @EventHandler
     public void showBarOnViewPlayerWithKit(PlayerMoveEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if(p.isInRegion(KitPvP.REGION_FEAST) || p.isInRegion(KitPvP.REGION_EHG) || p.isInRegion(KitPvP.REGION_DUEL)) {
-            ePlayer nearest = null;
-            List<ePlayer> possible = new ArrayList<>();
+            GeneralPlayer nearest = null;
+            List<GeneralPlayer> possible = new ArrayList<>();
             for(Entity ent : p.getPlayer().getNearbyEntities(3, 3, 3))
                 if(ent instanceof Player)
                     if(p.hasLineOfSight(ent))
-                        possible.add(ePlayer.get((Player) ent));
+                        possible.add(GeneralPlayer.get((Player) ent));
 
-            for(ePlayer near : possible)
+            for(GeneralPlayer near : possible)
                 if(nearest == null || p.getPlayer().getLocation().distance(near.getPlayer().getLocation()) < p.getPlayer().getLocation().distance(nearest.getPlayer().getLocation()))
                     nearest = near;
 

@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.kitpvp;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.special.Hologram;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.database.DatabaseCore;
@@ -13,22 +13,8 @@ import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelLocationCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelSpawnCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.holograms.SetHologramCommand;
-import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.KitEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.KitSettingsEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.LevelUpEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.RegionChangeEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ClearPlayerEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.GUIEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.JoinQuitEventsListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.LanguageEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ModeChangeEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ScoreboardEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.SpawnEventsListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ToolEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.*;
+import com.minecraft.plugin.elite.kitpvp.listeners.basic.*;
 import com.minecraft.plugin.elite.kitpvp.listeners.death.DeathEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.death.RespawnEventListener;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -69,7 +55,7 @@ public class KitPvP extends JavaPlugin {
 	public void onDisable() {
 		KitEventListener kitListener = new KitEventListener();
 		for(Player all : Bukkit.getOnlinePlayers()) {
-			ePlayer p = ePlayer.get(all);
+			GeneralPlayer p = GeneralPlayer.get(all);
 			kitListener.cleanUp(p);
 		}
 	}
@@ -223,7 +209,7 @@ public class KitPvP extends JavaPlugin {
 	public static void updateScoreboard() {
 		Server server = Server.get();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer p = ePlayer.get(players);
+			GeneralPlayer p = GeneralPlayer.get(players);
 			KitPlayer kp = KitPlayer.get(players);
 			ChatColor color = ChatColor.GOLD;
 			Scoreboard board = players.getScoreboard();
@@ -267,12 +253,12 @@ public class KitPvP extends JavaPlugin {
 		World world = Bukkit.getWorld("world");
 		Database db = KitPvP.getDB();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			loadHolograms(all);
 		}
 	}
 
-	public static void loadHolograms(ePlayer p) {
+	public static void loadHolograms(GeneralPlayer p) {
 		Database db = KitPvP.getDB();
 		World world = Bukkit.getWorld("world");
 

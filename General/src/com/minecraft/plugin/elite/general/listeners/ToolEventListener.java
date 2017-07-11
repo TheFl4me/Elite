@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import org.bukkit.Bukkit;
@@ -28,7 +28,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler
     public void callToolClickEvent(PlayerInteractEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         ItemStack item = p.getPlayer().getItemInHand();
         if(item != null) {
             if(item.getType() != Material.AIR) {
@@ -49,7 +49,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler
     public void callToolClickEntityEvent(PlayerInteractEntityEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         ItemStack item = p.getPlayer().getItemInHand();
         if(item != null) {
             if(item.getType() != Material.AIR) {
@@ -70,7 +70,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler
     public void onToolDrop(PlayerDropItemEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.hasTool()) {
             for (Tool tool : p.getTools()) {
                 ItemMeta meta = e.getItemDrop().getItemStack().getItemMeta();
@@ -86,7 +86,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler
     public void dontMoveTool(InventoryClickEvent e) {
-        ePlayer p = ePlayer.get((Player) e.getWhoClicked());
+        GeneralPlayer p = GeneralPlayer.get((Player) e.getWhoClicked());
         if(e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             if (p.hasTool()) {
                 for (Tool tool : p.getTools()) {
@@ -104,7 +104,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDeath(PlayerDeathEvent e) {
-        ePlayer p = ePlayer.get(e.getEntity());
+        GeneralPlayer p = GeneralPlayer.get(e.getEntity());
         if (p.hasTool()) {
             for (Tool tool : p.getTools()) {
                 List<ItemStack> list = e.getDrops();
@@ -122,7 +122,7 @@ public class ToolEventListener implements Listener {
 
     @EventHandler
     public void onBuild(BlockPlaceEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.hasTool()) {
             for (Tool tool : p.getTools()) {
                 if (e.getItemInHand().getItemMeta().hasDisplayName() && tool.getItem().getType().isBlock()) {

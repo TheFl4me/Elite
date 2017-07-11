@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.general.commands.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.info.InfoGUI;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 
-public class CheckInfoCommand extends eCommand {
+public class CheckInfoCommand extends GeneralCommand {
 	
 	public CheckInfoCommand() {
 		super("checkinfo", "egeneral.checkinfo", false);
@@ -23,7 +23,7 @@ public class CheckInfoCommand extends eCommand {
 	@SuppressWarnings("deprecation")
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-		ePlayer p = ePlayer.get((Player) cs);
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length == 1) {
 			p.sendMessage(GeneralLanguage.DB_CHECK);
 			Database db = General.getDB();

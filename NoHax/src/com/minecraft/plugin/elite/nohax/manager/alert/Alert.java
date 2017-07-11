@@ -1,20 +1,20 @@
 package com.minecraft.plugin.elite.nohax.manager.alert;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
 public class Alert {
 
-    private ePlayer hacker;
+    private GeneralPlayer hacker;
     private long date;
     private AlertType type;
 
-    public Alert(ePlayer p, AlertType alert) {
+    public Alert(GeneralPlayer p, AlertType alert) {
         this.hacker = p;
         this.type = alert;
         this.date = System.currentTimeMillis();
     }
 
-    public ePlayer getHacker() {
+    public GeneralPlayer getHacker() {
         return this.hacker;
     }
 

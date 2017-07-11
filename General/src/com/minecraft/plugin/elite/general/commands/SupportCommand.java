@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.supportchat.SupportChat;
 import com.minecraft.plugin.elite.general.api.special.supportchat.SupportChatManager;
 import org.bukkit.command.Command;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SupportCommand extends eCommand implements TabCompleter {
+public class SupportCommand extends GeneralCommand implements TabCompleter {
 
 	public SupportCommand() {
 		super("support", "egeneral.support", false);
@@ -26,13 +26,13 @@ public class SupportCommand extends eCommand implements TabCompleter {
 		if(args.length == 1)
 			return Arrays.asList("end", "add");
 		if(args.length == 2 && args[0].equalsIgnoreCase("add"))
-			return SupportChatManager.getRequests().stream().map(ePlayer::getName).collect(Collectors.toList());
+			return SupportChatManager.getRequests().stream().map(GeneralPlayer::getName).collect(Collectors.toList());
 		return null;
 	}
 	
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
 		
-		final ePlayer p = ePlayer.get((Player) cs);
+		final GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length == 0) {
 			if(!SupportChatManager.hasSentRequest(p)) {
 				if(SupportChatManager.get(p) == null) {
@@ -56,7 +56,7 @@ public class SupportCommand extends eCommand implements TabCompleter {
 				return true;
 			}
 		} else if(p.getPlayer().hasPermission("egeneral.support.extra") && args[0].equalsIgnoreCase("add") && args.length > 1) {
-			ePlayer z = ePlayer.get(args[1]);
+			GeneralPlayer z = GeneralPlayer.get(args[1]);
 			if(z != null) {
 				if(SupportChatManager.hasSentRequest(z)) {
 					if(!p.getUniqueId().equals(z.getUniqueId())) {

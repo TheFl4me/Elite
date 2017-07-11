@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.nohax.manager;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.nohax.NoHax;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
 import com.minecraft.plugin.elite.nohax.manager.hax.PlayerAttack;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class HaxPlayer extends ePlayer {
+public class HaxPlayer extends GeneralPlayer {
 
     private static Map<UUID, HaxPlayer> players = new HashMap<>();
     private static Map<UUID, HaxPlayer> loggingInPlayers = new HashMap<>();

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.commands.holograms;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -10,14 +10,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetHologramCommand extends eCommand {
+public class SetHologramCommand extends GeneralCommand {
 
     public SetHologramCommand() {
         super("sethologram", "ekitpvp.sethologram", false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         Database db = KitPvP.getDB();
         Location loc = p.getPlayer().getLocation();
         if(args.length > 0) {

@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BuildEventListener implements Listener {
 
-    private static List<Material> blocks = Arrays.asList(
+    private static final List<Material> blocks = Arrays.asList(
             Material.LEAVES, Material.LEAVES_2,
             Material.LONG_GRASS,
             Material.YELLOW_FLOWER, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM,
@@ -28,7 +28,7 @@ public class BuildEventListener implements Listener {
 
     @EventHandler
     public void buildBlockPlace(BlockPlaceEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         Lobby lobby = Lobby.get();
         if (!p.isBuilding())
             if(lobby.isActive() || !blocks.contains(e.getBlock().getType()))
@@ -37,7 +37,7 @@ public class BuildEventListener implements Listener {
 
     @EventHandler
     public void buildBlockBreak(BlockBreakEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         Lobby lobby = Lobby.get();
         if (!p.isBuilding())
             if(lobby.isActive() || !blocks.contains(e.getBlock().getType()))
@@ -46,7 +46,7 @@ public class BuildEventListener implements Listener {
 
     @EventHandler
     public void onItemFrameInteract(PlayerInteractEntityEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if(e.getRightClicked().getType() == EntityType.ITEM_FRAME)
             if(!p.isBuilding())
                 e.setCancelled(true);
@@ -55,7 +55,7 @@ public class BuildEventListener implements Listener {
     @EventHandler
     public void onItemFrameBreak(HangingBreakByEntityEvent e) {
         if(e.getRemover() instanceof Player) {
-            ePlayer p = ePlayer.get((Player) e.getRemover());
+            GeneralPlayer p = GeneralPlayer.get((Player) e.getRemover());
             Lobby lobby = Lobby.get();
             if(e.getEntity().getType() == EntityType.ITEM_FRAME)
                 if(!p.isBuilding())
@@ -66,7 +66,7 @@ public class BuildEventListener implements Listener {
     @EventHandler
     public void itemFrameItemRemoval(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof ItemFrame && e.getDamager() instanceof Player) {
-            ePlayer p = ePlayer.get((Player) e.getDamager());
+            GeneralPlayer p = GeneralPlayer.get((Player) e.getDamager());
             if(!p.isBuilding())
                 e.setCancelled(true);
         }

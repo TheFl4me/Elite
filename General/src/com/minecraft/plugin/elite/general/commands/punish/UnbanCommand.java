@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.ban.BanManager;
 import org.bukkit.Bukkit;
@@ -9,7 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnbanCommand extends eCommand {
+public class UnbanCommand extends GeneralCommand {
 
 	public UnbanCommand() {
 		super("unban", "egeneral.unban", true);

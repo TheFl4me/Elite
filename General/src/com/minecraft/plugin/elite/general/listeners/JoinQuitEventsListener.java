@@ -3,7 +3,7 @@ package com.minecraft.plugin.elite.general.listeners;
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -17,7 +17,7 @@ public class JoinQuitEventsListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent e) {
-        final ePlayer p = ePlayer.get(e.getPlayer());
+        final GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         Server server = Server.get();
         p.clear();
         p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.WELCOME)
@@ -30,13 +30,13 @@ public class JoinQuitEventsListener implements Listener {
                     .replaceAll("%gm", "ADMIN"));
         }
         for (Player players : Bukkit.getOnlinePlayers()) {
-            ePlayer all = ePlayer.get(players);
+            GeneralPlayer all = GeneralPlayer.get(players);
             if (all.isInvis())
                 if (p.getRank().ordinal() <= all.getInvisTo().ordinal())
                     p.getPlayer().hidePlayer(all.getPlayer());
         }
         for (Player players : Bukkit.getOnlinePlayers()) {
-            ePlayer all = ePlayer.get(players);
+            GeneralPlayer all = GeneralPlayer.get(players);
             all.setHeaderFooter();
             Clan allClan = all.getClan();
             Clan clan = p.getClan();
@@ -62,13 +62,13 @@ public class JoinQuitEventsListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         p.getPlayer().setFlySpeed((float) 0.1);
         p.getPlayer().setWalkSpeed((float) 0.2);
         e.setQuitMessage(null);
 
         for (Player players : Bukkit.getOnlinePlayers()) {
-            ePlayer all = ePlayer.get(players);
+            GeneralPlayer all = GeneralPlayer.get(players);
             Clan allClan = all.getClan();
             Clan clan = p.getClan();
             if (allClan != null && clan != null && clan.equals(allClan) && !p.isInvis()) {

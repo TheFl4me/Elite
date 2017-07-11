@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.api.special.supportchat;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ public class SupportChat {
 	private UUID staff;
 	private UUID user;
 	
-	public SupportChat(ePlayer staff, ePlayer user) {
+	public SupportChat(GeneralPlayer staff, GeneralPlayer user) {
 		this.staff = staff.getUniqueId();
 		this.user = user.getUniqueId();
 		SupportChatManager.add(this);
@@ -30,12 +30,12 @@ public class SupportChat {
 		SupportChatManager.remove(this);
 	}
 	
-	public ePlayer getStaff() {
-		return ePlayer.get(this.staff);
+	public GeneralPlayer getStaff() {
+		return GeneralPlayer.get(this.staff);
 	}
 	
-	public ePlayer getPlayer() {
-		return ePlayer.get(this.user);
+	public GeneralPlayer getPlayer() {
+		return GeneralPlayer.get(this.user);
 	}
 	
 	public void sendMessage(String msg) {

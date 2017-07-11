@@ -1,12 +1,8 @@
 package com.minecraft.plugin.elite.general.api.special;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
-import net.minecraft.server.v1_8_R3.EntityEnderDragon;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -17,7 +13,7 @@ import java.util.Set;
 
 public class BossBar {
 
-    private ePlayer viewer;
+    private GeneralPlayer viewer;
     private EntityEnderDragon dragon;
     private BukkitRunnable showTask;
 
@@ -27,7 +23,7 @@ public class BossBar {
         return bars.toArray(new BossBar[bars.size()]);
     }
 
-    public static BossBar get(ePlayer p) {
+    public static BossBar get(GeneralPlayer p) {
         for(BossBar bar : getAll()) {
             if(bar.getViewer().getUniqueId().equals(p.getUniqueId())) {
                 return bar;
@@ -36,7 +32,7 @@ public class BossBar {
         return null;
     }
 
-    public BossBar(ePlayer p) {
+    public BossBar(GeneralPlayer p) {
         WorldServer world = ((CraftWorld) p.getPlayer().getWorld()).getHandle();
         this.dragon = new EntityEnderDragon(world);
         this.viewer = p;
@@ -44,7 +40,7 @@ public class BossBar {
         bars.add(this);
     }
 
-    public ePlayer getViewer() {
+    public GeneralPlayer getViewer() {
         return this.viewer;
     }
 
@@ -95,14 +91,14 @@ public class BossBar {
     }
 
     public void changeTo(String text) {
-        final ePlayer p = this.getViewer();
+        final GeneralPlayer p = this.getViewer();
         this.destroy();
         BossBar bar = new BossBar(p);
         bar.show(text);
     }
 
     public void changeTo(String text, int ticks) {
-        final ePlayer p = this.getViewer();
+        final GeneralPlayer p = this.getViewer();
         this.destroy();
         BossBar bar = new BossBar(p);
         bar.show(text, ticks);

@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
-public class SayCommand extends eCommand {
+public class SayCommand extends GeneralCommand {
 
     public SayCommand() {
         super("say", "egeneral.say", false);
@@ -19,7 +19,7 @@ public class SayCommand extends eCommand {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 0) {
             StringBuilder message = new StringBuilder();
             Arrays.stream(args).forEach((arg) -> message.append(arg).append(" "));

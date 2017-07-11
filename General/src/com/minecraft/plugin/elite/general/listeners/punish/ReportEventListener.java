@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.listeners.punish;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.report.Report;
@@ -26,7 +26,7 @@ public class ReportEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		final ePlayer p = ePlayer.get(e.getPlayer());
+		final GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		if(p.isMod()) {
 			String list = ReportManager.getReportList(false, p.getLanguage());
 			if(list != null)
@@ -37,18 +37,18 @@ public class ReportEventListener implements Listener {
 	@EventHandler
 	public void onReportItemClick(GUIClickEvent e) {
 		if(e.getGUI() instanceof ReportGUI) {
-			final ePlayer p = e.getPlayer();
+			final GeneralPlayer p = e.getPlayer();
 			ItemStack item = e.getItem();
 			ItemMeta itemMeta = item.getItemMeta();
 			if(itemMeta.hasDisplayName()) {
 				String name = e.getGUI().getInventory().getName().substring(9);
 				String name_final = name.substring(0, name.length() - 5);
-				ePlayer z = ePlayer.get(name_final);
+				GeneralPlayer z = GeneralPlayer.get(name_final);
 				if(z != null) {
 					Report report = new Report(z.getUniqueId(), p.getUniqueId(), p.getLanguage().getNode(itemMeta.getDisplayName(), true), System.currentTimeMillis());
 					report.saveToDB();
 					PunishManager.addSentReport(p.getUniqueId());
-					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("egeneral.report.list")).forEach(players -> players.sendMessage(ePlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
+					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("egeneral.report.list")).forEach(players -> players.sendMessage(GeneralPlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
                             .replaceAll("%hacker", z.getName())
                             .replaceAll("%reason", itemMeta.getDisplayName().substring(2))
                             .replaceAll("%reporter", p.getName())));

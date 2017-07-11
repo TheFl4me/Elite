@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel.custom;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;
@@ -22,7 +22,7 @@ public class DuelSetup {
     private Duel duel;
     private boolean editing;
 
-    public DuelSetup(ePlayer p1, ePlayer p2) {
+    public DuelSetup(GeneralPlayer p1, GeneralPlayer p2) {
         this.phases = new HashMap<>();
         this.duel = DuelManager.get(p1);
         this.editing = true;
@@ -38,9 +38,9 @@ public class DuelSetup {
         this.editing = edit;
     }
 
-    public ePlayer getEditor() {
+    public GeneralPlayer getEditor() {
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             if(this.getPhase(p) == Phase.EDITING || this.getPhase(p) == Phase.PENDING) {
                 return p;
             }
@@ -48,9 +48,9 @@ public class DuelSetup {
         return null;
     }
 
-    public ePlayer getStandby() {
+    public GeneralPlayer getStandby() {
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             if(this.getPhase(p) == Phase.STANDBY) {
                 return p;
             }
@@ -62,26 +62,26 @@ public class DuelSetup {
         return this.duel;
     }
 
-    public void setPhase(ePlayer p, Phase phase) {
+    public void setPhase(GeneralPlayer p, Phase phase) {
         if(phases.containsKey(p.getUniqueId()))
             phases.remove(p.getUniqueId());
         phases.put(p.getUniqueId(), phase);
     }
 
-    public Phase getPhase(ePlayer p) {
+    public Phase getPhase(GeneralPlayer p) {
         return phases.get(p.getUniqueId());
     }
 
     public void switchRoles() {
-        final ePlayer editor = this.getEditor();
-        final ePlayer standby = this.getStandby();
+        final GeneralPlayer editor = this.getEditor();
+        final GeneralPlayer standby = this.getStandby();
         this.setPhase(standby, Phase.PENDING);
         this.setPhase(editor, Phase.STANDBY);
 
         Server server = Server.get();
 
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
 
             ItemStack glass = new ItemStack(Material.THIN_GLASS);
             Server.get().rename(glass, " ");
@@ -147,7 +147,7 @@ public class DuelSetup {
         Server.get().rename(glass, " ");
 
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             if(phases.get(uuid) == Phase.STANDBY) {
                 Inventory inv = p.getGUI().getInventory();
                 for(int i = 0; i < inv.getContents().length; i++)
@@ -186,7 +186,7 @@ public class DuelSetup {
 
         this.setEditing(false);
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             p.getPlayer().closeInventory();
             p.getPlayer().setGameMode(GameMode.SURVIVAL);
             p.clear();
@@ -302,7 +302,7 @@ public class DuelSetup {
 
     public void change(int slot, ItemStack item) {
         for(UUID uuid : phases.keySet()) {
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             p.getGUI().getInventory().setItem(slot, item);
         }
     }

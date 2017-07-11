@@ -1,33 +1,29 @@
 package com.minecraft.plugin.elite.general.api.abstracts;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 
-public abstract class eCommand implements CommandExecutor {
+public abstract class GeneralCommand implements CommandExecutor {
 
     private PluginCommand cmd;
     private String perm;
     private boolean consoleCmd;
     private Language lang;
 
-    private static HashSet<eCommand> commands = new HashSet<>();
+    private static HashSet<GeneralCommand> commands = new HashSet<>();
 
-    public static eCommand[] getCommands() {
-        return commands.toArray(new eCommand[commands.size()]);
+    public static GeneralCommand[] getCommands() {
+        return commands.toArray(new GeneralCommand[commands.size()]);
     }
 
-    public eCommand(String command, String perm, boolean console) {
+    public GeneralCommand(String command, String perm, boolean console) {
         this.perm = perm;
         this.cmd = Bukkit.getPluginCommand(command);
         this.consoleCmd = console;
@@ -72,7 +68,7 @@ public abstract class eCommand implements CommandExecutor {
                 return true;
             }
         } else if(sender instanceof Player) {
-            this.setLanguage(ePlayer.get((Player) sender).getLanguage());
+            this.setLanguage(GeneralPlayer.get((Player) sender).getLanguage());
             if (this.hasPermission(sender)) {
                 return this.execute(sender, cmd, args);
             } else {

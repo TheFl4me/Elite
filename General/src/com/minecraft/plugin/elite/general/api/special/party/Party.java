@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.api.special.party;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Party {
     private List<UUID> members;
     private UUID creator;
 
-    public Party(ePlayer creator) {
+    public Party(GeneralPlayer creator) {
         this.members = new ArrayList<>();
         this.members.add(creator.getUniqueId());
         this.id = UUID.randomUUID();
@@ -26,9 +26,9 @@ public class Party {
         PartyManager.remove(this);
     }
 
-    public Iterable<ePlayer> getMembers() {
-        List<ePlayer> list = new ArrayList<>();
-        this.members.forEach((uuid) -> list.add(ePlayer.get(uuid)));
+    public Iterable<GeneralPlayer> getMembers() {
+        List<GeneralPlayer> list = new ArrayList<>();
+        this.members.forEach((uuid) -> list.add(GeneralPlayer.get(uuid)));
         return list;
     }
 
@@ -41,7 +41,7 @@ public class Party {
         return inv.toArray(new PartyInvite[inv.size()]);
     }
 
-    public PartyInvite getInvite(ePlayer invited) {
+    public PartyInvite getInvite(GeneralPlayer invited) {
         for (PartyInvite invite : this.getInvites()) {
             if (invite.getInvited().equals(invited))
                 return invite;
@@ -53,31 +53,31 @@ public class Party {
         return this.id;
     }
 
-    public ePlayer getCreator() {
-        return ePlayer.get(this.creator);
+    public GeneralPlayer getCreator() {
+        return GeneralPlayer.get(this.creator);
     }
 
-    public void add(ePlayer p) {
+    public void add(GeneralPlayer p) {
         this.members.add(p.getUniqueId());
     }
 
-    public void remove(ePlayer p) {
+    public void remove(GeneralPlayer p) {
         this.members.remove(p.getUniqueId());
     }
 
-    public boolean isCreator(ePlayer p) {
+    public boolean isCreator(GeneralPlayer p) {
         return this.getCreator().getUniqueId().equals(p.getUniqueId());
     }
 
-    public boolean hasInvited(ePlayer p) {
+    public boolean hasInvited(GeneralPlayer p) {
         for (PartyInvite invite : PartyManager.getInvites(p))
             if (invite.getParty().getUniqueId().equals(this.getUniqueId()))
                 return true;
         return false;
     }
 
-    public void sendMessage(String message, ePlayer p) {
-        for (ePlayer all : this.getMembers())
+    public void sendMessage(String message, GeneralPlayer p) {
+        for (GeneralPlayer all : this.getMembers())
             all.getPlayer().sendMessage(ChatColor.GRAY + "[" + ChatColor.YELLOW + "PartyChat" + ChatColor.GRAY + "] " + ChatColor.RESET + p.getChatName() + " > " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
     }
 }

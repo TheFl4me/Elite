@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
@@ -13,7 +13,7 @@ public class ClearPlayerEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onClear(ClearPlayerEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         Lobby lobby = Lobby.get();
         if(p.hasTool())
             p.clearTools();

@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.survivalgames.manager;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -19,11 +19,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class Lobby {
 	
@@ -53,7 +49,7 @@ public class Lobby {
 	public Lobby() {
 		List<UUID> list = new ArrayList<>();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			if(!all.isInvis())
 				list.add(all.getUniqueId());
 		}
@@ -91,7 +87,7 @@ public class Lobby {
 	}
 	
 	public boolean hasNonPremiumPlayer() {
-		for(ePlayer all : this.getPlayers())
+		for(GeneralPlayer all : this.getPlayers())
 			if(!all.isPremium())
 				return true;
 		return false;
@@ -99,7 +95,7 @@ public class Lobby {
 	
 	public void kickNormalPlayer() {
 		Server server = Server.get();
-		for(ePlayer all : this.getPlayers()) {
+		for(GeneralPlayer all : this.getPlayers()) {
 			if(!all.isPremium()) {
 				all.getPlayer().kickPlayer(all.getLanguage().get(SurvivalGamesLanguage.KICK_REPLACED)
 						.replaceAll("%domain", server.getDomain()));
@@ -108,16 +104,16 @@ public class Lobby {
 		}
 	}
 	
-	public List<ePlayer> getPlayers() {
-		List<ePlayer> list = new ArrayList<>();
-		this.players.forEach((players) -> list.add(ePlayer.get(players)));
+	public List<GeneralPlayer> getPlayers() {
+		List<GeneralPlayer> list = new ArrayList<>();
+		this.players.forEach((players) -> list.add(GeneralPlayer.get(players)));
 		return list;
 	}
 	
-	public void addPlayer(ePlayer p) {
+	public void addPlayer(GeneralPlayer p) {
 		this.players.add(p.getUniqueId());
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.JOINED).replaceAll("%p", p.getName()));
 		}
 		if(!this.hasStartedCountdown() && this.getPlayers().size() >= this.neededPlayersToStart() && !this.isFull()) {
@@ -129,10 +125,10 @@ public class Lobby {
 		this.updateScoreboard();
 	}
 	
-	public void removePlayer(ePlayer p) {
+	public void removePlayer(GeneralPlayer p) {
 		this.players.remove(p.getUniqueId());
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.LEFT).replaceAll("%p", p.getName()));
 		}
 		if(this.hasStartedCountdown() && this.getPlayers().size() < this.neededPlayersToStart()) {
@@ -168,7 +164,7 @@ public class Lobby {
 		this.setCountdownTime(seconds);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			players.setLevel(this.getCountdownTime());
-			players.sendMessage(ePlayer.get(players).getLanguage().get(SurvivalGamesLanguage.LOBBY_COUNTDOWN).replaceAll("%seconds", Integer.toString(this.getCountdownTime())));
+			players.sendMessage(GeneralPlayer.get(players).getLanguage().get(SurvivalGamesLanguage.LOBBY_COUNTDOWN).replaceAll("%seconds", Integer.toString(this.getCountdownTime())));
 		}
 		lobby.updateScoreboard();
 		this.countdownTask = new BukkitRunnable() {
@@ -180,14 +176,14 @@ public class Lobby {
 						players.setLevel(lobby.getCountdownTime());
 					if(timeKeys.contains(lobby.getCountdownTime())) {
 						for(Player all : Bukkit.getOnlinePlayers())
-							all.sendMessage(ePlayer.get(all).getLanguage().get(SurvivalGamesLanguage.LOBBY_COUNTDOWN)
+							all.sendMessage(GeneralPlayer.get(all).getLanguage().get(SurvivalGamesLanguage.LOBBY_COUNTDOWN)
 									.replaceAll("%seconds", Integer.toString(getCountdownTime())));
 					} else if(lobby.getCountdownTime() == 0) {
                         Arena arena = getArena();
         				arena.setGamePhase(GamePhase.WAITING);
 						lobby.setActive(false);
         				for(Player players : Bukkit.getOnlinePlayers()) {
-        					ePlayer spec = ePlayer.get(players);
+							GeneralPlayer spec = GeneralPlayer.get(players);
         					if(!lobby.getPlayers().contains(spec)) {
         						spec.getPlayer().teleport(arena.getCenter());
         						if(spec.canAdminMode() && !spec.isWatching())
@@ -198,7 +194,7 @@ public class Lobby {
         					}
         				}
         				for(int i = 0; i < lobby.getPlayers().size(); i++) {
-        					ePlayer p = lobby.getPlayers().get(i);
+							GeneralPlayer p = lobby.getPlayers().get(i);
         					Location loc = arena.getPods().get(i);			
         					loc.setDirection(arena.getCenter().toVector().subtract(loc.toVector()));
         					p.getPlayer().teleport(loc);
@@ -219,7 +215,7 @@ public class Lobby {
 		Lobby lobby = Lobby.get();
 		Server server = Server.get();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer p = ePlayer.get(players);
+			GeneralPlayer p = GeneralPlayer.get(players);
 			ChatColor color = ChatColor.GOLD;
 			Scoreboard board = players.getScoreboard();
 			board.getObjectives().forEach(Objective::unregister);

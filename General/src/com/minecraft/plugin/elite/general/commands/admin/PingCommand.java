@@ -1,15 +1,14 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
-public class PingCommand extends eCommand {
+public class PingCommand extends GeneralCommand {
 
     public PingCommand() {
         super("ping", "egeneral.ping", false);
@@ -17,12 +16,12 @@ public class PingCommand extends eCommand {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length == 0) {
             sendPingInfo(p, p);
             return true;
         } else if (args.length > 0) {
-            ePlayer z = ePlayer.get(args[0]);
+            GeneralPlayer z = GeneralPlayer.get(args[0]);
             if (z != null) {
                 sendPingInfo(p, z);
                 return true;
@@ -34,7 +33,7 @@ public class PingCommand extends eCommand {
         return true;
     }
 
-    private void sendPingInfo(ePlayer p, ePlayer z) {
+    private void sendPingInfo(GeneralPlayer p, GeneralPlayer z) {
         int ping = z.getPing();
         ChatColor color;
         if (!z.isLagging())

@@ -4,7 +4,6 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
-import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Prefix;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
@@ -28,19 +27,9 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketDataSerializer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.*;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -57,17 +46,14 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class ePlayer {
+import com.minecraft.plugin.elite.general.api.enums.Achievement;
 
-	private static Map<UUID, ePlayer> players = new HashMap<>();
-	private static Map<UUID, ePlayer> loggingInPlayers = new HashMap<>();
+public class GeneralPlayer {
+
+	private static Map<UUID, GeneralPlayer> players = new HashMap<>();
+	private static Map<UUID, GeneralPlayer> loggingInPlayers = new HashMap<>();
 
 	private Player player;
 
@@ -85,44 +71,44 @@ public class ePlayer {
 	private int killStreak;
 	private List<PlayerHit> hits;
 
-	public static ePlayer get(Player player) {
+	public static GeneralPlayer get(Player player) {
 		return get(player.getUniqueId());
 	}
 
-	public static ePlayer get(UUID uuid) {
-		ePlayer result = players.get(uuid);
+	public static GeneralPlayer get(UUID uuid) {
+		GeneralPlayer result = players.get(uuid);
 		if(result == null) {
-			ePlayer login_result = loggingInPlayers.get(uuid);
+			GeneralPlayer login_result = loggingInPlayers.get(uuid);
 			return login_result;
 		}
 		return result;
 	}
 
-	public static ePlayer get(String name) {
+	public static GeneralPlayer get(String name) {
 		@SuppressWarnings("deprecation") Player p = Bukkit.getPlayer(name);
 		if(p != null) {
-			ePlayer result = get(p.getUniqueId());
+			GeneralPlayer result = get(p.getUniqueId());
 			return result;
 		}
 		return null;
 	}
 
-	public static ePlayer getPlayerLoggingIn(Player player) {
+	public static GeneralPlayer getPlayerLoggingIn(Player player) {
 		return getPlayerLoggingIn(player.getUniqueId());
 	}
 
-	public static ePlayer getPlayerLoggingIn(UUID uuid) {
+	public static GeneralPlayer getPlayerLoggingIn(UUID uuid) {
 		return loggingInPlayers.get(uuid);
 	}
 
     @SuppressWarnings("UnusedReturnValue")
-	public static ePlayer login(Player player) {
-		ePlayer p = new ePlayer(player);
+	public static GeneralPlayer login(Player player) {
+		GeneralPlayer p = new GeneralPlayer(player);
 		loggingInPlayers.put(player.getUniqueId(), p);
 		return p;
 	}
 
-	public ePlayer(Player player) {
+	public GeneralPlayer(Player player) {
 	    this.player = player;
 	    this.invisTo = null;
 	    this.pendingAFK = null;
@@ -527,7 +513,7 @@ public class ePlayer {
 		String msg = this.getLanguage().get(GeneralLanguage.INVIS_INVIS).replaceAll("%rank", this.getInvisTo().getDisplayName().toUpperCase());
 		this.getPlayer().sendMessage(msg);
 		for (Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			all.getPlayer().showPlayer(this.getPlayer());
 			if (all.getRank().ordinal() <= rank.ordinal())
 				all.getPlayer().hidePlayer(this.getPlayer());
@@ -547,7 +533,7 @@ public class ePlayer {
 	}
 
 	public void startAFKPendingTimer() {
-		final ePlayer p = this;
+		final GeneralPlayer p = this;
 	    this.pendingAFK = new BukkitRunnable() {
 	    	public void run() {
 	    		if(!p.isAFK()) {
@@ -584,7 +570,7 @@ public class ePlayer {
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			Scoreboard board = players.getScoreboard();
 			for(Player all : Bukkit.getOnlinePlayers()) {
-				ePlayer other = ePlayer.get(all);
+				GeneralPlayer other = get(all);
 				Team team = board.getTeam(other.getRank().getTeamName());
 				if(team != null) {
 					board.getTeams().forEach(teams -> teams.removeEntry(other.getName()));
@@ -904,7 +890,7 @@ public class ePlayer {
 		}
 
 		for(UUID uuid : damagePerPlayer.keySet()) {
-			ePlayer z = ePlayer.get(uuid);
+			GeneralPlayer z = get(uuid);
 			if(z != null) {
 				double exp = damagePerPlayer.get(uuid) * ((this.getPrestige() + 1) * 100) / totalDamage;
 				double percent = damagePerPlayer.get(uuid) * 100 / totalDamage;

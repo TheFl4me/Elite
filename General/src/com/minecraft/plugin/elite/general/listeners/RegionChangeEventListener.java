@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.mode.ModeChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionEnterEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionLeaveEvent;
@@ -20,19 +20,19 @@ public class RegionChangeEventListener implements Listener {
 
     @EventHandler
     public void callRegionChange(PlayerMoveEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         check(p, e.getFrom(), e.getTo());
     }
 
     @EventHandler
     public void callRegionChange(PlayerTeleportEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         check(p, e.getFrom(), e.getTo());
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onModeChange(ModeChangeEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         WorldGuardPlugin wgp = WorldGuardPlugin.inst();
         RegionManager manager = wgp.getRegionManager(p.getPlayer().getWorld());
         ApplicableRegionSet regions = manager.getApplicableRegions(p.getPlayer().getLocation());
@@ -49,7 +49,7 @@ public class RegionChangeEventListener implements Listener {
         }
     }
 
-    private void check(ePlayer p, Location from, Location to) {
+    private void check(GeneralPlayer p, Location from, Location to) {
         WorldGuardPlugin wgp = WorldGuardPlugin.inst();
         RegionManager manager = wgp.getRegionManager(p.getPlayer().getWorld());
 

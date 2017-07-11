@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.raid.commands.warp;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
 import com.minecraft.plugin.elite.raid.manager.Warp;
@@ -16,15 +16,15 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class WarpListCommand extends eCommand {
+public class WarpListCommand extends GeneralCommand {
 
 	public WarpListCommand() {
 		super("warplist", "eraid.warp", false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player)cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player)cs);
 		if(args.length == 0) {
 			Collection<String> list = new ArrayList<>();
 			for(Warp warp : WarpManager.getAvailableWarps(p))

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners.chat;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.Message;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ public class ChatEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void generalChatEvents(AsyncPlayerChatEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 
         if (p.getPlayer().hasPermission("egeneral.chat.color"))
             e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
@@ -37,7 +37,7 @@ public class ChatEventListener implements Listener {
 
     @EventHandler
     public void removePlayerFromHashMap(PlayerQuitEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (Message.hasSentMessage(p))
             Message.remove(p);
     }

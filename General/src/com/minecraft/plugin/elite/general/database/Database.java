@@ -1,10 +1,6 @@
 package com.minecraft.plugin.elite.general.database;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 public class Database {

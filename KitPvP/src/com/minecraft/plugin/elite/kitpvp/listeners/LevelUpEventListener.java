@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
@@ -11,7 +11,7 @@ public class LevelUpEventListener implements Listener {
 
     @EventHandler
     public void onLevelUp(LevelChangeEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         for(Kit kit : Kit.values())
             if(kit.getLevel() == e.getNewLevel())
                 p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_UNLOCKED)

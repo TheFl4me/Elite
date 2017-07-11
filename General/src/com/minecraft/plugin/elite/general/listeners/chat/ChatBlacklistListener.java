@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.listeners.chat;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +14,7 @@ public class ChatBlacklistListener implements Listener {
 
     @EventHandler
     public void onChatInsult(AsyncPlayerChatEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         File list = new File(General.DIRECTORY_BLACKLIST);
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(list);
         String msg = e.getMessage().toLowerCase();

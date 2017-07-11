@@ -1,18 +1,18 @@
 package com.minecraft.plugin.elite.general.api.events.stats;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class PrestigeChangeEvent extends Event {
 
-    private ePlayer player;
+    private GeneralPlayer player;
     private int newPrestige;
     private int oldPrestige;
 
     private static final HandlerList handlers = new HandlerList();
 
-    public PrestigeChangeEvent(ePlayer player, int oldPrestige, int newPrestige) {
+    public PrestigeChangeEvent(GeneralPlayer player, int oldPrestige, int newPrestige) {
         this.player = player;
         this.newPrestige = newPrestige;
         this.oldPrestige = oldPrestige;
@@ -27,7 +27,7 @@ public class PrestigeChangeEvent extends Event {
     }
 
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 

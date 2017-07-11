@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.mode.ModeChangeEvent;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
@@ -15,7 +15,7 @@ public class ModeChangeEventListener implements Listener {
 	
 	@EventHandler
 	public void onAdminChange(ModeChangeEvent e) {
-		ePlayer p = e.getPlayer();
+		GeneralPlayer p = e.getPlayer();
 		Lobby lobby = Lobby.get();
 		if(!e.isToMode()) {
 			p.clear();
@@ -42,7 +42,7 @@ public class ModeChangeEventListener implements Listener {
 	
 	@EventHandler
 	public void cancelWatchOpenChest(PlayerInteractEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Lobby lobby = Lobby.get();
 		if(p.isWatching() && !lobby.isActive())
 		   if (e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST))

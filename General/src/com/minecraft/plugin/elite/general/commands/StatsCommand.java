@@ -2,9 +2,9 @@ package com.minecraft.plugin.elite.general.commands;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 
-public class StatsCommand extends eCommand {
+public class StatsCommand extends GeneralCommand {
 
     public StatsCommand() {
         super("stats", "egeneral.stats", false);
@@ -25,7 +25,7 @@ public class StatsCommand extends eCommand {
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
         Database db = General.getDB();
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         p.sendMessage(GeneralLanguage.DB_CHECK);
         Server server = Server.get();
         DecimalFormat df = new DecimalFormat("0.00");

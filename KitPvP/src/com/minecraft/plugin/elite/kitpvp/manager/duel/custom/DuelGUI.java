@@ -2,10 +2,9 @@ package com.minecraft.plugin.elite.kitpvp.manager.duel.custom;
 
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +22,7 @@ public class DuelGUI extends GUI {
 		return this.setup;
 	}
 	
-	public Inventory main(ePlayer p) {
+	public Inventory main(GeneralPlayer p) {
 		Server server = Server.get();
 		this.build(54, this.getLanguage().get(KitPvPLanguage.DUEL_GUI_TITLE));
 		

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.commands.admin;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
@@ -11,7 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BorderCommand extends eCommand {
+public class BorderCommand extends GeneralCommand {
 
     public BorderCommand() {
         super("border", "esurvivalgames.border", false);
@@ -19,7 +19,7 @@ public class BorderCommand extends eCommand {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         Database db = SurvivalGames.getDB();
         Arena arena = ArenaManager.get(p.getPlayer().getWorld());
         if(arena != null) {

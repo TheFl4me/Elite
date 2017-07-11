@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.listeners.menu;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuGUI;
@@ -17,7 +17,7 @@ public class MenuGUIEventListener implements Listener {
 
     @EventHandler
     public void clickBackInGUI(GUIClickEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         ItemStack item = e.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         if(itemMeta.hasDisplayName() && p.getGUI() instanceof MenuGUI) {
@@ -36,7 +36,7 @@ public class MenuGUIEventListener implements Listener {
 
     @EventHandler
     public void clickItemInGUI(GUIClickEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         ItemStack item = e.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         if(itemMeta.hasDisplayName() && p.getGUI() instanceof MenuGUI) {

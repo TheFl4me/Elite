@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ public class GUIEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void clearGUI(InventoryCloseEvent e) {
-        ePlayer p = ePlayer.get((Player) e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get((Player) e.getPlayer());
         if (p != null) {
             GUI gui = p.getGUI();
             if (gui != null)
@@ -26,7 +26,7 @@ public class GUIEventListener implements Listener {
 
     @EventHandler
     public void callGUIClickEvent(InventoryClickEvent e) {
-        ePlayer p = ePlayer.get((Player) e.getWhoClicked());
+        GeneralPlayer p = GeneralPlayer.get((Player) e.getWhoClicked());
         if (p.isInGUI()) {
             if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
                 return;

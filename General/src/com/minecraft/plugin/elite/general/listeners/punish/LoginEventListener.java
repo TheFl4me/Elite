@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.listeners.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +13,7 @@ public class LoginEventListener implements Listener {
 	
 	@EventHandler
 	public void onLogin(PlayerLoginEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Server server = Server.get();
 		if(Bukkit.getServer().hasWhitelist())
 			if(!p.getPlayer().isWhitelisted())

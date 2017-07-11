@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.commands;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
@@ -10,7 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class FreeKitsCommand extends eCommand {
+public class FreeKitsCommand extends GeneralCommand {
 
     public FreeKitsCommand() {
         super("freekits", "ekitpvp.freekits", true);
@@ -21,7 +21,7 @@ public class FreeKitsCommand extends eCommand {
         KitPvP.setAllKitsFree(free);
         System.out.println(this.getLanguage().get((free ? KitPvPLanguage.KIT_FREE_TRUE : KitPvPLanguage.KIT_FREE_FALSE)));
         for(Player all : Bukkit.getOnlinePlayers()) {
-            ePlayer p = ePlayer.get(all);
+            GeneralPlayer p = GeneralPlayer.get(all);
             if(free)
                 p.sendMessage(KitPvPLanguage.KIT_FREE_TRUE);
             else

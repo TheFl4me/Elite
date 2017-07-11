@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +14,7 @@ public class SpawnEventsListener implements Listener {
 	@EventHandler
 	public void cancelDamageInSpawn(EntityDamageEvent e) {
 		if(e.getEntity() instanceof Player) {
-			ePlayer p = ePlayer.get((Player) e.getEntity());
+			GeneralPlayer p = GeneralPlayer.get((Player) e.getEntity());
 			if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 				e.setCancelled(true);
 			}
@@ -24,7 +24,7 @@ public class SpawnEventsListener implements Listener {
 	@EventHandler
 	public void invisToMobInSpawn(EntityTargetEvent e) {
 		if (e.getTarget() instanceof Player) {
-			ePlayer p = ePlayer.get((Player) e.getTarget());
+			GeneralPlayer p = GeneralPlayer.get((Player) e.getTarget());
 			if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 				e.setCancelled(true);
 			}
@@ -34,7 +34,7 @@ public class SpawnEventsListener implements Listener {
 	@EventHandler
 	public void invisToMobInSpawn(FoodLevelChangeEvent e) {
 		if(e.getEntity() instanceof Player) {
-			ePlayer p = ePlayer.get((Player) e.getEntity());
+			GeneralPlayer p = GeneralPlayer.get((Player) e.getEntity());
 			if(p.isInRegion(KitPvP.REGION_SPAWN)) {
 				e.setCancelled(true);
 			}

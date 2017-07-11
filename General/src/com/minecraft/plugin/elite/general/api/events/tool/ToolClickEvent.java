@@ -1,18 +1,18 @@
 package com.minecraft.plugin.elite.general.api.events.tool;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class ToolClickEvent extends Event {
 
-    private ePlayer player;
+    private GeneralPlayer player;
     private Tool tool;
 
     private static final HandlerList handlers = new HandlerList();
 
-    public ToolClickEvent(ePlayer p, Tool tool) {
+    public ToolClickEvent(GeneralPlayer p, Tool tool) {
         this.player = p;
         this.tool = tool;
     }
@@ -25,7 +25,7 @@ public class ToolClickEvent extends Event {
         return handlers;
     }
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 

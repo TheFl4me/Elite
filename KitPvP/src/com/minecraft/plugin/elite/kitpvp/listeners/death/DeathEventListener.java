@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.death;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -23,7 +23,7 @@ public class DeathEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void sendInvStatus(PlayerDeathEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity().getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
 		e.setDeathMessage(null);
 		
@@ -45,7 +45,7 @@ public class DeathEventListener implements Listener {
 			p.addDeath();
 			p.setKillStreak(0);
 			if(e.getEntity().getKiller() instanceof Player) {
-				ePlayer killer = ePlayer.get(e.getEntity().getKiller());
+				GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
 				KitPlayer kitKiller = KitPlayer.get(killer.getUniqueId());
 				killer.addKill();
 				p.addExpToDamagers();
@@ -66,7 +66,7 @@ public class DeathEventListener implements Listener {
 				int streak = killer.getKillStreak();
 				if(streak == 5 || streak == 10 || streak == 20 || streak == 30 || streak == 50 || streak == 75 || streak == 100 || streak == 150 || streak == 200) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
-						all.sendMessage(ePlayer.get(all).getLanguage().get(KitPvPLanguage.KILL_STREAK)
+						all.sendMessage(GeneralPlayer.get(all).getLanguage().get(KitPvPLanguage.KILL_STREAK)
 								.replaceAll("%p", killer.getName())
 								.replaceAll("%streak", Integer.toString(streak)));
 					}

@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.api.special;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,31 +21,31 @@ public class Message {
 
     private static Map<UUID, UUID> reply = new HashMap<>();
 
-    public static void remove(ePlayer p) {
+    public static void remove(GeneralPlayer p) {
         reply.remove(p.getUniqueId());
     }
 
-    public static boolean hasSentMessage(ePlayer p) {
+    public static boolean hasSentMessage(GeneralPlayer p) {
         return reply.containsKey(p.getUniqueId());
     }
 
-    public static ePlayer getTargetFrom(ePlayer p) {
-        return ePlayer.get(reply.get(p.getUniqueId()));
+    public static GeneralPlayer getTargetFrom(GeneralPlayer p) {
+        return GeneralPlayer.get(reply.get(p.getUniqueId()));
     }
 
-    public Message(ePlayer sender, ePlayer target, String msg) {
+    public Message(GeneralPlayer sender, GeneralPlayer target, String msg) {
         this.sender = sender.getUniqueId();
         this.target = target.getUniqueId();
         this.msg = msg;
         this.date = System.currentTimeMillis();
     }
 
-    public ePlayer getSender() {
-        return ePlayer.get(this.sender);
+    public GeneralPlayer getSender() {
+        return GeneralPlayer.get(this.sender);
     }
 
-    public ePlayer getTarget() {
-        return ePlayer.get(this.target);
+    public GeneralPlayer getTarget() {
+        return GeneralPlayer.get(this.target);
     }
 
     public String getMessage() {
@@ -74,7 +74,7 @@ public class Message {
         this.getSender().getPlayer().sendMessage(format);
 
         for (Player staffs : Bukkit.getOnlinePlayers()) {
-            ePlayer staff = ePlayer.get(staffs);
+            GeneralPlayer staff = GeneralPlayer.get(staffs);
             if (!this.getSender().getUniqueId().equals(staff.getUniqueId()) && !this.getTarget().getUniqueId().equals(staff.getUniqueId()) && staff.isSpy()) {
                 staff.getPlayer().sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "SPY" + ChatColor.GRAY + "] <" + this.getSender().getName() + " -> " + this.getTarget().getName() + "> " + this.getMessage());
             }

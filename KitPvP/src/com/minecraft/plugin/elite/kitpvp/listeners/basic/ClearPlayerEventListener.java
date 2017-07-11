@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
@@ -18,7 +18,7 @@ public class ClearPlayerEventListener implements Listener {
 
 	@EventHandler
 	public void clearKit(ClearPlayerEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer().getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer().getPlayer());
 		KitPlayer.get(p.getUniqueId()).clearKit();
 		if(p.hasTool())
 			p.clearTools();

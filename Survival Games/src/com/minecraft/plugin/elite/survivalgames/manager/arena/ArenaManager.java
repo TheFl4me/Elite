@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.manager.arena;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import org.bukkit.Bukkit;
@@ -8,11 +8,7 @@ import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ArenaManager {
 
@@ -26,7 +22,7 @@ public class ArenaManager {
         return arenas.get(worldName.toLowerCase());
     }
 
-    public static Arena get(ePlayer p) {
+    public static Arena get(GeneralPlayer p) {
         for(Arena arena : getAll()) {
             if(arena.getPlayers().contains(p))
                 return arena;

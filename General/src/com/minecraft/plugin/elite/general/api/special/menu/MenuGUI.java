@@ -2,9 +2,9 @@ package com.minecraft.plugin.elite.general.api.special.menu;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Prefix;
@@ -20,11 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MenuGUI extends GUI {
@@ -105,7 +101,7 @@ public class MenuGUI extends GUI {
 		return this.getInventory();
 	}
 	
-	public Inventory stats(ePlayer p) {
+	public Inventory stats(GeneralPlayer p) {
 
 		this.build(27, GeneralLanguage.MENU_GUI_STATS);
 		Server server = Server.get();
@@ -201,7 +197,7 @@ public class MenuGUI extends GUI {
 		return this.getInventory();
 	}
 
-	public Inventory achievements(ePlayer p, int page) {
+	public Inventory achievements(GeneralPlayer p, int page) {
 		List<Achievement> achievements = new ArrayList<>();
 		Collections.addAll(achievements, Achievement.values());
 		this.buildPageType(GeneralLanguage.MENU_GUI_ACHIEVEMENTS, page, achievements.size(), this.glass());
@@ -537,11 +533,13 @@ public class MenuGUI extends GUI {
 					UUID uuid = UUID.fromString(StringUUID);
 					OfflinePlayer offp = Bukkit.getOfflinePlayer(uuid);
 					head = server.playerHead(offp.getName());
-					ePlayer p = ePlayer.get(offp.getUniqueId());
+					GeneralPlayer p = GeneralPlayer.get(offp.getUniqueId());
+					String status;
 					if(p != null && !p.isInvis())
-						server.rename(head, prefix.getColor() + offp.getName() + "\n" + role(res.getString("role")) + "\n" + "&7[&aONLINE&7]");
+						status = "&7[&aONLINE&7]";
 					else
-						server.rename(head, prefix.getColor() + offp.getName() + "\n" + role(res.getString("role")) + "\n" + "&7[&cOFFLINE&7]");
+						status = "&7[&cOFFLINE&7]";
+					server.rename(head, prefix.getColor() + offp.getName() + "\n" + role(res.getString("role")) + "\n" + status);
 					return head;
 				}
 			}

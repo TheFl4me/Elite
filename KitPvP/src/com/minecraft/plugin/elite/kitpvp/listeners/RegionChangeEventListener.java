@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.region.RegionEnterEvent;
 import com.minecraft.plugin.elite.general.api.events.region.RegionLeaveEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
@@ -16,7 +16,7 @@ public class RegionChangeEventListener implements Listener {
     @EventHandler
     public void onSpawnLeave(RegionLeaveEvent e) {
         if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN)) {
-            ePlayer p = e.getPlayer();
+            GeneralPlayer p = e.getPlayer();
             if(!p.isAdminMode() && !p.isWatching()) {
                 if(p.hasTool())
                     p.clearTools();
@@ -28,7 +28,7 @@ public class RegionChangeEventListener implements Listener {
     @EventHandler
     public void onSpawnEnter(RegionEnterEvent e) {
         if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_SPAWN) || e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_DUEL)) {
-            ePlayer p = e.getPlayer();
+            GeneralPlayer p = e.getPlayer();
             Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
                 if(p != null) {
                     p.clear();

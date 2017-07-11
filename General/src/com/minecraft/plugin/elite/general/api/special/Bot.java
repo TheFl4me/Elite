@@ -1,15 +1,8 @@
 package com.minecraft.plugin.elite.general.api.special;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import net.minecraft.server.v1_8_R3.PlayerInteractManager;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -33,7 +26,7 @@ public class Bot {
         return bots.toArray(new Bot[bots.size()]);
     }
 
-    public static List<Bot> getBots(ePlayer p) {
+    public static List<Bot> getBots(GeneralPlayer p) {
         List<Bot> tempList = new ArrayList<>();
         for(Bot bot : getAll())
             if(bot.getViewer().getUniqueId().equals(p.getUniqueId()))
@@ -48,7 +41,7 @@ public class Bot {
         return null;
     }
 
-    public Bot(ePlayer p, OfflinePlayer offp) {
+    public Bot(GeneralPlayer p, OfflinePlayer offp) {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) p.getPlayer().getWorld()).getHandle();
 
@@ -56,8 +49,8 @@ public class Bot {
         this.entity = new EntityPlayer(server, world, new GameProfile(offp.getUniqueId(), offp.getName()), new PlayerInteractManager(world));
     }
 
-    public ePlayer getViewer() {
-        return ePlayer.get(this.viewer);
+    public GeneralPlayer getViewer() {
+        return GeneralPlayer.get(this.viewer);
     }
 
     public EntityPlayer getEntity() {

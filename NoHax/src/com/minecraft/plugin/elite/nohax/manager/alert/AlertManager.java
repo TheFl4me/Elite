@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.nohax.manager.alert;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
@@ -20,7 +20,7 @@ public class AlertManager {
 
     private static List<Alert> alerts = new ArrayList<>();
 
-    public static Alert get(ePlayer hacker, AlertType type) {
+    public static Alert get(GeneralPlayer hacker, AlertType type) {
         for (Alert alert : getAll())
             if (alert.getHacker().getUniqueId().equals(hacker.getUniqueId()) && alert.getType() == type)
                 return alert;
@@ -31,22 +31,22 @@ public class AlertManager {
         return alerts;
     }
 
-    public static List<Alert> getAll(ePlayer p) {
+    public static List<Alert> getAll(GeneralPlayer p) {
         List<Alert> list = getAll().stream().filter(alert -> alert.getHacker().getUniqueId().equals(p.getUniqueId())).collect(Collectors.toList());
         return list;
     }
 
-    public static void clear(ePlayer p) {
+    public static void clear(GeneralPlayer p) {
         Collection<Alert> list = new ArrayList<>();
         list.addAll(getAll(p));
         alerts.removeAll(list);
     }
 
-    public static void set(ePlayer p, AlertType type, double count) {
+    public static void set(GeneralPlayer p, AlertType type, double count) {
         set(p, type, 1, count);
     }
 
-    public static void set(ePlayer p, AlertType type, int sensitivity) {
+    public static void set(GeneralPlayer p, AlertType type, int sensitivity) {
         double count;
         Alert alert = get(p, type);
         if (alert != null)
@@ -56,7 +56,7 @@ public class AlertManager {
         set(p, type, sensitivity, count);
     }
 
-    public static void set(ePlayer p, AlertType type, int sensitivity, double count) {
+    public static void set(GeneralPlayer p, AlertType type, int sensitivity, double count) {
         final Alert alert = new Alert(p, type);
         alerts.add(alert);
         DecimalFormat df = new DecimalFormat("0");

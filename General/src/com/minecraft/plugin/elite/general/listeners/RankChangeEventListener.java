@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
 import org.bukkit.Bukkit;
@@ -13,7 +13,7 @@ public class RankChangeEventListener implements Listener {
     @EventHandler
     public void onRankChange(RankChangeEvent e) {
         if (e.getTarget().isOnline()) {
-            ePlayer p = ePlayer.get(e.getTarget().getName());
+            GeneralPlayer p = GeneralPlayer.get(e.getTarget().getName());
             p.setTag();
             if(p.isAdminMode()) {
                 if (!e.getNewRank().hasPermission("egeneral.admin")) {
@@ -31,7 +31,7 @@ public class RankChangeEventListener implements Listener {
                 p.setBuilding(false);
 
             for (Player players : Bukkit.getOnlinePlayers()) {
-                ePlayer all = ePlayer.get(players);
+                GeneralPlayer all = GeneralPlayer.get(players);
                 if (all.isInvis()) {
                     if (e.getNewRank().ordinal() <= all.getInvisTo().ordinal())
                         p.getPlayer().hidePlayer(all.getPlayer());

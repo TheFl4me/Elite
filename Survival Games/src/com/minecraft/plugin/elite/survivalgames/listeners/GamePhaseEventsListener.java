@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.survivalgames.manager.GamePhase;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -18,7 +18,7 @@ public class GamePhaseEventsListener implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Lobby lobby = Lobby.get();
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		if(!lobby.isActive()) {
 			Arena arena = lobby.getArena();
 			if(arena != null && arena.getGamePhase() == GamePhase.WAITING && arena.getPlayers().contains(p)) {

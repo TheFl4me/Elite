@@ -1,28 +1,28 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.listeners.punish.ReportEventListener;
 import com.minecraft.plugin.elite.general.punish.report.ReportGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ReportCommand extends eCommand {
+public class ReportCommand extends GeneralCommand {
 
 	public ReportCommand() {
 		super("report", "egeneral.report", false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player) cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length > 0) {
-			ePlayer z = ePlayer.get(args[0]);
+			GeneralPlayer z = GeneralPlayer.get(args[0]);
 			if(z != null) {
 				if(!p.getUniqueId().equals(z.getUniqueId())) {
-					if(!z.isMod()) {
+					if(!z.isSupporter()) {
 						if(ReportEventListener.reportedPlayer.containsKey(p.getUniqueId()) && ReportEventListener.reportedPlayer.get(p.getUniqueId()).equalsIgnoreCase(z.getName())) {
 							p.sendMessage(GeneralLanguage.REPORT_COOLDOWN);
 							return true;

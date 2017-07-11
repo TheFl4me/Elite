@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.raid.manager;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.raid.Raid;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
@@ -49,7 +49,7 @@ public class Warp {
     	WarpManager.remove(this);
     }
 	
-	public void teleport(final ePlayer p) {
+	public void teleport(final GeneralPlayer p) {
     	final Warp warp = this;
 		WarpManager.addTimer(p.getUniqueId(), new BukkitRunnable() {
 			public void run() {

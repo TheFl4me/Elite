@@ -1,14 +1,14 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class KickCommand extends eCommand {
+public class KickCommand extends GeneralCommand {
 	
 	public KickCommand() {
 		super("kick", "egeneral.kick", true);
@@ -17,11 +17,11 @@ public class KickCommand extends eCommand {
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
 		if(args.length >= 2) {
-			ePlayer z = ePlayer.get(args[0]);
+			GeneralPlayer z = GeneralPlayer.get(args[0]);
 			if(z != null) {
 				boolean can = true;
 				if(cs instanceof Player) {
-					ePlayer p = ePlayer.get((Player) cs);
+					GeneralPlayer p = GeneralPlayer.get((Player) cs);
 					if(p.getRank().ordinal() <= z.getRank().ordinal())
 						can = false;
 				} 
@@ -33,7 +33,7 @@ public class KickCommand extends eCommand {
 							.replaceAll("%reason", reason.toString());
 					z.getPlayer().kickPlayer(kick);
 					for(Player all : Bukkit.getOnlinePlayers())
-						ePlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
+						GeneralPlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
 								.replaceAll("%z", z.getName())
 								.replaceAll("%p", cs.getName());
 					return true;

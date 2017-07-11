@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.api.enums;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
@@ -11,13 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public enum Rank {
 
@@ -45,7 +39,7 @@ public enum Rank {
             ranks.remove(offp.getUniqueId());
         ranks.put(offp.getUniqueId(), rank);
         if (offp.isOnline())
-            ePlayer.get(offp.getUniqueId()).loadPermissions();
+            GeneralPlayer.get(offp.getUniqueId()).loadPermissions();
         Bukkit.getPluginManager().callEvent(event);
     }
 

@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.players;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.survivalgames.manager.alive.PlayerGUI;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ public class PlayerGUIEventListener implements Listener {
 
     @EventHandler
     public void onClickPlayerHead(GUIClickEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         ItemStack item = e.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         if(e.getGUI() instanceof PlayerGUI) {
@@ -22,7 +22,7 @@ public class PlayerGUIEventListener implements Listener {
                 PlayerGUI gui = (PlayerGUI) e.getGUI();
                 if(item.getType() == Material.SKULL_ITEM) {
                     p.getPlayer().closeInventory();
-                    ePlayer z = ePlayer.get(ChatColor.stripColor(itemMeta.getDisplayName()));
+                    GeneralPlayer z = GeneralPlayer.get(ChatColor.stripColor(itemMeta.getDisplayName()));
                     if(z != null)
                         p.getPlayer().teleport(z.getPlayer());
                     return;

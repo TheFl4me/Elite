@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode.invis;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvisCommand extends eCommand implements TabCompleter {
+public class InvisCommand extends GeneralCommand implements TabCompleter {
 
     public InvisCommand() {
         super("invisible", "egeneral.invis", false);
@@ -22,7 +22,7 @@ public class InvisCommand extends eCommand implements TabCompleter {
     public List<String> onTabComplete(CommandSender cs, Command cmd, String lbl, String[] args) {
 
         if (args.length == 1 && this.hasPermission(cs)) {
-            ePlayer p = ePlayer.get((Player) cs);
+            GeneralPlayer p = GeneralPlayer.get((Player) cs);
             List<String> ranks = new ArrayList<>();
             ranks.add(Rank.MEDIA.getName());
             ranks.add(Rank.BUILDER.getName());
@@ -38,7 +38,7 @@ public class InvisCommand extends eCommand implements TabCompleter {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length == 0) {
             p.setInvis(true);
             return true;
@@ -60,7 +60,7 @@ public class InvisCommand extends eCommand implements TabCompleter {
         return true;
     }
 
-    private void setInvis(ePlayer p, Rank rank) {
+    private void setInvis(GeneralPlayer p, Rank rank) {
         if (p.getRank().ordinal() > rank.ordinal())
             p.setInvis(rank);
         else {

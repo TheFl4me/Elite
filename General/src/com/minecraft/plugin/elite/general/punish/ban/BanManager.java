@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.punish.ban;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -15,11 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class BanManager {
 	
@@ -94,7 +90,7 @@ public class BanManager {
 		ReportManager.clearReportsOnBan(target.getUniqueId());
 
 		if(target.isOnline()) {
-			ePlayer z = ePlayer.get(target.getUniqueId());
+			GeneralPlayer z = GeneralPlayer.get(target.getUniqueId());
 			z.sendMessage(GeneralLanguage.BAN_WARNING);
 			final String kick = ban.getKickMessage(z.getLanguage());
 			z.getPlayer().kickPlayer(kick);
@@ -102,7 +98,7 @@ public class BanManager {
 
 		System.out.println(Language.ENGLISH.get(GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName()));
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			String msg = all.getLanguage().get(GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName());
 
 			if(all.getPlayer().hasPermission("eban.checkinfo"))
@@ -186,7 +182,7 @@ public class BanManager {
 
 			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
 			for(Player players : Bukkit.getOnlinePlayers()) {
-				ePlayer all = ePlayer.get(players);
+				GeneralPlayer all = GeneralPlayer.get(players);
 				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner), "/checkinfo " + z.getName(), true);
 			}
 		}

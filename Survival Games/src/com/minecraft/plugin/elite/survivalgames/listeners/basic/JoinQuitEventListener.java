@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -17,7 +17,7 @@ public class JoinQuitEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onLogin(PlayerLoginEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Lobby lobby = Lobby.get();
 		Server server = Server.get();
 		if(lobby.isActive()) {
@@ -37,7 +37,7 @@ public class JoinQuitEventListener implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Lobby lobby = Lobby.get();
 		Server server = Server.get();
 		p.getPlayer().teleport(lobby.getWorld().getSpawnLocation());
@@ -55,7 +55,7 @@ public class JoinQuitEventListener implements Listener {
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Lobby lobby = Lobby.get();
 		Arena arena = lobby.getArena();
 		if(lobby.isActive() && lobby.getPlayers().contains(p))

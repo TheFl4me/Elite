@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-public class SpeedCommand extends eCommand implements TabCompleter {
+public class SpeedCommand extends GeneralCommand implements TabCompleter {
 
     public SpeedCommand() {
         super("speed", "egeneral.speed", false);
@@ -27,7 +27,7 @@ public class SpeedCommand extends eCommand implements TabCompleter {
     @SuppressWarnings("deprecation")
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 0) {
             try {
                 int speed = Integer.parseInt(args[0]);

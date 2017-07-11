@@ -1,12 +1,7 @@
 package com.minecraft.plugin.elite.hub;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.hub.listeners.ClearPlayerEventListener;
-import com.minecraft.plugin.elite.hub.listeners.DamageEventListener;
-import com.minecraft.plugin.elite.hub.listeners.FoodChangeEventListener;
-import com.minecraft.plugin.elite.hub.listeners.JoinQuitEventsListener;
-import com.minecraft.plugin.elite.hub.listeners.LanguageEventListener;
-import com.minecraft.plugin.elite.hub.listeners.ModeChangeEventListener;
+import com.minecraft.plugin.elite.hub.listeners.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Hub extends JavaPlugin {

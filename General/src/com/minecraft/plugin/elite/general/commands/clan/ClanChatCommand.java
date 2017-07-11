@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.general.commands.clan;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.command.Command;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
-public class ClanChatCommand extends eCommand {
+public class ClanChatCommand extends GeneralCommand {
 
     public ClanChatCommand() {
         super("clanchat", "egeneral.clan", false);
@@ -20,7 +20,7 @@ public class ClanChatCommand extends eCommand {
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 0) {
             Clan clan = p.getClan();
             if (clan != null) {

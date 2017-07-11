@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -9,20 +9,11 @@ import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.events.KitChangeEvent;
 import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -36,13 +27,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
@@ -50,20 +35,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class KitEventListener implements Listener {
 
 
-	public void cleanUp(ePlayer p ) {
+	public void cleanUp(GeneralPlayer p ) {
 		if(chargeTask.containsKey(p.getUniqueId())) {
 			chargeTask.get(p.getUniqueId()).cancel();
 			chargeTask.remove(p.getUniqueId());
@@ -133,7 +110,7 @@ public class KitEventListener implements Listener {
 
 	@EventHandler
 	public void cleanOnClear(ClearPlayerEvent e) {
-		ePlayer p = e.getPlayer();
+		GeneralPlayer p = e.getPlayer();
 		cleanUp(p);
 	}
 	
@@ -161,7 +138,7 @@ public class KitEventListener implements Listener {
 		if(e.getDamager() instanceof Arrow) {
 			Arrow arrow = (Arrow) e.getDamager();
 			if(arrow.getShooter() instanceof Player && e.getEntity() instanceof Player) {
-				ePlayer z = ePlayer.get(e.getEntity().getUniqueId());
+				GeneralPlayer z = GeneralPlayer.get(e.getEntity().getUniqueId());
 				if(z.isAdminMode() || z.isWatching())
 					return;
 				KitPlayer shooter = KitPlayer.get((Player) arrow.getShooter());
@@ -175,7 +152,7 @@ public class KitEventListener implements Listener {
 	//Backup
 	@EventHandler
 	public void onBackup(PlayerInteractEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
 		ItemStack item = p.getPlayer().getItemInHand();
 		if(item == null || item.getType() == Material.AIR)
@@ -194,7 +171,7 @@ public class KitEventListener implements Listener {
     	KitPlayer p = KitPlayer.get(e.getPlayer());
     	if ((e.getCaught() instanceof Player)) {
     		final KitPlayer caught = KitPlayer.get((Player) e.getCaught());
-			ePlayer cp = ePlayer.get(caught.getUniqueId());
+			GeneralPlayer cp = GeneralPlayer.get(caught.getUniqueId());
     		if(p.hasKit(Kit.FISHERMAN) && !p.isNearRogue() && !cp.isAdminMode() && !cp.isWatching()) {
 				if(p.isInRegion(KitPvP.REGION_SPAWN) || caught.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -227,7 +204,7 @@ public class KitEventListener implements Listener {
 					boolean nearby = false;
 					for(Entity entity : p.getPlayer().getNearbyEntities(5, 5, 5)) {
 						if(entity instanceof Player) {
-							ePlayer z = ePlayer.get(entity.getUniqueId());
+							GeneralPlayer z = GeneralPlayer.get(entity.getUniqueId());
 							if(!z.isAdminMode() && !z.isWatching() && !z.isInRegion(KitPvP.REGION_SPAWN)) {
 								nearby = true;
 								break;
@@ -299,7 +276,7 @@ public class KitEventListener implements Listener {
     				p.getPlayer().getWorld().playSound(p.getPlayer().getLocation(), Sound.WITHER_DEATH, 20F, 20F);
 					p.getPlayer().getNearbyEntities(20F, 20F, 20F).forEach((entity) -> {
 						if(entity instanceof Player) {
-							ePlayer all = ePlayer.get((Player) entity);
+							GeneralPlayer all = GeneralPlayer.get((Player) entity);
 							all.getPlayer().sendMessage(all.getLanguage().get(KitPvPLanguage.PHANTOM_WARNING).replaceAll("%p", p.getName()));
 						}
 					});
@@ -343,15 +320,15 @@ public class KitEventListener implements Listener {
     }
 
     @EventHandler
-	public void dontMoveArmor(InventoryClickEvent e) {
-    	ePlayer p = ePlayer.get((Player) e.getWhoClicked());
+	public void cancelMoveArmor(InventoryClickEvent e) {
+		GeneralPlayer p = GeneralPlayer.get((Player) e.getWhoClicked());
 		if(e.getSlotType() == InventoryType.SlotType.ARMOR && flyTask.containsKey(p.getUniqueId()))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
-	public void dontDropArmor(PlayerDropItemEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+	public void cancelDropArmor(PlayerDropItemEvent e) {
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		if(flyTask.containsKey(p.getUniqueId())) {
 			switch(e.getItemDrop().getItemStack().getType()) {
 				case LEATHER_BOOTS: p.getPlayer().getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS));
@@ -372,7 +349,7 @@ public class KitEventListener implements Listener {
 
 	@EventHandler
 	public void clearArmorOnDeath(PlayerDeathEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity());
 		if(flyTask.containsKey(p.getUniqueId())) {
 			List<ItemStack> list = e.getDrops();
 			Iterator<ItemStack> i = list.iterator();
@@ -395,7 +372,7 @@ public class KitEventListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.SNAIL) && !hitter.isNearRogue() && !et.isWatching() && !et.isAdminMode()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -503,7 +480,7 @@ public class KitEventListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.VIPER) && !hitter.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -548,7 +525,7 @@ public class KitEventListener implements Listener {
 							for(Entity ent : p.getPlayer().getNearbyEntities(5.0, block.getWorld().getMaxHeight(), 5.0)) {
 								if(ent instanceof Player) {
 									Location zLoc = ent.getLocation();
-									ePlayer z = ePlayer.get(ent.getUniqueId());
+									GeneralPlayer z = GeneralPlayer.get(ent.getUniqueId());
 									int zY = zLoc.getBlockY();
 									int pY = pLoc.getBlockY();
 									if(zY - pY < 3 && zY - pY > -3)
@@ -631,7 +608,7 @@ public class KitEventListener implements Listener {
 		if(e.getRightClicked() instanceof Player) {
 			KitPlayer hitter = KitPlayer.get(e.getPlayer());
 			KitPlayer target = KitPlayer.get((Player) e.getRightClicked());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.MONK) && hitter.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && !hitter.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -723,7 +700,7 @@ public class KitEventListener implements Listener {
 		if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
 			final KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			final KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.NINJA) && !et.isWatching() && !et.isAdminMode() && target.hasKit()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -812,7 +789,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity() instanceof Player && e.getDamager() instanceof Projectile) {
 			Projectile proj = (Projectile) e.getDamager();
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(proj.getShooter() instanceof Player && proj instanceof Snowball) {
 				KitPlayer thrower = KitPlayer.get((Player) proj.getShooter());
 				if(thrower.hasKit(Kit.SWITCHER) && !thrower.isNearRogue() && !et.isAdminMode() && !et.isWatching() && !thrower.isInRegion(KitPvP.REGION_SPAWN) && !et.isInRegion(KitPvP.REGION_SPAWN)) {
@@ -831,7 +808,7 @@ public class KitEventListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(hitter.hasKit(Kit.MAGMA) && !hitter.isNearRogue() && !et.isWatching() && !et.isAdminMode()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -850,7 +827,7 @@ public class KitEventListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			KitPlayer hitter = KitPlayer.get((Player) e.getDamager());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			ItemStack item = hitter.getPlayer().getItemInHand();
 			if(item == null || item.getType() == Material.AIR)
 				return;
@@ -1006,7 +983,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity().getKiller() instanceof Player) {
 			final KitPlayer killer = KitPlayer.get(e.getEntity().getKiller());
 			final KitPlayer target = KitPlayer.get(e.getEntity().getPlayer());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if((killer.hasKit(Kit.TANK) || target.hasKit(Kit.TANK)) && !killer.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
 				if(killer.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -1035,7 +1012,7 @@ public class KitEventListener implements Listener {
 		if(e.getEntity().getKiller() instanceof Player) {
 			KitPlayer killer = KitPlayer.get(e.getEntity().getKiller());
 			KitPlayer target = KitPlayer.get(e.getEntity().getPlayer());
-			ePlayer et = ePlayer.get(target.getUniqueId());
+			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
 			if(killer.hasKit(Kit.BERSERKER) && !killer.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
 				if(killer.isInRegion(KitPvP.REGION_SPAWN))
 					return;
@@ -1053,7 +1030,7 @@ public class KitEventListener implements Listener {
 			if(item.getType() == Material.AIR || item == null) {
 				KitPlayer p = KitPlayer.get(e.getPlayer());
 				KitPlayer z = KitPlayer.get((Player) e.getRightClicked());
-				ePlayer ez = ePlayer.get(z.getUniqueId());
+				GeneralPlayer ez = GeneralPlayer.get(z.getUniqueId());
 				if(p.hasKit(Kit.HULK) && !p.isNearRogue() && p.getPlayer().getPassenger() != null && z.getPlayer().getPassenger() != null && !ez.isAdminMode() && !ez.isWatching() && !z.getPlayer().isSneaking()) {
 					if(p.isInRegion(KitPvP.REGION_SPAWN) || z.isInRegion(KitPvP.REGION_SPAWN))
 						return;
@@ -1203,7 +1180,7 @@ public class KitEventListener implements Listener {
 			if(item != null && item.getType() != Material.AIR && item.getItemMeta().hasDisplayName()) {
 				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_GLADIATOR_ITEM))) {
 					if(e.getRightClicked() instanceof Player) {
-						ePlayer z = ePlayer.get((Player) e.getRightClicked());
+						GeneralPlayer z = GeneralPlayer.get((Player) e.getRightClicked());
 						if(!z.isAdminMode() && !z.isWatching()) {
 							if(p.isInRegion(KitPvP.REGION_SPAWN) || z.isInRegion(KitPvP.REGION_SPAWN))
 								return;
@@ -1307,7 +1284,7 @@ public class KitEventListener implements Listener {
 			Collection<ItemStack> drops = new ArrayList<>();
 			drops.addAll(e.getDrops());
 			e.getDrops().clear();
-			ePlayer killer = ePlayer.get(fight.get(e.getEntity().getPlayer().getUniqueId()));
+			GeneralPlayer killer = GeneralPlayer.get(fight.get(e.getEntity().getPlayer().getUniqueId()));
 			Bukkit.getScheduler().runTaskLater(KitPvP.getPlugin(), () -> {
                 for(ItemStack item : drops)
                     killer.getPlayer().getWorld().dropItem(killer.getPlayer().getLocation(), item);
@@ -1317,11 +1294,11 @@ public class KitEventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void cleanOnDeath(PlayerDeathEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity().getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 		cleanUpGladiator(p);
 	}
 
-	private void cleanUpGladiator(ePlayer p) {
+	private void cleanUpGladiator(GeneralPlayer p) {
 		if(cubes.containsKey(p.getUniqueId())) {
 			for(Location loc : cubes.get(p.getUniqueId()))
 				loc.getBlock().setType(Material.AIR);
@@ -1373,7 +1350,7 @@ public class KitEventListener implements Listener {
 						p.getPlayer().getWorld().playSound(p.getPlayer().getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
 						for(Entity ent : p.getPlayer().getNearbyEntities(1.5 * lvl, 1.5 * lvl, 1.5 * lvl)) {
 							if(ent instanceof Player) {
-								ePlayer ep = ePlayer.get(ent.getUniqueId());
+								GeneralPlayer ep = GeneralPlayer.get(ent.getUniqueId());
 								if(ep.isAdminMode() || ep.isWatching() || ep.isInRegion(KitPvP.REGION_SPAWN))
 									continue;
 								HaxPlayer.get(ep.getUniqueId()).invalidate(10000);

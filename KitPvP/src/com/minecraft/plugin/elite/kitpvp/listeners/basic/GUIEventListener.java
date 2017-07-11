@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -25,7 +25,7 @@ public class GUIEventListener implements Listener {
 	
 	@EventHandler
 	public void clickItemInGUI(GUIClickEvent e) {
-		ePlayer p = e.getPlayer();
+		GeneralPlayer p = e.getPlayer();
 		Server server = Server.get();
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
 		ItemStack item = e.getItem();

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.death;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +11,7 @@ public class RespawnEventListener implements Listener {
 		
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		e.setRespawnLocation(Bukkit.getWorld("world").getSpawnLocation());
 		Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
             if(p != null) {

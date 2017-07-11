@@ -1,18 +1,14 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +33,7 @@ public class Duel {
 		DuelManager.add(this);
 	}
 
-	public Duel(ePlayer inviter, ePlayer invited, DuelType type) {
+	public Duel(GeneralPlayer inviter, GeneralPlayer invited, DuelType type) {
 		this.players = new ArrayList<>();
 		this.players.add(inviter.getUniqueId());
 		this.players.add(invited.getUniqueId());
@@ -58,25 +54,25 @@ public class Duel {
 	}
 
 	public void accepted() {
-		ePlayer p1 = ePlayer.get(this.getPlayers().get(0));
-		ePlayer p2 = ePlayer.get(this.getPlayers().get(1));
+		GeneralPlayer p1 = GeneralPlayer.get(this.getPlayers().get(0));
+		GeneralPlayer p2 = GeneralPlayer.get(this.getPlayers().get(1));
 		DuelRequest request = DuelManager.getRequest(p1, p2);
 		for(UUID uuid : this.getPlayers()) {
-			ePlayer p = ePlayer.get(uuid);
+			GeneralPlayer p = GeneralPlayer.get(uuid);
 			p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
 					.replaceAll("%z", request.getOther(p).getName()));
 		}
 		if(request.getType() == DuelType.CUSTOM) {
 			DuelSetup setup = new DuelSetup(p1, p2);
 			for(UUID uuid : this.getPlayers()) {
-				ePlayer p = ePlayer.get(uuid);
+				GeneralPlayer p = GeneralPlayer.get(uuid);
 				DuelGUI gui = new DuelGUI(p.getLanguage(), setup);
 				p.openGUI(gui, gui.main(p));
 				setup.playSound(Sound.ANVIL_USE);
 			}
 		} else if(request.getType() == DuelType.NORMAL) {
 			for(UUID uuid : this.getPlayers()) {
-				ePlayer p = ePlayer.get(uuid);
+				GeneralPlayer p = GeneralPlayer.get(uuid);
 				p.getPlayer().closeInventory();
 				p.getPlayer().setGameMode(GameMode.SURVIVAL);
 				p.clear();
@@ -92,15 +88,15 @@ public class Duel {
 	}
 
 	public void queueStart() {
-		ePlayer p1 = ePlayer.get(this.getPlayers().get(0));
-		ePlayer p2 = ePlayer.get(this.getPlayers().get(1));
+		GeneralPlayer p1 = GeneralPlayer.get(this.getPlayers().get(0));
+		GeneralPlayer p2 = GeneralPlayer.get(this.getPlayers().get(1));
 		p1.getPlayer().sendMessage(p1.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
 				.replaceAll("%z", p2.getName()));
 		p2.getPlayer().sendMessage(p2.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
 				.replaceAll("%z", p1.getName()));
 
 		for(UUID uuid : this.getPlayers()) {
-			ePlayer p = ePlayer.get(uuid);
+			GeneralPlayer p = GeneralPlayer.get(uuid);
 			p.getPlayer().closeInventory();
 			p.getPlayer().setGameMode(GameMode.SURVIVAL);
 			p.clear();
@@ -120,18 +116,18 @@ public class Duel {
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			if(!this.getPlayers().contains(players.getUniqueId()))
 				for(UUID uuid : this.getPlayers())
-					ePlayer.get(uuid).getPlayer().hidePlayer(players.getPlayer());
+					GeneralPlayer.get(uuid).getPlayer().hidePlayer(players.getPlayer());
 		}
 		for(int i = 0; i < this.getPlayers().size(); i++) {
-			ePlayer p = ePlayer.get(this.getPlayers().get(i));
+			GeneralPlayer p = GeneralPlayer.get(this.getPlayers().get(i));
 			DuelManager.removeFromQueue(p.getUniqueId());
 			Location loc = this.getLocation(i + 1);
 			if(loc != null)
 				p.getPlayer().teleport(loc);
 		}
 		for(UUID uuid : this.getPlayers()) {
-			ePlayer p = ePlayer.get(uuid);
-			ePlayer z = this.getOpponent(p);
+			GeneralPlayer p = GeneralPlayer.get(uuid);
+			GeneralPlayer z = this.getOpponent(p);
 
 			Location p1 = p.getPlayer().getLocation();
 			Location z1 = z.getPlayer().getLocation();
@@ -142,7 +138,7 @@ public class Duel {
 		this.started = true;
 	}
 	
-	public void end(ePlayer winner, ePlayer loser) {
+	public void end(GeneralPlayer winner, GeneralPlayer loser) {
 		Server server = Server.get();
 		server.computeELO(winner, loser, 1 , 0, 32);
 
@@ -154,7 +150,7 @@ public class Duel {
 		winner.clear();
 
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			if(!all.isInvis()) {
 				winner.getPlayer().showPlayer(players);
 				loser.getPlayer().showPlayer(players);
@@ -177,10 +173,10 @@ public class Duel {
 		this.delete();
 	}
 	
-	public ePlayer getOpponent(ePlayer p) {
+	public GeneralPlayer getOpponent(GeneralPlayer p) {
 		for(UUID uuid : this.getPlayers()) {
 			if(!uuid.equals(p.getUniqueId()))
-				return ePlayer.get(uuid);
+				return GeneralPlayer.get(uuid);
 		}
 		return null;
 	}

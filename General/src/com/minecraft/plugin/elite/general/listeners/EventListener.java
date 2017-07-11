@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
@@ -27,13 +27,13 @@ public class EventListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerLogin(PlayerLoginEvent e) {
-        ePlayer.login(e.getPlayer());
+        GeneralPlayer.login(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerLoginCanceled(PlayerLoginEvent e) {
         if (e.getResult() != Result.ALLOWED) {
-            ePlayer p = ePlayer.get(e.getPlayer());
+            GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
             if (p != null)
                 p.logout();
         }
@@ -41,21 +41,21 @@ public class EventListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void cleanUpPlayerHashMap(PlayerQuitEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p != null)
             p.leave();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p != null)
             p.join();
     }
 
     @EventHandler
     public void onLevelUp(LevelChangeEvent e) {
-        ePlayer p = e.getPlayer();
+        GeneralPlayer p = e.getPlayer();
         if (e.isLevelUp()) {
             p.setTokens(p.getTokens() + 1);
             p.sendTitle(p.getLanguage().get(GeneralLanguage.LEVEL_UP), 1, 20, 3);

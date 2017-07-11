@@ -1,18 +1,18 @@
 package com.minecraft.plugin.elite.general.api.events.stats;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class ELOChangeEvent extends Event {
 
-    private ePlayer player;
+    private GeneralPlayer player;
     private long amount;
     private boolean isPositive;
 
     private static final HandlerList handlers = new HandlerList();
 
-    public ELOChangeEvent(ePlayer player, long amount) {
+    public ELOChangeEvent(GeneralPlayer player, long amount) {
         this.player = player;
         this.amount = amount;
         this.isPositive = amount >= 0;
@@ -26,7 +26,7 @@ public class ELOChangeEvent extends Event {
         return handlers;
     }
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 

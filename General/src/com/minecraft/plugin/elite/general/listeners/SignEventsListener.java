@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutOpenSignEditor;
@@ -21,7 +21,7 @@ public class SignEventsListener implements Listener {
 
     @EventHandler
     public void addSignColor(SignChangeEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.getPlayer().hasPermission("egeneral.signcolor"))
             for (int i = 0; i < 4; i++)
                 e.setLine(i, ChatColor.translateAlternateColorCodes('&', e.getLine(i)));
@@ -29,7 +29,7 @@ public class SignEventsListener implements Listener {
 
     @EventHandler
     public void clickOnSign(PlayerInteractEvent e) {
-        ePlayer p = ePlayer.get(e.getPlayer());
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if((p.isBuilding())) {
             if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 Block block = e.getClickedBlock();

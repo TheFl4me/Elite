@@ -1,9 +1,9 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class StatusCommand extends eCommand {
+public class StatusCommand extends GeneralCommand {
 
     public StatusCommand() {
         super("status", "egeneral.status", false);
@@ -22,7 +22,7 @@ public class StatusCommand extends eCommand {
 
         ChatColor mainColor = ChatColor.GRAY;
         ChatColor secColor = ChatColor.WHITE;
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         World world = p.getPlayer().getWorld();
         long maxMemory = Runtime.getRuntime().maxMemory();
         Server server = Server.get();

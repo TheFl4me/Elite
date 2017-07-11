@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.commands;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SetMapCommand extends eCommand implements TabCompleter {
+public class SetMapCommand extends GeneralCommand implements TabCompleter {
 
 	public SetMapCommand() {
 		super("setmap","esurvivalgames.setmap", false);
@@ -30,7 +30,7 @@ public class SetMapCommand extends eCommand implements TabCompleter {
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-		ePlayer p = ePlayer.get((Player) cs);
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length > 0) {
 			Lobby lobby = Lobby.get();
 			if(lobby.isActive()) {
@@ -39,7 +39,7 @@ public class SetMapCommand extends eCommand implements TabCompleter {
 					lobby.setArena(arena);
 					lobby.updateScoreboard();
 					for(Player players : Bukkit.getOnlinePlayers()) {
-						ePlayer all = ePlayer.get(players);
+						GeneralPlayer all = GeneralPlayer.get(players);
 						all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.MAP_SET)
 								.replaceAll("%arena", arena.getName()));
 					}

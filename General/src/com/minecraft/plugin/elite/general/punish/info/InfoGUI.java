@@ -2,9 +2,9 @@ package com.minecraft.plugin.elite.general.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
@@ -19,11 +19,7 @@ import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import com.minecraft.plugin.elite.general.punish.mute.PastMute;
 import com.minecraft.plugin.elite.general.punish.report.Report;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.SkullType;
+import org.bukkit.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -124,7 +120,7 @@ public class InfoGUI extends GUI {
         Database db = General.getDB();
 
         ItemStack head = server.playerHead(this.getPlayer().getName());
-        if(this.getPlayer().isOnline() && !ePlayer.get(this.getPlayer().getUniqueId()).isInvis())
+        if(this.getPlayer().isOnline() && !GeneralPlayer.get(this.getPlayer().getUniqueId()).isInvis())
             server.rename(head, ChatColor.GREEN + "ONLINE");
         else
             server.rename(head, ChatColor.RED + "OFFLINE");

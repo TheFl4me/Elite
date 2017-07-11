@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.raid.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ public class DeathEventListener implements Listener {
 	
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
-		ePlayer p = ePlayer.get(e.getEntity().getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 		e.setDeathMessage(null);
     	
 		if(e.getEntity().getKiller().getUniqueId().equals(e.getEntity().getPlayer().getUniqueId()))
@@ -25,7 +25,7 @@ public class DeathEventListener implements Listener {
 			p.addDeath();
 			p.setKillStreak(0);
 			if(e.getEntity().getKiller() instanceof Player) {
-				ePlayer killer = ePlayer.get(e.getEntity().getKiller());
+				GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
 				killer.addKill();
 				killer.addExp((p.getPrestige() + 1) * 300);
 				Inventory inv = killer.getPlayer().getInventory();

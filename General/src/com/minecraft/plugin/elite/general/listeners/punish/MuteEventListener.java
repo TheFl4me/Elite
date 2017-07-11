@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners.punish;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.punish.mute.Mute;
 import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import org.bukkit.command.Command;
@@ -19,7 +19,7 @@ public class MuteEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onMuteTalk(AsyncPlayerChatEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		Mute mute = MuteManager.getMute(p.getUniqueId());
 		if(mute != null) {
 			e.setCancelled(true);
@@ -29,7 +29,7 @@ public class MuteEventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void checkSpamOnCommand(PlayerCommandPreprocessEvent e) {
-		ePlayer p = ePlayer.get(e.getPlayer());
+		GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
 		List<String> blacklist = new ArrayList<>();
 		List<String> cmdNames = Arrays.asList("tell", "reply", "clanchat");
 

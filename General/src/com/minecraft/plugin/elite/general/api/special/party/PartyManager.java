@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.api.special.party;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
 import java.util.HashSet;
 
@@ -13,7 +13,7 @@ public class PartyManager {
         return parties.toArray(new Party[parties.size()]);
     }
 
-    public static Party get(ePlayer p) {
+    public static Party get(GeneralPlayer p) {
         for (Party party : getParties())
             if (party.getUniqueId().equals(p.getUniqueId())) {
                 return party;
@@ -33,7 +33,7 @@ public class PartyManager {
         return invites.toArray(new PartyInvite[invites.size()]);
     }
 
-    public static PartyInvite[] getInvites(ePlayer invited) {
+    public static PartyInvite[] getInvites(GeneralPlayer invited) {
         HashSet<PartyInvite> inv = new HashSet<>();
         for (PartyInvite invite : getInvites()) {
             if (invite.getInvited().equals(invited))

@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import org.bukkit.Bukkit;
@@ -9,11 +9,7 @@ import org.bukkit.Location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class DuelManager {
 
@@ -34,14 +30,14 @@ public class DuelManager {
         return tempList;
     }
 
-    public static Duel get(ePlayer p) {
+    public static Duel get(GeneralPlayer p) {
         for(Duel duel : getAll())
             if(duel.getPlayers().contains(p.getUniqueId()))
                 return duel;
         return null;
     }
 
-    public static DuelRequest getRequest(ePlayer inviter, ePlayer invited) {
+    public static DuelRequest getRequest(GeneralPlayer inviter, GeneralPlayer invited) {
         for(DuelRequest request : getAllRequests()) {
             if(request.getInviter().getUniqueId().equals(inviter.getUniqueId()) && request.getInvited().getUniqueId().equals(invited.getUniqueId())) {
                 return request;
@@ -50,7 +46,7 @@ public class DuelManager {
         return null;
     }
 
-    public static DuelRequest getRequest(ePlayer inviter) {
+    public static DuelRequest getRequest(GeneralPlayer inviter) {
         for(DuelRequest request : getAllRequests()) {
             if(request.getInviter().getUniqueId().equals(inviter.getUniqueId()))
                 return request;

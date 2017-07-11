@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.admin.staff;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SetRankCommand extends eCommand implements TabCompleter {
+public class SetRankCommand extends GeneralCommand implements TabCompleter {
 
     public SetRankCommand() {
         super("setrank", "egeneral.setrank", true);
@@ -42,7 +42,7 @@ public class SetRankCommand extends eCommand implements TabCompleter {
                         .replaceAll("%z", z.getName())
                         .replaceAll("%rank", rank.getDisplayName()));
                 if(z.isOnline()) {
-                    ePlayer zp = ePlayer.get(z.getUniqueId());
+                    GeneralPlayer zp = GeneralPlayer.get(z.getUniqueId());
                     zp.getPlayer().sendMessage(zp.getLanguage().get(GeneralLanguage.RANK_SET_YOU)
                             .replaceAll("%rank", zp.getRank().getDisplayName()));
                 }

@@ -1,14 +1,8 @@
 package com.minecraft.plugin.elite.general.api.special;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.ePlayer;
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import net.minecraft.server.v1_8_R3.World;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,12 +11,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Hologram {
 
@@ -38,14 +27,14 @@ public class Hologram {
         return holograms.toArray(new Hologram[holograms.size()]);
     }
 
-    public static Hologram get(ePlayer p, Location loc) {
+    public static Hologram get(GeneralPlayer p, Location loc) {
         for(Hologram holo : getAll())
             if(holo.getLocation().equals(loc) && holo.getViewer().getUniqueId().equals(p.getUniqueId()))
                 return holo;
         return null;
     }
 
-    public Hologram(ePlayer p, String text) {
+    public Hologram(GeneralPlayer p, String text) {
         this.viewer = p.getUniqueId();
         String[] lines = text.split("\n");
         this.lines.addAll(Arrays.asList(lines));
@@ -55,8 +44,8 @@ public class Hologram {
         return this.location;
     }
 
-    public ePlayer getViewer() {
-        return ePlayer.get(this.viewer);
+    public GeneralPlayer getViewer() {
+        return GeneralPlayer.get(this.viewer);
     }
 
     public void destroy() {
@@ -70,7 +59,7 @@ public class Hologram {
     }
 
     public void change(String text) {
-        final ePlayer p = this.getViewer();
+        final GeneralPlayer p = this.getViewer();
         final Location loc = this.getLocation();
         Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
             boolean online = false;

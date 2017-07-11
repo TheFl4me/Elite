@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.commands.duel;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -9,14 +9,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetDuelLocationCommand extends eCommand {
+public class SetDuelLocationCommand extends GeneralCommand {
 
     public SetDuelLocationCommand() {
         super("setduellocation", "ekitpvp.setduel.location", false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         Database db = KitPvP.getDB();
         if(args.length > 0) {
             try {

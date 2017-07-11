@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.raid.commands;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
-public class RandomSpawnCommand extends eCommand {
+public class RandomSpawnCommand extends GeneralCommand {
 
 	public RandomSpawnCommand() {
 		super("randomspawn", "eraid.randomspawn", false);
@@ -24,8 +24,8 @@ public class RandomSpawnCommand extends eCommand {
 	private HashMap<UUID, Integer> spawns = new HashMap<>();
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player) cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		Server server = Server.get();
 		if(spawns.containsKey(p.getUniqueId())) {
 			if(spawns.get(p.getUniqueId()) >= getSpawnLimit(p)) {
@@ -53,7 +53,7 @@ public class RandomSpawnCommand extends eCommand {
 		return true;
 	}
 	
-	private int getSpawnLimit(ePlayer p) {
+	private int getSpawnLimit(GeneralPlayer p) {
 		if(p.isPremium())
 			return 10;
 		else

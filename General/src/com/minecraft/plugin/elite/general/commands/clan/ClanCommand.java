@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.general.commands.clan;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanInvite;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class ClanCommand extends eCommand implements TabCompleter {
+public class ClanCommand extends GeneralCommand implements TabCompleter {
 
     public ClanCommand() {
         super("clan", "egeneral.clan", false);
@@ -36,7 +36,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
     @SuppressWarnings("deprecation")
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 1) {
             if (args[0].equalsIgnoreCase("create")) {
                 if(p.getClan() == null) {
@@ -65,7 +65,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId()) || p.getPlayer().hasPermission("egeneral.clan.admin")) {
                         for (UUID uuid : clan.getMembers()) {
-                            ePlayer z = ePlayer.get(uuid);
+                            GeneralPlayer z = GeneralPlayer.get(uuid);
                             if (z != null)
                                 p.sendMessage(GeneralLanguage.CLAN_DELETED);
                         }
@@ -109,7 +109,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                                         .replaceAll("%p", rank.getPrefix().getColor() + offp.getName());
                                 p.getPlayer().sendMessage(inviteMsgSent);
                                 if (offp.isOnline()) {
-                                    ePlayer z = ePlayer.get(offp.getUniqueId());
+                                    GeneralPlayer z = GeneralPlayer.get(offp.getUniqueId());
                                     z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED).replaceAll("%clan", clan.getName()));
                                     z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_ACCEPT).replaceAll("%clan", clan.getName()), "/clan accept " + clan.getName(), false);
                                     z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_DENY).replaceAll("%clan", clan.getName()), "/clan deny " + clan.getName(), false);
@@ -211,7 +211,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
                                         .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
                                 if (offp.isOnline()) {
-                                    ePlayer z = ePlayer.get(offp.getUniqueId());
+                                    GeneralPlayer z = GeneralPlayer.get(offp.getUniqueId());
                                     z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
                                             .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
                                 }
@@ -245,7 +245,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
                                         .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
                                 if (offp.isOnline())
-                                    ((Player) offp).sendMessage(ePlayer.get(offp.getUniqueId()).getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
+                                    ((Player) offp).sendMessage(GeneralPlayer.get(offp.getUniqueId()).getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
                                             .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
                                 return true;
                             } else {
@@ -274,7 +274,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                             if (clan.isCreator(p.getUniqueId()) || (clan.isMod(p.getUniqueId()) && clan.isNormal(offp.getUniqueId()))) {
                                 clan.remove(offp.getUniqueId());
                                 for(UUID uuid : clan.getMembers()) {
-                                    ePlayer all = ePlayer.get(uuid);
+                                    GeneralPlayer all = GeneralPlayer.get(uuid);
                                     if(all != null)
                                         all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.CLAN_KICKED)
                                                 .replaceAll("%p", Rank.get(offp).getPrefix().getColor() + offp.getName()));
@@ -306,7 +306,7 @@ public class ClanCommand extends eCommand implements TabCompleter {
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId())) {
                         for(UUID uuid : clan.getMembers()) {
-                            ePlayer all = ePlayer.get(uuid);
+                            GeneralPlayer all = GeneralPlayer.get(uuid);
                             if(all != null)
                                 p.sendMessage(GeneralLanguage.CLAN_DELETED);
                         }

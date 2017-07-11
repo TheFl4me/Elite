@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.commands;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KitCommand extends eCommand implements TabCompleter {
+public class KitCommand extends GeneralCommand implements TabCompleter {
 
 	@Override
 	public List<String> onTabComplete(CommandSender cs, Command cmd, String s, String[] args) {
@@ -36,8 +36,8 @@ public class KitCommand extends eCommand implements TabCompleter {
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-		
-		ePlayer p = ePlayer.get((Player)cs);
+
+		GeneralPlayer p = GeneralPlayer.get((Player)cs);
 		if(p.isInvis() || p.isAdminMode()) {
 			p.sendMessage(KitPvPLanguage.KIT_ERROR_MODE);
 			return true;

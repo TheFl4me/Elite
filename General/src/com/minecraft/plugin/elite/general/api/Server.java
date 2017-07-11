@@ -223,7 +223,7 @@ public class Server {
         return head;
     }
 
-    public void computeELO(ePlayer p1, ePlayer p2, double s1, double s2, double k) {
+    public void computeELO(GeneralPlayer p1, GeneralPlayer p2, double s1, double s2, double k) {
         //K = 32 chess, 20 Basketball
 
         final double r1 = p1.getELO();

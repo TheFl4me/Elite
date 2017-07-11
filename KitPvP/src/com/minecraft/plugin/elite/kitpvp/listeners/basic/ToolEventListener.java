@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -19,7 +19,7 @@ public class ToolEventListener implements Listener {
 
 	@EventHandler
 	public void toolClick(ToolClickEvent e) {
-		ePlayer p = e.getPlayer();
+		GeneralPlayer p = e.getPlayer();
 		if(e.getTool() instanceof KitSelectorTool) {
 			if(p.isAdminMode() || p.isWatching()) {
 				p.sendMessage(KitPvPLanguage.KIT_ERROR_MODE);

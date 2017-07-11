@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.api.events;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class GUIClickEvent extends Event {
 
-    private ePlayer player;
+    private GeneralPlayer player;
     private GUI gui;
     private ItemStack item;
     private int slot;
@@ -18,7 +18,7 @@ public class GUIClickEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     public GUIClickEvent(InventoryClickEvent event) {
-        this.player = ePlayer.get((Player) event.getWhoClicked());
+        this.player = GeneralPlayer.get((Player) event.getWhoClicked());
         this.gui = this.getPlayer().getGUI();
         this.item = event.getCurrentItem();
         this.slot = event.getSlot();
@@ -32,7 +32,7 @@ public class GUIClickEvent extends Event {
         return handlers;
     }
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 

@@ -2,8 +2,8 @@ package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PunishCommand extends eCommand implements TabCompleter {
+public class PunishCommand extends GeneralCommand implements TabCompleter {
 
     public PunishCommand() {
         super("punish", "egeneral.punish", true);
@@ -51,7 +51,7 @@ public class PunishCommand extends eCommand implements TabCompleter {
                 return true;
             }
             if(cs instanceof Player) {
-                ePlayer p = ePlayer.get((Player) cs);
+                GeneralPlayer p = GeneralPlayer.get((Player) cs);
                 if(p.getRank().ordinal() <= Rank.get(target).ordinal())
                     canPunish = false;
             }

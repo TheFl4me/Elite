@@ -1,19 +1,19 @@
 package com.minecraft.plugin.elite.general.api.events.stats;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class LevelChangeEvent extends Event {
 
-    private ePlayer player;
+    private GeneralPlayer player;
     private int newLevel;
     private int oldLevel;
     private boolean isPositive;
 
     private static final HandlerList handlers = new HandlerList();
 
-    public LevelChangeEvent(ePlayer player, int oldLevel, int newLevel) {
+    public LevelChangeEvent(GeneralPlayer player, int oldLevel, int newLevel) {
         this.player = player;
         this.newLevel = newLevel;
         this.oldLevel = oldLevel;
@@ -29,7 +29,7 @@ public class LevelChangeEvent extends Event {
     }
 
 
-    public ePlayer getPlayer() {
+    public GeneralPlayer getPlayer() {
         return this.player;
     }
 

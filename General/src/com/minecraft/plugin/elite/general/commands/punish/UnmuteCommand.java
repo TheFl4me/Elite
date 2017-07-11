@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import org.bukkit.Bukkit;
@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnmuteCommand extends eCommand {
+public class UnmuteCommand extends GeneralCommand {
 	
 	public UnmuteCommand() {
 		super("unmute", "egeneral.unmute", true);
@@ -24,7 +24,7 @@ public class UnmuteCommand extends eCommand {
 			if(PunishManager.isMuted(z.getUniqueId())) {
 				MuteManager.unmutePlayer(cs.getName(), z);
 				if(z.isOnline())
-					ePlayer.get(z.getUniqueId()).sendMessage(GeneralLanguage.UNMUTE_UNMUTED_YOU);
+					GeneralPlayer.get(z.getUniqueId()).sendMessage(GeneralLanguage.UNMUTE_UNMUTED_YOU);
 				return true;
 			} else {
 				cs.sendMessage(this.getLanguage().get(GeneralLanguage.UNMUTE_NOT_MUTED).replaceAll("%z", z.getName()));

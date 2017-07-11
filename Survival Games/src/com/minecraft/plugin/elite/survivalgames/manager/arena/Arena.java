@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.survivalgames.manager.arena;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -10,13 +10,7 @@ import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.GamePhase;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -28,11 +22,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Arena {
 
@@ -66,7 +56,7 @@ public class Arena {
 		this.loadedChests = new ArrayList<>();
 		List<UUID> pList = new ArrayList<>();
 		for(Player pall : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(pall);
+			GeneralPlayer all = GeneralPlayer.get(pall);
 			if(!all.isInvis() && !pList.contains(all.getUniqueId()))
 				pList.add(all.getUniqueId());
 		}
@@ -107,18 +97,18 @@ public class Arena {
 		return this.startPlayerSize;
 	}
 
-	public List<ePlayer> getPlayers() {
-		List<ePlayer> list = new ArrayList<>();
-		this.players.forEach((players) -> list.add(ePlayer.get(players)));
+	public List<GeneralPlayer> getPlayers() {
+		List<GeneralPlayer> list = new ArrayList<>();
+		this.players.forEach((players) -> list.add(GeneralPlayer.get(players)));
 		return list;
 	}
 
-	public void addPlayer(ePlayer p) {
+	public void addPlayer(GeneralPlayer p) {
 		this.players.add(p.getUniqueId());
 		this.killCount.put(p.getUniqueId(), 0);
 	}
 
-	public void removePlayer(ePlayer p) {
+	public void removePlayer(GeneralPlayer p) {
 		this.players.remove(p.getUniqueId());
 		this.killCount.remove(p.getUniqueId());
 		/*if(this.getPlayers().size() <= this.getPods().size() / 10) {
@@ -130,11 +120,11 @@ public class Arena {
 		this.updateScoreboard();
 	}
 
-	public void removePlayer(ePlayer p, LanguageNode node) {
+	public void removePlayer(GeneralPlayer p, LanguageNode node) {
 		this.getWorld().strikeLightningEffect(p.getPlayer().getLocation());
 		for (Player players : Bukkit.getOnlinePlayers()) {
 			this.getWorld().playSound(players.getLocation(), Sound.AMBIENCE_THUNDER, 1, 1);
-			players.sendMessage(ePlayer.get(players).getLanguage().get(node)
+			players.sendMessage(GeneralPlayer.get(players).getLanguage().get(node)
 					.replaceAll("%player", p.getName())
 					.replaceAll("%remaining", Integer.toString(this.getPlayers().size() - 1)));
 		}
@@ -193,11 +183,11 @@ public class Arena {
 		this.winner = uuid;
 	}
 
-	public int getKills(ePlayer p) {
+	public int getKills(GeneralPlayer p) {
 		return this.killCount.get(p.getUniqueId());
 	}
 
-	public void addKill(ePlayer p) {
+	public void addKill(GeneralPlayer p) {
 		final int i = this.getKills(p);
 		this.killCount.remove(p.getUniqueId());
 		this.killCount.put(p.getUniqueId(), i + 1);
@@ -230,7 +220,7 @@ public class Arena {
 		if(!hasStartedCountdown()) {
 			this.setCountdownTime(11);
 			for(Player players : Bukkit.getOnlinePlayers()) {
-				ePlayer all = ePlayer.get(players);
+				GeneralPlayer all = GeneralPlayer.get(players);
 				all.sendTitle(SurvivalGamesLanguage.ARENA_WARNING, 1, 220, 1);
 			}
 			this.countdownTask = new BukkitRunnable() {
@@ -240,7 +230,7 @@ public class Arena {
 						if(getCountdownTime() == 0) {
 							setGamePhase(GamePhase.MAIN);
 							for(Player players : Bukkit.getOnlinePlayers()) {
-								ePlayer all = ePlayer.get(players);
+								GeneralPlayer all = GeneralPlayer.get(players);
 								all.getPlayer().setLevel(0);
 								all.getPlayer().playSound(all.getPlayer().getLocation(), Sound.EXPLODE, 1, 1);
 								all.sendMessage(SurvivalGamesLanguage.ARENA_START);
@@ -251,7 +241,7 @@ public class Arena {
 	        				startPlayTimeClock();
 						} else {
 							for(Player players : Bukkit.getOnlinePlayers()) {
-								ePlayer all = ePlayer.get(players);
+								GeneralPlayer all = GeneralPlayer.get(players);
 								all.getPlayer().setLevel(getCountdownTime());
 								all.getPlayer().playSound(all.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 1);
 								all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.ARENA_COUNTDOWN)
@@ -281,7 +271,7 @@ public class Arena {
 	public void startShrinking() {
 		Arena arena = ArenaManager.get(this.getName());
 		for(Player all : Bukkit.getOnlinePlayers()) {
-			ePlayer p = ePlayer.get(all);
+			GeneralPlayer p = GeneralPlayer.get(all);
 			p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.PORTAL_TRAVEL, 1, 1);
 			p.sendMessage(SurvivalGamesLanguage.SHRINK_START);
 		}
@@ -292,15 +282,15 @@ public class Arena {
 					border.setSize(border.getSize() - 1);
 				} else {
 					for(Player all : Bukkit.getOnlinePlayers()) {
-						ePlayer p = ePlayer.get(all);
+						GeneralPlayer p = GeneralPlayer.get(all);
 						p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.PORTAL_TRAVEL, 1, 1);
 						p.sendMessage(SurvivalGamesLanguage.SHRINK_END);
 					}
 					arena.clearChests();
 					Bukkit.getScheduler().runTaskLater(SurvivalGames.getPlugin(), () -> {
                         if(getGamePhase() != GamePhase.END) {
-                            ePlayer tempWinner = null;
-                            for(ePlayer all : getPlayers())
+							GeneralPlayer tempWinner = null;
+                            for(GeneralPlayer all : getPlayers())
                                 if(tempWinner == null || arena.getKills(tempWinner) < arena.getKills(all))
 									tempWinner = all;
                             if(tempWinner != null)
@@ -342,7 +332,7 @@ public class Arena {
 
 	public void end() {
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			if(this.getWinner() == null)
 				all.getPlayer().kickPlayer(all.getLanguage().get(SurvivalGamesLanguage.KICK_END));
 			else
@@ -354,19 +344,19 @@ public class Arena {
 		Bukkit.getServer().shutdown();
 	}
 
-	public void win(ePlayer p) {
+	public void win(GeneralPlayer p) {
 		this.setWinner(p.getUniqueId());
 		this.setGamePhase(GamePhase.END);
 		p.addExp(5000);
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer all = ePlayer.get(players);
+			GeneralPlayer all = GeneralPlayer.get(players);
 			all.sendTitle(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", p.getName()), 1, 30, 1);
 		}
 		Bukkit.getScheduler().runTaskTimer(SurvivalGames.getPlugin(), () -> {
 			if(p != null)
 				p.getPlayer().getWorld().spawnEntity(p.getPlayer().getLocation(), EntityType.FIREWORK);
 			for(Player players : Bukkit.getOnlinePlayers()) {
-				ePlayer all = ePlayer.get(players);
+				GeneralPlayer all = GeneralPlayer.get(players);
 				all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", this.getWinner().getName()));
 			}
         }, 40, 40);
@@ -377,7 +367,7 @@ public class Arena {
 		Lobby lobby = Lobby.get();
 		Server server = Server.get();
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			ePlayer p = ePlayer.get(players);
+			GeneralPlayer p = GeneralPlayer.get(players);
 			ChatColor color = ChatColor.GOLD;
 			Scoreboard board = players.getScoreboard();
 			board.getObjectives().forEach(Objective::unregister);

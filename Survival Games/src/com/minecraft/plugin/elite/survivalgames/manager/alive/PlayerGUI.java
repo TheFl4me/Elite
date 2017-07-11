@@ -2,7 +2,7 @@ package com.minecraft.plugin.elite.survivalgames.manager.alive;
 
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
@@ -35,7 +35,7 @@ public class PlayerGUI extends GUI {
         Lobby lobby = Lobby.get();
         if(!lobby.isActive()) {
             Arena arena = lobby.getArena();
-            for(ePlayer p : arena.getPlayers()) {
+            for(GeneralPlayer p : arena.getPlayers()) {
                 players.add(p.getUniqueId());
                 kills.put(p.getUniqueId(), arena.getKills(p));
             }
@@ -48,7 +48,7 @@ public class PlayerGUI extends GUI {
             if(i >= players.size())
                 break;
             UUID uuid = players.get(i);
-            ePlayer p = ePlayer.get(uuid);
+            GeneralPlayer p = GeneralPlayer.get(uuid);
             ItemStack head = server.playerHead(p.getName());
             server.rename(head, this.getLanguage().get(SurvivalGamesLanguage.PLAYERS_GUI_HEAD).replaceAll("%p", p.getChatName()).replaceAll("%kills", (lobby.isActive() ? "0" : Integer.toString(kills.get(p.getUniqueId())))));
             this.getInventory().addItem(head);

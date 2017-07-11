@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.raid.manager;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.raid.Raid;
@@ -10,11 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class WarpManager {
 
@@ -25,7 +21,7 @@ public class WarpManager {
         return warps.toArray(new Warp[warps.size()]);
     }
 
-    public static Warp[] getPlayerWarps(ePlayer p) {
+    public static Warp[] getPlayerWarps(GeneralPlayer p) {
         HashSet<Warp> list = new HashSet<>();
         for(Warp warp : getAllWarps()) {
             if(warp.getOwner().equalsIgnoreCase(p.getUniqueId().toString()) && warp.getType() == Warp.WarpType.PLAYER)
@@ -43,7 +39,7 @@ public class WarpManager {
         return list.toArray(new Warp[list.size()]);
     }
 
-    public static Warp[] getAvailableWarps(ePlayer p) {
+    public static Warp[] getAvailableWarps(GeneralPlayer p) {
         HashSet<Warp> list = new HashSet<>();
         Collections.addAll(list, getPlayerWarps(p));
         if(p.getClan() != null)
@@ -51,7 +47,7 @@ public class WarpManager {
         return list.toArray(new Warp[list.size()]);
     }
 
-    public static Warp getPlayerWarp(String warpName, ePlayer p) {
+    public static Warp getPlayerWarp(String warpName, GeneralPlayer p) {
         if(getAllWarps().length > 0) {
             for(Warp warp : getAllWarps()) {
                 if(warp.getType() == Warp.WarpType.PLAYER && warp.getOwner().equalsIgnoreCase(p.getUniqueId().toString()))
@@ -71,7 +67,7 @@ public class WarpManager {
         return null;
     }
 
-    public static Warp get(String warpName, ePlayer p) {
+    public static Warp get(String warpName, GeneralPlayer p) {
         if(getAllWarps().length > 0) {
             for(Warp warp : getAllWarps()) {
                 boolean bool = false;
@@ -86,7 +82,7 @@ public class WarpManager {
         return null;
     }
 
-    public static int getMaxWarps(ePlayer p) {
+    public static int getMaxWarps(GeneralPlayer p) {
         if(p.isPremium())
             return 10;
         else
@@ -101,7 +97,7 @@ public class WarpManager {
         warps.remove(warp);
     }
 
-    public static void cancel(ePlayer p) {
+    public static void cancel(GeneralPlayer p) {
         if(warping.containsKey(p.getUniqueId())) {
             warping.get(p.getUniqueId()).cancel();
             warping.remove(p.getUniqueId());

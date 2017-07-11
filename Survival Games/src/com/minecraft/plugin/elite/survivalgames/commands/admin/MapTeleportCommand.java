@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.commands.admin;
 
-import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.ArenaManager;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MapTeleportCommand extends eCommand implements TabCompleter{
+public class MapTeleportCommand extends GeneralCommand implements TabCompleter{
 
     public MapTeleportCommand() {
         super("mapteleport", "esurvivalgames.mapteleport", false);
@@ -27,7 +27,7 @@ public class MapTeleportCommand extends eCommand implements TabCompleter{
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
-        ePlayer p = ePlayer.get((Player) cs);
+        GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if(args.length > 0) {
             Arena arena = ArenaManager.get(args[0]);
             if(arena != null) {

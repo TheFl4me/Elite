@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.kitpvp.manager;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
-import com.minecraft.plugin.elite.general.api.ePlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-public class KitPlayer extends ePlayer {
+public class KitPlayer extends GeneralPlayer {
 
 	private int cooldownTime;
 	private BukkitRunnable cooldownTask;

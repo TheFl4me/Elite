@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.api.ePlayer;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.PlayerHit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -17,7 +17,7 @@ public class DamageEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void storeDamageOnHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player && e.getDamage() > 0 && !e.isCancelled()) {
-            ePlayer p = ePlayer.get((Player) e.getEntity());
+            GeneralPlayer p = GeneralPlayer.get((Player) e.getEntity());
             UUID uuid = null;
             if(e.getDamager() instanceof Player) {
                 uuid = e.getDamager().getUniqueId();
@@ -25,7 +25,7 @@ public class DamageEventListener implements Listener {
                 uuid = ((Player) ((Projectile) e.getDamager()).getShooter()).getUniqueId();
             }
             if(uuid != null)  {
-                ePlayer z = ePlayer.get(uuid);
+                GeneralPlayer z = GeneralPlayer.get(uuid);
                 if(!z.isAdminMode() && !z.isWatching()) {
                     PlayerHit hit = new PlayerHit(uuid, e.getDamage());
                     p.saveHit(hit);
@@ -36,7 +36,7 @@ public class DamageEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void clearOnDeath(PlayerDeathEvent e) {
-        ePlayer p = ePlayer.get(e.getEntity());
+        GeneralPlayer p = GeneralPlayer.get(e.getEntity());
         p.clearHits();
     }
 }
