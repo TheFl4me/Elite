@@ -29,18 +29,17 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class Arena {
 
 	private String name;
 	private World world;
-	private Set<Chest> loadedChests;
+	private Collection<Chest> loadedChests;
 	private int startPlayerSize;
 	private List<Location> pods;
 	private Location center;
@@ -63,7 +62,7 @@ public class Arena {
 		this.countdownTask = null;
 		this.playTimeTask = null;
 		this.winner = null;
-		this.loadedChests = new HashSet<>();
+		this.loadedChests = new ArrayList<>();
 		this.killCount = new HashMap<>();
 		for(Player pall : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(pall);
@@ -150,8 +149,10 @@ public class Arena {
 		return this.maxSize;
 	}
 
-	public Chest[] getLoadedChests() {
-		return loadedChests.toArray(new Chest[loadedChests.size()]);
+	public Collection<Chest> getLoadedChests() {
+		Collection<Chest> tempList = new ArrayList<>();
+		tempList.addAll(this.loadedChests);
+		return tempList;
 	}
 
 	public void addChest(Chest chest) {
