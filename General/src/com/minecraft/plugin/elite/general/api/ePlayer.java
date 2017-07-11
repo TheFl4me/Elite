@@ -163,7 +163,7 @@ public class ePlayer {
 		if(!db.containsValue(General.DB_PLAYERS, "uuid", this.getUniqueId().toString())) {
 			this.setLanguage(Language.ENGLISH);
 			db.execute("INSERT INTO " + General.DB_PLAYERS + " (uuid, name, rank, ip, agreed, language, firstjoin, lastjoin, playtime, kills, deaths, tokens, prestige, level, exp, elo, sentreports, truereports, clan, clanrank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, Language.ENGLISH.toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, "", "");
+					this.getUniqueId(), this.getName(), Rank.NORMAL.getName(), this.getIP(), 0, this.getLanguage().toString(), System.currentTimeMillis(), System.currentTimeMillis(), 0, 0, 0, 0, 0, 1, 0, 2000, 0, 0, "", "");
 			Rank.set(Bukkit.getOfflinePlayer(this.getUniqueId()), Rank.NORMAL);
 		} else {
 			db.update(General.DB_PLAYERS, "name", this.getName(), "uuid", this.getUniqueId());

@@ -16,9 +16,10 @@ import java.util.HashSet;
 
 public abstract class eCommand implements CommandExecutor {
 
-    protected String perm;
-    protected PluginCommand cmd;
-    protected boolean consoleCmd;
+    private PluginCommand cmd;
+    private String perm;
+    private boolean consoleCmd;
+    private Language lang;
 
     private static HashSet<eCommand> commands = new HashSet<>();
 
@@ -30,31 +31,52 @@ public abstract class eCommand implements CommandExecutor {
         this.perm = perm;
         this.cmd = Bukkit.getPluginCommand(command);
         this.consoleCmd = console;
-        if (this.cmd == null) {
+        this.lang = Language.ENGLISH;
+        if (this.getCommand() == null)
             System.out.println(ChatColor.RED + "Failed to register the " + command + " command!");
-        } else {
-            this.cmd.setExecutor(this);
-        }
+        else
+            this.getCommand().setExecutor(this);
         commands.add(this);
     }
 
+    public PluginCommand getCommand() {
+        return this.cmd;
+    }
+
+    public String getPermission() {
+        return this.perm;
+    }
+
+    public boolean isConsoleCmd() {
+        return this.consoleCmd;
+    }
+
+    public Language getLanguage() {
+        return this.lang;
+    }
+
+    public void setLanguage(Language lang) {
+        this.lang = lang;
+    }
+
     public boolean hasPermission(CommandSender sender) {
-        return !(this.perm == null || this.perm.isEmpty()) && sender.hasPermission(this.perm);
+        return !(this.getPermission() == null || this.getPermission().isEmpty()) && sender.hasPermission(this.getPermission());
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(sender instanceof ConsoleCommandSender) {
-            if(this.consoleCmd) {
-                return execute(sender, cmd, args);
+            if(this.isConsoleCmd()) {
+                return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(Language.ENGLISH.get(GeneralLanguage.ONLY_PLAYER));
+                sender.sendMessage(this.getLanguage().get(GeneralLanguage.ONLY_PLAYER));
                 return true;
             }
         } else if(sender instanceof Player) {
-            if (hasPermission(sender)) {
-                return execute(sender, cmd, args);
+            this.setLanguage(ePlayer.get((Player) sender).getLanguage());
+            if (this.hasPermission(sender)) {
+                return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(ePlayer.get((Player) sender).getLanguage().get(GeneralLanguage.NOPERM));
+                sender.sendMessage(this.getLanguage().get(GeneralLanguage.NOPERM));
                 return true;
             }
         } else {

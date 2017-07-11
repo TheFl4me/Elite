@@ -4,7 +4,6 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -42,17 +41,13 @@ public class PunishCommand extends eCommand implements TabCompleter {
     @SuppressWarnings("deprecation")
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
-        Language lang = Language.ENGLISH;
-        if(cs instanceof Player)
-            lang = ePlayer.get((Player) cs).getLanguage();
-
         if(args.length > 2) {
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
             boolean canPunish = true;
             boolean canBan = true;
             Database db = General.getDB();
             if(!db.containsValue(General.DB_PLAYERS, "uuid", target.getUniqueId().toString())) {
-                cs.sendMessage(lang.get(GeneralLanguage.NEVER_JOINED));
+                cs.sendMessage(this.getLanguage().get(GeneralLanguage.NEVER_JOINED));
                 return true;
             }
             if(cs instanceof Player) {
@@ -64,7 +59,7 @@ public class PunishCommand extends eCommand implements TabCompleter {
                 PunishReason reason = PunishReason.get(args[1]);
                 if(reason != null) {
                     if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission("egeneral.ban")) {
-                        cs.sendMessage(lang.get(GeneralLanguage.PUNISH_BAN_NOPERM));
+                        cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_BAN_NOPERM));
                         return true;
                     }
                     StringBuilder details = new StringBuilder();
@@ -73,16 +68,16 @@ public class PunishCommand extends eCommand implements TabCompleter {
                     PunishManager.punish(cs.getName(), target, reason, details.toString());
                     return true;
                 } else {
-                    cs.sendMessage(lang.get(GeneralLanguage.ARG_INVALID)
+                    cs.sendMessage(this.getLanguage().get(GeneralLanguage.ARG_INVALID)
                             .replaceAll("%arg", args[1]));
                     return true;
                 }
             } else {
-                cs.sendMessage(lang.get(GeneralLanguage.PUNISH_NOPERM));
+                cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_NOPERM));
                 return true;
             }
         } else {
-            cs.sendMessage(lang.get(GeneralLanguage.PUNISH_USAGE));
+            cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_USAGE));
             return true;
         }
     }

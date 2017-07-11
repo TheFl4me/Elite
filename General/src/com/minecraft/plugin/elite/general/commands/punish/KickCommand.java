@@ -3,7 +3,6 @@ package com.minecraft.plugin.elite.general.commands.punish;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.eCommand;
 import com.minecraft.plugin.elite.general.api.ePlayer;
-import com.minecraft.plugin.elite.general.api.enums.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,10 +15,6 @@ public class KickCommand extends eCommand {
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
-
-		Language lang = Language.ENGLISH;
-		if(cs instanceof Player)
-			lang = ePlayer.get((Player) cs).getLanguage();
 
 		if(args.length >= 2) {
 			ePlayer z = ePlayer.get(args[0]);
@@ -43,15 +38,15 @@ public class KickCommand extends eCommand {
 								.replaceAll("%p", cs.getName());
 					return true;
 				} else {
-					cs.sendMessage(lang.get(GeneralLanguage.KICK_NOPERM));
+					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NOPERM));
 					return true;
 				}
 			} else {
-				cs.sendMessage(lang.get(GeneralLanguage.NO_TARGET));
+				cs.sendMessage(this.getLanguage().get(GeneralLanguage.NO_TARGET));
 				return true;
 			}
 		} else {
-			cs.sendMessage(lang.get(GeneralLanguage.KICK_USAGE));
+			cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_USAGE));
 			return true;
 		}
 	}
