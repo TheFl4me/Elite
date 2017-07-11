@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.listeners;
 
-import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;

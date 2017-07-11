@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
+import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Prefix;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
@@ -27,9 +28,19 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.*;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketDataSerializer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -46,9 +57,13 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.*;
-
-import com.minecraft.plugin.elite.general.api.enums.Achievement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class GeneralPlayer {
 

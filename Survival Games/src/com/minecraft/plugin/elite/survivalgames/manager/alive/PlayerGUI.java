@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.survivalgames.manager.alive;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;

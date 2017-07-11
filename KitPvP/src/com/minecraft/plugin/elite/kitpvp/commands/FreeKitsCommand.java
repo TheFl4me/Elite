@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.commands;
 
-import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;

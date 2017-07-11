@@ -1,14 +1,18 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel;
 
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

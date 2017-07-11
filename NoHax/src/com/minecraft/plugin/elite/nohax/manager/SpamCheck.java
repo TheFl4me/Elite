@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.nohax.manager;
 
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.PunishReason;
 import com.minecraft.plugin.elite.nohax.NoHaxLanguage;
@@ -9,7 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class SpamCheck {
 

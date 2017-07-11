@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;

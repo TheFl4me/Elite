@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

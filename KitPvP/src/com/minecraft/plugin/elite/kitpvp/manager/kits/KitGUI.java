@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.kitpvp.manager.kits;
 
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
-import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;

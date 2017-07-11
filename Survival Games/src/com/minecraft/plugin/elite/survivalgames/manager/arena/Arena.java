@@ -10,7 +10,13 @@ import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.GamePhase;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -22,13 +28,19 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class Arena {
 
 	private String name;
 	private World world;
-	private Collection<Chest> loadedChests;
+	private Set<Chest> loadedChests;
 	private int startPlayerSize;
 	private List<Location> pods;
 	private Location center;
@@ -40,8 +52,8 @@ public class Arena {
 	private BukkitRunnable shrinkTask;
 	private long playTime;
 	private BukkitRunnable playTimeTask;
-	private HashMap<GeneralPlayer, Integer> killCount;
-	private UUID winner;
+	private Map<GeneralPlayer, Integer> killCount;
+	private OfflinePlayer winner;
 
 	public Arena(World world) {
 		this.name = world.getName();
@@ -51,7 +63,7 @@ public class Arena {
 		this.countdownTask = null;
 		this.playTimeTask = null;
 		this.winner = null;
-		this.loadedChests = new ArrayList<>();
+		this.loadedChests = new HashSet<>();
 		this.killCount = new HashMap<>();
 		for(Player pall : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(pall);
@@ -138,10 +150,8 @@ public class Arena {
 		return this.maxSize;
 	}
 
-	public Collection<Chest> getLoadedChests() {
-		Collection<Chest> locList = new ArrayList<>();
-		locList.addAll(this.loadedChests);
-		return locList;
+	public Chest[] getLoadedChests() {
+		return loadedChests.toArray(new Chest[loadedChests.size()]);
 	}
 
 	public void addChest(Chest chest) {
@@ -169,13 +179,11 @@ public class Arena {
 	}
 
 	public OfflinePlayer getWinner() {
-		if(this.winner == null)
-			return null;
-		return Bukkit.getOfflinePlayer(this.winner);
+		return this.winner;
 	}
 
 	public void setWinner(UUID uuid) {
-		this.winner = uuid;
+		this.winner = Bukkit.getOfflinePlayer(uuid);
 	}
 
 	public int getKills(GeneralPlayer p) {
@@ -285,7 +293,7 @@ public class Arena {
 					Bukkit.getScheduler().runTaskLater(SurvivalGames.getPlugin(), () -> {
                         if(getGamePhase() != GamePhase.END) {
 							GeneralPlayer tempWinner = null;
-                            for(GeneralPlayer all : getPlayers())
+                            for(GeneralPlayer all : arena.getPlayers())
                                 if(tempWinner == null || arena.getKills(tempWinner) < arena.getKills(all))
 									tempWinner = all;
                             if(tempWinner != null)
@@ -345,7 +353,7 @@ public class Arena {
 		p.addExp(5000);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
-			all.sendTitle(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", p.getName()), 1, 30, 1);
+			all.sendTitle(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", this.getWinner().getName()), 1, 30, 1);
 		}
 		Bukkit.getScheduler().runTaskTimer(SurvivalGames.getPlugin(), () -> {
 			if(p != null)

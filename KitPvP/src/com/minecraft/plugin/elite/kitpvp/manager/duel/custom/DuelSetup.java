@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.kitpvp.manager.duel.custom;
 
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.Duel;

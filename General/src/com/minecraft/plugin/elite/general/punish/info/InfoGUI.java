@@ -19,7 +19,11 @@ import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import com.minecraft.plugin.elite.general.punish.mute.PastMute;
 import com.minecraft.plugin.elite.general.punish.report.Report;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 

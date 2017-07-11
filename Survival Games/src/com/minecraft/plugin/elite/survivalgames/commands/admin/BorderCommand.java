@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.survivalgames.commands.admin;
 
-import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;

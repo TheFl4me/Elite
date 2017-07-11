@@ -20,7 +20,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MenuGUI extends GUI {

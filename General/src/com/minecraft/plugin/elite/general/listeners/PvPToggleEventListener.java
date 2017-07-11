@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
