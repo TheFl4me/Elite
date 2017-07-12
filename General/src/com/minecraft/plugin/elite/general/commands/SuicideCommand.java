@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands;
 
-import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,10 +12,7 @@ public class SuicideCommand extends GeneralCommand {
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
-
-        GeneralPlayer p = GeneralPlayer
-                .get((Player) cs);
-        p.getPlayer().setHealth(0);
+        ((Player) cs).setHealth(0);
         return true;
     }
 }

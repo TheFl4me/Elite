@@ -9,12 +9,13 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SupportChatManager {
 
-    private static Collection<SupportChat> chat = new HashSet<>();
+    private static Set<SupportChat> chat = new HashSet<>();
     private static Collection<UUID> requests = new ArrayList<>();
 
     public static SupportChat get(GeneralPlayer p) {

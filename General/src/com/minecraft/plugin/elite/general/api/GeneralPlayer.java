@@ -600,7 +600,7 @@ public class GeneralPlayer {
 			board.getTeams().forEach(teams -> teams.removeEntry(this.getName()));
 		}
 	}
-	
+
 	public boolean canAdminMode() {
 		return this.getPlayer().hasPermission("egeneral.admin");
 	}

@@ -421,7 +421,7 @@ public class MenuGUI extends GUI {
 		Server server = Server.get();
 		Database db = General.getDB();
 
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
+		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, Prefix.ADMIN.getHexadecimal());
 		server.rename(glass, " ");
 
 		List<String> list = Arrays.asList("server-owner", "admin-1", "admin-2", "admin-3");
@@ -444,7 +444,7 @@ public class MenuGUI extends GUI {
 		Server server = Server.get();
 		Database db = General.getDB();
 		
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 10);
+		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, Prefix.MOD.getHexadecimal());
 		server.rename(glass, " ");
 
 		List<String> modplusList = Arrays.asList("modplus-1", "modplus-2", "modplus-3");
@@ -479,7 +479,7 @@ public class MenuGUI extends GUI {
 		Server server = Server.get();
 		Database db = General.getDB();
 
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 6);
+		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, Prefix.SUPPORTER.getHexadecimal());
 		server.rename(glass, " ");
 
 		List<String> list = Arrays.asList("supporter-1", "supporter-2", "supporter-3", "supporter-4", "supporter-5");
@@ -506,7 +506,7 @@ public class MenuGUI extends GUI {
 		List<String> list = Arrays.asList("builder-1", "builder-2", "builder-3");
 		List<ItemStack> heads = list.stream().map(rank -> getHeadData(Prefix.BUILDER, rank)).collect(Collectors.toList());
 
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
+		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, Prefix.BUILDER.getHexadecimal());
 		server.rename(glass, " ");
 
 		this.fill(glass);
@@ -562,28 +562,28 @@ public class MenuGUI extends GUI {
 	
 	private ItemStack admin() {
 		Server server = Server.get();
-		ItemStack Admin = new ItemStack(Material.STAINED_GLASS, 1, (short) 14);
+		ItemStack Admin = new ItemStack(Material.STAINED_GLASS, 1, Prefix.ADMIN.getHexadecimal());
 		server.rename(Admin, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_ADMINS));
 		return Admin;
 	}
 	
 	private ItemStack mod() {
 		Server server = Server.get();
-		ItemStack Mod = new ItemStack(Material.STAINED_GLASS, 1, (short) 10);
+		ItemStack Mod = new ItemStack(Material.STAINED_GLASS, 1, Prefix.MOD.getHexadecimal());
 		server.rename(Mod, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_MODS));
 		return Mod;
 	}
 
 	private ItemStack supporter() {
 		Server server = Server.get();
-		ItemStack supp = new ItemStack(Material.STAINED_GLASS, 1, (short) 6);
+		ItemStack supp = new ItemStack(Material.STAINED_GLASS, 1, Prefix.SUPPORTER.getHexadecimal());
 		server.rename(supp, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS));
 		return supp;
 	}
 	
 	private ItemStack builder() {
 		Server server = Server.get();
-		ItemStack Builder = new ItemStack(Material.STAINED_GLASS, 1, (short) 5);
+		ItemStack Builder = new ItemStack(Material.STAINED_GLASS, 1, Prefix.BUILDER.getHexadecimal());
 		server.rename(Builder, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_BUILDERS));
 		return Builder;
 	}

@@ -23,7 +23,7 @@ public class ReportCommand extends GeneralCommand {
 			if(z != null) {
 				if(!p.getUniqueId().equals(z.getUniqueId())) {
 					if(!z.isSupporter()) {
-						if(ReportEventListener.reportedPlayer.containsKey(p.getUniqueId()) && ReportEventListener.reportedPlayer.get(p.getUniqueId()).equalsIgnoreCase(z.getName())) {
+						if(ReportEventListener.reportedPlayer.containsKey(p.getUniqueId()) && ReportEventListener.reportedPlayer.get(p.getUniqueId()).equals(z.getUniqueId())) {
 							p.sendMessage(GeneralLanguage.REPORT_COOLDOWN);
 							return true;
 						} else {								

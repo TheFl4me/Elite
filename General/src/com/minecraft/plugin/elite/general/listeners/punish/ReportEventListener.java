@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class ReportEventListener implements Listener {
 	
-	public static Map<UUID, String> reportedPlayer = new HashMap<>();
+	public static Map<UUID, UUID> reportedPlayer = new HashMap<>();
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent e) {
@@ -54,7 +54,7 @@ public class ReportEventListener implements Listener {
                             .replaceAll("%reporter", p.getName())));
 					p.sendMessage(GeneralLanguage.REPORT_CONFIRMED);
 					p.getPlayer().closeInventory();
-					reportedPlayer.put(p.getUniqueId(), z.getName());
+					reportedPlayer.put(p.getUniqueId(), z.getUniqueId());
 					Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
                         if(reportedPlayer.containsKey(p.getUniqueId()))
                             reportedPlayer.remove(p.getUniqueId());

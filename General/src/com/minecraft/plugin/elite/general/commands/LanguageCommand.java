@@ -20,7 +20,7 @@ public class LanguageCommand extends GeneralCommand implements TabCompleter {
         if(args.length == 0) {
             List<String> langs = new ArrayList<>();
             for(Language lang : Language.values())
-                langs.add(lang.toString().toLowerCase());
+                langs.add(lang.toString());
             return langs;
         }
         return null;

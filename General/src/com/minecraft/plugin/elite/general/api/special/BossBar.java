@@ -13,7 +13,6 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class BossBar {
 
@@ -21,7 +20,7 @@ public class BossBar {
     private EntityEnderDragon dragon;
     private BukkitRunnable showTask;
 
-    private static Set<BossBar> bars = new HashSet<>();
+    private static HashSet<BossBar> bars = new HashSet<>();
 
     public static BossBar[] getAll() {
         return bars.toArray(new BossBar[bars.size()]);

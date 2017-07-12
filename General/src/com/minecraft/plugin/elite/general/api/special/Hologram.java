@@ -26,7 +26,7 @@ import java.util.List;
 public class Hologram {
 
     private static HashSet<Hologram> holograms = new HashSet<>();
-    private static final double distance = 0.23;
+    private static final double DISTANCE = 0.23;
 
     private Collection<String> lines = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
@@ -64,7 +64,6 @@ public class Hologram {
             ints[j] = ids.get(j);
         Packet packet = new PacketPlayOutEntityDestroy(ints);
         ((CraftPlayer) this.getViewer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
-        this.location = null;
         holograms.remove(this);
     }
 
@@ -72,26 +71,22 @@ public class Hologram {
         final GeneralPlayer p = this.getViewer();
         final Location loc = this.getLocation();
         Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
-            boolean online = false;
             for(Player players : Bukkit.getOnlinePlayers()) {
                 if(players.getUniqueId().equals(p.getUniqueId())) {
-                    online = true;
+                    Hologram holo = new Hologram(p, text);
+                    holo.show(loc);
                     break;
                 }
-            }
-            if(online) {
-                Hologram holo = new Hologram(p, text);
-                holo.show(loc);
             }
         }, 20);
         this.destroy();
     }
 
     public void show(Location loc) {
-        Location first = loc.clone().add(0, (this.lines.size() / 2) * distance, 0);
+        Location first = loc.clone().add(0, (this.lines.size() / 2) * DISTANCE, 0);
         for(String line : this.lines) {
             this.ids.add(this.showLine(first.clone(), line));
-            first.subtract(0, distance, 0);
+            first.subtract(0, DISTANCE, 0);
         }
         this.location = loc;
         holograms.add(this);
