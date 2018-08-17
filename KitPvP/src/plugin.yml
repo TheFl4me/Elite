@@ -3,7 +3,6 @@ author: TheFl4me
 version: 8.7.11
 main: com.minecraft.plugin.elite.kitpvp.KitPvP
 depend: [General, WorldEdit, WorldGuard]
-softdepend: [General, Punish, NoHax, WorldEdit, WorldGuard]
 commands:
     freekits:
     kit:

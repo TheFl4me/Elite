@@ -171,6 +171,20 @@ public enum GeneralLanguage implements LanguageNode {
     INFO_GUI_ALTS,
     INFO_GUI_REPORTS_REPORT,
 
+    SILENT_HIDDEN,
+    SILENT_VIS,
+
+    SPAMCHECK_STAFF,
+
+    CHECK_FF_TOOL,
+
+    COMBATLOG_SAFE,
+
+    ALERT_HACKS,
+    ALERT_NONE,
+    ALERT_USAGE,
+    ALERT_LIST,
+
     CLAN_CREATED,
     CLAN_EXIST,
     CLAN_EXIST_NOT,

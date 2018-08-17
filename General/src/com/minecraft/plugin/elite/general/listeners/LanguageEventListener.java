@@ -264,6 +264,18 @@ public class LanguageEventListener implements Listener {
                         "&bReporter: &6%reporter\n" +
                         "&bReport date: &6%date");
 
+                lang.addLangNode(GeneralLanguage.SILENT_HIDDEN, "&cAll alerts are now hidden from you.");
+                lang.addLangNode(GeneralLanguage.SILENT_VIS, "&cAll alerts are now visible for you.");
+
+                lang.addLangNode(GeneralLanguage.SPAMCHECK_STAFF, "&cYou would have been muted for spam!");
+
+                lang.addLangNode(GeneralLanguage.COMBATLOG_SAFE, "&aLost combatlog protection! You can now logout safely again.");
+
+                lang.addLangNode(GeneralLanguage.ALERT_HACKS, "&6%p might be using %hack (%chance)!");
+                lang.addLangNode(GeneralLanguage.ALERT_NONE, "&cThis player does not have any alerts.");
+                lang.addLangNode(GeneralLanguage.ALERT_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/alerts <player>");
+                lang.addLangNode(GeneralLanguage.ALERT_LIST, "&6Detected alerts: %alerts");
+
                 lang.addLangNode(GeneralLanguage.CLAN_CREATED, "&aClan successfully created.");
                 lang.addLangNode(GeneralLanguage.CLAN_EXIST, "&cThis clan already exists!");
                 lang.addLangNode(GeneralLanguage.CLAN_EXIST_NOT, "&cThis clan does not exist!");

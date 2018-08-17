@@ -8,7 +8,6 @@ import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.events.KitChangeEvent;
-import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -1057,7 +1056,7 @@ public class KitEventListener implements Listener {
 				if(p.hasKit(Kit.HULK) && !p.isNearRogue() && p.getPlayer().getPassenger() != null && z.getPlayer().getPassenger() != null && !ez.isAdminMode() && !ez.isWatching() && !z.getPlayer().isSneaking()) {
 					if(p.isInRegion(KitPvP.REGION_SPAWN) || z.isInRegion(KitPvP.REGION_SPAWN))
 						return;
-					HaxPlayer.get(z.getPlayer()).setCanFly(true);
+					GeneralPlayer.get(z.getPlayer()).setCanFly(true);
 					p.getPlayer().setPassenger(z.getPlayer());
 				}
 			}
@@ -1078,9 +1077,9 @@ public class KitEventListener implements Listener {
 					Entity ent = p.getPlayer().getPassenger();
 					if(ent instanceof Player) {
 						ent.leaveVehicle();
-						HaxPlayer.get(ent.getUniqueId()).invalidate(5000);
+						GeneralPlayer.get(ent.getUniqueId()).invalidate(5000);
 						ent.setVelocity(v);
-						HaxPlayer.get(ent.getUniqueId()).setCanFly(false);
+						GeneralPlayer.get(ent.getUniqueId()).setCanFly(false);
 					}
 				}
 			}
@@ -1376,7 +1375,7 @@ public class KitEventListener implements Listener {
 								GeneralPlayer ep = GeneralPlayer.get(ent.getUniqueId());
 								if(ep.isAdminMode() || ep.isWatching() || ep.isInRegion(KitPvP.REGION_SPAWN))
 									continue;
-								HaxPlayer.get(ep.getUniqueId()).invalidate(10000);
+								GeneralPlayer.get(ep.getUniqueId()).invalidate(10000);
 								ep.sendMessage(KitPvPLanguage.REPULSE_REPULSED);
 							}
 							Vector direction = ent.getLocation().toVector().subtract(p.getPlayer().getLocation().toVector());

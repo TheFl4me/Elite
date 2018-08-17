@@ -8,7 +8,6 @@ import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.events.KitChangeEvent;
-import com.minecraft.plugin.elite.nohax.manager.HaxPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -183,9 +182,8 @@ public class KitPlayer extends GeneralPlayer {
 			this.stopCooldown();
 			this.setKit(null);
 
-			HaxPlayer hp = HaxPlayer.get(this.getUniqueId());
-			hp.setCanFly(false);
-			hp.setCanSpeed(false);
+			this.setCanFly(false);
+			this.setCanSpeed(false);
 		}
 	}
 
@@ -202,15 +200,14 @@ public class KitPlayer extends GeneralPlayer {
 		KitChangeEvent event = new KitChangeEvent(this, kit);
 		Bukkit.getPluginManager().callEvent(event);
 
-		HaxPlayer hp = HaxPlayer.get(this.getUniqueId());
 		switch(kit) {
 			case KANGAROO:
-				hp.setCanFly(true);
-				hp.setCanSpeed(true);
+				this.setCanFly(true);
+				this.setCanSpeed(true);
 				break;
 			case PHANTOM:
-				hp.setCanFly(true);
-				hp.setCanSpeed(true);
+				this.setCanFly(true);
+				this.setCanSpeed(true);
 				break;
 		}
 

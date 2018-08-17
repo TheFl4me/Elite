@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="General:jar">
-    <output-path>$USER_HOME$/Desktop</output-path>
-    <root id="archive" name="General.jar">
-      <element id="module-output" name="General" />
-    </root>
-  </artifact>
-</component>

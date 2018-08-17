@@ -31,6 +31,8 @@ import com.minecraft.plugin.elite.general.commands.admin.mode.invis.VisCommand;
 import com.minecraft.plugin.elite.general.commands.admin.staff.ClearStaffCommand;
 import com.minecraft.plugin.elite.general.commands.admin.staff.SetRankCommand;
 import com.minecraft.plugin.elite.general.commands.admin.staff.SetStaffCommand;
+import com.minecraft.plugin.elite.general.commands.antihack.AlertsCommand;
+import com.minecraft.plugin.elite.general.commands.antihack.SilentCommand;
 import com.minecraft.plugin.elite.general.commands.chat.ChatClearCommand;
 import com.minecraft.plugin.elite.general.commands.chat.ChatLogCommand;
 import com.minecraft.plugin.elite.general.commands.chat.ChatToggleCommand;
@@ -73,6 +75,9 @@ import com.minecraft.plugin.elite.general.listeners.SoupEventListener;
 import com.minecraft.plugin.elite.general.listeners.SpecialModeEventListener;
 import com.minecraft.plugin.elite.general.listeners.SupportEventListener;
 import com.minecraft.plugin.elite.general.listeners.ToolEventListener;
+import com.minecraft.plugin.elite.general.listeners.antihack.ActionStoreEventListener;
+import com.minecraft.plugin.elite.general.listeners.antihack.CombatLogEventListener;
+import com.minecraft.plugin.elite.general.listeners.antihack.SpamCheckEventListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatBlacklistListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatEventListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatToggleEventListener;
@@ -122,6 +127,8 @@ public class General extends JavaPlugin {
     public static final String DB_MUTES = "mutes";
     public static final String DB_MUTEHISTORY = "mutehistory";
     public static final String DB_REPORTS = "reports";
+
+    public static final String ALERTS_PERM = "enohax.alerts";
 
     public static final  List<String> STAFF_SLOTS = Arrays.asList("server-owner", "admin-1", "admin-2", "admin-3", "modplus-1", "modplus-2", "modplus-3", "mod-1", "mod-2", "mod-3", "mod-4", "mod-5", "mod-6", "mod-7", "trialmod-1", "trialmod-2", "trialmod-3", "supporter-1", "supporter-2", "supporter-3", "supporter-4", "supporter-5", "builder-1", "builder-2", "builder-3");
 
@@ -213,6 +220,8 @@ public class General extends JavaPlugin {
         new ReportCommand();
         new ReportListCommand();
         new ReportClearCommand();
+        new SilentCommand();
+        new AlertsCommand();
     }
 
     private void loadEvents() {
@@ -242,6 +251,9 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InfoEventListener(), this);
         getServer().getPluginManager().registerEvents(new DamageEventListener(), this);
         getServer().getPluginManager().registerEvents(new RegionChangeEventListener(), this);
+        getServer().getPluginManager().registerEvents(new ActionStoreEventListener(), this);
+        getServer().getPluginManager().registerEvents(new CombatLogEventListener(), this);
+        getServer().getPluginManager().registerEvents(new SpamCheckEventListener(), this);
     }
 
     private void loadFiles() {

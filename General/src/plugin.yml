@@ -76,3 +76,5 @@ commands:
       aliases: [reports]
     reportclear:
       aliases: [repclear, repcl, clearreports, clearrep, clrep]
+    silent:
+    alerts:

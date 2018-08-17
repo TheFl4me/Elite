@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.antihack.alert.AlertManager;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
@@ -42,6 +43,7 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void cleanUpPlayerHashMap(PlayerQuitEvent e) {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
+        AlertManager.clear(p);
         if (p != null)
             p.leave();
     }

@@ -2,6 +2,9 @@ package com.minecraft.plugin.elite.general.api;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.antihack.hacks.PlayerAttack;
+import com.minecraft.plugin.elite.general.antihack.hacks.PlayerClick;
+import com.minecraft.plugin.elite.general.antihack.hacks.PlayerMove;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.enums.Achievement;
@@ -83,8 +86,24 @@ public class GeneralPlayer {
 	private boolean afk;
 	private boolean pendingAgree;
 	private boolean spy;
+	private boolean showAlerts;
 	private int killStreak;
 	private List<PlayerHit> hits;
+
+	private PlayerMove lastMove;
+	private PlayerMove lastOnGround;
+	private PlayerMove[] moves;
+	private PlayerAttack[] attacks;
+	private PlayerClick[] clicks;
+	private int moveCount;
+	private int attackCount;
+	private int clickCount;
+	private int lastOnGroundMovesAgo;
+	private boolean canFly;
+	private boolean canSpeed;
+	private BukkitRunnable combatLogTask;
+	private BukkitRunnable knockbackTask;
+	private long invalid;
 
 	public static GeneralPlayer get(Player player) {
 		return get(player.getUniqueId());
@@ -138,6 +157,25 @@ public class GeneralPlayer {
 	    this.killStreak = 0;
 		this.spy = false;
 		this.hits = new ArrayList<>();
+
+		this.showAlerts = false;
+
+		this.moves = new PlayerMove[50];
+		this.attacks = new PlayerAttack[5];
+		this.clicks = new PlayerClick[150];
+
+		this.moveCount = 0;
+		this.attackCount = 0;
+		this.clickCount = 0;
+		this.lastOnGroundMovesAgo = 0;
+
+		this.invalid = 0;
+
+		this.canFly = false;
+		this.canSpeed = false;
+
+		this.combatLogTask = null;
+		this.knockbackTask = null;
 
 		Database db = General.getDB();
 		try {
@@ -997,5 +1035,179 @@ public class GeneralPlayer {
 
 	public boolean hasLineOfSight(Entity ent, double degree) {
 		return this.getLineOfSightAngleTo(ent) < Math.toRadians(degree);
+	}
+
+	public boolean canBypassChecks() {
+		return this.getPlayer().hasPermission("enohax.bypass");
+	}
+
+	public void showAlerts(boolean alerts) {
+		this.showAlerts = alerts;
+	}
+
+	public boolean canViewAlerts() {
+		return this.showAlerts;
+	}
+
+	public void setCombatLog() {
+		if(this.isCombatLog()) {
+			this.getCombatLogTask().cancel();
+			this.setCombatLogTask(null);
+		}
+		this.setCombatLogTask(new BukkitRunnable() {
+			@Override
+			public void run() {
+				GeneralPlayer p = get(getUniqueId());
+				if(p == null)
+					cancel();
+				if (p.isCombatLog()) {
+					p.sendMessage(GeneralLanguage.COMBATLOG_SAFE);
+					p.getCombatLogTask().cancel();
+					p.setCombatLogTask(null);
+				}
+			}
+		});
+		this.getCombatLogTask().runTaskLater(General.getPlugin(), 200);
+	}
+
+	public boolean isCombatLog() {
+		return this.combatLogTask != null;
+	}
+
+	public BukkitRunnable getCombatLogTask() {
+		return this.combatLogTask;
+	}
+
+	public void setCombatLogTask(BukkitRunnable runnable) {
+		this.combatLogTask = runnable;
+	}
+
+	public boolean isKnockbacked() {
+		return this.knockbackTask != null;
+	}
+
+	public BukkitRunnable getKnockbackTask() {
+		return this.knockbackTask;
+	}
+
+	public void setKnockbackTask(BukkitRunnable runnable) {
+		this.knockbackTask = runnable;
+	}
+
+	public void invalidate() {
+		this.invalidate(2000);
+	}
+
+	public void invalidate(long ms) {
+		this.invalid = System.currentTimeMillis() + ms;
+	}
+
+	public boolean isValid() {
+		return System.currentTimeMillis() > this.invalid;
+	}
+
+
+	public void setLastOnGround(PlayerMove move) {
+		this.lastOnGround = move;
+	}
+
+	public void setLastOnGroundMovesAgo(int i) {
+		this.lastOnGroundMovesAgo = i;
+	}
+
+	public PlayerMove getLastOnGround() {
+		return this.lastOnGround;
+	}
+
+	public int getLastOnGroundMovesAgo() {
+		return this.lastOnGroundMovesAgo;
+	}
+
+	public void setLastMove(PlayerMove move) {
+		this.lastMove = move;
+	}
+
+	public PlayerMove getLastMove() {
+		return this.lastMove;
+	}
+
+	public void setMoveCount(int i) {
+		this.moveCount = i;
+	}
+
+	public int getMoveCount() {
+		return this.moveCount;
+	}
+
+	public PlayerMove[] getMoves() {
+		return this.moves;
+	}
+
+	public void setMoves(PlayerMove[] moves) {
+		this.moves = moves;
+	}
+
+	public PlayerMove getMovesAgo(int x) {
+		if (this.getMoveCount() - x < 0)
+			return null;
+		int index = Math.abs(this.getMoveCount() - x) % this.getMoves().length;
+		return this.getMoves()[index];
+	}
+
+
+
+	public PlayerAttack[] getAttacks() {
+		return this.attacks;
+	}
+
+	public int getAttackCount() {
+		return this.attackCount;
+	}
+
+	public void setAttackCount(int i) {
+		this.attackCount = i;
+	}
+
+	public PlayerAttack getDamageAgo(int x) {
+		if (this.getAttackCount() - x < 0)
+			return null;
+		int index = Math.abs(this.getAttackCount() - x) % this.getAttacks().length;
+		return this.getAttacks()[index];
+	}
+
+	public PlayerClick[] getClicks() {
+		return this.clicks;
+	}
+
+	public int getClickCount() {
+		return this.clickCount;
+	}
+
+	public void setClickCount(int i) {
+		this.clickCount = i;
+	}
+
+	public PlayerClick getClicksAgo(int x) {
+		if (this.getClickCount() - x < 0)
+			return null;
+		int index = Math.abs(this.getClickCount() - x) % this.getClicks().length;
+		return this.getClicks()[index];
+	}
+
+
+	public boolean isCanFly() {
+		return this.canFly || this.getPlayer().getAllowFlight();
+	}
+
+	public boolean isCanSpeed() {
+		return canSpeed;
+	}
+
+	public void setCanFly(boolean fly) {
+		this.canFly = fly;
+	}
+
+	public void setCanSpeed(boolean speed) {
+		this.canSpeed = speed;
 	}
 }

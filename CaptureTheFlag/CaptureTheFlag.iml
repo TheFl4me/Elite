@@ -7,23 +7,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="General" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Plugins/General.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
+          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/craftbukkit-1.8.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Versions/Build 1.8.8/craftbukkit-1.8.8.jar!/" />
+          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/craftbukkit-1.8.8.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

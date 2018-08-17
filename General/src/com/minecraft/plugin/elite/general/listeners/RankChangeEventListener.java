@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
+import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
@@ -29,6 +30,11 @@ public class RankChangeEventListener implements Listener {
 
             if(p.isBuilding() && !e.getNewRank().hasPermission("egeneral.build"))
                 p.setBuilding(false);
+
+            if (!e.getNewRank().hasPermission(General.ALERTS_PERM))
+                p.showAlerts(false);
+            else
+                p.showAlerts(true);
 
             for (Player players : Bukkit.getOnlinePlayers()) {
                 GeneralPlayer all = GeneralPlayer.get(players);
