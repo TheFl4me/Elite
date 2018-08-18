@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.punish.ban;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -15,20 +16,16 @@ import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class BanManager {
 	
 	private static Map<UUID, Ban> bans = new HashMap<>();
-	private static Map<UUID, TempBan> tempbans = new HashMap<>();
-	private static Map<UUID, Collection<PastBan>> pastbans = new HashMap<>();
+	private static Map<UUID, TempBan> temporaryBans = new HashMap<>();
+	private static Map<UUID, Collection<PastBan>> pastBans = new HashMap<>();
 
 	public static Collection<PastBan> getPastBans(UUID uuid) {
-		return pastbans.get(uuid);
+		return pastBans.get(uuid);
 	}
 
 	public static Collection<PastBan> getPastBans(UUID uuid, PunishReason reason) {
@@ -42,7 +39,7 @@ public class BanManager {
 	}
 
 	public static PastBan getPastBan(UUID id) {
-		for(UUID uuid : pastbans.keySet())
+		for(UUID uuid : pastBans.keySet())
 			for(PastBan pastBan : getPastBans(uuid))
 				if(pastBan.getUniqueId().equals(id))
 					return pastBan;
@@ -55,7 +52,7 @@ public class BanManager {
     	if(ban != null){
     		return ban;
     	}	
-    	TempBan tempBan = tempbans.get(uuid);
+    	TempBan tempBan = temporaryBans.get(uuid);
     	if(tempBan != null){
     		if(!tempBan.hasExpired()) {
     			return tempBan;
@@ -70,18 +67,16 @@ public class BanManager {
 
 		String kick_screen;
 		long time = 0;
-		if(bans.containsKey(target.getUniqueId())) 
-			bans.remove(target.getUniqueId());
-		if(tempbans.containsKey(target.getUniqueId()))
-			tempbans.remove(target.getUniqueId());
 		Ban ban;
 		if(reason.isTemp()) {
 			time = PunishManager.computeTime((BanManager.getPastBans(target.getUniqueId(), reason).size() + 1D), reason.getModifier(), reason.getUnit());
 			ban = new TempBan(bannerName, target, reason, banDetails, time, System.currentTimeMillis(), id);
-			tempbans.put(target.getUniqueId(), (TempBan) ban);
+			temporaryBans.put(target.getUniqueId(), (TempBan) ban);
+			bans.remove(target.getUniqueId());
 		} else {
 			ban = new Ban(bannerName, target, reason, banDetails, System.currentTimeMillis(), id);
 			bans.put(target.getUniqueId(), ban);
+			temporaryBans.remove(target.getUniqueId());
 		}
 
 		Database db = General.getDB();
@@ -105,7 +100,7 @@ public class BanManager {
 			GeneralPlayer all = GeneralPlayer.get(players);
 			String msg = all.getLanguage().get(GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName());
 
-			if(all.getPlayer().hasPermission("eban.checkinfo"))
+			if(all.hasPermission(GeneralPermission.PUNISH_INFO_CHECK))
 				all.sendHoverMessage(msg, ban.getInfo(GeneralLanguage.BAN_INFO, all.getLanguage()));
 			else
 				all.getPlayer().sendMessage(msg);
@@ -114,8 +109,8 @@ public class BanManager {
 	
 	public static void reload() {
 		bans.clear();
-		tempbans.clear();
-		pastbans.clear();
+		temporaryBans.clear();
+		pastBans.clear();
 		
 		Database db = General.getDB();
 		
@@ -132,14 +127,14 @@ public class BanManager {
 				boolean isTemp = banRes.getBoolean("tempban");
 				if(isTemp) {
 					TempBan tempBan = new TempBan(banner, hacker, reason, details, time, date, id);
-					tempbans.put(hacker.getUniqueId(), tempBan);
+					temporaryBans.put(hacker.getUniqueId(), tempBan);
 				} else {
 					Ban ban = new Ban(banner, hacker, reason, details, date, id);
 					bans.put(hacker.getUniqueId(), ban);
 				}
 			}
 
-			ResultSet pastBanRes = db.select(General.DB_BANHISTORY);
+			ResultSet pastBanRes = db.select(General.DB_BAN_HISTORY);
 			while(pastBanRes.next()) {
 				String banner = pastBanRes.getString("banner");
 				OfflinePlayer hacker = Bukkit.getOfflinePlayer(UUID.fromString(pastBanRes.getString("target")));
@@ -149,9 +144,9 @@ public class BanManager {
 				long time = pastBanRes.getLong("time");
 				UUID id = UUID.fromString(pastBanRes.getString("id"));
 				String unbanner = pastBanRes.getString("unbanner");
-				long unbandate = pastBanRes.getLong("unbandate");
+				long unbanDate = pastBanRes.getLong("unbandate");
 
-				PastBan pastBan = new PastBan(id, hacker, reason, details, date, time, banner, unbanner, unbandate);
+				PastBan pastBan = new PastBan(id, hacker, reason, details, date, time, banner, unbanner, unbanDate);
 				addPastBan(hacker, pastBan);
 			}
 		} catch (SQLException e) {
@@ -163,15 +158,15 @@ public class BanManager {
 		Ban ban = null;
 		if(bans.containsKey(z.getUniqueId()))
 			ban = bans.get(z.getUniqueId());
-		else if(tempbans.containsKey(z.getUniqueId()))
-			ban = tempbans.get(z.getUniqueId());
+		else if(temporaryBans.containsKey(z.getUniqueId()))
+			ban = temporaryBans.get(z.getUniqueId());
 
 		if(ban != null) {
 			Database db = General.getDB();
 			final long currentTime = System.currentTimeMillis();
 			final long time = (ban instanceof Temporary ? ((Temporary) ban).getTime() : 0);
 
-			db.execute("INSERT INTO " + General.DB_BANHISTORY + " (tempban, time, banner, id, reason, details, date, target, unbanner, unbandate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+			db.execute("INSERT INTO " + General.DB_BAN_HISTORY + " (tempban, time, banner, id, reason, details, date, target, unbanner, unbandate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
 					(ban instanceof Temporary ? 1 : 0), time, ban.getPunisher(), ban.getUniqueId(), ban.getReason().toString(), ban.getDetails(), ban.getDate(), ban.getTarget(), unbanner, currentTime);
 
 			PastBan pastBan = new PastBan(ban.getUniqueId(), ban.getTarget(), ban.getReason(), ban.getDetails(), ban.getDate(), time, ban.getPunisher(), unbanner, currentTime);
@@ -179,10 +174,8 @@ public class BanManager {
 
 			db.delete(General.DB_BANS, "target", z.getUniqueId());
 
-			if(bans.containsKey(z.getUniqueId()))
-				bans.remove(z.getUniqueId());
-			if(tempbans.containsKey(z.getUniqueId()))
-				tempbans.remove(z.getUniqueId());
+			bans.remove(z.getUniqueId());
+			temporaryBans.remove(z.getUniqueId());
 
 			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
 			for(Player players : Bukkit.getOnlinePlayers()) {
@@ -198,8 +191,6 @@ public class BanManager {
 		if(pastBansList != null && !pastBansList.isEmpty())
 			tempPastBans.addAll(pastBansList);
 		tempPastBans.add(pastBan);
-		if(pastbans.containsKey(hacker.getUniqueId()))
-			pastbans.remove(hacker.getUniqueId());
-		pastbans.put(hacker.getUniqueId(), tempPastBans);
+		pastBans.put(hacker.getUniqueId(), tempPastBans);
 	}
 }

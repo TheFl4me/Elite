@@ -9,11 +9,7 @@ import org.bukkit.Location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class DuelManager {
 
@@ -29,9 +25,7 @@ public class DuelManager {
     }
 
     public static List<UUID> getQueue() {
-        List<UUID> tempList = new ArrayList<>();
-        tempList.addAll(queue);
-        return tempList;
+        return new ArrayList<>(queue);
     }
 
     public static Duel get(GeneralPlayer p) {

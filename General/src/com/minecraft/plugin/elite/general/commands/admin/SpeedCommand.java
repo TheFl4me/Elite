@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.command.Command;
@@ -14,7 +15,7 @@ import java.util.List;
 public class SpeedCommand extends GeneralCommand implements TabCompleter {
 
     public SpeedCommand() {
-        super("speed", "egeneral.speed", false);
+        super("speed", GeneralPermission.ADMIN_SPEED, false);
     }
 
     @Override

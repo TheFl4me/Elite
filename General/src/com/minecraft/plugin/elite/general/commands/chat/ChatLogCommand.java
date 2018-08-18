@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ChatLogCommand extends GeneralCommand {
 
     public ChatLogCommand() {
-        super("chatlog", "egeneral.chatlog", false);
+        super("chatlog", GeneralPermission.CHAT_LOG, false);
     }
 
     @SuppressWarnings("deprecation")
@@ -32,22 +33,22 @@ public class ChatLogCommand extends GeneralCommand {
             Server server = Server.get();
             OfflinePlayer z = Bukkit.getOfflinePlayer(args[0]);
             StringBuilder logs = new StringBuilder();
-            List<String> msgs = new ArrayList<>();
+            List<String> messages = new ArrayList<>();
             Database db = General.getDB();
-            db.execute("DELETE FROM " + General.DB_CHATLOGS + " WHERE date < ?", System.currentTimeMillis() - 604800000L);
+            db.execute("DELETE FROM " + General.DB_CHAT_LOGS + " WHERE date < ?", System.currentTimeMillis() - 604800000L);
             p.sendMessage(GeneralLanguage.DB_CHECK);
             try {
-                ResultSet res = db.select(General.DB_CHATLOGS, "uuid", z.getUniqueId().toString());
+                ResultSet res = db.select(General.DB_CHAT_LOGS, "uuid", z.getUniqueId().toString());
                 logs.append(ChatColor.RED + General.SPACER + "\n");
                 logs.append(ChatColor.RED + "ChatLog " + z.getName() + ":\n");
                 while (res.next()) {
                     if (res.getString("type").equalsIgnoreCase("public")) {
-                        if (msgs.size() > 14)
-                            msgs.remove(msgs.get(0));
-                        msgs.add(ChatColor.GRAY + "[" + server.getDate(res.getLong("date")) + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', res.getString("message")) + "\n");
+                        if (messages.size() > 14)
+                            messages.remove(messages.get(0));
+                        messages.add(ChatColor.GRAY + "[" + server.getDate(res.getLong("date")) + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', res.getString("message")) + "\n");
                     }
                 }
-                msgs.forEach(logs::append);
+                messages.forEach(logs::append);
                 logs.append(ChatColor.RED + General.SPACER);
                 cs.sendMessage(logs.toString());
                 return true;

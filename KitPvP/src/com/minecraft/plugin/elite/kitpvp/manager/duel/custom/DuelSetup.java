@@ -60,8 +60,6 @@ public class DuelSetup {
     }
 
     public void setPhase(GeneralPlayer p, Phase phase) {
-        if(phases.containsKey(p))
-            phases.remove(p);
         phases.put(p, phase);
     }
 
@@ -170,14 +168,14 @@ public class DuelSetup {
 
         Inventory editInv = this.getEditor().getGUI().getInventory();
         final ItemStack helmet = editInv.getItem(Slot.HELMET.getSlot());
-        final ItemStack chest = editInv.getItem(Slot.CHESTPLATE.getSlot());
+        final ItemStack chest = editInv.getItem(Slot.CHEST_PLATE.getSlot());
         final ItemStack leg = editInv.getItem(Slot.LEGGINGS.getSlot());
         final ItemStack boots = editInv.getItem(Slot.BOOTS.getSlot());
 
         final ItemStack sword = editInv.getItem(Slot.SWORD.getSlot());
         final ItemStack soup = editInv.getItem(Slot.SOUP.getSlot());
         final ItemStack fishing = editInv.getItem(Slot.FISHING_ROD.getSlot());
-        final boolean recraft = editInv.getItem(Slot.RECRAFT.getSlot()).getType() != Material.BARRIER;
+        final boolean re_craft = editInv.getItem(Slot.RE_CRAFT.getSlot()).getType() != Material.BARRIER;
 
         this.setEditing(false);
         for(GeneralPlayer p : phases.keySet()) {
@@ -200,7 +198,7 @@ public class DuelSetup {
                 kp.setItem(KitPlayer.SlotType.KIT_ITEM, fishing);
 
             if(soup.getType() != Material.BARRIER) {
-                if(recraft) {
+                if(re_craft) {
                     kp.setItem(KitPlayer.SlotType.BOWL, (new ItemStack(Material.BOWL, 32)));
                     kp.setItem(KitPlayer.SlotType.BROWN_MUSHROOM, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
                     kp.setItem(KitPlayer.SlotType.RED_MUSHROOM, (new ItemStack(Material.RED_MUSHROOM, 32)));
@@ -232,7 +230,7 @@ public class DuelSetup {
                 case DIAMOND_HELMET : return Material.BARRIER;
                 default: return null;
             }
-        } else if(slot == Slot.CHESTPLATE.getSlot()) {
+        } else if(slot == Slot.CHEST_PLATE.getSlot()) {
             switch(item.getType()) {
                 case BARRIER : return Material.LEATHER_CHESTPLATE;
                 case LEATHER_CHESTPLATE : return Material.GOLD_CHESTPLATE;
@@ -278,7 +276,7 @@ public class DuelSetup {
                 case MUSHROOM_SOUP : return Material.BARRIER;
                 default: return null;
             }
-        } else if(slot == Slot.RECRAFT.getSlot()) {
+        } else if(slot == Slot.RE_CRAFT.getSlot()) {
             switch(item.getType()) {
                 case BARRIER : return Material.BROWN_MUSHROOM;
                 case BROWN_MUSHROOM : return Material.BARRIER;
@@ -302,12 +300,12 @@ public class DuelSetup {
     public enum Slot {
 
         HELMET(13),
-        CHESTPLATE(22),
+        CHEST_PLATE(22),
         LEGGINGS(31),
         BOOTS(40),
         SWORD(15),
         SOUP(11),
-        RECRAFT(38),
+        RE_CRAFT(38),
         FISHING_ROD(42);
 
         private int slot;

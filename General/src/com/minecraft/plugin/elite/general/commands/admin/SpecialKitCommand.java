@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.skit.SKit;
@@ -16,10 +17,10 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-public class SKitCommand extends GeneralCommand implements TabCompleter {
+public class SpecialKitCommand extends GeneralCommand implements TabCompleter {
 
-    public SKitCommand() {
-        super("skit", "egeneral.skit", false);
+    public SpecialKitCommand() {
+        super("skit", GeneralPermission.ADMIN_SPECIAL_KIT, false);
     }
 
     @Override

@@ -13,22 +13,8 @@ import com.minecraft.plugin.elite.kitpvp.commands.KitInfoCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelLocationCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.duel.SetDuelSpawnCommand;
 import com.minecraft.plugin.elite.kitpvp.commands.holograms.SetHologramCommand;
-import com.minecraft.plugin.elite.kitpvp.listeners.BossBarEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.DuelEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.EventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.KitEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.KitSettingsEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.LevelUpEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.RegionChangeEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.BuildEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ClearPlayerEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.GUIEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.JoinQuitEventsListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.LanguageEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ModeChangeEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ScoreboardEventListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.SpawnEventsListener;
-import com.minecraft.plugin.elite.kitpvp.listeners.basic.ToolEventListener;
+import com.minecraft.plugin.elite.kitpvp.listeners.*;
+import com.minecraft.plugin.elite.kitpvp.listeners.basic.*;
 import com.minecraft.plugin.elite.kitpvp.listeners.death.DeathEventListener;
 import com.minecraft.plugin.elite.kitpvp.listeners.death.RespawnEventListener;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
@@ -78,11 +64,11 @@ public class KitPvP extends JavaPlugin {
 		
 		plugin = this;
 
-		freekits.add(Kit.PVP);
-		freekits.add(Kit.ARCHER);
+		free_kits.add(Kit.PVP);
+		free_kits.add(Kit.ARCHER);
 
 		loadDatabase();
-		loadCmds();
+		loadCommands();
 		loadEvents();
 
 		Server server = new Server("KitPvP");
@@ -95,7 +81,7 @@ public class KitPvP extends JavaPlugin {
 	}
 
 	
-    private void loadCmds() {		
+    private void loadCommands() {
 		new KitCommand();
 		new KitInfoCommand();
 		new FreeKitsCommand();
@@ -205,19 +191,19 @@ public class KitPvP extends JavaPlugin {
 		return db;
 	}
 
-	private static Collection<Kit> freekits = new ArrayList<>();
+	private static Collection<Kit> free_kits = new ArrayList<>();
 
 	public static Collection<Kit> getFreeKits() {
-		return freekits;
+		return free_kits;
 	}
 
 	public static void setAllKitsFree(boolean free) {
 			for(Kit kit : Kit.values())
 				if(kit != Kit.ARCHER && kit != Kit.PVP)
 					if(free)
-						freekits.add(kit);
+						free_kits.add(kit);
 					else
-		            	freekits.remove(kit);
+		            	free_kits.remove(kit);
 	}
 
 	public static void updateScoreboard() {

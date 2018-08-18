@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class ReportClearCommand extends GeneralCommand {
 
     public ReportClearCommand() {
-        super("reportclear", "egeneral.report.clear", false);
+        super("reportclear", GeneralPermission.PUNISH_REPORT_CLEAR, false);
     }
 
     @SuppressWarnings("deprecation")

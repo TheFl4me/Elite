@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -13,7 +14,7 @@ import org.bukkit.command.CommandSender;
 public class UnmuteCommand extends GeneralCommand {
 	
 	public UnmuteCommand() {
-		super("unmute", "egeneral.unmute", true);
+		super("unmute", GeneralPermission.PUNISH_UNMUTE, true);
 	}
 
 	@SuppressWarnings("deprecation")

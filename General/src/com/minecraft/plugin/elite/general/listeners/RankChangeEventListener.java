@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
@@ -17,21 +17,21 @@ public class RankChangeEventListener implements Listener {
             GeneralPlayer p = GeneralPlayer.get(e.getTarget().getName());
             p.setTag();
             if(p.isAdminMode()) {
-                if (!e.getNewRank().hasPermission("egeneral.admin")) {
+                if (!e.getNewRank().hasPermission(GeneralPermission.MODE_ADMIN)) {
                     p.setAdminMode(false);
                 }
             } else if(p.isWatching()) {
-                if (!e.getNewRank().hasPermission("egeneral.watch")) {
+                if (!e.getNewRank().hasPermission(GeneralPermission.MODE_WATCH)) {
                     p.setWatching(false);
                 }
             }
             if(p.isInvis())
                 p.setInvis(Rank.valueOf(e.getNewRank().ordinal() - 1));
 
-            if(p.isBuilding() && !e.getNewRank().hasPermission("egeneral.build"))
+            if(p.isBuilding() && !e.getNewRank().hasPermission(GeneralPermission.MODE_BUILD))
                 p.setBuilding(false);
 
-            if (!e.getNewRank().hasPermission(General.ALERTS_PERM))
+            if (!e.getNewRank().hasPermission(GeneralPermission.ANTI_HACK_ALERTS))
                 p.showAlerts(false);
             else
                 p.showAlerts(true);

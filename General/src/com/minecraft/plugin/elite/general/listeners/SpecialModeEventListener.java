@@ -3,18 +3,10 @@ package com.minecraft.plugin.elite.general.listeners;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.EnderPearl;
-import org.bukkit.entity.FishHook;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -83,12 +75,12 @@ public class SpecialModeEventListener implements Listener {
 
             //watcher shoot at player
             if(ee.getDamager() instanceof Projectile) {
-                Projectile proj = (Projectile) ee.getDamager();
-                if(proj.getShooter() instanceof Player) {
-                    GeneralPlayer p = GeneralPlayer.get((Player) proj.getShooter());
+                Projectile projectile = (Projectile) ee.getDamager();
+                if(projectile.getShooter() instanceof Player) {
+                    GeneralPlayer p = GeneralPlayer.get((Player) projectile.getShooter());
                     if(p.isWatching()) {
                         e.setCancelled(true);
-                        proj.setBounce(false);
+                        projectile.setBounce(false);
                     }
                 }
             }
@@ -96,17 +88,17 @@ public class SpecialModeEventListener implements Listener {
     }
 
     @EventHandler
-    public void projHitMode(EntityDamageByEntityEvent e) {
+    public void projectileHitMode(EntityDamageByEntityEvent e) {
         if(e.getDamager() instanceof Projectile && e.getEntity() instanceof Player) {
             GeneralPlayer p = GeneralPlayer.get((Player) e.getEntity());
-            Projectile proj = (Projectile) e.getDamager();
+            Projectile projectile = (Projectile) e.getDamager();
             if(p.isWatching() || p.isAdminMode()) {
-                final Vector v = proj.getVelocity();
-                proj.setBounce(false);
-                proj.remove();
-                if(proj instanceof EnderPearl || proj instanceof FishHook || proj instanceof ThrownPotion)
+                final Vector v = projectile.getVelocity();
+                projectile.setBounce(false);
+                projectile.remove();
+                if(projectile instanceof EnderPearl || projectile instanceof FishHook || projectile instanceof ThrownPotion)
                     return;
-                Projectile newProj = p.getPlayer().launchProjectile(proj.getClass(), v);
+                Projectile newProjectile = p.getPlayer().launchProjectile(projectile.getClass(), v);
             }
         }
     }
@@ -119,14 +111,14 @@ public class SpecialModeEventListener implements Listener {
     }
 
     @EventHandler
-    public void dontMoveGlass(InventoryClickEvent e) {
+    public void doNotMoveGlass(InventoryClickEvent e) {
         GeneralPlayer p = GeneralPlayer.get((Player) e.getWhoClicked());
         if(e.getSlotType() == InventoryType.SlotType.ARMOR && (p.isWatching() || p.isAdminMode()))
             e.setCancelled(true);
     }
 
     @EventHandler
-    public void dontDropGlass(PlayerDropItemEvent e) {
+    public void doNotDropGlass(PlayerDropItemEvent e) {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if((p.isAdminMode() || p.isWatching()) && e.getItemDrop().getItemStack().getType() == Material.GLASS) {
             e.getItemDrop().remove();

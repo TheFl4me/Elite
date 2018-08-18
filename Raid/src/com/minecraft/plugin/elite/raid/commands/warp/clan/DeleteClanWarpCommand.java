@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import com.minecraft.plugin.elite.raid.manager.Warp;
 import com.minecraft.plugin.elite.raid.manager.WarpManager;
 import org.bukkit.command.Command;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 public class DeleteClanWarpCommand extends GeneralCommand {
 	
 	public DeleteClanWarpCommand() {
-		super("deleteclanwarp", "eraid.warp", false);
+		super("deleteclanwarp", RaidPermission.WARP, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

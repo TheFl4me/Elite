@@ -39,7 +39,7 @@ public enum KitPvPLanguage implements LanguageNode {
     DUEL_GUI_CANCEL,
     DUEL_GUI_EDITOR,
     DUEL_GUI_STANDBY,
-    DUEL_GUI_RECRAFT,
+    DUEL_GUI_RE_CRAFT,
 
     DUEL_TOOL,
     DUEL_TOOL_CUSTOM,
@@ -51,7 +51,7 @@ public enum KitPvPLanguage implements LanguageNode {
     KILL_STREAK,
 
     KIT_GIVE,
-    KIT_NOPERM,
+    KIT_NO_PERMISSION,
     KIT_ERROR_ALREADY,
     KIT_ERROR_NULL,
     KIT_ERROR_MODE,

@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.survivalgames.commands;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
+import com.minecraft.plugin.elite.survivalgames.SurvivalGamesPermission;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.ArenaManager;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class SetMapCommand extends GeneralCommand implements TabCompleter {
 
 	public SetMapCommand() {
-		super("setmap","esurvivalgames.setmap", false);
+		super("setmap", SurvivalGamesPermission.MAP_SET, false);
 	}
 	
 	@Override

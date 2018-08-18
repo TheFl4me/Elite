@@ -165,7 +165,7 @@ public class GUIEventListener implements Listener {
 						if(mat != null) {
 							ItemStack nextItem = new ItemStack(mat);
 							if (nextItem.getType() == Material.BROWN_MUSHROOM)
-								Server.get().rename(nextItem, p.getLanguage().get(KitPvPLanguage.DUEL_GUI_RECRAFT));
+								Server.get().rename(nextItem, p.getLanguage().get(KitPvPLanguage.DUEL_GUI_RE_CRAFT));
 							setup.change(i, nextItem);
 						}
 					}
@@ -177,7 +177,7 @@ public class GUIEventListener implements Listener {
 					if(mat != null) {
 						ItemStack nextItem = new ItemStack(mat);
 						if (nextItem.getType() == Material.BROWN_MUSHROOM)
-							Server.get().rename(nextItem, p.getLanguage().get(KitPvPLanguage.DUEL_GUI_RECRAFT));
+							Server.get().rename(nextItem, p.getLanguage().get(KitPvPLanguage.DUEL_GUI_RE_CRAFT));
 						setup.change(i, nextItem);
 					}
 				}

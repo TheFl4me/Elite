@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import com.minecraft.plugin.elite.raid.manager.Warp;
 import com.minecraft.plugin.elite.raid.manager.WarpManager;
 import org.bukkit.Location;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 public class SetWarpCommand extends GeneralCommand {
 
 	public SetWarpCommand() {
-		super("setwarp", "eraid.warp", false);
+		super("setwarp", RaidPermission.WARP, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

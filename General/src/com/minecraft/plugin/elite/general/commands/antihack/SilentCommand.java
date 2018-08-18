@@ -1,7 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.antihack;
 
-import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class SilentCommand extends GeneralCommand {
 
     public SilentCommand() {
-        super("silent", General.ALERTS_PERM, false);
+        super("silent", GeneralPermission.ANTI_HACK_ALERTS, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

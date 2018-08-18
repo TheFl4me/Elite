@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import com.minecraft.plugin.elite.raid.manager.Warp;
 import com.minecraft.plugin.elite.raid.manager.WarpManager;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class SetClanWarpCommand extends GeneralCommand {
 
 	public SetClanWarpCommand() {
-		super("setclanwarp", "eraid.warp", false);
+		super("setclanwarp", RaidPermission.WARP, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

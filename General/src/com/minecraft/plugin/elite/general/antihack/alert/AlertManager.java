@@ -2,7 +2,6 @@ package com.minecraft.plugin.elite.general.antihack.alert;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.antihack.alert.Alert;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -37,8 +36,7 @@ public class AlertManager {
     }
 
     public static void clear(GeneralPlayer p) {
-        Collection<Alert> list = new ArrayList<>();
-        list.addAll(getAll(p));
+        Collection<Alert> list = new ArrayList<>(getAll(p));
         alerts.removeAll(list);
     }
 

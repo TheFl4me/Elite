@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.api;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerAttack;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerClick;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerMove;
@@ -20,6 +21,7 @@ import com.minecraft.plugin.elite.general.api.events.stats.ExpChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.PrestigeChangeEvent;
 import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
+import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
 import com.minecraft.plugin.elite.general.api.special.PlayerHit;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
@@ -31,19 +33,9 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketDataSerializer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.*;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -60,13 +52,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
+import com.minecraft.plugin.elite.general.api.enums.Achievement;
 
 public class GeneralPlayer {
 
@@ -155,7 +143,7 @@ public class GeneralPlayer {
 	    this.afk = false;
 	    this.pendingAgree = false;
 	    this.killStreak = 0;
-		this.spy = false;
+	    this.spy = false;
 		this.hits = new ArrayList<>();
 
 		this.showAlerts = false;
@@ -208,9 +196,9 @@ public class GeneralPlayer {
 			db.update(General.DB_PLAYERS, "ip", this.getIP(), "uuid", this.getUniqueId());
 			db.update(General.DB_PLAYERS, "lastjoin", System.currentTimeMillis(), "uuid", this.getUniqueId());
 		}
-		this.loadPermissions();
+        this.loadPermissions();
 
-		if(!db.containsValue(General.DB_ACHIEVEMENTS, "uuid", this.getUniqueId().toString())) {
+        if(!db.containsValue(General.DB_ACHIEVEMENTS, "uuid", this.getUniqueId().toString())) {
 			db.execute("INSERT INTO " + General.DB_ACHIEVEMENTS + " (uuid) VALUES (?);", this.getUniqueId());
 			for (Achievement achievement : Achievement.values())
 				db.update(General.DB_ACHIEVEMENTS, achievement.toString().toLowerCase(), 0, "uuid", this.getUniqueId());
@@ -250,19 +238,23 @@ public class GeneralPlayer {
 		this.getPlayer().setDisplayName(name);
 	}
 
-	public void loadPermissions() {
-		this.getPlayer().getEffectivePermissions().forEach((perm) -> {
-			PermissionAttachment attachment = perm.getAttachment();
-			if(attachment != null)
-				attachment.unsetPermission(perm.getPermission());
-		});
-		this.getRank().getPermissions().forEach((perm) -> {
-			if(perm != null) {
-				PermissionAttachment attachment = this.getPlayer().addAttachment(General.getPlugin(), perm, true);
-				attachment.setPermission(perm, true);
-			}
-		});
+	public boolean hasPermission(PermissionNode permission) {
+		return this.getPlayer().hasPermission(permission.toString());
 	}
+
+    public void loadPermissions() {
+	    this.getPlayer().getEffectivePermissions().forEach((perm) -> {
+            PermissionAttachment attachment = perm.getAttachment();
+            if(attachment != null)
+                attachment.unsetPermission(perm.getPermission());
+        });
+        this.getRank().getPermissions().forEach((perm) -> {
+            if(perm != null) {
+                PermissionAttachment attachment = this.getPlayer().addAttachment(General.getPlugin(), perm, true);
+                attachment.setPermission(perm, true);
+            }
+        });
+    }
 
 	public Language getLanguage() {
 		Database db = General.getDB();
@@ -640,10 +632,10 @@ public class GeneralPlayer {
 	}
 
 	public boolean canAdminMode() {
-		return this.getPlayer().hasPermission("egeneral.admin");
+		return this.hasPermission(GeneralPermission.MODE_ADMIN);
 	}
 	public boolean canWatch() {
-		return this.getPlayer().hasPermission("egeneral.watch");
+		return this.hasPermission(GeneralPermission.MODE_WATCH);
 	}
 	public boolean isAdminMode() {
 		return this.adminMode;
@@ -666,7 +658,7 @@ public class GeneralPlayer {
 	}
 
 	public boolean canSpy() {
-		return this.getPlayer().hasPermission("egeneral.spy");
+		return this.hasPermission(GeneralPermission.MODE_SPY);
 	}
 	public boolean isSpy() {
 		return this.spy;
@@ -927,19 +919,16 @@ public class GeneralPlayer {
 		Bukkit.getPluginManager().callEvent(event);
 	}
 
-	public void addExpToDamagers() {
+	public void addExpToAttackers() {
 		DecimalFormat df = new DecimalFormat("00.0");
 		double totalDamage = 0.0;
 		HashMap<UUID, Double> damagePerPlayer = new HashMap<>();
 		for(PlayerHit hit : this.getHits()) {
-			totalDamage += hit.getDamage();
-			if(!damagePerPlayer.containsKey(hit.getDamager())) {
-				damagePerPlayer.put(hit.getDamager(), hit.getDamage());
-			} else {
-				final double dmg = damagePerPlayer.get(hit.getDamager());
-				damagePerPlayer.remove(hit.getDamager());
-				damagePerPlayer.put(hit.getDamager(), hit.getDamage() + dmg);
-			}
+			double damage = hit.getDamage();
+			totalDamage += damage;
+			if(damagePerPlayer.containsKey(hit.getAttacker()))
+				damage += damagePerPlayer.get(hit.getAttacker());
+			damagePerPlayer.put(hit.getAttacker(), damage);
 		}
 
 		for(UUID uuid : damagePerPlayer.keySet()) {
@@ -975,9 +964,7 @@ public class GeneralPlayer {
 	}
 
 	public List<PlayerHit> getHits() {
-		List<PlayerHit> tempList = new ArrayList<>();
-		tempList.addAll(this.hits);
-		return tempList;
+		return new ArrayList<>(this.hits);
 	}
 
 	public void saveHit(PlayerHit hit) {
@@ -1038,7 +1025,7 @@ public class GeneralPlayer {
 	}
 
 	public boolean canBypassChecks() {
-		return this.getPlayer().hasPermission("enohax.bypass");
+		return this.hasPermission(GeneralPermission.ANTI_HACK_BYPASS);
 	}
 
 	public void showAlerts(boolean alerts) {
@@ -1047,6 +1034,10 @@ public class GeneralPlayer {
 
 	public boolean canViewAlerts() {
 		return this.showAlerts;
+	}
+
+	public boolean hasAlertsPerm() {
+		return this.hasPermission(GeneralPermission.ANTI_HACK_ALERTS);
 	}
 
 	public void setCombatLog() {
@@ -1082,7 +1073,7 @@ public class GeneralPlayer {
 		this.combatLogTask = runnable;
 	}
 
-	public boolean isKnockbacked() {
+	public boolean hasKnockback() {
 		return this.knockbackTask != null;
 	}
 

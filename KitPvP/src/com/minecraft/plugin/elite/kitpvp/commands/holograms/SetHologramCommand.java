@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class SetHologramCommand extends GeneralCommand {
 
     public SetHologramCommand() {
-        super("sethologram", "ekitpvp.sethologram", false);
+        super("sethologram", KitPvPPermission.HOLOGRAM_SET, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

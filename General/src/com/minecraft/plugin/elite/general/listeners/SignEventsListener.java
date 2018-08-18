@@ -22,9 +22,8 @@ public class SignEventsListener implements Listener {
     @EventHandler
     public void addSignColor(SignChangeEvent e) {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
-        if (p.getPlayer().hasPermission("egeneral.signcolor"))
-            for (int i = 0; i < 4; i++)
-                e.setLine(i, ChatColor.translateAlternateColorCodes('&', e.getLine(i)));
+        for (int i = 0; i < 4; i++)
+            e.setLine(i, ChatColor.translateAlternateColorCodes('&', e.getLine(i)));
     }
 
     @EventHandler

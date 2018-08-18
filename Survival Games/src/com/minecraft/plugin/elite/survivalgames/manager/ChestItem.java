@@ -23,20 +23,20 @@ public enum ChestItem {
 	STONE_AXE(15, new ItemStack(Material.STONE_AXE)),
 	WOOD_AXE(15, new ItemStack(Material.WOOD_AXE)),
 	
-	DIAMOND_CHESTPLATE(3, new ItemStack(Material.DIAMOND_CHESTPLATE)),
-	IRON_CHESTPLATE(5, new ItemStack(Material.IRON_CHESTPLATE)),
+	DIAMOND_CHEST_PLATE(3, new ItemStack(Material.DIAMOND_CHESTPLATE)),
+	IRON_CHEST_PLATE(5, new ItemStack(Material.IRON_CHESTPLATE)),
 	IRON_LEGGINGS(6, new ItemStack(Material.IRON_LEGGINGS)),
 	IRON_HELMET(7, new ItemStack(Material.IRON_HELMET)),
 	IRON_BOOTS(8, new ItemStack(Material.IRON_BOOTS)),
-	CHAIN_CHESTPLATE(11, new ItemStack(Material.CHAINMAIL_CHESTPLATE)),
+	CHAIN_CHEST_PLATE(11, new ItemStack(Material.CHAINMAIL_CHESTPLATE)),
 	CHAIN_LEGGINGS(12, new ItemStack(Material.CHAINMAIL_LEGGINGS)),
 	CHAIN_HELMET(13, new ItemStack(Material.CHAINMAIL_HELMET)),
 	CHAIN_BOOTS(14, new ItemStack(Material.CHAINMAIL_BOOTS)),
-	GOLD_CHESTPLATE(17, new ItemStack(Material.GOLD_CHESTPLATE)),
+	GOLD_CHEST_PLATE(17, new ItemStack(Material.GOLD_CHESTPLATE)),
 	GOLD_LEGGINGS(18, new ItemStack(Material.GOLD_LEGGINGS)),
 	GOLD_HELMET(19, new ItemStack(Material.GOLD_HELMET)),
 	GOLD_BOOTS(20, new ItemStack(Material.GOLD_BOOTS)),
-	LEATHER_CHESTPLATE(22, new ItemStack(Material.LEATHER_CHESTPLATE)),
+	LEATHER_CHEST_PLATE(22, new ItemStack(Material.LEATHER_CHESTPLATE)),
 	LEATHER_LEGGINGS(23, new ItemStack(Material.LEATHER_LEGGINGS)),
 	LEATHER_HELMET(24, new ItemStack(Material.LEATHER_HELMET)),
 	LEATHER_BOOTS(25, new ItemStack(Material.LEATHER_BOOTS)),
@@ -44,8 +44,8 @@ public enum ChestItem {
 	SOUP(350, new ItemStack(Material.MUSHROOM_SOUP)),
 	APPLE(30, new ItemStack(Material.APPLE)),
 	BREAD(30, new ItemStack(Material.BREAD)),
-	RAW_PORKCHOP(25, new ItemStack(Material.PORK)),
-	COOKED_PORKCHOP(15, new ItemStack(Material.GRILLED_PORK)),
+	RAW_PORK_CHOP(25, new ItemStack(Material.PORK)),
+	COOKED_PORK_CHOP(15, new ItemStack(Material.GRILLED_PORK)),
 	GOLDEN_APPLE(3, new ItemStack(Material.GOLDEN_APPLE)),
 	RAW_FISH(25, new ItemStack(Material.RAW_FISH)),
 	COOKED_FISH(12, new ItemStack(Material.COOKED_FISH)),
@@ -118,8 +118,8 @@ public enum ChestItem {
 		case ARROW:
 			case APPLE:
 			case BREAD:
-			case RAW_PORKCHOP:
-			case COOKED_PORKCHOP:
+			case RAW_PORK_CHOP:
+			case COOKED_PORK_CHOP:
 			case RAW_FISH:
 			case COOKED_FISH:
 			case RAW_BEEF:

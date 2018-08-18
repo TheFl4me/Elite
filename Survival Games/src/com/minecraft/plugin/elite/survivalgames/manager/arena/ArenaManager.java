@@ -8,11 +8,7 @@ import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ArenaManager {
 
@@ -35,9 +31,7 @@ public class ArenaManager {
     }
 
     public static List<Arena> getAll() {
-        List<Arena> list = new ArrayList<>();
-        list.addAll(arenas.values());
-        return list;
+        return new ArrayList<>(arenas.values());
     }
 
     public static void loadAll() {

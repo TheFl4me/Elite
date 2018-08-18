@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class PvPToggleCommand extends GeneralCommand {
 
     public PvPToggleCommand() {
-        super("pvp", "egeneral.pvptoggle", true);
+        super("pvp", GeneralPermission.ADMIN_PVP_TOGGLE, true);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

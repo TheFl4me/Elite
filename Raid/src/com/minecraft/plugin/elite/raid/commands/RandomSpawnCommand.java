@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class RandomSpawnCommand extends GeneralCommand {
 
 	public RandomSpawnCommand() {
-		super("randomspawn", "eraid.randomspawn", false);
+		super("randomspawn", RaidPermission.SPAWN, false);
 	}
 	
 	private HashMap<UUID, Integer> spawns = new HashMap<>();
@@ -34,10 +35,9 @@ public class RandomSpawnCommand extends GeneralCommand {
 			}
 		}
 		int count;
-		if(spawns.containsKey(p.getUniqueId())) {
+		if(spawns.containsKey(p.getUniqueId()))
 			count = spawns.get(p.getUniqueId()) + 1;
-			spawns.remove(p.getUniqueId());
-		} else
+		else
 			count = 1;
 		spawns.put(p.getUniqueId(), count);
 		Random r1 = new Random();

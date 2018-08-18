@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.Bukkit;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 public class KickCommand extends GeneralCommand {
 	
 	public KickCommand() {
-		super("kick", "egeneral.kick", true);
+		super("kick", GeneralPermission.PUNISH_KICK, true);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
@@ -38,7 +39,7 @@ public class KickCommand extends GeneralCommand {
 								.replaceAll("%p", cs.getName());
 					return true;
 				} else {
-					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NOPERM));
+					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NO_PERMISSION));
 					return true;
 				}
 			} else {

@@ -10,13 +10,7 @@ import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
 import com.minecraft.plugin.elite.survivalgames.manager.GamePhase;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -28,12 +22,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Arena {
 
@@ -106,9 +95,7 @@ public class Arena {
 	}
 
 	public List<GeneralPlayer> getPlayers() {
-		List<GeneralPlayer> list = new ArrayList<>();
-		list.addAll(killCount.keySet());
-		return list;
+		return new ArrayList<>(killCount.keySet());
 	}
 
 	public void addPlayer(GeneralPlayer p) {
@@ -150,8 +137,7 @@ public class Arena {
 	}
 
 	public Collection<Chest> getLoadedChests() {
-		Collection<Chest> tempList = new ArrayList<>();
-		tempList.addAll(this.loadedChests);
+		Collection<Chest> tempList = new ArrayList<>(this.loadedChests);
 		return tempList;
 	}
 
@@ -193,7 +179,6 @@ public class Arena {
 
 	public void addKill(GeneralPlayer p) {
 		final int i = this.getKills(p);
-		this.killCount.remove(p);
 		this.killCount.put(p, i + 1);
 		this.updateScoreboard();
 	}
@@ -262,7 +247,7 @@ public class Arena {
 	public void scheduleShrinking() {
 		Bukkit.getScheduler().runTaskLater(SurvivalGames.getPlugin(), () -> {
             if(!deathMatchStarted()) {
-                setGamePhase(GamePhase.DEATHMATCH);
+                setGamePhase(GamePhase.FINAL);
                 startShrinking();
             }
         }, 6000);

@@ -66,11 +66,11 @@ public class KitGUI extends GUI {
 		ItemStack back = new ItemStack(Material.SUGAR);
 		server.rename(back, this.getLanguage().get(KitPvPLanguage.KIT_GUI_BACK));
     	
-    	ItemStack desc = new ItemStack(Material.BOOK);
-    	server.rename(desc, this.getLanguage().get(KitPvPLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
+    	ItemStack description = new ItemStack(Material.BOOK);
+    	server.rename(description, this.getLanguage().get(KitPvPLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
 		
-		ItemStack abil = new ItemStack(Material.COMPASS);
-		server.rename(abil, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
+		ItemStack ability = new ItemStack(Material.COMPASS);
+		server.rename(ability, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
 		
 		ItemStack start = new ItemStack(Material.SIGN);
 		server.rename(start, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ITEMS));
@@ -92,8 +92,8 @@ public class KitGUI extends GUI {
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, back);
-		this.getInventory().setItem(21, desc);
-		this.getInventory().setItem(23, abil);
+		this.getInventory().setItem(21, description);
+		this.getInventory().setItem(23, ability);
 		this.getInventory().setItem(36, start);
 		this.getInventory().setItem(44, play);
 		this.getInventory().setItem(45, kit.getItem());
@@ -136,11 +136,11 @@ public class KitGUI extends GUI {
 		ItemStack back = new ItemStack(Material.REDSTONE);
 		server.rename(back, this.getLanguage().get(KitPvPLanguage.KIT_GUI_BACK));
 
-		ItemStack desc = new ItemStack(Material.BOOK);
-		server.rename(desc, this.getLanguage().get(KitPvPLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
+		ItemStack description = new ItemStack(Material.BOOK);
+		server.rename(description, this.getLanguage().get(KitPvPLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
 
-		ItemStack abil = new ItemStack(Material.COMPASS);
-		server.rename(abil, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
+		ItemStack ability = new ItemStack(Material.COMPASS);
+		server.rename(ability, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
 
 		ItemStack start = new ItemStack(Material.SIGN);
 		server.rename(start, this.getLanguage().get(KitPvPLanguage.KIT_GUI_ITEMS));
@@ -165,8 +165,8 @@ public class KitGUI extends GUI {
 		
 		this.fill(this.glass());
 		this.getInventory().setItem(4, back);
-		this.getInventory().setItem(21, desc);
-		this.getInventory().setItem(23, abil);
+		this.getInventory().setItem(21, description);
+		this.getInventory().setItem(23, ability);
 		this.getInventory().setItem(36, start);
 		this.getInventory().setItem(44, buy);
 		

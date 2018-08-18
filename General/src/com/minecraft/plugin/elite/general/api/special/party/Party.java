@@ -27,9 +27,7 @@ public class Party {
     }
 
     public Iterable<GeneralPlayer> getMembers() {
-        List<GeneralPlayer> list = new ArrayList<>();
-        list.addAll(this.members);
-        return list;
+        return new ArrayList<>(this.members);
     }
 
     public PartyInvite[] getInvites() {

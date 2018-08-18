@@ -49,7 +49,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(KitPvPLanguage.DUEL_GUI_CANCEL, "&cCANCEL");
                 lang.addLangNode(KitPvPLanguage.DUEL_GUI_EDITOR, "&a%p is EDITING");
                 lang.addLangNode(KitPvPLanguage.DUEL_GUI_STANDBY, "&a%p is WAITING");
-                lang.addLangNode(KitPvPLanguage.DUEL_GUI_RECRAFT, "Recraft");
+                lang.addLangNode(KitPvPLanguage.DUEL_GUI_RE_CRAFT, "Recraft");
 
                 lang.addLangNode(KitPvPLanguage.DUEL_TOOL, "&bDuel");
                 lang.addLangNode(KitPvPLanguage.DUEL_TOOL_DEFAULT, "&bDefault Duel Selector");
@@ -63,7 +63,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(KitPvPLanguage.KIT_UNLOCKED, "&7You can now buy the &6%kit &7kit.");
 
                 lang.addLangNode(KitPvPLanguage.KIT_GIVE, "&aYou are now a %kit.");
-                lang.addLangNode(KitPvPLanguage.KIT_NOPERM, "&cYou do not own this kit!\n&cDo &f/kit &cto see all kits.");
+                lang.addLangNode(KitPvPLanguage.KIT_NO_PERMISSION, "&cYou do not own this kit!\n&cDo &f/kit &cto see all kits.");
                 lang.addLangNode(KitPvPLanguage.KIT_ERROR_ALREADY, "&cYou already have a kit!");
                 lang.addLangNode(KitPvPLanguage.KIT_ERROR_NULL, "&cThis kit does not exist.");
                 lang.addLangNode(KitPvPLanguage.KIT_ERROR_MODE, "&4You cannot choose a kit whilst you are in ADMIN/WATCH/INVIS mode!");

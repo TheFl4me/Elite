@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class SetDuelSpawnCommand extends GeneralCommand {
 
     public SetDuelSpawnCommand() {
-        super("setduelspawn", "ekitpvp.setduel.spawn", false);
+        super("setduelspawn", KitPvPPermission.DUEL_SET_SPAWN, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.admin.staff;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ import java.util.List;
 public class SetStaffCommand extends GeneralCommand implements TabCompleter {
 
     public SetStaffCommand() {
-        super("setstaff", "egeneral.setrank", true);
+        super("setstaff", GeneralPermission.ADMIN_SET_RANK, true);
     }
 
     @Override

@@ -85,7 +85,7 @@ public class ToolEventListener implements Listener {
     }
 
     @EventHandler
-    public void dontMoveTool(InventoryClickEvent e) {
+    public void doNotMoveTool(InventoryClickEvent e) {
         GeneralPlayer p = GeneralPlayer.get((Player) e.getWhoClicked());
         if(e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             if (p.hasTool()) {

@@ -4,7 +4,7 @@ public enum GamePhase {
 	
 	WAITING(false),
 	MAIN(true),
-	DEATHMATCH(true),
+	FINAL(true),
 	END(false);
 	
 	private boolean pvp;

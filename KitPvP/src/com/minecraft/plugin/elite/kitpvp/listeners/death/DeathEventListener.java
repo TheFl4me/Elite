@@ -48,7 +48,7 @@ public class DeathEventListener implements Listener {
 				GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
 				KitPlayer kitKiller = KitPlayer.get(killer.getUniqueId());
 				killer.addKill();
-				p.addExpToDamagers();
+				p.addExpToAttackers();
 				Inventory inv = killer.getPlayer().getInventory();
 				int soups = 0;
 				for (int i = 0; i < inv.getSize(); i++) {

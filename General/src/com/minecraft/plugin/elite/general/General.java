@@ -5,23 +5,8 @@ import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
-import com.minecraft.plugin.elite.general.commands.AgreeCommand;
-import com.minecraft.plugin.elite.general.commands.ClearCommand;
-import com.minecraft.plugin.elite.general.commands.HelpCommand;
-import com.minecraft.plugin.elite.general.commands.LanguageCommand;
-import com.minecraft.plugin.elite.general.commands.StatsCommand;
-import com.minecraft.plugin.elite.general.commands.SuicideCommand;
-import com.minecraft.plugin.elite.general.commands.SupportCommand;
-import com.minecraft.plugin.elite.general.commands.admin.ClearLagCommand;
-import com.minecraft.plugin.elite.general.commands.admin.HeadCommand;
-import com.minecraft.plugin.elite.general.commands.admin.InvseeCommand;
-import com.minecraft.plugin.elite.general.commands.admin.KillAllCommand;
-import com.minecraft.plugin.elite.general.commands.admin.LagCommand;
-import com.minecraft.plugin.elite.general.commands.admin.PingCommand;
-import com.minecraft.plugin.elite.general.commands.admin.PvPToggleCommand;
-import com.minecraft.plugin.elite.general.commands.admin.SKitCommand;
-import com.minecraft.plugin.elite.general.commands.admin.SpeedCommand;
-import com.minecraft.plugin.elite.general.commands.admin.StatusCommand;
+import com.minecraft.plugin.elite.general.commands.*;
+import com.minecraft.plugin.elite.general.commands.admin.*;
 import com.minecraft.plugin.elite.general.commands.admin.mode.AdminCommand;
 import com.minecraft.plugin.elite.general.commands.admin.mode.BuildCommand;
 import com.minecraft.plugin.elite.general.commands.admin.mode.GamemodeCommand;
@@ -33,10 +18,7 @@ import com.minecraft.plugin.elite.general.commands.admin.staff.SetRankCommand;
 import com.minecraft.plugin.elite.general.commands.admin.staff.SetStaffCommand;
 import com.minecraft.plugin.elite.general.commands.antihack.AlertsCommand;
 import com.minecraft.plugin.elite.general.commands.antihack.SilentCommand;
-import com.minecraft.plugin.elite.general.commands.chat.ChatClearCommand;
-import com.minecraft.plugin.elite.general.commands.chat.ChatLogCommand;
-import com.minecraft.plugin.elite.general.commands.chat.ChatToggleCommand;
-import com.minecraft.plugin.elite.general.commands.chat.SayCommand;
+import com.minecraft.plugin.elite.general.commands.chat.*;
 import com.minecraft.plugin.elite.general.commands.chat.message.ReplyCommand;
 import com.minecraft.plugin.elite.general.commands.chat.message.SpyCommand;
 import com.minecraft.plugin.elite.general.commands.chat.message.TellCommand;
@@ -59,22 +41,7 @@ import com.minecraft.plugin.elite.general.commands.timeset.NightCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.general.database.DatabaseCore;
 import com.minecraft.plugin.elite.general.database.MySQLCore;
-import com.minecraft.plugin.elite.general.listeners.AFKEventsListener;
-import com.minecraft.plugin.elite.general.listeners.AchievementEventListener;
-import com.minecraft.plugin.elite.general.listeners.AgreeEventsListener;
-import com.minecraft.plugin.elite.general.listeners.DamageEventListener;
-import com.minecraft.plugin.elite.general.listeners.EventListener;
-import com.minecraft.plugin.elite.general.listeners.GUIEventListener;
-import com.minecraft.plugin.elite.general.listeners.JoinQuitEventsListener;
-import com.minecraft.plugin.elite.general.listeners.LanguageEventListener;
-import com.minecraft.plugin.elite.general.listeners.PvPToggleEventListener;
-import com.minecraft.plugin.elite.general.listeners.RankChangeEventListener;
-import com.minecraft.plugin.elite.general.listeners.RegionChangeEventListener;
-import com.minecraft.plugin.elite.general.listeners.SignEventsListener;
-import com.minecraft.plugin.elite.general.listeners.SoupEventListener;
-import com.minecraft.plugin.elite.general.listeners.SpecialModeEventListener;
-import com.minecraft.plugin.elite.general.listeners.SupportEventListener;
-import com.minecraft.plugin.elite.general.listeners.ToolEventListener;
+import com.minecraft.plugin.elite.general.listeners.*;
 import com.minecraft.plugin.elite.general.listeners.antihack.ActionStoreEventListener;
 import com.minecraft.plugin.elite.general.listeners.antihack.CombatLogEventListener;
 import com.minecraft.plugin.elite.general.listeners.antihack.SpamCheckEventListener;
@@ -83,11 +50,7 @@ import com.minecraft.plugin.elite.general.listeners.chat.ChatEventListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatToggleEventListener;
 import com.minecraft.plugin.elite.general.listeners.menu.MenuGUIEventListener;
 import com.minecraft.plugin.elite.general.listeners.menu.MenuToolEventListener;
-import com.minecraft.plugin.elite.general.listeners.punish.BanEventListener;
-import com.minecraft.plugin.elite.general.listeners.punish.InfoEventListener;
-import com.minecraft.plugin.elite.general.listeners.punish.LoginEventListener;
-import com.minecraft.plugin.elite.general.listeners.punish.MuteEventListener;
-import com.minecraft.plugin.elite.general.listeners.punish.ReportEventListener;
+import com.minecraft.plugin.elite.general.listeners.punish.*;
 import com.minecraft.plugin.elite.general.punish.ban.BanManager;
 import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
@@ -118,17 +81,15 @@ public class General extends JavaPlugin {
     public static final String SPACER = ChatColor.STRIKETHROUGH + "----------------------------------";
 
     public static final String DB_PLAYERS = "players";
-    public static final String DB_CHATLOGS = "chatlogs";
+    public static final String DB_CHAT_LOGS = "chatlogs";
     public static final String DB_CLANS = "clans";
     public static final String DB_ACHIEVEMENTS = "achievements";
     public static final String DB_STAFF = "staff";
     public static final String DB_BANS = "bans";
-    public static final String DB_BANHISTORY = "banhistory";
+    public static final String DB_BAN_HISTORY = "banhistory";
     public static final String DB_MUTES = "mutes";
-    public static final String DB_MUTEHISTORY = "mutehistory";
+    public static final String DB_MUTE_HISTORY = "mutehistory";
     public static final String DB_REPORTS = "reports";
-
-    public static final String ALERTS_PERM = "enohax.alerts";
 
     public static final  List<String> STAFF_SLOTS = Arrays.asList("server-owner", "admin-1", "admin-2", "admin-3", "modplus-1", "modplus-2", "modplus-3", "mod-1", "mod-2", "mod-3", "mod-4", "mod-5", "mod-6", "mod-7", "trialmod-1", "trialmod-2", "trialmod-3", "supporter-1", "supporter-2", "supporter-3", "supporter-4", "supporter-5", "builder-1", "builder-2", "builder-3");
 
@@ -142,7 +103,7 @@ public class General extends JavaPlugin {
         loadFiles();
         loadDatabase();
         loadEvents();
-        loadCmds();
+        loadCommands();
         Rank.reload();
         ClanManager.load();
         BanManager.reload();
@@ -169,13 +130,13 @@ public class General extends JavaPlugin {
         }
     }
 
-    private void loadCmds() {
+    private void loadCommands() {
 
         new AdminCommand();
         new InvisCommand();
         new VisCommand();
         new WatchCommand();
-        new InvseeCommand();
+        new InventorySeeCommand();
         new SpeedCommand();
         new PvPToggleCommand();
         new GamemodeCommand();
@@ -194,7 +155,7 @@ public class General extends JavaPlugin {
         new SetRankCommand();
         new ClanCommand();
         new ClanChatCommand();
-        new SKitCommand();
+        new SpecialKitCommand();
         new AgreeCommand();
         new TellCommand();
         new ReplyCommand();
@@ -210,7 +171,6 @@ public class General extends JavaPlugin {
         new SetStaffCommand();
         new ClearStaffCommand();
         new PartyCommand();
-        new KillAllCommand();
         new PunishCommand();
         new UnbanCommand();
         new KickCommand();
@@ -258,8 +218,8 @@ public class General extends JavaPlugin {
 
     private void loadFiles() {
 
-        File general = new File(General.DIRECTORY_GENERAL);
-        File database = new File(General.DIRECTORY_DATABASE);
+        File general = new File(DIRECTORY_GENERAL);
+        File database = new File(DIRECTORY_DATABASE);
         File permissions = new File(DIRECTORY_PERMISSIONS);
         File blacklist = new File(DIRECTORY_BLACKLIST);
         if (!general.exists())
@@ -303,7 +263,7 @@ public class General extends JavaPlugin {
     }
 
     private void loadDatabase() {
-        File database = new File(General.DIRECTORY_DATABASE);
+        File database = new File(DIRECTORY_DATABASE);
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(database);
 
         String prefix = "[General - Database]";
@@ -353,14 +313,14 @@ public class General extends JavaPlugin {
                 db.createTable(query, DB_PLAYERS);
             }
 
-            if (!db.hasTable(DB_CHATLOGS)) {
-                String query = "CREATE TABLE " + DB_CHATLOGS + " ("
+            if (!db.hasTable(DB_CHAT_LOGS)) {
+                String query = "CREATE TABLE " + DB_CHAT_LOGS + " ("
                         + " date BIGINT NOT NULL,"
                         + " uuid TEXT(50) NOT NULL,"
                         + " name TEXT(20) NOT NULL,"
                         + " message TEXT(300) NOT NULL,"
                         + " type TEXT(10) NOT NULL);";
-                db.createTable(query, DB_CHATLOGS);
+                db.createTable(query, DB_CHAT_LOGS);
             }
 
             if (!db.hasTable(DB_CLANS)) {
@@ -400,8 +360,8 @@ public class General extends JavaPlugin {
                 db.createTable(query, DB_BANS);
             }
 
-            if(!db.hasTable(DB_BANHISTORY)) {
-                String query = "CREATE TABLE " + DB_BANHISTORY + " ("
+            if(!db.hasTable(DB_BAN_HISTORY)) {
+                String query = "CREATE TABLE " + DB_BAN_HISTORY + " ("
                         + " target TEXT(50) NOT NULL,"
                         + " id TEXT(50) NOT NULL,"
                         + " reason  TEXT(100) NOT NULL,"
@@ -412,7 +372,7 @@ public class General extends JavaPlugin {
                         + " banner TEXT(30) NOT NULL,"
                         + " unbanner TEXT(30) NOT NULL,"
                         + " unbandate BIGINT NOT NULL);";
-                db.createTable(query, DB_BANHISTORY);
+                db.createTable(query, DB_BAN_HISTORY);
             }
 
             if(!db.hasTable(DB_MUTES)) {
@@ -428,8 +388,8 @@ public class General extends JavaPlugin {
                 db.createTable(query, DB_MUTES);
             }
 
-            if(!db.hasTable(DB_MUTEHISTORY)) {
-                String query = "CREATE TABLE " + DB_MUTEHISTORY + " ("
+            if(!db.hasTable(DB_MUTE_HISTORY)) {
+                String query = "CREATE TABLE " + DB_MUTE_HISTORY + " ("
                         + " target TEXT(50) NOT NULL,"
                         + " id TEXT(50) NOT NULL,"
                         + " reason  TEXT(100) NOT NULL,"
@@ -440,7 +400,7 @@ public class General extends JavaPlugin {
                         + " muter TEXT(30) NOT NULL,"
                         + " unmuter TEXT(30) NOT NULL,"
                         + " unmutedate BIGINT NOT NULL);";
-                db.createTable(query, DB_MUTEHISTORY);
+                db.createTable(query, DB_MUTE_HISTORY);
             }
 
             if(!db.hasTable(DB_REPORTS)) {

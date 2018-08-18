@@ -9,11 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SpamCheck {
 
@@ -82,14 +78,14 @@ public class SpamCheck {
             for (int i = 1; i < 3; i++)
                 same = same && msg.equalsIgnoreCase(this.getMessages().get(i).getMessage());
             long time = this.getMessages().get(0).getWhen() - this.getMessages().get(2).getWhen();
-            // if they sent 3 msgs in 1.5 seconds, they are spamming
+            // if they sent 3 messages in 1.5 seconds, they are spamming
             isSpamming = time < 1500;
             // if they sent the same message 3 times in a row within 5 seconds, they are spamming
             isSpamming = isSpamming || (time < 5000 && same);
         }
         if (isSpamming) {
             if (GeneralPlayer.get(p.getUniqueId()).canBypassChecks()) {
-                p.sendMessage(GeneralLanguage.SPAMCHECK_STAFF);
+                p.sendMessage(GeneralLanguage.SPAM_CHECK_STAFF);
             } else {
                 PunishManager.punish("System - SpamCheck", Bukkit.getOfflinePlayer(this.getPlayer().getUniqueId()), PunishReason.CHAT_SPAM, "Detected spamming chat by SpamCheck.");
                 this.clear();

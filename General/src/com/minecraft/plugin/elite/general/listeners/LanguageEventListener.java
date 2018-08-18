@@ -18,7 +18,7 @@ public class LanguageEventListener implements Listener {
             case ENGLISH:
                 lang.addLangNode(GeneralLanguage.RELOAD, "&cThe server has been reloaded/restarted.\n&cYou have been kicked to avoid some bugs.");
                 lang.addLangNode(GeneralLanguage.SYNTAX, "&cSyntax error! Usage: ");
-                lang.addLangNode(GeneralLanguage.NOPERM, "Unknown command.");
+                lang.addLangNode(GeneralLanguage.NO_PERMISSION, "Unknown command.");
                 lang.addLangNode(GeneralLanguage.ONLY_PLAYER, "Only players are allowed to to this command.");
                 lang.addLangNode(GeneralLanguage.NO_TARGET, "&4Player not found.");
                 lang.addLangNode(GeneralLanguage.NEVER_JOINED, "&cPlayer never joined this server.");
@@ -79,12 +79,12 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.NOT_ADMIN_MODE, "&cYou must be in admin mode to do this.");
 
                 lang.addLangNode(GeneralLanguage.CLEAR, "&7Inventory cleared of %p&7");
-                lang.addLangNode(GeneralLanguage.CLEAR_NOPERM, "&cYou cannot clear the inventory of this player.");
+                lang.addLangNode(GeneralLanguage.CLEAR_NO_PERMISSION, "&cYou cannot clear the inventory of this player.");
 
                 lang.addLangNode(GeneralLanguage.SPAWN_SET, "&6Global spawn has been set.");
 
                 lang.addLangNode(GeneralLanguage.INVIS_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/invis <rank>");
-                lang.addLangNode(GeneralLanguage.INVIS_NOPERM, "&cYou can only become invisible to ranks below yours.");
+                lang.addLangNode(GeneralLanguage.INVIS_NO_PERMISSION, "&cYou can only become invisible to ranks below yours.");
                 lang.addLangNode(GeneralLanguage.INVIS_INVIS, "&dYou are now invisible to %rank &dand below.");
                 lang.addLangNode(GeneralLanguage.INVIS_VIS, "&aYou are now visible.");
                 lang.addLangNode(GeneralLanguage.INVIS_VIS_ALREADY, "&eYou already are visible.");
@@ -94,7 +94,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.MODE_STILL_ADMIN, "&4You are still in admin mode.");
                 lang.addLangNode(GeneralLanguage.MODE_STILL_WATCH, "&4You are still watching.");
 
-                lang.addLangNode(GeneralLanguage.INVSEE_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/invsee <player>");
+                lang.addLangNode(GeneralLanguage.INVENTORY_SEE_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/invsee <player>");
 
                 lang.addLangNode(GeneralLanguage.SPEED_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/speed <1-10>");
                 lang.addLangNode(GeneralLanguage.SPEED_FLY, "&aYour FLY speed is now &r%speed&a.");
@@ -139,8 +139,8 @@ public class LanguageEventListener implements Listener {
                         "&6Store: &b&uwww.%domain/store");
 
                 lang.addLangNode(GeneralLanguage.PUNISH_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/punish <player> <reason> <details>");
-                lang.addLangNode(GeneralLanguage.PUNISH_NOPERM, "&cYou cannot punish this player.");
-                lang.addLangNode(GeneralLanguage.PUNISH_BAN_NOPERM, "&cYou are not too low ranked to punish for that reason.");
+                lang.addLangNode(GeneralLanguage.PUNISH_NO_PERMISSION, "&cYou cannot punish this player.");
+                lang.addLangNode(GeneralLanguage.PUNISH_BAN_NO_PERMISSION, "&cYou are not too low ranked to punish for that reason.");
 
                 lang.addLangNode(GeneralLanguage.BAN_WARNING, "&4&cYOU HAVE BEEN BANNED!");
                 lang.addLangNode(GeneralLanguage.BAN_BANNED, "&7%z has been banned.");
@@ -182,7 +182,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.KICK_KICKED, "%z has been kicked by %p.");
                 lang.addLangNode(GeneralLanguage.KICK_SCREEN, "&cYou were kicked from the network.\n\n" +
                         "&8Reason: &f%reason");
-                lang.addLangNode(GeneralLanguage.KICK_NOPERM, "&cYou cannot kick this player.");
+                lang.addLangNode(GeneralLanguage.KICK_NO_PERMISSION, "&cYou cannot kick this player.");
 
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED, "&7%z has been muted.");
                 lang.addLangNode(GeneralLanguage.MUTE_MUTED_ON_TALK, "&cYOU ARE MUTED!");
@@ -267,7 +267,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.SILENT_HIDDEN, "&cAll alerts are now hidden from you.");
                 lang.addLangNode(GeneralLanguage.SILENT_VIS, "&cAll alerts are now visible for you.");
 
-                lang.addLangNode(GeneralLanguage.SPAMCHECK_STAFF, "&cYou would have been muted for spam!");
+                lang.addLangNode(GeneralLanguage.SPAM_CHECK_STAFF, "&cYou would have been muted for spam!");
 
                 lang.addLangNode(GeneralLanguage.COMBATLOG_SAFE, "&aLost combatlog protection! You can now logout safely again.");
 
@@ -405,7 +405,7 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.ACHIEVEMENT_GOD, "God\n&7Kill 50 player without dying.");
                 lang.addLangNode(GeneralLanguage.ACHIEVEMENT_LAST_RESORT, "Last Resort\n&7Kill a player with half a heart left and no soups.");
                 lang.addLangNode(GeneralLanguage.ACHIEVEMENT_LONG_SHOT, "Hail Marie\n&7Kill someone with an arrow shot.");
-                lang.addLangNode(GeneralLanguage.ACHIEVEMENT_BACKSTAB, "Backstabber\n&7Kill a player who is not looking at you.");
+                lang.addLangNode(GeneralLanguage.ACHIEVEMENT_BACK_STAB, "Backstabber\n&7Kill a player who is not looking at you.");
 
                 lang.addLangNode(GeneralLanguage.SPY_ENABLED, "&cSPY &7is now active.");
                 lang.addLangNode(GeneralLanguage.SPY_DISABLED, "&cSPY &7is no longer active.");

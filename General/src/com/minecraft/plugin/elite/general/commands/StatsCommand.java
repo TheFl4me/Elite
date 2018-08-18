@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -18,7 +19,7 @@ import java.text.DecimalFormat;
 public class StatsCommand extends GeneralCommand {
 
     public StatsCommand() {
-        super("stats", "egeneral.stats", false);
+        super("stats", GeneralPermission.STATS, false);
     }
 
     @SuppressWarnings("deprecation")

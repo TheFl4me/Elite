@@ -5,7 +5,7 @@ import com.minecraft.plugin.elite.general.antihack.alert.AlertType;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerMove;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
-public class AutoCritsHack {
+public class AutoCriticalHack {
 
     public static void check(PlayerMove move) {
         GeneralPlayer p = move.getPlayer();
@@ -23,7 +23,7 @@ public class AutoCritsHack {
                 }
             }
             if (jumpHeight <= max && jumpHeight >= min) {
-                AlertManager.set(p, AlertType.AUTOCRITS, 3, (jumpHeight - min) / (max - min));
+                AlertManager.set(p, AlertType.AUTO_CRITICAL, 3, (jumpHeight - min) / (max - min));
             }
         }
     }

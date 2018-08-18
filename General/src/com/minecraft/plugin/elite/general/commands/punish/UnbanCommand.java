@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
 import com.minecraft.plugin.elite.general.punish.ban.BanManager;
@@ -12,7 +13,7 @@ import org.bukkit.command.CommandSender;
 public class UnbanCommand extends GeneralCommand {
 
 	public UnbanCommand() {
-		super("unban", "egeneral.unban", true);
+		super("unban", GeneralPermission.PUNISH_UNBAN, true);
 	}
 
 	@SuppressWarnings("deprecation")

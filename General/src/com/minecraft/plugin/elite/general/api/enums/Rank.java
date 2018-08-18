@@ -1,8 +1,8 @@
 package com.minecraft.plugin.elite.general.api.enums;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.RankChangeEvent;
+import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -11,24 +11,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public enum Rank {
 
-    NORMAL(Arrays.asList()),
-    PREMIUM(Arrays.asList(NORMAL)),
-    MEDIA(Arrays.asList(PREMIUM)),
-    BUILDER(Arrays.asList(MEDIA)),
-    SUPPORTER(Arrays.asList(MEDIA)),
-    MOD(Arrays.asList(SUPPORTER)),
+    NORMAL(Collections.emptyList()),
+    PREMIUM(Collections.singletonList(NORMAL)),
+    MEDIA(Collections.singletonList(PREMIUM)),
+    BUILDER(Collections.singletonList(MEDIA)),
+    SUPPORTER(Collections.singletonList(MEDIA)),
+    MOD(Collections.singletonList(SUPPORTER)),
     MODPLUS(Arrays.asList(MOD, BUILDER)),
-    ADMIN(Arrays.asList(MODPLUS));
+    ADMIN(Collections.singletonList(MODPLUS));
 
     private final String name;
     private final Prefix prefix;
@@ -37,15 +31,11 @@ public enum Rank {
 
     private static Map<UUID, Rank> ranks = new HashMap<>();
 
-    public static void set(OfflinePlayer offp, Rank rank) {
-        RankChangeEvent event = new RankChangeEvent(offp, rank, Rank.get(offp.getUniqueId()));
+    public static void set(OfflinePlayer offlinePlayer, Rank rank) {
+        RankChangeEvent event = new RankChangeEvent(offlinePlayer, rank, Rank.get(offlinePlayer.getUniqueId()));
         Database db = General.getDB();
-        db.update("players", "rank", rank.getName(), "uuid", offp.getUniqueId());
-        if (ranks.containsKey(offp.getUniqueId()))
-            ranks.remove(offp.getUniqueId());
-        ranks.put(offp.getUniqueId(), rank);
-        if (offp.isOnline())
-            GeneralPlayer.get(offp.getUniqueId()).loadPermissions();
+        db.update("players", "rank", rank.getName(), "uuid", offlinePlayer.getUniqueId());
+        ranks.put(offlinePlayer.getUniqueId(), rank);
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -83,7 +73,6 @@ public enum Rank {
         this.name = this.toString();
         this.prefix = Prefix.valueOf(this.toString().toUpperCase());
         this.inheritance = inherits;
-
         File permissions = new File(General.DIRECTORY_PERMISSIONS);
         YamlConfiguration perms = YamlConfiguration.loadConfiguration(permissions);
         List<String> finalPerms = new ArrayList<>();
@@ -94,11 +83,11 @@ public enum Rank {
 
         if (!this.getInheritance().isEmpty())
             this.getInheritance().forEach((inheritanceRanks) ->
-                inheritanceRanks.getPermissions().forEach((inheritPerms) -> {
-                if (!finalPerms.contains(inheritPerms.toLowerCase())) {
-                    finalPerms.add(inheritPerms.toLowerCase());
-                }
-            }));
+                    inheritanceRanks.getPermissions().forEach((inheritPerms) -> {
+                        if (!finalPerms.contains(inheritPerms.toLowerCase())) {
+                            finalPerms.add(inheritPerms.toLowerCase());
+                        }
+                    }));
         this.perms = finalPerms;
     }
 
@@ -122,8 +111,12 @@ public enum Rank {
         return this.perms;
     }
 
-    public boolean hasPermission(String perm) {
-        return this.getPermissions().contains(perm.toLowerCase());
+    public boolean hasPermission(PermissionNode node) {
+        return this.getPermissions().contains(node.toString());
+    }
+
+    public boolean hasPermission(String string) {
+        return this.getPermissions().contains(string.toLowerCase());
     }
 
     public String getTeamLetter() {

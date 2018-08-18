@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.admin.staff;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.command.Command;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ClearStaffCommand extends GeneralCommand implements TabCompleter {
 
     public ClearStaffCommand() {
-        super("clearstaff", "egeneral.setrank", true);
+        super("clearstaff", GeneralPermission.ADMIN_SET_RANK, true);
     }
 
     @Override

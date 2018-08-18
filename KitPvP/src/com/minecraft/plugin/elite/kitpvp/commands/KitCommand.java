@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
@@ -32,7 +33,7 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 	}
 	
 	public KitCommand() {
-		super("kit", "ekitpvp.kit", false);
+		super("kit", KitPvPPermission.KIT, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
@@ -62,7 +63,7 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 							kp.giveKit(kit);
 						}
 					} else {
-						p.sendMessage(KitPvPLanguage.KIT_NOPERM);
+						p.sendMessage(KitPvPLanguage.KIT_NO_PERMISSION);
 					}
 					return true;
 		    	}

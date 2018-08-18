@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
@@ -21,7 +22,7 @@ import java.util.List;
 public class PunishCommand extends GeneralCommand implements TabCompleter {
 
     public PunishCommand() {
-        super("punish", "egeneral.punish", true);
+        super("punish", GeneralPermission.PUNISH, true);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
         if(args.length == 2) {
             List<String> reasons = new ArrayList<>();
             for(PunishReason reason : PunishReason.values()) {
-                if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission("egeneral.ban"))
+                if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission(GeneralPermission.PUNISH_BAN.toString()))
                     continue;
                 reasons.add(reason.toString());
             }
@@ -58,8 +59,8 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
             if(canPunish) {
                 PunishReason reason = PunishReason.get(args[1]);
                 if(reason != null) {
-                    if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission("egeneral.ban")) {
-                        cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_BAN_NOPERM));
+                    if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission(GeneralPermission.PUNISH_BAN.toString())) {
+                        cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_BAN_NO_PERMISSION));
                         return true;
                     }
                     StringBuilder details = new StringBuilder();
@@ -73,7 +74,7 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else {
-                cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_NOPERM));
+                cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_NO_PERMISSION));
                 return true;
             }
         } else {

@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
+import com.minecraft.plugin.elite.survivalgames.SurvivalGamesPermission;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.ArenaManager;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class CenterCommand extends GeneralCommand {
 	
 	public CenterCommand() {
-		super("center", "esurvivalgames.center", false);
+		super("center", SurvivalGamesPermission.MAP_EDIT, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

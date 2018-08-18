@@ -108,9 +108,7 @@ public class Lobby {
 	}
 	
 	public List<GeneralPlayer> getPlayers() {
-		List<GeneralPlayer> list = new ArrayList<>();
-		list.addAll(this.players);
-		return list;
+		return new ArrayList<>(this.players);
 	}
 	
 	public void addPlayer(GeneralPlayer p) {

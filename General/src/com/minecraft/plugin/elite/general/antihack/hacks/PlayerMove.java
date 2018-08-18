@@ -1,6 +1,6 @@
 package com.minecraft.plugin.elite.general.antihack.hacks;
 
-import com.minecraft.plugin.elite.general.antihack.hacks.movement.AutoCritsHack;
+import com.minecraft.plugin.elite.general.antihack.hacks.movement.AutoCriticalHack;
 import com.minecraft.plugin.elite.general.antihack.hacks.movement.FastLadderHack;
 import com.minecraft.plugin.elite.general.antihack.hacks.movement.FlyHack;
 import com.minecraft.plugin.elite.general.antihack.hacks.movement.SpeedHack;
@@ -56,7 +56,7 @@ public class PlayerMove {
         FlyHack.check(move);
         SpeedHack.check(move);
         FastLadderHack.check(move);
-        AutoCritsHack.check(move);
+        AutoCriticalHack.check(move);
 
         if (move.isOnGround()) {
             move.getPlayer().setLastOnGround(move);
@@ -164,7 +164,7 @@ public class PlayerMove {
         this.moveSpeed = e.getFrom().distance(e.getTo());
 
         Server server = Server.get();
-        if (!p.isValid() || p.isCanFly() || p.isKnockbacked() || p.isLagging() || server.isLagging() || p.canBypassChecks() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
+        if (!p.isValid() || p.isCanFly() || p.hasKnockback() || p.isLagging() || server.isLagging() || p.canBypassChecks() || this.isInWater() || this.isOnWater() || this.isInVehicle() || this.isInLava() || this.isOnLava()|| this.isOnBlockEdge() || p.getLastOnGround() == null || this.isInVine() || this.isInWeb())
             this.isValid = false;
     }
 

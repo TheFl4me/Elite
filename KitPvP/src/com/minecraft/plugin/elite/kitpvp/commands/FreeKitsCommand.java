@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class FreeKitsCommand extends GeneralCommand {
 
     public FreeKitsCommand() {
-        super("freekits", "ekitpvp.freekits", true);
+        super("freekits", KitPvPPermission.KIT_FREE, true);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

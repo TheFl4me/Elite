@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Language;
@@ -18,16 +19,16 @@ public class LanguageCommand extends GeneralCommand implements TabCompleter {
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
 
         if(args.length == 0) {
-            List<String> langs = new ArrayList<>();
-            for(Language lang : Language.values())
-                langs.add(lang.toString());
-            return langs;
+            List<String> languages = new ArrayList<>();
+            for(Language language : Language.values())
+                languages.add(language.toString());
+            return languages;
         }
         return null;
     }
 
     public LanguageCommand() {
-        super("language", "egeneral.lang", false);
+        super("language", GeneralPermission.LANGUAGE, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

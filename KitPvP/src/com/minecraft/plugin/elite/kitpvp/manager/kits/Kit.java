@@ -56,15 +56,15 @@ public enum Kit {
 	private ItemStack item;
 	private LanguageNode itemName;
 	private LanguageNode desc;
-	private LanguageNode abil;
+	private LanguageNode ability;
 
-	Kit(int price, int level, ItemStack item, LanguageNode itemName, ItemStack icon, LanguageNode abil, LanguageNode desc) {
+	Kit(int price, int level, ItemStack item, LanguageNode itemName, ItemStack icon, LanguageNode ability, LanguageNode desc) {
 		this.price = price;
 		this.level = level;
 		this.item = item;
 		this.icon = icon;
 		this.itemName = itemName;
-		this.abil = abil;
+		this.ability = ability;
 		this.desc = desc;
 	}
 
@@ -123,7 +123,7 @@ public enum Kit {
 	}
 	
 	public String getAbility(Language lang) {
-		return lang.get(this.abil);
+		return lang.get(this.ability);
 	}
 	
 	public String getDescription(Language lang) {

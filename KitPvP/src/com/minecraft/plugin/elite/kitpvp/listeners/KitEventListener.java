@@ -8,20 +8,11 @@ import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.KitGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.events.KitChangeEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -35,13 +26,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
@@ -49,15 +34,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class KitEventListener implements Listener {
 
@@ -71,8 +48,7 @@ public class KitEventListener implements Listener {
 			invincibleTask.get(p.getUniqueId()).cancel();
 			invincibleTask.remove(p.getUniqueId());
 		}
-		if(empty.contains(p.getUniqueId()))
-			empty.remove(p.getUniqueId());
+		empty.remove(p.getUniqueId());
 		if(frostyTask.containsKey(p.getUniqueId())) {
 			frostyTask.get(p.getUniqueId()).cancel();
 			frostyTask.remove(p.getUniqueId());
@@ -81,9 +57,7 @@ public class KitEventListener implements Listener {
 			saveTask.get(p.getUniqueId()).cancel();
 			saveTask.remove(p.getUniqueId());
 		}
-		if(tpTo.containsKey(p.getUniqueId())) {
-			tpTo.remove(p.getUniqueId());
-		}
+		tpTo.remove(p.getUniqueId());
 		if(poseidonTask.containsKey(p.getUniqueId())) {
 			poseidonTask.get(p.getUniqueId()).cancel();
 			poseidonTask.remove(p.getUniqueId());
@@ -96,13 +70,11 @@ public class KitEventListener implements Listener {
 			teleportScanTask.get(p.getUniqueId()).cancel();
 			teleportScanTask.remove(p.getUniqueId());
 		}
-		if(tpedTask.containsKey(p.getUniqueId())) {
-			tpedTask.get(p.getUniqueId()).cancel();
-			tpedTask.remove(p.getUniqueId());
+		if(teleportedTask.containsKey(p.getUniqueId())) {
+			teleportedTask.get(p.getUniqueId()).cancel();
+			teleportedTask.remove(p.getUniqueId());
 		}
-		if(teleportScanTimer.containsKey(p.getUniqueId())) {
-			teleportScanTimer.remove(p.getUniqueId());
-		}
+		teleportScanTimer.remove(p.getUniqueId());
 		if(oldBlock.containsKey(p.getUniqueId())) {
 			BlockState state = oldBlock.get(p.getUniqueId());
 			Block block = p.getPlayer().getWorld().getBlockAt(state.getLocation());
@@ -111,22 +83,14 @@ public class KitEventListener implements Listener {
 			state.update();
 			oldBlock.remove(p.getUniqueId());
 		}
-		if(jump.contains(p.getUniqueId())) {
-			jump.remove(p.getUniqueId());
-		}
-		if(flyTimer.containsKey(p.getUniqueId())) {
-			flyTimer.remove(p.getUniqueId());
-		}
+		jump.remove(p.getUniqueId());
+		flyTimer.remove(p.getUniqueId());
 		if(flyTask.containsKey(p.getUniqueId())) {
 			flyTask.get(p.getUniqueId()).cancel();
 			flyTask.remove(p.getUniqueId());
 		}
-		if(locs.containsKey(p.getUniqueId())) {
-			locs.remove(p.getUniqueId());
-		}
-		if(levels.containsKey(p.getUniqueId())) {
-			levels.remove(p.getUniqueId());
-		}
+		locs.remove(p.getUniqueId());
+		levels.remove(p.getUniqueId());
 		cleanUpGladiator(p);
 	}
 
@@ -258,7 +222,7 @@ public class KitEventListener implements Listener {
 
 	@SuppressWarnings("deprecation")
 	@EventHandler
-    public void kangaRemove(PlayerMoveEvent e) {
+    public void kangarooRemove(PlayerMoveEvent e) {
 		KitPlayer p = KitPlayer.get(e.getPlayer());
     	if (jump.contains(p.getUniqueId()) && p.hasKit(Kit.KANGAROO) && p.getPlayer().isOnGround()) {
 			jump.remove(p.getUniqueId());
@@ -279,7 +243,7 @@ public class KitEventListener implements Listener {
     		if(item.getType() == Material.FEATHER && p.hasKit(Kit.PHANTOM) && !p.isNearRogue()) {
     			if(p.isInRegion(KitPvP.REGION_SPAWN))
     				return;
-    			if(p.isCooldowned()) {
+    			if(p.hasCooldown()) {
     				e.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 							.replaceAll("%seconds", Integer.toString(p.getCooldownTime())));
     				e.setCancelled(true);
@@ -307,7 +271,6 @@ public class KitEventListener implements Listener {
 						@Override
 						public void run() {
 							final int index = flyTimer.get(p.getUniqueId());
-							flyTimer.remove(p.getUniqueId());
 							flyTimer.put(p.getUniqueId(), index - 1);
 							p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.PHANTOM_FLIGHT_TIME)
 									.replaceAll("%seconds", Integer.toString(flyTimer.get(p.getUniqueId()))));
@@ -336,7 +299,7 @@ public class KitEventListener implements Listener {
     public void PhantomFall(EntityDamageEvent e) {
     	if(e.getEntity() instanceof Player && e.getCause() == DamageCause.FALL) {
     		KitPlayer p = KitPlayer.get((Player) e.getEntity());
-    		if(p.hasKit(Kit.PHANTOM) && p.isCooldowned())
+    		if(p.hasKit(Kit.PHANTOM) && p.hasCooldown())
     			e.setDamage(e.getDamage() * 2);
     	}
     }
@@ -446,7 +409,7 @@ public class KitEventListener implements Listener {
 			if(p.hasKit(Kit.THOR) && (e.getAction() == Action.RIGHT_CLICK_BLOCK) && item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_THOR_ITEM)) && !p.isNearRogue()) {
 				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
-				if(p.isCooldowned()) {
+				if(p.hasCooldown()) {
 					e.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 							.replaceAll("%seconds", Integer.toString(p.getCooldownTime())));
 				} else {
@@ -517,7 +480,7 @@ public class KitEventListener implements Listener {
 
 	private Map<UUID, BukkitRunnable> teleportScanTask = new HashMap<>();
 	private HashMap<UUID, Integer> teleportScanTimer = new HashMap<>();
-	private Map<UUID, BukkitRunnable> tpedTask = new HashMap<>();
+	private Map<UUID, BukkitRunnable> teleportedTask = new HashMap<>();
 	private Map<UUID, BlockState> oldBlock = new HashMap<>();
 
 	//Endermage
@@ -528,7 +491,7 @@ public class KitEventListener implements Listener {
 		if(item == null || item.getType() == Material.AIR)
 			return;
 		if(item.getItemMeta().hasDisplayName()) {
-			if(e.getAction() == Action.RIGHT_CLICK_BLOCK && item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_ENDERMAGE_ITEM)) && !p.isCooldowned() && !teleportScanTimer.containsKey(p.getUniqueId()) && p.hasKit(Kit.ENDERMAGE) && !p.isNearRogue()) {
+			if(e.getAction() == Action.RIGHT_CLICK_BLOCK && item.getItemMeta().getDisplayName().equalsIgnoreCase(p.getLanguage().get(KitPvPLanguage.KIT_ENDERMAGE_ITEM)) && !p.hasCooldown() && !teleportScanTimer.containsKey(p.getUniqueId()) && p.hasKit(Kit.ENDERMAGE) && !p.isNearRogue()) {
 				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Block above = e.getClickedBlock().getRelative(BlockFace.UP);
@@ -558,7 +521,6 @@ public class KitEventListener implements Listener {
 							}
 
 							final int timer = teleportScanTimer.get(p.getUniqueId());
-							teleportScanTimer.remove(p.getUniqueId());
 							teleportScanTimer.put(p.getUniqueId(), timer + 1);
 							if(!targets.isEmpty() || teleportScanTimer.get(p.getUniqueId()) >= 3) {
 								if(!targets.isEmpty()) {
@@ -569,16 +531,16 @@ public class KitEventListener implements Listener {
 										t.sendMessage(KitPvPLanguage.ENDERMAGE_WARNING);
 										if(fight.containsKey(t.getUniqueId()) && !fight.containsKey(p.getUniqueId()))
 											cleanUpGladiator(t);
-										tpedTask.put(t.getUniqueId(), new BukkitRunnable() {
+										teleportedTask.put(t.getUniqueId(), new BukkitRunnable() {
 											@Override
 											public void run() {
-												if(tpedTask.containsKey(t.getUniqueId())) {
-													tpedTask.get(t.getUniqueId()).cancel();
-													tpedTask.remove(t.getUniqueId());
+												if(teleportedTask.containsKey(t.getUniqueId())) {
+													teleportedTask.get(t.getUniqueId()).cancel();
+													teleportedTask.remove(t.getUniqueId());
 												}
 											}
 										});
-										tpedTask.get(t.getUniqueId()).runTaskLater(KitPvP.getPlugin(), 100);
+										teleportedTask.get(t.getUniqueId()).runTaskLater(KitPvP.getPlugin(), 100);
 									}
 								}
 								teleportScanTask.remove(p.getUniqueId());
@@ -599,9 +561,9 @@ public class KitEventListener implements Listener {
 	}
 
 	@EventHandler
-	public void onMagedHit(EntityDamageEvent e) {
+	public void onHitAfterEndermaged(EntityDamageEvent e) {
 		if(e.getEntity() instanceof Player) {
-			if(tpedTask.containsKey(e.getEntity().getUniqueId()))
+			if(teleportedTask.containsKey(e.getEntity().getUniqueId()))
 				e.setCancelled(true);
 		}
 	}
@@ -611,15 +573,15 @@ public class KitEventListener implements Listener {
 	public void cancelNeoDamage(EntityDamageByEntityEvent e) {
 		if(e.getEntity() instanceof Player && e.getDamager() instanceof Projectile) {
 			KitPlayer p = KitPlayer.get((Player) e.getEntity());
-			Projectile proj = (Projectile) e.getDamager();
+			Projectile projectile = (Projectile) e.getDamager();
 			if(p.hasKit(Kit.NEO) && !p.isNearRogue()) {
 				if(p.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				e.setCancelled(true);
-				final Vector v = proj.getVelocity().multiply(-1);
-				Projectile newProj = p.getPlayer().launchProjectile(proj.getClass());
-				proj.remove();
-				newProj.setVelocity(v);
+				final Vector v = projectile.getVelocity().multiply(-1);
+				Projectile newProjectile = p.getPlayer().launchProjectile(projectile.getClass());
+				projectile.remove();
+				newProjectile.setVelocity(v);
 			}
 		}
 	}
@@ -634,7 +596,7 @@ public class KitEventListener implements Listener {
 			if(hitter.hasKit(Kit.MONK) && hitter.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && !hitter.isNearRogue() && !et.isAdminMode() && !et.isWatching()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
-				if(hitter.isCooldowned()) {
+				if(hitter.hasCooldown()) {
 					hitter.getPlayer().sendMessage(hitter.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 							.replaceAll("%seconds", Integer.toString(hitter.getCooldownTime())));
 					return;
@@ -726,8 +688,6 @@ public class KitEventListener implements Listener {
 			if(hitter.hasKit(Kit.NINJA) && !et.isWatching() && !et.isAdminMode() && target.hasKit()) {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
-				if(tpTo.containsKey(hitter.getUniqueId()))
-					tpTo.remove(hitter.getUniqueId());
 				tpTo.put(hitter.getUniqueId(), target.getUniqueId());
 				if(saveTask.containsKey(hitter.getUniqueId())) {
 					saveTask.get(hitter.getUniqueId()).cancel();
@@ -795,7 +755,7 @@ public class KitEventListener implements Listener {
 					p.getPlayer().getInventory().addItem(new ItemStack(Material.SNOW_BALL));
 					return;
 				}
-				if(p.isCooldowned()) {
+				if(p.hasCooldown()) {
 					p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 							.replaceAll("%seconds", Integer.toString(p.getCooldownTime())));
 					e.setCancelled(true);
@@ -809,11 +769,11 @@ public class KitEventListener implements Listener {
 	@EventHandler
 	public void onSwitcherHit(EntityDamageByEntityEvent e) {
 		if(e.getEntity() instanceof Player && e.getDamager() instanceof Projectile) {
-			Projectile proj = (Projectile) e.getDamager();
+			Projectile projectile = (Projectile) e.getDamager();
 			KitPlayer target = KitPlayer.get((Player) e.getEntity());
 			GeneralPlayer et = GeneralPlayer.get(target.getUniqueId());
-			if(proj.getShooter() instanceof Player && proj instanceof Snowball) {
-				KitPlayer thrower = KitPlayer.get((Player) proj.getShooter());
+			if(projectile.getShooter() instanceof Player && projectile instanceof Snowball) {
+				KitPlayer thrower = KitPlayer.get((Player) projectile.getShooter());
 				if(thrower.hasKit(Kit.SWITCHER) && !thrower.isNearRogue() && !et.isAdminMode() && !et.isWatching() && !thrower.isInRegion(KitPvP.REGION_SPAWN) && !et.isInRegion(KitPvP.REGION_SPAWN)) {
 					final Location switcherLoc = thrower.getPlayer().getLocation();
 					final Location targetLoc = target.getPlayer().getLocation();
@@ -1098,7 +1058,7 @@ public class KitEventListener implements Listener {
 				if(item.getType() == Material.ARROW && p.hasKit(Kit.RAIJIN)) {
 					if(p.isInRegion(KitPvP.REGION_SPAWN))
 						return;
-					if(p.isCooldowned()) {
+					if(p.hasCooldown()) {
 						p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 								.replaceAll("%seconds", Integer.toString(p.getCooldownTime())));
 						return;
@@ -1107,8 +1067,6 @@ public class KitEventListener implements Listener {
 					PlayerInventory inv = p.getPlayer().getInventory();
 					arrow.setVelocity(arrow.getVelocity().multiply(0.5));
 					inv.setItem(inv.getHeldItemSlot(), new ItemStack(item.getType(), item.getAmount() - 1));
-					if(locs.containsKey(p.getUniqueId()))
-						locs.remove(p.getUniqueId());
 					locs.put(p.getUniqueId(), arrow);
 					final UUID uuid = p.getUniqueId();
 					final UUID arrowUuid = arrow.getUniqueId();
@@ -1303,12 +1261,10 @@ public class KitEventListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void dropDeathItemsOnGround(PlayerDeathEvent e) {
 		if(fight.containsKey(e.getEntity().getPlayer().getUniqueId())) {
-			Collection<ItemStack> drops = new ArrayList<>();
-			drops.addAll(e.getDrops());
 			e.getDrops().clear();
 			GeneralPlayer killer = GeneralPlayer.get(fight.get(e.getEntity().getPlayer().getUniqueId()));
 			Bukkit.getScheduler().runTaskLater(KitPvP.getPlugin(), () -> {
-                for(ItemStack item : drops)
+                for(ItemStack item : new ArrayList<>(e.getDrops()))
                     killer.getPlayer().getWorld().dropItem(killer.getPlayer().getLocation(), item);
             }, 20);
 		}
@@ -1324,12 +1280,12 @@ public class KitEventListener implements Listener {
 		if(cubes.containsKey(p.getUniqueId())) {
 			for(Location loc : cubes.get(p.getUniqueId()))
 				loc.getBlock().setType(Material.AIR);
-			final UUID zuuid = fight.get(p.getUniqueId());
-			cubes.remove(zuuid);
+			final UUID zUuid = fight.get(p.getUniqueId());
+			cubes.remove(zUuid);
 			cubes.remove(p.getUniqueId());
-			fight.remove(zuuid);
+			fight.remove(zUuid);
 			fight.remove(p.getUniqueId());
-			KitPlayer z = KitPlayer.get(zuuid);
+			KitPlayer z = KitPlayer.get(zUuid);
 
 			z.getPlayer().teleport(oldLoc.get(z.getUniqueId()));
 			oldLoc.remove(z.getUniqueId());
@@ -1363,7 +1319,7 @@ public class KitEventListener implements Listener {
 							return;
 						if(p.isNearRogue())
 							return;
-						if(p.isCooldowned()) {
+						if(p.hasCooldown()) {
 							p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_COOLDOWN)
 									.replaceAll("%seconds", Integer.toString(p.getCooldownTime())));
 							return;
@@ -1391,7 +1347,6 @@ public class KitEventListener implements Listener {
 						int newLvl = lvl + 1;
 						if(lvl + 1 > 5)
 							newLvl = 1;
-						levels.remove(p.getUniqueId());
 						levels.put(p.getUniqueId(), newLvl);
 						p.sendActionBar(p.getLanguage().get(KitPvPLanguage.REPULSE_LVL).replaceAll("%lvl", Integer.toString(newLvl)));
 					}

@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.ChatColor;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 public class PingCommand extends GeneralCommand {
 
     public PingCommand() {
-        super("ping", "egeneral.ping", false);
+        super("ping", GeneralPermission.ADMIN_PING, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

@@ -1,12 +1,12 @@
 package com.minecraft.plugin.elite.general.commands.antihack;
 
-import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
-import com.minecraft.plugin.elite.general.api.GeneralPlayer;
-import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.antihack.alert.Alert;
 import com.minecraft.plugin.elite.general.antihack.alert.AlertManager;
 import com.minecraft.plugin.elite.general.antihack.alert.AlertType;
+import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class AlertsCommand extends GeneralCommand {
 
     public AlertsCommand() {
-        super("alerts", General.ALERTS_PERM, false);
+        super("alerts", GeneralPermission.ANTI_HACK_ALERTS, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

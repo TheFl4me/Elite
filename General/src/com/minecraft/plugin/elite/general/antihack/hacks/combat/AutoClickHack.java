@@ -18,6 +18,6 @@ public class AutoClickHack {
                     cps++;
 
         if(cps > index)
-            AlertManager.set(p, AlertType.AUTOCLICK, 10, (cps - index) / 100D);
+            AlertManager.set(p, AlertType.AUTO_CLICK, 10, (cps - index) / 100D);
     }
 }

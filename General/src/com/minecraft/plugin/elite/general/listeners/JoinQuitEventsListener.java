@@ -54,7 +54,7 @@ public class JoinQuitEventsListener implements Listener {
         if (p.canSpy())
             p.setSpy(true);
 
-        if (p.getPlayer().hasPermission(General.ALERTS_PERM))
+        if (p.hasAlertsPerm())
             p.showAlerts(true);
 
         Bukkit.getScheduler().runTaskTimer(General.getPlugin(), () -> {

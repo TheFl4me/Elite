@@ -36,7 +36,7 @@ public class DuelGUI extends GUI {
 		ItemStack mushroom = new ItemStack(Material.BROWN_MUSHROOM);
 		ItemStack fishing = new ItemStack(Material.FISHING_ROD);
 
-		server.rename(mushroom, this.getLanguage().get(KitPvPLanguage.DUEL_GUI_RECRAFT));
+		server.rename(mushroom, this.getLanguage().get(KitPvPLanguage.DUEL_GUI_RE_CRAFT));
 
 		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE);
 		Server.get().rename(glass, " ");
@@ -64,13 +64,13 @@ public class DuelGUI extends GUI {
 		this.fill(glass);
 		
 		this.getInventory().setItem(DuelSetup.Slot.HELMET.getSlot(), helmet);
-		this.getInventory().setItem(DuelSetup.Slot.CHESTPLATE.getSlot(), chest);
+		this.getInventory().setItem(DuelSetup.Slot.CHEST_PLATE.getSlot(), chest);
 		this.getInventory().setItem(DuelSetup.Slot.LEGGINGS.getSlot(), leg);
 		this.getInventory().setItem(DuelSetup.Slot.BOOTS.getSlot(), boots);
 		
 		this.getInventory().setItem(DuelSetup.Slot.SOUP.getSlot(), soup);
 		this.getInventory().setItem(DuelSetup.Slot.SWORD.getSlot(), sword);
-		this.getInventory().setItem(DuelSetup.Slot.RECRAFT.getSlot(), mushroom);
+		this.getInventory().setItem(DuelSetup.Slot.RE_CRAFT.getSlot(), mushroom);
 		this.getInventory().setItem(DuelSetup.Slot.FISHING_ROD.getSlot(), fishing);
 
 		this.getInventory().setItem(3, head1);

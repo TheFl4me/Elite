@@ -1,10 +1,6 @@
 package com.minecraft.plugin.elite.general.database;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 public class Database {
@@ -34,8 +30,8 @@ public class Database {
         return this.core.getConnection();
     }
 
-    public void execute(String query, Object... objs) {
-        BufferStatement bs = new BufferStatement(query, objs);
+    public void execute(String query, Object... objects) {
+        BufferStatement bs = new BufferStatement(query, objects);
         this.core.queue(bs);
     }
 

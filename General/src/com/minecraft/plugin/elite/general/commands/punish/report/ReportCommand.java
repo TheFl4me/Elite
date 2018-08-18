@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.listeners.punish.ReportEventListener;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class ReportCommand extends GeneralCommand {
 
 	public ReportCommand() {
-		super("report", "egeneral.report", false);
+		super("report", GeneralPermission.PUNISH_REPORT, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

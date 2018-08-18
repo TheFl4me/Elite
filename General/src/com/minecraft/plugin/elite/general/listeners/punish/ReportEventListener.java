@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.listeners.punish;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.GUIClickEvent;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -48,17 +49,14 @@ public class ReportEventListener implements Listener {
 					Report report = new Report(z.getUniqueId(), p.getUniqueId(), p.getLanguage().getNode(itemMeta.getDisplayName(), true), System.currentTimeMillis());
 					report.saveToDB();
 					PunishManager.addSentReport(p.getUniqueId());
-					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("egeneral.report.list")).forEach(players -> players.sendMessage(GeneralPlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
+					Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission(GeneralPermission.PUNISH_REPORT_LIST.toString())).forEach(players -> players.sendMessage(GeneralPlayer.get(players).getLanguage().get(GeneralLanguage.REPORT_STAFF)
                             .replaceAll("%hacker", z.getName())
                             .replaceAll("%reason", itemMeta.getDisplayName().substring(2))
                             .replaceAll("%reporter", p.getName())));
 					p.sendMessage(GeneralLanguage.REPORT_CONFIRMED);
 					p.getPlayer().closeInventory();
 					reportedPlayer.put(p.getUniqueId(), z.getUniqueId());
-					Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
-                        if(reportedPlayer.containsKey(p.getUniqueId()))
-                            reportedPlayer.remove(p.getUniqueId());
-                    }, 6000);
+					Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> reportedPlayer.remove(p.getUniqueId()), 6000);
 				}
 			}
 		}

@@ -64,6 +64,7 @@ public class MySQLCore implements DatabaseCore {
         return null;
     }
 
+    @SuppressWarnings("LoopConditionNotUpdatedInsideLoop")
     @Override
     public void queue(BufferStatement bs) {
         try {

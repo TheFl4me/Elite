@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.chat.message;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.Message;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 public class ReplyCommand extends GeneralCommand {
 
     public ReplyCommand() {
-        super("reply", "egeneral.reply", false);
+        super("reply", GeneralPermission.CHAT_TELL, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

@@ -15,11 +15,7 @@ import com.minecraft.plugin.elite.raid.commands.warp.personal.DeleteWarpCommand;
 import com.minecraft.plugin.elite.raid.commands.warp.personal.SetWarpCommand;
 import com.minecraft.plugin.elite.raid.listeners.MobCaptureEventListener;
 import com.minecraft.plugin.elite.raid.listeners.WarpEventListener;
-import com.minecraft.plugin.elite.raid.listeners.basic.DeathEventListener;
-import com.minecraft.plugin.elite.raid.listeners.basic.JoinQuitEventListener;
-import com.minecraft.plugin.elite.raid.listeners.basic.LanguageEventListener;
-import com.minecraft.plugin.elite.raid.listeners.basic.ModeChangeEventListener;
-import com.minecraft.plugin.elite.raid.listeners.basic.SpawnEventListener;
+import com.minecraft.plugin.elite.raid.listeners.basic.*;
 import com.minecraft.plugin.elite.raid.manager.WarpManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -46,7 +42,7 @@ public class Raid extends JavaPlugin {
 
 		loadDatabase();
 		WarpManager.load();
-		loadCmds();
+		loadCommands();
 		loadEvents();
 		
 		World world = Bukkit.getWorld("world");
@@ -55,7 +51,7 @@ public class Raid extends JavaPlugin {
 		border.setSize(1000);
 	}
 	
-	private void loadCmds() {
+	private void loadCommands() {
 		new WarpCommand();
 		new WarpListCommand();
 		new SetWarpCommand();

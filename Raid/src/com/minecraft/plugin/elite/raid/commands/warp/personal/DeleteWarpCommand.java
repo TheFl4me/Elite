@@ -3,6 +3,7 @@ package com.minecraft.plugin.elite.raid.commands.warp.personal;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import com.minecraft.plugin.elite.raid.manager.Warp;
 import com.minecraft.plugin.elite.raid.manager.WarpManager;
 import org.bukkit.command.Command;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class DeleteWarpCommand extends GeneralCommand {
 	
 	public DeleteWarpCommand() {
-		super("deletewarp", "eraid.warp", false);
+		super("deletewarp", RaidPermission.WARP, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

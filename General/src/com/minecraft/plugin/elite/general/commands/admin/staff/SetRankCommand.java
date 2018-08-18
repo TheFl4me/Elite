@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin.staff;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
@@ -17,7 +18,7 @@ import java.util.List;
 public class SetRankCommand extends GeneralCommand implements TabCompleter {
 
     public SetRankCommand() {
-        super("setrank", "egeneral.setrank", true);
+        super("setrank", GeneralPermission.ADMIN_SET_RANK, true);
     }
 
     @Override

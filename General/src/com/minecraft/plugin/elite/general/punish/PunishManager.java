@@ -85,7 +85,7 @@ public class PunishManager {
 		boolean exists = true;
 		Database db = General.getDB();
 		while(exists)
-			if(!db.containsValue(General.DB_BANS, "id", uuid.toString()) && !db.containsValue(General.DB_BANHISTORY, "id", uuid.toString())&& !db.containsValue(General.DB_MUTES, "id", uuid.toString())&& !db.containsValue(General.DB_MUTEHISTORY, "id", uuid.toString()))
+			if(!db.containsValue(General.DB_BANS, "id", uuid.toString()) && !db.containsValue(General.DB_BAN_HISTORY, "id", uuid.toString())&& !db.containsValue(General.DB_MUTES, "id", uuid.toString())&& !db.containsValue(General.DB_MUTE_HISTORY, "id", uuid.toString()))
 				exists = false;
 			else
 				uuid = UUID.randomUUID();

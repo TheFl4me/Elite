@@ -1,14 +1,11 @@
 package com.minecraft.plugin.elite.general.listeners;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 public class AFKEventsListener implements Listener {
 
@@ -62,7 +59,7 @@ public class AFKEventsListener implements Listener {
     @EventHandler
     public void onJoinStartAFKTimer(PlayerJoinEvent e) {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
-        if (p.getPlayer().hasPermission("egeneral.afk"))
+        if (p.hasPermission(GeneralPermission.MODE_AFK))
             p.startAFKPendingTimer();
     }
 }

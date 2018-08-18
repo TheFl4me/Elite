@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.GameMode;
@@ -15,7 +16,7 @@ import java.util.List;
 public class GamemodeCommand extends GeneralCommand implements TabCompleter {
 
     public GamemodeCommand() {
-        super("gamemode", "egeneral.gamemode", false);
+        super("gamemode", GeneralPermission.MODE_GAME, false);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class GamemodeCommand extends GeneralCommand implements TabCompleter {
         } else if (args.length > 1) {
             GeneralPlayer z = GeneralPlayer.get(args[1]);
             if (z != null) {
-                if (p.getPlayer().hasPermission("egeneral.gamemode.other") && p.getRank().ordinal() > z.getRank().ordinal()) {
+                if (p.hasPermission(GeneralPermission.MODE_GAME_OTHER) && p.getRank().ordinal() > z.getRank().ordinal()) {
                     setGameMode(z, args[0]);
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.GAMEMODE_SET_OTHER)
                             .replaceAll("%p", z.getChatName())

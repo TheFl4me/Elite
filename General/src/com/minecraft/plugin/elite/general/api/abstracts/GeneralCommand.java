@@ -3,13 +3,10 @@ package com.minecraft.plugin.elite.general.api.abstracts;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
+import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -17,7 +14,7 @@ import java.util.HashSet;
 public abstract class GeneralCommand implements CommandExecutor {
 
     private PluginCommand cmd;
-    private String perm;
+    private PermissionNode perm;
     private boolean consoleCmd;
     private Language lang;
 
@@ -27,7 +24,7 @@ public abstract class GeneralCommand implements CommandExecutor {
         return commands.toArray(new GeneralCommand[commands.size()]);
     }
 
-    public GeneralCommand(String command, String perm, boolean console) {
+    public GeneralCommand(String command, PermissionNode perm, boolean console) {
         this.perm = perm;
         this.cmd = Bukkit.getPluginCommand(command);
         this.consoleCmd = console;
@@ -43,7 +40,7 @@ public abstract class GeneralCommand implements CommandExecutor {
         return this.cmd;
     }
 
-    public String getPermission() {
+    public PermissionNode getPermission() {
         return this.perm;
     }
 
@@ -60,7 +57,7 @@ public abstract class GeneralCommand implements CommandExecutor {
     }
 
     public boolean hasPermission(CommandSender sender) {
-        return !(this.getPermission() == null || this.getPermission().isEmpty()) && sender.hasPermission(this.getPermission());
+        return sender.hasPermission(this.getPermission().toString());
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -76,7 +73,7 @@ public abstract class GeneralCommand implements CommandExecutor {
             if (this.hasPermission(sender)) {
                 return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(this.getLanguage().get(GeneralLanguage.NOPERM));
+                sender.sendMessage(this.getLanguage().get(GeneralLanguage.NO_PERMISSION));
                 return true;
             }
         } else {

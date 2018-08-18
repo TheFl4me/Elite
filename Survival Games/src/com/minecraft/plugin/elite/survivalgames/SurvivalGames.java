@@ -14,13 +14,7 @@ import com.minecraft.plugin.elite.survivalgames.commands.admin.PodCommand;
 import com.minecraft.plugin.elite.survivalgames.listeners.ChestFillEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.CompassEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.GamePhaseEventsListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.BuildEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.ClearPlayerEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.DeathEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.JoinQuitEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.LanguageEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.ModeChangeEventListener;
-import com.minecraft.plugin.elite.survivalgames.listeners.basic.ScoreboardEventListener;
+import com.minecraft.plugin.elite.survivalgames.listeners.basic.*;
 import com.minecraft.plugin.elite.survivalgames.listeners.players.PlayerGUIEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.players.PlayerGUIToolEventListener;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
@@ -43,7 +37,7 @@ public class SurvivalGames extends JavaPlugin {
 		plugin = this;
 
 		loadDatabase();
-		loadCmds();
+		loadCommands();
 		loadEvents();
 
 		Server server = new Server("SurvivalGames");
@@ -53,7 +47,7 @@ public class SurvivalGames extends JavaPlugin {
 		Lobby.create();
 	}
 	
-	private void loadCmds() {
+	private void loadCommands() {
 		new PodCommand();
 		new StartCommand();
 		new SetMapCommand();

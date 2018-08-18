@@ -20,7 +20,7 @@ public enum Achievement {
     GOD(GeneralLanguage.ACHIEVEMENT_GOD, Difficulty.HARD),
     LAST_RESORT(GeneralLanguage.ACHIEVEMENT_LAST_RESORT, Difficulty.HARD),
     LONG_SHOT(GeneralLanguage.ACHIEVEMENT_LONG_SHOT, Difficulty.MEDIUM),
-    BACKSTAB(GeneralLanguage.ACHIEVEMENT_BACKSTAB, Difficulty.MEDIUM);
+    BACK_STAB(GeneralLanguage.ACHIEVEMENT_BACK_STAB, Difficulty.MEDIUM);
 
     private final LanguageNode name;
     private final Difficulty difficulty;

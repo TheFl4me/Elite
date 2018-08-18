@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class CheckInfoCommand extends GeneralCommand {
 	
 	public CheckInfoCommand() {
-		super("checkinfo", "egeneral.checkinfo", false);
+		super("checkinfo", GeneralPermission.PUNISH_INFO_CHECK, false);
 	}
 	
 	@SuppressWarnings("deprecation")

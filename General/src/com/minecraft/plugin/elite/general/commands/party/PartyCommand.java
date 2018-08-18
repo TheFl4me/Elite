@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.party;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
@@ -16,7 +17,7 @@ import java.util.List;
 public class PartyCommand extends GeneralCommand implements TabCompleter {
 
     public PartyCommand() {
-        super("party", "egeneral.party", false);
+        super("party", GeneralPermission.PARTY, false);
     }
 
     public List<String> onTabComplete(CommandSender cs, Command cmd, String lbl, String[] args) {

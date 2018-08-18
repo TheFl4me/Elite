@@ -61,11 +61,6 @@ public class Message {
             this.getSender().getPlayer().sendMessage(this.getSender().getLanguage().get(GeneralLanguage.MSG_AFK)
                     .replaceAll("%z", this.getTarget().getName()));
 
-        if (reply.containsKey(this.getSender().getUniqueId()))
-            reply.remove(this.getSender().getUniqueId());
-        if (reply.containsKey(this.getSender().getUniqueId()))
-            reply.remove(this.getTarget().getUniqueId());
-
         reply.put(this.getSender().getUniqueId(), this.getTarget().getUniqueId());
         reply.put(this.getTarget().getUniqueId(), this.getSender().getUniqueId());
 
@@ -81,6 +76,6 @@ public class Message {
         }
 
         Database db = General.getDB();
-        db.execute("INSERT INTO " + General.DB_CHATLOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", this.getDate(), this.getSender().getUniqueId(), this.getSender().getName(), format, "private");
+        db.execute("INSERT INTO " + General.DB_CHAT_LOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", this.getDate(), this.getSender().getUniqueId(), this.getSender().getName(), format, "private");
     }
 }

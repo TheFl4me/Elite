@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class StatusCommand extends GeneralCommand {
 
     public StatusCommand() {
-        super("status", "egeneral.status", false);
+        super("status", GeneralPermission.ADMIN_STATUS, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

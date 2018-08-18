@@ -5,7 +5,7 @@ import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 public enum GeneralLanguage implements LanguageNode {
 
     RELOAD,
-    NOPERM,
+    NO_PERMISSION,
     ONLY_PLAYER,
     NO_TARGET,
     NEVER_JOINED,
@@ -61,12 +61,12 @@ public enum GeneralLanguage implements LanguageNode {
     NOT_ADMIN_MODE,
 
     CLEAR,
-    CLEAR_NOPERM,
+    CLEAR_NO_PERMISSION,
 
     SPAWN_SET,
 
     INVIS_USAGE,
-    INVIS_NOPERM,
+    INVIS_NO_PERMISSION,
     INVIS_INVIS,
     INVIS_VIS,
     INVIS_VIS_ALREADY,
@@ -76,7 +76,7 @@ public enum GeneralLanguage implements LanguageNode {
     MODE_STILL_ADMIN,
     MODE_STILL_WATCH,
 
-    INVSEE_USAGE,
+    INVENTORY_SEE_USAGE,
 
     SPEED_USAGE,
     SPEED_FLY,
@@ -107,9 +107,9 @@ public enum GeneralLanguage implements LanguageNode {
     JOIN_WHITELIST,
 
     PUNISH_USAGE,
-    PUNISH_NOPERM,
+    PUNISH_NO_PERMISSION,
 
-    PUNISH_BAN_NOPERM,
+    PUNISH_BAN_NO_PERMISSION,
 
     BAN_WARNING,
     BAN_BANNED,
@@ -126,7 +126,7 @@ public enum GeneralLanguage implements LanguageNode {
     KICK_USAGE,
     KICK_KICKED,
     KICK_SCREEN,
-    KICK_NOPERM,
+    KICK_NO_PERMISSION,
 
     MUTE_MUTED,
     MUTE_MUTED_ON_TALK,
@@ -174,7 +174,7 @@ public enum GeneralLanguage implements LanguageNode {
     SILENT_HIDDEN,
     SILENT_VIS,
 
-    SPAMCHECK_STAFF,
+    SPAM_CHECK_STAFF,
 
     CHECK_FF_TOOL,
 
@@ -284,7 +284,7 @@ public enum GeneralLanguage implements LanguageNode {
     ACHIEVEMENT_GOD,
     ACHIEVEMENT_LAST_RESORT,
     ACHIEVEMENT_LONG_SHOT,
-    ACHIEVEMENT_BACKSTAB,
+    ACHIEVEMENT_BACK_STAB,
 
     SPY_ENABLED,
     SPY_DISABLED,

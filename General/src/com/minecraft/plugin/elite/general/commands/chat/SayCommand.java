@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import org.bukkit.Bukkit;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 public class SayCommand extends GeneralCommand {
 
     public SayCommand() {
-        super("say", "egeneral.say", false);
+        super("say", GeneralPermission.CHAT_SAY, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

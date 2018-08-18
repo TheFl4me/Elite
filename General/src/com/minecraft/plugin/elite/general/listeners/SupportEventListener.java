@@ -20,7 +20,7 @@ public class SupportEventListener implements Listener {
 		if(chat != null) {
 			e.setCancelled(true);
 			Database db = General.getDB();
-			db.execute("INSERT INTO " + General.DB_CHATLOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", System.currentTimeMillis(), p.getUniqueId(), p.getName(), e.getMessage(), "support");
+			db.execute("INSERT INTO " + General.DB_CHAT_LOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", System.currentTimeMillis(), p.getUniqueId(), p.getName(), e.getMessage(), "support");
 			chat.sendMessage(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Support" + ChatColor.GRAY + "] " + ChatColor.RESET + p.getChatName() + " > " + ChatColor.YELLOW + e.getMessage());
 		}
 	}

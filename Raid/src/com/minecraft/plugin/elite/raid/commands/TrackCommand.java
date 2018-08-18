@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.raid.Raid;
 import com.minecraft.plugin.elite.raid.RaidLanguage;
+import com.minecraft.plugin.elite.raid.RaidPermission;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,7 +17,7 @@ import org.bukkit.entity.Player;
 public class TrackCommand extends GeneralCommand {
 
 	public TrackCommand() {
-		super("track", "eraid.track", false);
+		super("track", RaidPermission.TRACK, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

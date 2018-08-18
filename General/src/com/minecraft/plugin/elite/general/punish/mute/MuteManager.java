@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.punish.mute;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -14,20 +15,16 @@ import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MuteManager {
 	
 	private static Map<UUID, Mute> mutes = new HashMap<>();
-	private static Map<UUID, TempMute> tempmutes = new HashMap<>();
-	private static Map<UUID, Collection<PastMute>> pastmutes = new HashMap<>();
+	private static Map<UUID, TempMute> temporaryMutes = new HashMap<>();
+	private static Map<UUID, Collection<PastMute>> pastMutes = new HashMap<>();
 
 	public static Collection<PastMute> getPastMutes(UUID uuid) {
-		return pastmutes.get(uuid);
+		return pastMutes.get(uuid);
 	}
 
 	public static Collection<PastMute> getPastMutes(UUID uuid, PunishReason reason) {
@@ -41,7 +38,7 @@ public class MuteManager {
 	}
 
 	public static PastMute getPastMute(UUID id) {
-		for(UUID uuid : pastmutes.keySet())
+		for(UUID uuid : pastMutes.keySet())
 			for(PastMute pastMute : getPastMutes(uuid))
 				if(pastMute.getUniqueId().equals(id))
 					return pastMute;
@@ -52,7 +49,7 @@ public class MuteManager {
 		Mute mute = mutes.get(uuid);
 		if(mute != null)
 			return mute;
-		TempMute tempMute = tempmutes.get(uuid);
+		TempMute tempMute = temporaryMutes.get(uuid);
 		if(tempMute != null) {
 			if(!tempMute.hasExpired()) {
 				return tempMute;
@@ -64,19 +61,17 @@ public class MuteManager {
 	}
 	
 	public static void mute(UUID id, String muterName, OfflinePlayer target, PunishReason reason, String muteDetails) {
-		if(mutes.containsKey(target.getUniqueId())) 
-			mutes.remove(target.getUniqueId());
-		if(tempmutes.containsKey(target.getUniqueId()))
-			tempmutes.remove(target.getUniqueId());
 		long time = 0;
 		Mute mute;
 		if(reason.isTemp()) {
 			time = PunishManager.computeTime((MuteManager.getPastMutes(target.getUniqueId(), reason).size() + 1D), reason.getModifier(), reason.getUnit());
 			mute = new TempMute(muterName, target, reason, muteDetails, time, System.currentTimeMillis(), id);
-			tempmutes.put(target.getUniqueId(), (TempMute) mute);
+			temporaryMutes.put(target.getUniqueId(), (TempMute) mute);
+			mutes.remove(target.getUniqueId());
 		} else {
 			mute = new Mute(muterName, target, reason, muteDetails, System.currentTimeMillis(), id);
 			mutes.put(target.getUniqueId(), mute);
+			temporaryMutes.remove(target.getUniqueId());
 		}
 
 		Database db = General.getDB();
@@ -90,7 +85,7 @@ public class MuteManager {
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
 			String msg = all.getLanguage().get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName());
-			if(all.getPlayer().hasPermission("egeneral.checkinfo"))
+			if(all.hasPermission(GeneralPermission.PUNISH_INFO_CHECK))
 				all.sendHoverMessage(msg, mute.getInfo(GeneralLanguage.MUTE_INFO, all.getLanguage()));
 			else
 				all.getPlayer().sendMessage(msg);
@@ -99,8 +94,8 @@ public class MuteManager {
 	
 	public static void reload() {
 		mutes.clear();
-		tempmutes.clear();
-		pastmutes.clear();
+		temporaryMutes.clear();
+		pastMutes.clear();
 
 		Database db = General.getDB();
 		try {
@@ -116,13 +111,13 @@ public class MuteManager {
 				boolean isTemp = muteRes.getBoolean("tempmute");
 				if(isTemp) {
 					TempMute tempMute = new TempMute(muter, target, reason, details, time, date, id);
-					tempmutes.put(target.getUniqueId(), tempMute);
+					temporaryMutes.put(target.getUniqueId(), tempMute);
 				} else {
 					Mute mute = new Mute(muter, target, reason, details, date, id);
 					mutes.put(target.getUniqueId(), mute);
 				}
 			}
-			ResultSet pastMuteRes = db.select(General.DB_MUTEHISTORY);
+			ResultSet pastMuteRes = db.select(General.DB_MUTE_HISTORY);
 			while(pastMuteRes.next()) {
 				String muter = pastMuteRes.getString("muter");
 				OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(pastMuteRes.getString("target")));
@@ -148,15 +143,15 @@ public class MuteManager {
 		Mute mute = null;
 		if(mutes.containsKey(z.getUniqueId()))
 			mute = mutes.get(z.getUniqueId());
-		else if(tempmutes.containsKey(z.getUniqueId()))
-			mute = tempmutes.get(z.getUniqueId());
+		else if(temporaryMutes.containsKey(z.getUniqueId()))
+			mute = temporaryMutes.get(z.getUniqueId());
 
 		if(mute != null) {
 			final long currentTime = System.currentTimeMillis();
 			final long time = (mute instanceof Temporary ? ((Temporary) mute).getTime() : 0);
 			Database db = General.getDB();
 
-			db.execute("INSERT INTO " + General.DB_MUTEHISTORY + " (tempmute, time, muter, id, reason, details, date, target, unmuter, unmutedate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+			db.execute("INSERT INTO " + General.DB_MUTE_HISTORY + " (tempmute, time, muter, id, reason, details, date, target, unmuter, unmutedate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
 					(mute instanceof Temporary ? 1 : 0), time, mute.getPunisher(), mute.getUniqueId(), mute.getReason().toString(), mute.getDetails(), mute.getDate(), mute.getTarget(), unmuter, currentTime);
 
 			PastMute pastMute = new PastMute(mute.getUniqueId(), mute.getTarget(), mute.getReason(), mute.getDetails(), mute.getDate(), time, mute.getPunisher(), unmuter, currentTime);
@@ -164,10 +159,8 @@ public class MuteManager {
 
 			db.delete(General.DB_MUTES, "target", z.getUniqueId());
 
-			if(mutes.containsKey(z.getUniqueId()))
-				mutes.remove(z.getUniqueId());
-			if(tempmutes.containsKey(z.getUniqueId()))
-				tempmutes.remove(z.getUniqueId());
+			mutes.remove(z.getUniqueId());
+			temporaryMutes.remove(z.getUniqueId());
 
 			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
 			for(Player players : Bukkit.getOnlinePlayers()) {
@@ -183,8 +176,6 @@ public class MuteManager {
 		if(pastMuteList != null && !pastMuteList.isEmpty())
 			tempPastMutes.addAll(pastMuteList);
 		tempPastMutes.add(pastMute);
-		if(pastmutes.containsKey(target.getUniqueId()))
-			pastmutes.remove(target.getUniqueId());
-		pastmutes.put(target.getUniqueId(), tempPastMutes);
+		pastMutes.put(target.getUniqueId(), tempPastMutes);
 	}
 }

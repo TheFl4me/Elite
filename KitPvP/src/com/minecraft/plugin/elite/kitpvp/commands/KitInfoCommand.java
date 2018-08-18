@@ -4,6 +4,7 @@ import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
+import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
 import org.bukkit.command.Command;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class KitInfoCommand extends GeneralCommand {
 
 	public KitInfoCommand() {
-		super("kitinfo", "ekitpvp.kitinfo", false);
+		super("kitinfo", KitPvPPermission.KIT_INFO, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {

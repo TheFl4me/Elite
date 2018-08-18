@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.general.commands.clan;
 
 import com.minecraft.plugin.elite.general.General;
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class ClanCommand extends GeneralCommand implements TabCompleter {
 
     public ClanCommand() {
-        super("clan", "egeneral.clan", false);
+        super("clan", GeneralPermission.CLAN, false);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
             } else if (args[0].equalsIgnoreCase("delete")) {
                 Clan clan = ClanManager.get(args[1]);
                 if (clan != null) {
-                    if (clan.isCreator(p.getUniqueId()) || p.getPlayer().hasPermission("egeneral.clan.admin")) {
+                    if (clan.isCreator(p.getUniqueId()) || p.hasPermission(GeneralPermission.CLAN_ADMIN)) {
                         for (UUID uuid : clan.getMembers()) {
                             GeneralPlayer z = GeneralPlayer.get(uuid);
                             if (z != null)
@@ -86,8 +87,8 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     info.append(ChatColor.GOLD + General.SPACER + "\n");
                     info.append(ChatColor.GOLD + clan.getName() + ":" + "\n");
                     for (UUID uuid : clan.getMembers()) {
-                        OfflinePlayer offp = Bukkit.getOfflinePlayer(uuid);
-                        info.append(ChatColor.GOLD + "> " + Rank.get(offp).getPrefix().getColor() + offp.getName() + ChatColor.GRAY + " (Clan " + clan.getRank(uuid) + ") " + "[" + (offp.isOnline() ? ChatColor.GREEN + "ONLINE" : ChatColor.RED + "OFFLINE") + ChatColor.GRAY + "]\n");
+                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+                        info.append(ChatColor.GOLD + "> " + Rank.get(offlinePlayer).getPrefix().getColor() + offlinePlayer.getName() + ChatColor.GRAY + " (Clan " + clan.getRank(uuid) + ") " + "[" + (offlinePlayer.isOnline() ? ChatColor.GREEN + "ONLINE" : ChatColor.RED + "OFFLINE") + ChatColor.GRAY + "]\n");
                     }
                     info.append(ChatColor.GOLD + General.SPACER);
                     p.getPlayer().sendMessage(info.toString());
@@ -97,24 +98,24 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("invite")) {
-                OfflinePlayer offp = Bukkit.getOfflinePlayer(args[1]);
-                Clan otherClan = ClanManager.get(offp.getUniqueId());
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                Clan otherClan = ClanManager.get(offlinePlayer.getUniqueId());
                 if (otherClan == null) {
                     Clan clan = p.getClan();
                     if (clan != null) {
                         if (clan.isMod(p.getUniqueId())) {
-                            if (!clan.hasInvited(offp.getUniqueId())) {
-                                Rank rank = Rank.get(offp);
+                            if (!clan.hasInvited(offlinePlayer.getUniqueId())) {
+                                Rank rank = Rank.get(offlinePlayer);
                                 String inviteMsgSent = p.getLanguage().get(GeneralLanguage.CLAN_INVITE_SENT)
-                                        .replaceAll("%p", rank.getPrefix().getColor() + offp.getName());
+                                        .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName());
                                 p.getPlayer().sendMessage(inviteMsgSent);
-                                if (offp.isOnline()) {
-                                    GeneralPlayer z = GeneralPlayer.get(offp.getUniqueId());
+                                if (offlinePlayer.isOnline()) {
+                                    GeneralPlayer z = GeneralPlayer.get(offlinePlayer.getUniqueId());
                                     z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED).replaceAll("%clan", clan.getName()));
                                     z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_ACCEPT).replaceAll("%clan", clan.getName()), "/clan accept " + clan.getName(), false);
                                     z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_DENY).replaceAll("%clan", clan.getName()), "/clan deny " + clan.getName(), false);
                                 }
-                                new ClanInvite(p.getUniqueId(), offp.getUniqueId(), clan);
+                                new ClanInvite(p.getUniqueId(), offlinePlayer.getUniqueId(), clan);
                                 return true;
                             } else {
                                 p.sendMessage(GeneralLanguage.CLAN_INVITE_ALREADY);
@@ -137,13 +138,13 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                 Clan clan = p.getClan();
                 if (clan != null) {
                     if (clan.isMod(p.getUniqueId())) {
-                        OfflinePlayer offp = Bukkit.getOfflinePlayer(args[1]);
-                        ClanInvite invite = ClanManager.getInvite(offp.getUniqueId(), clan);
+                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                        ClanInvite invite = ClanManager.getInvite(offlinePlayer.getUniqueId(), clan);
                         if (invite != null) {
                             invite.delete();
-                            Rank rank = Rank.get(offp);
+                            Rank rank = Rank.get(offlinePlayer);
                             String uninvite = p.getLanguage().get(GeneralLanguage.CLAN_INVITE_REVOKED)
-                                    .replaceAll("%p", rank.getPrefix().getColor() + offp.getName());
+                                    .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName());
                             p.getPlayer().sendMessage(uninvite);
                             return true;
                         } else {
@@ -199,21 +200,21 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("promote")) {
-                OfflinePlayer offp = Bukkit.getOfflinePlayer(args[1]);
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                 Clan clan = p.getClan();
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId())) {
-                        Clan zClan = ClanManager.get(offp.getUniqueId());
+                        Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
                         if (zClan != null && clan.equals(zClan)) {
-                            if (clan.isNormal(offp.getUniqueId())) {
-                                clan.setRank(offp.getUniqueId(), Clan.ClanRank.MOD);
-                                Rank rank = Rank.get(offp);
+                            if (clan.isNormal(offlinePlayer.getUniqueId())) {
+                                clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.MOD);
+                                Rank rank = Rank.get(offlinePlayer);
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
-                                        .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
-                                if (offp.isOnline()) {
-                                    GeneralPlayer z = GeneralPlayer.get(offp.getUniqueId());
+                                        .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
+                                if (offlinePlayer.isOnline()) {
+                                    GeneralPlayer z = GeneralPlayer.get(offlinePlayer.getUniqueId());
                                     z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
-                                            .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
+                                            .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 }
                                 return true;
                             } else {
@@ -233,20 +234,20 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("demote")) {
-                OfflinePlayer offp = Bukkit.getOfflinePlayer(args[1]);
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                 Clan clan = p.getClan();
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId())) {
-                        Clan zClan = ClanManager.get(offp.getUniqueId());
+                        Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
                         if (zClan != null && clan.equals(zClan)) {
-                            if (clan.isMod(offp.getUniqueId())) {
-                                clan.setRank(offp.getUniqueId(), Clan.ClanRank.NORMAL);
-                                Rank rank = Rank.get(offp);
+                            if (clan.isMod(offlinePlayer.getUniqueId())) {
+                                clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.NORMAL);
+                                Rank rank = Rank.get(offlinePlayer);
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
-                                        .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
-                                if (offp.isOnline())
-                                    ((Player) offp).sendMessage(GeneralPlayer.get(offp.getUniqueId()).getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
-                                            .replaceAll("%p", rank.getPrefix().getColor() + offp.getName()));
+                                        .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
+                                if (offlinePlayer.isOnline())
+                                    ((Player) offlinePlayer).sendMessage(GeneralPlayer.get(offlinePlayer.getUniqueId()).getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
+                                            .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 return true;
                             } else {
                                 p.sendMessage(GeneralLanguage.CLAN_DEMOTED_ALREADY);
@@ -265,19 +266,19 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("kick")) {
-                OfflinePlayer offp = Bukkit.getOfflinePlayer(args[1]);
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                 Clan clan = p.getClan();
                 if (clan != null) {
                     if (clan.isMod(p.getUniqueId())) {
-                        Clan zClan = ClanManager.get(offp.getUniqueId());
+                        Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
                         if (zClan != null && clan.equals(zClan)) {
-                            if (clan.isCreator(p.getUniqueId()) || (clan.isMod(p.getUniqueId()) && clan.isNormal(offp.getUniqueId()))) {
-                                clan.remove(offp.getUniqueId());
+                            if (clan.isCreator(p.getUniqueId()) || (clan.isMod(p.getUniqueId()) && clan.isNormal(offlinePlayer.getUniqueId()))) {
+                                clan.remove(offlinePlayer.getUniqueId());
                                 for(UUID uuid : clan.getMembers()) {
                                     GeneralPlayer all = GeneralPlayer.get(uuid);
                                     if(all != null)
                                         all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.CLAN_KICKED)
-                                                .replaceAll("%p", Rank.get(offp).getPrefix().getColor() + offp.getName()));
+                                                .replaceAll("%p", Rank.get(offlinePlayer).getPrefix().getColor() + offlinePlayer.getName()));
                                 }
                                 return true;
                             } else {

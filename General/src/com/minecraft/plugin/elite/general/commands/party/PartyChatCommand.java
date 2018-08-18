@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.party;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 public class PartyChatCommand extends GeneralCommand {
 
     public PartyChatCommand() {
-        super("partychat", "egeneral.partychat", false);
+        super("partychat", GeneralPermission.PARTY, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

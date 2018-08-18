@@ -9,7 +9,7 @@ public class FlyHack {
 
     public static void check(PlayerMove move) {
         GeneralPlayer p = move.getPlayer();
-        int chestplate = 102;
+        int chest_plate = 102;
         if (!move.isInLadder() && !move.isNextToBlock()) {
             double index = 1.4;
             if (move.getJumpHeight() > index && move.getVerticalDistance() >= 0) {
@@ -26,7 +26,7 @@ public class FlyHack {
                     }
                 }
                 if (isValid)
-                    AlertManager.set(p, AlertType.HIGHJUMP, 5, (move.getJumpHeight() - index) / 10D);
+                    AlertManager.set(p, AlertType.HIGH_JUMP, 5, (move.getJumpHeight() - index) / 10D);
             } else if (move.getHeightAboveGround() > 3) {
                 boolean isGliding = true;
                 for (int i = 2; i < 20; i++) {

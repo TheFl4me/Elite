@@ -2,14 +2,7 @@ package com.minecraft.plugin.elite.general.api.special;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import net.minecraft.server.v1_8_R3.PlayerInteractManager;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -48,12 +41,12 @@ public class Bot {
         return null;
     }
 
-    public Bot(GeneralPlayer p, OfflinePlayer offp) {
+    public Bot(GeneralPlayer p, OfflinePlayer offlinePlayer) {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) p.getPlayer().getWorld()).getHandle();
 
         this.viewer = p;
-        this.entity = new EntityPlayer(server, world, new GameProfile(offp.getUniqueId(), offp.getName()), new PlayerInteractManager(world));
+        this.entity = new EntityPlayer(server, world, new GameProfile(offlinePlayer.getUniqueId(), offlinePlayer.getName()), new PlayerInteractManager(world));
     }
 
     public GeneralPlayer getViewer() {

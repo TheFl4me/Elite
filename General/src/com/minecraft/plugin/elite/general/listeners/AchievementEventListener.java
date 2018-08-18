@@ -151,12 +151,12 @@ public class AchievementEventListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBackstab(PlayerDeathEvent e) {
+    public void onBackStab(PlayerDeathEvent e) {
         if(e.getEntity().getKiller() instanceof Player) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
-            if(killer.getPlayer().getLocation().getDirection().normalize().equals(target.getPlayer().getLocation().getDirection()) && killer.hasAchievement(Achievement.BACKSTAB) && !killer.getUniqueId().equals(target.getUniqueId()))
-                killer.giveAchievement(Achievement.BACKSTAB);
+            if(killer.getPlayer().getLocation().getDirection().normalize().equals(target.getPlayer().getLocation().getDirection()) && killer.hasAchievement(Achievement.BACK_STAB) && !killer.getUniqueId().equals(target.getUniqueId()))
+                killer.giveAchievement(Achievement.BACK_STAB);
         }
     }
 }

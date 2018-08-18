@@ -4,18 +4,18 @@ import java.util.UUID;
 
 public class PlayerHit {
 
-    private UUID damager;
+    private UUID attacker;
     private double damage;
     private long timeStamp;
 
     public PlayerHit(UUID hitter, double damage) {
-        this.damager = hitter;
+        this.attacker = hitter;
         this.damage = damage;
         this.timeStamp = System.currentTimeMillis();
     }
 
-    public UUID getDamager() {
-        return this.damager;
+    public UUID getAttacker() {
+        return this.attacker;
     }
 
     public double getDamage() {

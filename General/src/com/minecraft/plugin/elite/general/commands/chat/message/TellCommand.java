@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.chat.message;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.Message;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 public class TellCommand extends GeneralCommand {
 
     public TellCommand() {
-        super("tell", "egeneral.tell", false);
+        super("tell", GeneralPermission.CHAT_TELL, false);
     }
 
     public boolean execute(CommandSender cs, Command cmd, String[] args) {

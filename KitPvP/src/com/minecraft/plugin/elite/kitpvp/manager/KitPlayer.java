@@ -114,7 +114,7 @@ public class KitPlayer extends GeneralPlayer {
 		return this.cooldownTask;
 	}
 
-	public boolean isCooldowned() {
+	public boolean hasCooldown() {
 		return this.cooldownTask != null;
 	}
 
@@ -123,7 +123,7 @@ public class KitPlayer extends GeneralPlayer {
 		this.setCooldownTime(seconds);
 		this.cooldownTask = new BukkitRunnable() {
 			public void run() {
-				if(p.isCooldowned()) {
+				if(p.hasCooldown()) {
 					final int index = p.getCooldownTime();
 					p.setCooldownTime(index - 1);
 					if(p.getCooldownTime() <= 0)

@@ -12,6 +12,6 @@ public class FastLadderHack {
         double index = 0.2;
         if ((move.isInLadder() || move.isInVine()) && !move.isCanSpeed())
             if (move.getSpeed() >= index && move.getJumpHeight() > index)
-                AlertManager.set(p, AlertType.FASTLADDER, 5, ((move.getSpeed() - index) + (move.getJumpHeight() - index)) / 2D);
+                AlertManager.set(p, AlertType.FAST_LADDER, 5, ((move.getSpeed() - index) + (move.getJumpHeight() - index)) / 2D);
     }
 }

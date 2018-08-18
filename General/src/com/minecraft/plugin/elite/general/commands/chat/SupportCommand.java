@@ -1,6 +1,7 @@
-package com.minecraft.plugin.elite.general.commands;
+package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.supportchat.SupportChat;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class SupportCommand extends GeneralCommand implements TabCompleter {
 
 	public SupportCommand() {
-		super("support", "egeneral.support", false);
+		super("support", GeneralPermission.CHAT_SUPPORT, false);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class SupportCommand extends GeneralCommand implements TabCompleter {
 				p.sendMessage(GeneralLanguage.SUPPORT_CHAT_NULL);
 				return true;
 			}
-		} else if(p.getPlayer().hasPermission("egeneral.support.extra") && args[0].equalsIgnoreCase("add") && args.length > 1) {
+		} else if(p.hasPermission(GeneralPermission.CHAT_SUPPORT_EXTRA) && args[0].equalsIgnoreCase("add") && args.length > 1) {
 			GeneralPlayer z = GeneralPlayer.get(args[1]);
 			if(z != null) {
 				if(SupportChatManager.hasSentRequest(z)) {

@@ -54,13 +54,10 @@ public class Clan {
         Database db = General.getDB();
         db.update(General.DB_PLAYERS, "clan", "", "uuid", uuid);
         db.update(General.DB_PLAYERS, "clanrank", "", "uuid", uuid);
-        if (this.ranks.containsKey(uuid))
-            this.ranks.remove(uuid);
+        this.ranks.remove(uuid);
     }
 
     public void setRank(UUID uuid, ClanRank rank) {
-        if (this.ranks.containsKey(uuid))
-            this.ranks.remove(uuid);
         this.ranks.put(uuid, rank);
         Database db = General.getDB();
         db.update(General.DB_PLAYERS, "clanrank", rank.getName(), "uuid", uuid);

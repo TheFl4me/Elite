@@ -4,13 +4,13 @@ public enum AlertType {
 
     AIMBOT,
     FORCEFIELD,
-    AUTOCRITS,
-    FASTLADDER,
+    AUTO_CRITICAL,
+    FAST_LADDER,
     FLY,
-    HIGHJUMP,
+    HIGH_JUMP,
     SPEED,
     HOVER,
     GLIDE,
     REACH,
-    AUTOCLICK
+    AUTO_CLICK
 }
