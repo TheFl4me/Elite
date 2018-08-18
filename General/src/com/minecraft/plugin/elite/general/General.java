@@ -216,6 +216,7 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpamCheckEventListener(), this);
     }
 
+    @SuppressWarnings({"ResultOfMethodCallIgnored", "ArraysAsListWithZeroOrOneArgument"})
     private void loadFiles() {
 
         File general = new File(DIRECTORY_GENERAL);

@@ -30,9 +30,9 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
 
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length > 1) {
-            if (args[0].equalsIgnoreCase("invite")) {
-                GeneralPlayer z = GeneralPlayer.get(args[1]);
-                if (z != null) {
+            GeneralPlayer z = GeneralPlayer.get(args[1]);
+            if (z != null) {
+                if (args[0].equalsIgnoreCase("invite")) {
                     Party other = z.getParty();
                     if (other == null) {
                         Party party = p.getParty();
@@ -62,41 +62,57 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                         p.sendMessage(GeneralLanguage.PARTY_ALREADY_OTHER);
                         return true;
                     }
-                } else {
-                    p.sendMessage(GeneralLanguage.NO_TARGET);
-                    return true;
-                }
-            } else if (args[0].equalsIgnoreCase("uninvite")) {
-                Party party = p.getParty();
-                if (party != null) {
-                    if (party.isCreator(p)) {
-                        GeneralPlayer z = GeneralPlayer.get(args[1]);
-                        PartyInvite invite = party.getInvite(z);
-                        if (invite != null) {
-                            invite.delete();
-                            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_REVOKED)
-                                    .replaceAll("%p", z.getName()));
-                            return true;
+                } else if (args[0].equalsIgnoreCase("uninvite")) {
+                    Party party = p.getParty();
+                    if (party != null) {
+                        if (party.isCreator(p)) {
+                            PartyInvite invite = party.getInvite(z);
+                            if (invite != null) {
+                                invite.delete();
+                                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_REVOKED)
+                                        .replaceAll("%p", invite.getInvited().getName()));
+                                return true;
+                            } else {
+                                p.sendMessage(GeneralLanguage.PARTY_INVITE_NULL);
+                                return true;
+                            }
                         } else {
-                            p.sendMessage(GeneralLanguage.PARTY_INVITE_NULL);
+                            p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
                             return true;
                         }
                     } else {
-                        p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
+                        p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
                         return true;
                     }
-                } else {
-                    p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
-                    return true;
-                }
-            } else if (args[0].equalsIgnoreCase("accept")) {
-                if (p.getParty() == null) {
-                    Party party = GeneralPlayer.get(args[1]).getParty();
+                } else if (args[0].equalsIgnoreCase("accept")) {
+                    if (p.getParty() == null) {
+                        Party party = z.getParty();
+                        if (party != null) {
+                            PartyInvite invite = party.getInvite(p);
+                            if (invite != null) {
+                                party.add(p);
+                                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_ACCEPT)
+                                        .replaceAll("%p", party.getCreator().getName()));
+                                invite.delete();
+                                return true;
+                            } else {
+                                p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
+                                return true;
+                            }
+                        } else {
+                            p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
+                            return true;
+                        }
+                    } else {
+                        p.sendMessage(GeneralLanguage.PARTY_ALREADY);
+                        return true;
+                    }
+                } else if (args[0].equalsIgnoreCase("deny")) {
+                    Party party = z.getParty();
                     if (party != null) {
                         PartyInvite invite = party.getInvite(p);
                         if (invite != null) {
-                            party.add(p);
-                            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_ACCEPT)
+                            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_DENY)
                                     .replaceAll("%p", party.getCreator().getName()));
                             invite.delete();
                             return true;
@@ -108,52 +124,34 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                         p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
                         return true;
                     }
-                } else {
-                    p.sendMessage(GeneralLanguage.PARTY_ALREADY);
-                    return true;
-                }
-            } else if (args[0].equalsIgnoreCase("deny")) {
-                Party party = GeneralPlayer.get(args[1]).getParty();
-                if (party != null) {
-                    PartyInvite invite = party.getInvite(p);
-                    if (invite != null) {
-                        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_DENY)
-                                .replaceAll("%p", party.getCreator().getName()));
-                        invite.delete();
-                        return true;
-                    } else {
-                        p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                        return true;
-                    }
-                } else {
-                    p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                    return true;
-                }
-            } else if (args[0].equalsIgnoreCase("kick")) {
-                GeneralPlayer z = GeneralPlayer.get(args[1]);
-                Party party = p.getParty();
-                if (party != null) {
-                    if (party.isCreator(p)) {
-                        Party zParty = z.getParty();
-                        if (zParty != null && party.getUniqueId().equals(zParty.getUniqueId())) {
-                            party.remove(z);
-                            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_KICKED)
-                                    .replaceAll("%p", z.getName()));
-                            return true;
+                } else if (args[0].equalsIgnoreCase("kick")) {
+                    Party party = p.getParty();
+                    if (party != null) {
+                        if (party.isCreator(p)) {
+                            Party zParty = z.getParty();
+                            if (zParty != null && party.getUniqueId().equals(zParty.getUniqueId())) {
+                                party.remove(z);
+                                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_KICKED)
+                                        .replaceAll("%p", z.getName()));
+                                return true;
+                            } else {
+                                p.sendMessage(GeneralLanguage.PARTY_NOT_SAME);
+                                return true;
+                            }
                         } else {
-                            p.sendMessage(GeneralLanguage.PARTY_NOT_SAME);
+                            p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
                             return true;
                         }
                     } else {
-                        p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
+                        p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
                         return true;
                     }
                 } else {
-                    p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
+                    p.sendMessage(GeneralLanguage.PARTY_USAGE);
                     return true;
                 }
             } else {
-                p.sendMessage(GeneralLanguage.PARTY_USAGE);
+                p.sendMessage(GeneralLanguage.NO_TARGET);
                 return true;
             }
         } else if (args.length > 0) {

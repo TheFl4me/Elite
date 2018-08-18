@@ -44,32 +44,35 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 			return true;
 		}
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
-		if(kp.hasKit() && !kp.isInRegion(KitPvP.REGION_SPAWN)) {
-			p.sendMessage(KitPvPLanguage.KIT_ERROR_ALREADY);
-			return true;
-		}
-		if(args.length == 0) {
-			KitGUI gui = new KitGUI(p.getLanguage());
-			p.openGUI(gui, gui.selector(kp, 1));
-			return true;
-		} else  {
-			for(Kit kit : Kit.values()) {
-				if(args[0].equalsIgnoreCase(kit.getName())) {
-					if(kp.hasKitPermission(kit)) {
-						if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel()) {
-							p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_ERROR_LOCKED)
-									.replaceAll("%level", Integer.toString(kit.getLevel())));
-						} else {
-							kp.giveKit(kit);
-						}
-					} else {
-						p.sendMessage(KitPvPLanguage.KIT_NO_PERMISSION);
-					}
-					return true;
-		    	}
+		if (kp != null) {
+			if(kp.hasKit() && !kp.isInRegion(KitPvP.REGION_SPAWN)) {
+				p.sendMessage(KitPvPLanguage.KIT_ERROR_ALREADY);
+				return true;
 			}
-			p.sendMessage(KitPvPLanguage.KIT_ERROR_NULL);
-			return true;
+			if(args.length == 0) {
+				KitGUI gui = new KitGUI(p.getLanguage());
+				p.openGUI(gui, gui.selector(kp, 1));
+				return true;
+			} else  {
+				for(Kit kit : Kit.values()) {
+					if(args[0].equalsIgnoreCase(kit.getName())) {
+						if(kp.hasKitPermission(kit)) {
+							if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel()) {
+								p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_ERROR_LOCKED)
+										.replaceAll("%level", Integer.toString(kit.getLevel())));
+							} else {
+								kp.giveKit(kit);
+							}
+						} else {
+							p.sendMessage(KitPvPLanguage.KIT_NO_PERMISSION);
+						}
+						return true;
+					}
+				}
+				p.sendMessage(KitPvPLanguage.KIT_ERROR_NULL);
+				return true;
+			}
 		}
+		return true;
 	}
 }

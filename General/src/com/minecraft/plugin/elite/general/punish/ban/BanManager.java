@@ -31,10 +31,9 @@ public class BanManager {
 	public static Collection<PastBan> getPastBans(UUID uuid, PunishReason reason) {
 		Collection<PastBan> tempList = new ArrayList<>();
 		Collection<PastBan> pastBans = new ArrayList<>();
-		if(pastBans != null)
-			for(PastBan pastBan : getPastBans(uuid))
-				if(pastBan.getReason() == reason)
-					tempList.add(pastBan);
+		for (PastBan pastBan : getPastBans(uuid))
+			if (pastBan.getReason() == reason)
+				tempList.add(pastBan);
 		return tempList;
 	}
 

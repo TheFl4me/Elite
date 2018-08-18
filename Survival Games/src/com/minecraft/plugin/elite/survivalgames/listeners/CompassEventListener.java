@@ -26,9 +26,13 @@ public class CompassEventListener implements Listener {
 					if((nearest == null || all.getPlayer().getLocation().distance(loc) < nearest.getPlayer().getLocation().distance(loc)) && all.getPlayer().getLocation().distance(loc) > 20)
 						nearest = all;
 				}
-				p.getPlayer().setCompassTarget(nearest.getPlayer().getLocation());
-				p.getPlayer().sendMessage(p.getLanguage().get(SurvivalGamesLanguage.TRACKING)
-						.replaceAll("%player", nearest.getName()));
+				if (nearest == null)
+					p.sendMessage(SurvivalGamesLanguage.TRACKING_NONE);
+				else {
+					p.getPlayer().setCompassTarget(nearest.getPlayer().getLocation());
+					p.getPlayer().sendMessage(p.getLanguage().get(SurvivalGamesLanguage.TRACKING)
+							.replaceAll("%player", nearest.getName()));
+				}
 			} else {
 				p.sendMessage(SurvivalGamesLanguage.TRACKING_NONE);
 			}

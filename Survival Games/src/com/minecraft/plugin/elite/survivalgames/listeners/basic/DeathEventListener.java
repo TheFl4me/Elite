@@ -25,9 +25,10 @@ public class DeathEventListener implements Listener {
 			if(!p.canAdminMode() && !p.canWatch())
 				p.getPlayer().kickPlayer(p.getLanguage().get(SurvivalGamesLanguage.KICK_DEATH)
 						.replaceAll("%remaining", Integer.toString(arena.getPlayers().size())));
-			if(e.getEntity().getKiller() instanceof Player) {
-				GeneralPlayer z = GeneralPlayer.get(e.getEntity().getKiller());
-				if(arena.getPlayers().contains(z)) {
+			Player ent = e.getEntity().getKiller();
+			if(ent != null) {
+				GeneralPlayer z = GeneralPlayer.get(ent);
+				if(z != null && arena.getPlayers().contains(z)) {
 					z.addExp((p.getPrestige() + 1) * 100);
 					arena.addKill(z);
 				}

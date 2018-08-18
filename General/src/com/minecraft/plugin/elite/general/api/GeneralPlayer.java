@@ -99,19 +99,15 @@ public class GeneralPlayer {
 
 	public static GeneralPlayer get(UUID uuid) {
 		GeneralPlayer result = players.get(uuid);
-		if(result == null) {
-			GeneralPlayer login_result = loggingInPlayers.get(uuid);
-			return login_result;
-		}
+		if(result == null)
+			return loggingInPlayers.get(uuid);
 		return result;
 	}
 
 	public static GeneralPlayer get(String name) {
 		@SuppressWarnings("deprecation") Player p = Bukkit.getPlayer(name);
-		if(p != null) {
-			GeneralPlayer result = get(p.getUniqueId());
-			return result;
-		}
+		if(p != null)
+			return get(p.getUniqueId());
 		return null;
 	}
 
@@ -1049,13 +1045,14 @@ public class GeneralPlayer {
 			@Override
 			public void run() {
 				GeneralPlayer p = get(getUniqueId());
-				if(p == null)
+				if(p != null)
+					if (p.isCombatLog()) {
+						p.sendMessage(GeneralLanguage.COMBATLOG_SAFE);
+						p.getCombatLogTask().cancel();
+						p.setCombatLogTask(null);
+					}
+				else
 					cancel();
-				if (p.isCombatLog()) {
-					p.sendMessage(GeneralLanguage.COMBATLOG_SAFE);
-					p.getCombatLogTask().cancel();
-					p.setCombatLogTask(null);
-				}
 			}
 		});
 		this.getCombatLogTask().runTaskLater(General.getPlugin(), 200);

@@ -23,7 +23,6 @@ public class ChatBlacklistListener implements Listener {
             if(msg.contains(insult.toLowerCase())) {
                 e.setCancelled(true);
                 p.sendMessage(GeneralLanguage.CHAT_SWEAR);
-                return;
             }
         });
 

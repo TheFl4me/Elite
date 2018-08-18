@@ -152,8 +152,9 @@ public class DuelEventListener implements Listener {
 	
 	@EventHandler
 	public void on1v1Death(PlayerDeathEvent e) {
-		if(e.getEntity().getKiller() instanceof Player) {
-			GeneralPlayer z = GeneralPlayer.get(e.getEntity().getKiller());
+		Player ent = e.getEntity().getKiller();
+		if(ent != null) {
+			GeneralPlayer z = GeneralPlayer.get(ent);
 			GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
 			Duel duel = DuelManager.get(p);
 			if(duel != null && duel.getOpponent(p).getUniqueId().equals(z.getUniqueId())) {

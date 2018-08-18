@@ -10,7 +10,6 @@ import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -82,8 +81,8 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onItemDrop(ItemSpawnEvent e) {
-        Entity ent = e.getEntity();
-        if(ent instanceof Item) {
+        Item ent = e.getEntity();
+        if(ent != null) {
             Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> {
                 if(ent != null)
                     ent.remove();

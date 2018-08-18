@@ -191,21 +191,22 @@ public class DuelSetup {
             inv.setBoots((boots.getType() == Material.BARRIER ? null : boots));
 
             KitPlayer kp = KitPlayer.get(p.getUniqueId());
+            if (kp != null) {
+                if(sword.getType() != Material.BARRIER)
+                    kp.setItem(KitPlayer.SlotType.SWORD, sword);
+                if(fishing.getType() != Material.BARRIER)
+                    kp.setItem(KitPlayer.SlotType.KIT_ITEM, fishing);
 
-            if(sword.getType() != Material.BARRIER)
-                kp.setItem(KitPlayer.SlotType.SWORD, sword);
-            if(fishing.getType() != Material.BARRIER)
-                kp.setItem(KitPlayer.SlotType.KIT_ITEM, fishing);
+                if(soup.getType() != Material.BARRIER) {
+                    if(re_craft) {
+                        kp.setItem(KitPlayer.SlotType.BOWL, (new ItemStack(Material.BOWL, 32)));
+                        kp.setItem(KitPlayer.SlotType.BROWN_MUSHROOM, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
+                        kp.setItem(KitPlayer.SlotType.RED_MUSHROOM, (new ItemStack(Material.RED_MUSHROOM, 32)));
+                    }
+                    for (int i = 0; i < inv.getSize(); i++)
+                        inv.addItem(soup);
 
-            if(soup.getType() != Material.BARRIER) {
-                if(re_craft) {
-                    kp.setItem(KitPlayer.SlotType.BOWL, (new ItemStack(Material.BOWL, 32)));
-                    kp.setItem(KitPlayer.SlotType.BROWN_MUSHROOM, (new ItemStack(Material.BROWN_MUSHROOM, 32)));
-                    kp.setItem(KitPlayer.SlotType.RED_MUSHROOM, (new ItemStack(Material.RED_MUSHROOM, 32)));
                 }
-                for (int i = 0; i < inv.getSize(); i++)
-                    inv.addItem(soup);
-
             }
         }
         this.getDuel().start();

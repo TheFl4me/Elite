@@ -8,11 +8,7 @@ import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
 import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
 import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -60,30 +56,33 @@ public class Duel {
 		GeneralPlayer p1 = this.getPlayers().get(0);
 		GeneralPlayer p2 = this.getPlayers().get(1);
 		DuelRequest request = DuelManager.getRequest(p1, p2);
-		for(GeneralPlayer p : this.getPlayers())
-			p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
-					.replaceAll("%z", request.getOther(p).getName()));
-		if(request.getType() == DuelType.CUSTOM) {
-			DuelSetup setup = new DuelSetup(p1, p2);
-			for(GeneralPlayer p : this.getPlayers()) {
-				DuelGUI gui = new DuelGUI(p.getLanguage(), setup);
-				p.openGUI(gui, gui.main(p));
-				setup.playSound(Sound.ANVIL_USE);
+		if (request != null) {
+			for(GeneralPlayer p : this.getPlayers())
+				p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_REQUEST_ACCEPTED)
+						.replaceAll("%z", request.getOther(p).getName()));
+			if(request.getType() == DuelType.CUSTOM) {
+				DuelSetup setup = new DuelSetup(p1, p2);
+				for(GeneralPlayer p : this.getPlayers()) {
+					DuelGUI gui = new DuelGUI(p.getLanguage(), setup);
+					p.openGUI(gui, gui.main(p));
+					setup.playSound(Sound.ANVIL_USE);
+				}
+			} else if(request.getType() == DuelType.NORMAL) {
+				for(GeneralPlayer p : this.getPlayers()) {
+					p.getPlayer().closeInventory();
+					p.getPlayer().setGameMode(GameMode.SURVIVAL);
+					p.clear();
+					p.clearTools();
+					KitPlayer kp = KitPlayer.get(p.getUniqueId());
+					if (kp != null) {
+						kp.addDefaults(true);
+						kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
+					}
+				}
+				this.start();
 			}
-		} else if(request.getType() == DuelType.NORMAL) {
-			for(GeneralPlayer p : this.getPlayers()) {
-				p.getPlayer().closeInventory();
-				p.getPlayer().setGameMode(GameMode.SURVIVAL);
-				p.clear();
-				p.clearTools();
-				KitPlayer kp = KitPlayer.get(p.getUniqueId());
-				kp.addDefaults(true);
-				kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
-			}
-			this.start();
+			request.delete();
 		}
-		request.delete();
-
 	}
 
 	public void queueStart() {
@@ -100,8 +99,10 @@ public class Duel {
 			p.clear();
 			p.clearTools();
 			KitPlayer kp = KitPlayer.get(p.getUniqueId());
-			kp.addDefaults(true);
-			kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
+			if (kp != null) {
+				kp.addDefaults(true);
+				kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
+			}
 
 			DuelRequest request = DuelManager.getRequest(p);
 			if(request != null)

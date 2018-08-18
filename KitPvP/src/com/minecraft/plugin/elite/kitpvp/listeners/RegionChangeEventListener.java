@@ -41,10 +41,12 @@ public class RegionChangeEventListener implements Listener {
     public void onEnterArena(RegionEnterEvent e) {
         if(!e.getPlayer().isAdminMode() && !e.getPlayer().isWatching()) {
             KitPlayer kp = KitPlayer.get(e.getPlayer().getUniqueId());
-            if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_EHG)) {
-                kp.giveKitInv(false);
-            } else if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_FEAST)) {
-                kp.giveKitInv(true);
+            if (kp != null) {
+                if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_EHG)) {
+                    kp.giveKitInv(false);
+                } else if(e.getRegion().getId().equalsIgnoreCase(KitPvP.REGION_FEAST)) {
+                    kp.giveKitInv(true);
+                }
             }
         }
     }

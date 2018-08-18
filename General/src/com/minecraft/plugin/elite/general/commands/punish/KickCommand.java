@@ -34,9 +34,9 @@ public class KickCommand extends GeneralCommand {
 							.replaceAll("%reason", reason.toString());
 					z.getPlayer().kickPlayer(kick);
 					for(Player all : Bukkit.getOnlinePlayers())
-						GeneralPlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
+						all.sendMessage(GeneralPlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
 								.replaceAll("%z", z.getName())
-								.replaceAll("%p", cs.getName());
+								.replaceAll("%p", cs.getName()));
 					return true;
 				} else {
 					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NO_PERMISSION));

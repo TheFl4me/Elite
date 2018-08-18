@@ -35,7 +35,7 @@ public class ActionStoreEventListener implements Listener {
         if (e.getEntity() instanceof Player) {
             GeneralPlayer target = GeneralPlayer.get((Player) e.getEntity());
             if (!target.canBypassChecks()) {
-                if(target.isKnockbacked()) {
+                if(target.hasKnockback()) {
                     target.getKnockbackTask().cancel();
                     target.setKnockbackTask(null);
                 }
@@ -44,7 +44,7 @@ public class ActionStoreEventListener implements Listener {
                     public void run() {
                         if(target == null)
                             cancel();
-                        if(target.isKnockbacked()) {
+                        if(target.hasKnockback()) {
                             target.getKnockbackTask().cancel();
                             target.setKnockbackTask(null);
                         }

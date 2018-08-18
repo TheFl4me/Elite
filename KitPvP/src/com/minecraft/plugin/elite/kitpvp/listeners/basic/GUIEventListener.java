@@ -28,6 +28,8 @@ public class GUIEventListener implements Listener {
 		GeneralPlayer p = e.getPlayer();
 		Server server = Server.get();
 		KitPlayer kp = KitPlayer.get(p.getUniqueId());
+		if (kp == null)
+			return;
 		ItemStack item = e.getItem();
 		ItemMeta itemMeta = item.getItemMeta();
 		if(e.getGUI() instanceof KitGUI) {
@@ -140,7 +142,6 @@ public class GUIEventListener implements Listener {
 					}
 					if(guiName.equalsIgnoreCase(lang.get(KitPvPLanguage.KIT_GUI_SHOP_TITLE))) {
 						p.openGUI(gui, gui.selector(kp, page));
-						return;
 					}
 				}
 			}

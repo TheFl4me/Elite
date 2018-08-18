@@ -24,23 +24,26 @@ public class DeathEventListener implements Listener {
 			DecimalFormat df = new DecimalFormat("0.0");
 			p.addDeath();
 			p.setKillStreak(0);
-			if(e.getEntity().getKiller() instanceof Player) {
-				GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
-				killer.addKill();
-				killer.addExp((p.getPrestige() + 1) * 300);
-				Inventory inv = killer.getPlayer().getInventory();
-				int soups = 0;
-				for (int i = 0; i < inv.getSize(); i++) {
-					if(inv.getItem(i) != null) {
-						if(inv.getItem(i).getType() == Material.MUSHROOM_SOUP) {
-			    			soups++;
-			    		}
+			Player ent = e.getEntity().getKiller();
+			if(ent != null) {
+				GeneralPlayer killer = GeneralPlayer.get(ent);
+				if (killer != null) {
+					killer.addKill();
+					killer.addExp((p.getPrestige() + 1) * 300);
+					Inventory inv = killer.getPlayer().getInventory();
+					int soups = 0;
+					for (int i = 0; i < inv.getSize(); i++) {
+						if(inv.getItem(i) != null) {
+							if(inv.getItem(i).getType() == Material.MUSHROOM_SOUP) {
+								soups++;
+							}
+						}
 					}
+					p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.DEATH)
+							.replaceAll("%z", killer.getName())
+							.replaceAll("%health", df.format(killer.getPlayer().getHealth() / 2.0))
+							.replaceAll("%soups", Integer.toString(soups)));
 				}
-				p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.DEATH)
-						.replaceAll("%z", killer.getName())
-						.replaceAll("%health", df.format(killer.getPlayer().getHealth() / 2.0))
-						.replaceAll("%soups", Integer.toString(soups)));
 			}
 		}
 	}

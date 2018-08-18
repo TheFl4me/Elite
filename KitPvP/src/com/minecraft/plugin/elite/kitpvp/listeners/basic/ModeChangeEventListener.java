@@ -16,7 +16,8 @@ public class ModeChangeEventListener implements Listener {
 			p.clear();
 			p.giveTool(new MenuTool(p.getLanguage()));
 		}
-		if(!e.isToMode() && !KitPlayer.get(p.getUniqueId()).hasKit())
+		KitPlayer kp = KitPlayer.get(p.getUniqueId());
+		if(!e.isToMode() && kp != null && kp.hasKit())
 			p.clear();
 	}
 }

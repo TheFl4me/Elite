@@ -26,7 +26,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFirstKill(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(!p.getUniqueId().equals(e.getEntity().getUniqueId()))
                 if(!p.hasAchievement(Achievement.KILLER))
@@ -50,7 +50,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onStaffKill(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
             if(target.isBuilder() && !killer.hasAchievement(Achievement.STAFF_KILL) && !killer.getUniqueId().equals(target.getUniqueId()))
@@ -60,7 +60,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAdminKill(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
             if(target.isAdmin() && !killer.hasAchievement(Achievement.ADMIN_KIll) && !killer.getUniqueId().equals(target.getUniqueId()))
@@ -70,7 +70,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMediaKill(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
             if(target.getRank() == Rank.MEDIA && !killer.hasAchievement(Achievement.MEDIA_KILL) && !killer.getUniqueId().equals(target.getUniqueId()))
@@ -80,7 +80,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMaxPrestigeKill(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
             if(target.isMasterPrestige() && !killer.hasAchievement(Achievement.MAX_PRESTIGE_KILL) && !killer.getUniqueId().equals(target.getUniqueId()))
@@ -90,7 +90,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBloodthirsty(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(p.getKillStreak() == 5 && !p.hasAchievement(Achievement.BLOODTHIRSTY))
                 p.giveAchievement(Achievement.BLOODTHIRSTY);
@@ -99,7 +99,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInvincible(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(p.getKillStreak() == 10 && !p.hasAchievement(Achievement.INVINCIBLE))
                 p.giveAchievement(Achievement.INVINCIBLE);
@@ -108,7 +108,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onNuclear(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(p.getKillStreak() == 25 && !p.hasAchievement(Achievement.NUCLEAR))
                 p.giveAchievement(Achievement.NUCLEAR);
@@ -117,7 +117,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onGod(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(p.getKillStreak() == 50 && !p.hasAchievement(Achievement.GOD))
                 p.giveAchievement(Achievement.GOD);
@@ -126,7 +126,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLastResort(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer p = GeneralPlayer.get(e.getEntity().getKiller());
             if(p.getPlayer().getHealth() <= 1  && p.getPlayer().getHealth() > 0 && !p.getPlayer().getInventory().contains(Material.MUSHROOM_SOUP) && !p.hasAchievement(Achievement.LAST_RESORT) && !p.getUniqueId().equals(e.getEntity().getUniqueId()))
                 p.giveAchievement(Achievement.LAST_RESORT);
@@ -152,7 +152,7 @@ public class AchievementEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBackStab(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() instanceof Player) {
+        if(e.getEntity().getKiller() != null) {
             GeneralPlayer killer = GeneralPlayer.get(e.getEntity().getKiller());
             GeneralPlayer target = GeneralPlayer.get(e.getEntity().getPlayer());
             if(killer.getPlayer().getLocation().getDirection().normalize().equals(target.getPlayer().getLocation().getDirection()) && killer.hasAchievement(Achievement.BACK_STAB) && !killer.getUniqueId().equals(target.getUniqueId()))

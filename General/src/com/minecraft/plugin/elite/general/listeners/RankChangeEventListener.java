@@ -15,37 +15,38 @@ public class RankChangeEventListener implements Listener {
     public void onRankChange(RankChangeEvent e) {
         if (e.getTarget().isOnline()) {
             GeneralPlayer p = GeneralPlayer.get(e.getTarget().getName());
-            p.setTag();
-            if(p.isAdminMode()) {
-                if (!e.getNewRank().hasPermission(GeneralPermission.MODE_ADMIN)) {
-                    p.setAdminMode(false);
+            if (p != null) {
+                p.setTag();
+                if(p.isAdminMode()) {
+                    if (!e.getNewRank().hasPermission(GeneralPermission.MODE_ADMIN)) {
+                        p.setAdminMode(false);
+                    }
+                } else if(p.isWatching()) {
+                    if (!e.getNewRank().hasPermission(GeneralPermission.MODE_WATCH)) {
+                        p.setWatching(false);
+                    }
                 }
-            } else if(p.isWatching()) {
-                if (!e.getNewRank().hasPermission(GeneralPermission.MODE_WATCH)) {
-                    p.setWatching(false);
+                if(p.isInvis())
+                    p.setInvis(Rank.valueOf(e.getNewRank().ordinal() - 1));
+
+                if(p.isBuilding() && !e.getNewRank().hasPermission(GeneralPermission.MODE_BUILD))
+                    p.setBuilding(false);
+
+                if (!e.getNewRank().hasPermission(GeneralPermission.ANTI_HACK_ALERTS))
+                    p.showAlerts(false);
+                else
+                    p.showAlerts(true);
+
+                for (Player players : Bukkit.getOnlinePlayers()) {
+                    GeneralPlayer all = GeneralPlayer.get(players);
+                    if (all.isInvis()) {
+                        if (e.getNewRank().ordinal() <= all.getInvisTo().ordinal())
+                            p.getPlayer().hidePlayer(all.getPlayer());
+                        if (e.getNewRank().ordinal() >= all.getInvisTo().ordinal())
+                            p.getPlayer().showPlayer(all.getPlayer());
+                    }
                 }
             }
-            if(p.isInvis())
-                p.setInvis(Rank.valueOf(e.getNewRank().ordinal() - 1));
-
-            if(p.isBuilding() && !e.getNewRank().hasPermission(GeneralPermission.MODE_BUILD))
-                p.setBuilding(false);
-
-            if (!e.getNewRank().hasPermission(GeneralPermission.ANTI_HACK_ALERTS))
-                p.showAlerts(false);
-            else
-                p.showAlerts(true);
-
-            for (Player players : Bukkit.getOnlinePlayers()) {
-                GeneralPlayer all = GeneralPlayer.get(players);
-                if (all.isInvis()) {
-                    if (e.getNewRank().ordinal() <= all.getInvisTo().ordinal())
-                        p.getPlayer().hidePlayer(all.getPlayer());
-                    if (e.getNewRank().ordinal() >= all.getInvisTo().ordinal())
-                        p.getPlayer().showPlayer(all.getPlayer());
-                }
-            }
-
         }
     }
 }

@@ -151,7 +151,6 @@ public class MenuGUIEventListener implements Listener {
                     p.getPlayer().closeInventory();
                     if(guiName.equalsIgnoreCase(lang.get(GeneralLanguage.MENU_GUI_ACHIEVEMENTS))) {
                         p.openGUI(menu, menu.achievements(p, page));
-                        return;
                     }
                 } catch (NumberFormatException e1) {
                     //this exist so that it does not active when player click a page item which does not act as a gui page

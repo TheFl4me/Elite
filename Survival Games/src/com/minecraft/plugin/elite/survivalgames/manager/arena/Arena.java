@@ -137,8 +137,7 @@ public class Arena {
 	}
 
 	public Collection<Chest> getLoadedChests() {
-		Collection<Chest> tempList = new ArrayList<>(this.loadedChests);
-		return tempList;
+		return new ArrayList<>(this.loadedChests);
 	}
 
 	public void addChest(Chest chest) {

@@ -45,7 +45,7 @@ public class ToolEventListener implements Listener {
 		KitPlayer p = KitPlayer.get(e.getPlayer());
 		if(p.hasKit())
 			for(Kit kit : Kit.values())
-				if(p.hasKit(kit))
+				if(p.hasKit(kit) && kit.getItem() != null)
 					if(e.getItemDrop().getItemStack().getType() == kit.getItem().getType())
 						e.setCancelled(true);
 	}

@@ -205,7 +205,7 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId())) {
                         Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
-                        if (zClan != null && clan.equals(zClan)) {
+                        if (clan.equals(zClan)) {
                             if (clan.isNormal(offlinePlayer.getUniqueId())) {
                                 clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.MOD);
                                 Rank rank = Rank.get(offlinePlayer);
@@ -239,7 +239,7 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                 if (clan != null) {
                     if (clan.isCreator(p.getUniqueId())) {
                         Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
-                        if (zClan != null && clan.equals(zClan)) {
+                        if (clan.equals(zClan)) {
                             if (clan.isMod(offlinePlayer.getUniqueId())) {
                                 clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.NORMAL);
                                 Rank rank = Rank.get(offlinePlayer);
@@ -271,7 +271,7 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                 if (clan != null) {
                     if (clan.isMod(p.getUniqueId())) {
                         Clan zClan = ClanManager.get(offlinePlayer.getUniqueId());
-                        if (zClan != null && clan.equals(zClan)) {
+                        if (clan.equals(zClan)) {
                             if (clan.isCreator(p.getUniqueId()) || (clan.isMod(p.getUniqueId()) && clan.isNormal(offlinePlayer.getUniqueId()))) {
                                 clan.remove(offlinePlayer.getUniqueId());
                                 for(UUID uuid : clan.getMembers()) {

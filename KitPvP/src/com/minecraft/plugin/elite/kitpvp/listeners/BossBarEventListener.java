@@ -32,21 +32,23 @@ public class BossBarEventListener implements Listener {
 
             if(nearest != null) {
                 KitPlayer kz = KitPlayer.get(nearest.getUniqueId());
-                if(!nearest.isAdminMode() && !nearest.isWatching()) {
-                    String text = null;
-                    if(p.isInRegion(KitPvP.REGION_DUEL)) {
-                        text = Long.toString(nearest.getELO()) + " ELO";
-                    } else if(kz.hasKit()) {
-                       text = kz.getKit().getName();
-                    }
+                if (kz != null) {
+                    if(!nearest.isAdminMode() && !nearest.isWatching()) {
+                        String text = null;
+                        if(p.isInRegion(KitPvP.REGION_DUEL)) {
+                            text = Long.toString(nearest.getELO()) + " ELO";
+                        } else if(kz.hasKit()) {
+                            text = kz.getKit().getName();
+                        }
 
-                    if(text != null) {
-                        BossBar bar = BossBar.get(p);
-                        if(bar == null) {
-                            BossBar newBar = new BossBar(p);
-                            newBar.show(nearest.getName() + " - " + text, 10);
-                        } else {
-                            bar.changeTo(nearest.getName() + " - " + text, 10);
+                        if(text != null) {
+                            BossBar bar = BossBar.get(p);
+                            if(bar == null) {
+                                BossBar newBar = new BossBar(p);
+                                newBar.show(nearest.getName() + " - " + text, 10);
+                            } else {
+                                bar.changeTo(nearest.getName() + " - " + text, 10);
+                            }
                         }
                     }
                 }

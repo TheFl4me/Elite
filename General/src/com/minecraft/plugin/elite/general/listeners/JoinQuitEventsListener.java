@@ -40,7 +40,7 @@ public class JoinQuitEventsListener implements Listener {
             all.setHeaderFooter();
             Clan allClan = all.getClan();
             Clan clan = p.getClan();
-            if (allClan != null && clan != null && clan.equals(allClan) && !p.isInvis())
+            if (clan != null && clan.equals(allClan) && !p.isInvis())
                 all.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.JOINED)
                         .replaceAll("%p", p.getName()));
         }
@@ -74,7 +74,7 @@ public class JoinQuitEventsListener implements Listener {
             GeneralPlayer all = GeneralPlayer.get(players);
             Clan allClan = all.getClan();
             Clan clan = p.getClan();
-            if (allClan != null && clan != null && clan.equals(allClan) && !p.isInvis()) {
+            if (clan != null && clan.equals(allClan) && !p.isInvis()) {
                 all.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.LEFT)
                         .replaceAll("%p", p.getName()));
             }

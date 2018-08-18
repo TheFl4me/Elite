@@ -31,8 +31,7 @@ public class AlertManager {
     }
 
     public static List<Alert> getAll(GeneralPlayer p) {
-        List<Alert> list = getAll().stream().filter(alert -> alert.getHacker().getUniqueId().equals(p.getUniqueId())).collect(Collectors.toList());
-        return list;
+        return getAll().stream().filter(alert -> alert.getHacker().getUniqueId().equals(p.getUniqueId())).collect(Collectors.toList());
     }
 
     public static void clear(GeneralPlayer p) {
