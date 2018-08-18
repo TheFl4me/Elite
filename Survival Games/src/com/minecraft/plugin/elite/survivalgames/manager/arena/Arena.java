@@ -341,8 +341,7 @@ public class Arena {
 			all.sendTitle(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", this.getWinner().getName()), 1, 30, 1);
 		}
 		Bukkit.getScheduler().runTaskTimer(SurvivalGames.getPlugin(), () -> {
-			if(p != null)
-				p.getPlayer().getWorld().spawnEntity(p.getPlayer().getLocation(), EntityType.FIREWORK);
+			p.getPlayer().getWorld().spawnEntity(p.getPlayer().getLocation(), EntityType.FIREWORK);
 			for(Player players : Bukkit.getOnlinePlayers()) {
 				GeneralPlayer all = GeneralPlayer.get(players);
 				all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", this.getWinner().getName()));

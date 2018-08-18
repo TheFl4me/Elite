@@ -42,8 +42,6 @@ public class ActionStoreEventListener implements Listener {
                 target.setKnockbackTask(new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if(target == null)
-                            cancel();
                         if(target.hasKnockback()) {
                             target.getKnockbackTask().cancel();
                             target.setKnockbackTask(null);
