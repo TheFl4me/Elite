@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class MapTeleportCommand extends GeneralCommand implements TabCompleter{
 
     public MapTeleportCommand() {
-        super("mapteleport", SurvivalGamesPermission.MAP_TELEPORT, false);
+        super("mapteleport", SurvivalGamesPermission.MAP_EDIT, false);
     }
 
     @Override

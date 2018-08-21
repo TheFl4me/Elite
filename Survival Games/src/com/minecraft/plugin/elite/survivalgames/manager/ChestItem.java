@@ -5,9 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public enum ChestItem {
 	
@@ -18,12 +16,10 @@ public enum ChestItem {
 	WOOD_SWORD(20, new ItemStack(Material.WOOD_SWORD)),
 	GOLD_SWORD(15, new ItemStack(Material.GOLD_SWORD)),
 
-	DIAMOND_AXE(3, new ItemStack(Material.DIAMOND_AXE)),
 	IRON_AXE(10, new ItemStack(Material.IRON_AXE)),
 	STONE_AXE(15, new ItemStack(Material.STONE_AXE)),
 	WOOD_AXE(15, new ItemStack(Material.WOOD_AXE)),
-	
-	DIAMOND_CHEST_PLATE(3, new ItemStack(Material.DIAMOND_CHESTPLATE)),
+
 	IRON_CHEST_PLATE(5, new ItemStack(Material.IRON_CHESTPLATE)),
 	IRON_LEGGINGS(6, new ItemStack(Material.IRON_LEGGINGS)),
 	IRON_HELMET(7, new ItemStack(Material.IRON_HELMET)),
@@ -67,11 +63,20 @@ public enum ChestItem {
 	EXP_BOTTLE(5, new ItemStack(Material.EXP_BOTTLE)),
 	BOAT(5, new ItemStack(Material.BOAT)),
 	LAPIS_LAZULI(10, new ItemStack(Material.INK_SACK, 1, (short) 4)),
-	ENDER_PEARL(5, new ItemStack(Material.ENDER_PEARL));
+	ENDER_PEARL(5, new ItemStack(Material.ENDER_PEARL)),
+
+	DIAMOND_SWORD(1, new ItemStack(Material.DIAMOND_SWORD)),
+	DIAMOND_AXE(4, new ItemStack(Material.DIAMOND_AXE)),
+	DIAMOND_HELMET(5, new ItemStack(Material.DIAMOND_HELMET)),
+	DIAMOND_CHEST_PLATE(2, new ItemStack(Material.DIAMOND_CHESTPLATE)),
+	DIAMOND_LEGGINGS(3, new ItemStack(Material.DIAMOND_LEGGINGS)),
+	DIAMOND_BOOTS(5, new ItemStack(Material.DIAMOND_BOOTS));
 	
 	
 	private int spawnChance;
 	private ItemStack item;
+
+	private static final Collection<ChestItem> SPECIAL_ITEMS = Arrays.asList(DIAMOND_AXE, DIAMOND_BOOTS, DIAMOND_CHEST_PLATE, DIAMOND_HELMET, DIAMOND_LEGGINGS, DIAMOND_SWORD);
 	
 	ChestItem(int chance, ItemStack item) {
 		this.spawnChance = chance;
@@ -90,6 +95,30 @@ public enum ChestItem {
 		}
 		return list;
 	}
+
+	public static List<ChestItem> getAllNormalItems() {
+		Server server = Server.get();
+		List<ChestItem> list = new ArrayList<>();
+		for(ChestItem item : values()) {
+			if((item == SOUP && !server.hasSoups()) || SPECIAL_ITEMS.contains(item))
+				continue;
+			for(int i = 0; i < item.getSpawnChance(); i++) {
+				list.add(item);
+			}
+		}
+		return list;
+	}
+
+	public static List<ChestItem> getAllSpecialItems() {
+		Server server = Server.get();
+		List<ChestItem> list = new ArrayList<>();
+		for(ChestItem item : SPECIAL_ITEMS) {
+			for(int i = 0; i < item.getSpawnChance(); i++) {
+				list.add(item);
+			}
+		}
+		return list;
+	}
 	
 	public int getSpawnChance() {
 		return this.spawnChance;
@@ -99,8 +128,8 @@ public enum ChestItem {
 		return this.item;
 	}
 	
-	public static void setRandom(Inventory inv) {
-		List<ChestItem> items = getAllItems();
+	public static void setRandom(Inventory inv, boolean special) {
+		List<ChestItem> items = (special ? getAllSpecialItems() : getAllNormalItems()) ;
 		Random r1 = new Random();
 		Random r2 = new Random();
 		ChestItem item = items.get(r2.nextInt(items.size()));

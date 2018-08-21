@@ -80,11 +80,10 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onItemDrop(ItemSpawnEvent e) {
+    public void removeItemDrop(ItemSpawnEvent e) {
         Item ent = e.getEntity();
-        if(ent != null) {
+        if(ent != null)
             Bukkit.getScheduler().runTaskLater(General.getPlugin(), ent::remove, 600);
-        }
     }
 
     @EventHandler

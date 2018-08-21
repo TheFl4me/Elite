@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.listeners;
 
+import com.minecraft.plugin.elite.survivalgames.manager.AirDrop;
 import com.minecraft.plugin.elite.survivalgames.manager.ChestItem;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.arena.Arena;
@@ -30,6 +31,7 @@ public class ChestFillEventListener implements Listener {
                         List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
                         Chest chest = (Chest) block;
                         Chest nextChest = null;
+                        Random r = new Random();
                         for(BlockFace face : faces) {
                             BlockState blocks = chest.getBlock().getRelative(face).getState();
                             if(blocks instanceof Chest) {
@@ -37,21 +39,31 @@ public class ChestFillEventListener implements Listener {
                                 break;
                             }
                         }
-                        Random r = new Random();
-                        if(nextChest != null) {
-                            if(!arena.getLoadedChests().contains(chest) && !arena.getLoadedChests().contains(nextChest) && chest.getInventory().getHolder() instanceof DoubleChest) {
-                                DoubleChest doubleChest = (DoubleChest) chest.getInventory().getHolder();
-                                arena.addChest(chest);
-                                arena.addChest(nextChest);
-                                doubleChest.getInventory().clear();
-                                for(int i = 0; i < 10 - r.nextInt(3); i++)
-                                    ChestItem.setRandom(doubleChest.getInventory());
+                        if (!arena.getLoadedChests().contains(chest)) {
+                            for (AirDrop drop : arena.getAirDrops()) {
+                                if(drop.getChestBlocks().contains(e.getClickedBlock())) {
+                                    arena.getLoadedChests().add(chest);
+                                    chest.getInventory().clear();
+                                    for(int i = 0; i < 1 + r.nextInt(2); i++)
+                                        ChestItem.setRandom(chest.getInventory(), true);
+                                    return;
+                                }
                             }
-                        } else if(!arena.getLoadedChests().contains(chest)) {
-                            arena.addChest(chest);
-                            chest.getInventory().clear();
-                            for(int i = 0; i < 5 - r.nextInt(2); i++)
-                                ChestItem.setRandom(chest.getInventory());
+                            if(nextChest != null) {
+                                if(!arena.getLoadedChests().contains(nextChest) && chest.getInventory().getHolder() instanceof DoubleChest) {
+                                    DoubleChest doubleChest = (DoubleChest) chest.getInventory().getHolder();
+                                    arena.getLoadedChests().add(chest);
+                                    arena.getLoadedChests().add(nextChest);
+                                    doubleChest.getInventory().clear();
+                                    for(int i = 0; i < 7 + r.nextInt(3); i++)
+                                        ChestItem.setRandom(doubleChest.getInventory(), false);
+                                }
+                            } else {
+                                arena.getLoadedChests().add(chest);
+                                chest.getInventory().clear();
+                                for(int i = 0; i < 3 + r.nextInt(2); i++)
+                                    ChestItem.setRandom(chest.getInventory(), false);
+                            }
                         }
                     }
                 }

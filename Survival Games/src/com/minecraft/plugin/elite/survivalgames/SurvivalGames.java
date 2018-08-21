@@ -11,6 +11,7 @@ import com.minecraft.plugin.elite.survivalgames.commands.admin.BorderCommand;
 import com.minecraft.plugin.elite.survivalgames.commands.admin.CenterCommand;
 import com.minecraft.plugin.elite.survivalgames.commands.admin.MapTeleportCommand;
 import com.minecraft.plugin.elite.survivalgames.commands.admin.PodCommand;
+import com.minecraft.plugin.elite.survivalgames.listeners.AirDropEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.ChestFillEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.CompassEventListener;
 import com.minecraft.plugin.elite.survivalgames.listeners.GamePhaseEventsListener;
@@ -70,6 +71,7 @@ public class SurvivalGames extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BuildEventListener(), this);
 		getServer().getPluginManager().registerEvents(new ClearPlayerEventListener(), this);
 		getServer().getPluginManager().registerEvents(new ScoreboardEventListener(), this);
+		getServer().getPluginManager().registerEvents(new AirDropEventListener(), this);
 
 	}
 

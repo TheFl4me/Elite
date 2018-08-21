@@ -470,7 +470,7 @@ public class KitEventListener implements Listener {
 				if(hitter.isInRegion(KitPvP.REGION_SPAWN) || target.isInRegion(KitPvP.REGION_SPAWN))
 					return;
 				Random r = new Random();
-				int per = r.nextInt(100) + 1;
+				int per = r.nextInt(100);
 				if (per <= 33) {
 					target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 1));
 				}

@@ -8,6 +8,7 @@ import com.minecraft.plugin.elite.general.api.interfaces.LanguageNode;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGamesLanguage;
+import com.minecraft.plugin.elite.survivalgames.manager.AirDrop;
 import com.minecraft.plugin.elite.survivalgames.manager.GamePhase;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import org.bukkit.*;
@@ -40,8 +41,10 @@ public class Arena {
 	private BukkitRunnable shrinkTask;
 	private long playTime;
 	private BukkitRunnable playTimeTask;
+	private BukkitRunnable scheduleAirDropTask;
 	private Map<GeneralPlayer, Integer> killCount;
 	private OfflinePlayer winner;
+	private Collection<AirDrop> airDrops;
 
 	public Arena(World world) {
 		this.name = world.getName();
@@ -51,6 +54,7 @@ public class Arena {
 		this.countdownTask = null;
 		this.playTimeTask = null;
 		this.winner = null;
+		this.airDrops = new ArrayList<>();
 		this.loadedChests = new ArrayList<>();
 		this.killCount = new HashMap<>();
 		for(Player pall : Bukkit.getOnlinePlayers()) {
@@ -137,15 +141,15 @@ public class Arena {
 	}
 
 	public Collection<Chest> getLoadedChests() {
-		return new ArrayList<>(this.loadedChests);
+		return this.loadedChests;
 	}
 
-	public void addChest(Chest chest) {
-		this.loadedChests.add(chest);
+	public Collection<AirDrop> getAirDrops() {
+		return this.airDrops;
 	}
 
-	public void clearChests() {
-		this.loadedChests.clear();
+	public BukkitRunnable getScheduleAirDropTask() {
+		return this.scheduleAirDropTask;
 	}
 
 	public int getMinSize() {
@@ -224,6 +228,7 @@ public class Arena {
 								all.sendMessage(SurvivalGamesLanguage.ARENA_START);
 							}
 							scheduleShrinking();
+							scheduleAirDrop();
 	        				endCountdown();
 	        				setPlayTime(0);
 	        				startPlayTimeClock();
@@ -263,6 +268,7 @@ public class Arena {
 			p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.PORTAL_TRAVEL, 1, 1);
 			p.sendMessage(SurvivalGamesLanguage.SHRINK_START);
 		}
+		this.getScheduleAirDropTask().cancel();
 		this.shrinkTask = new BukkitRunnable() {
 			public void run() {
 				WorldBorder border = arena.getWorld().getWorldBorder();
@@ -274,7 +280,6 @@ public class Arena {
 						p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.PORTAL_TRAVEL, 1, 1);
 						p.sendMessage(SurvivalGamesLanguage.SHRINK_END);
 					}
-					arena.clearChests();
 					Bukkit.getScheduler().runTaskLater(SurvivalGames.getPlugin(), () -> {
                         if(getGamePhase() != GamePhase.END) {
 							GeneralPlayer tempWinner = null;
@@ -328,6 +333,7 @@ public class Arena {
 					.replaceAll("%winner", Rank.get(this.getWinner()).getPrefix().getColor() + this.getWinner().getName()));
 		}
 		this.getPlayTimeTask().cancel();
+		this.getAirDrops().forEach(AirDrop::cleanUp);
 		General.removeScoreboard();
 		Bukkit.getServer().shutdown();
 	}
@@ -347,7 +353,26 @@ public class Arena {
 				all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.WIN).replaceAll("%player", this.getWinner().getName()));
 			}
         }, 40, 40);
+		this.getScheduleAirDropTask().cancel();
 		Bukkit.getScheduler().runTaskLater(SurvivalGames.getPlugin(), this::end, 600);
+	}
+
+	public void scheduleAirDrop() {
+
+		this.scheduleAirDropTask = new BukkitRunnable() {
+			@Override
+			public void run() {
+				Random r = new Random();
+				int i = r.nextInt(100);
+				if (i <= 20) {
+					Arena arena = Lobby.get().getArena();
+					AirDrop drop = new AirDrop(arena);
+					arena.getAirDrops().add(drop);
+					drop.spawnDragon();
+				}
+			}
+		};
+		this.getScheduleAirDropTask().runTaskTimer(SurvivalGames.getPlugin(), 1200, 1200);
 	}
 
 	public void updateScoreboard() {
