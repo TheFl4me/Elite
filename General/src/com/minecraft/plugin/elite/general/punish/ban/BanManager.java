@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.punish.ban;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
@@ -89,18 +88,18 @@ public class BanManager {
 
 		if(target.isOnline()) {
 			GeneralPlayer z = GeneralPlayer.get(target.getUniqueId());
-			z.sendMessage(GeneralLanguage.BAN_WARNING);
+			z.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_WARNING);
 			final String kick = ban.getKickMessage(z.getLanguage());
 			z.getPlayer().kickPlayer(kick);
 		}
 
-		System.out.println(Language.ENGLISH.get(GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName()));
+		System.out.println(Language.ENGLISH.get(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName()));
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
-			String msg = all.getLanguage().get(GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName());
+			String msg = all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_BANNED).replaceAll("%z", target.getName());
 
 			if(all.hasPermission(GeneralPermission.PUNISH_INFO_CHECK))
-				all.sendHoverMessage(msg, ban.getInfo(GeneralLanguage.BAN_INFO, all.getLanguage()));
+				all.sendHoverMessage(msg, ban.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_INFO, all.getLanguage()));
 			else
 				all.getPlayer().sendMessage(msg);
 		}
@@ -176,10 +175,10 @@ public class BanManager {
 			bans.remove(z.getUniqueId());
 			temporaryBans.remove(z.getUniqueId());
 
-			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
+			System.out.println(Language.ENGLISH.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner));
 			for(Player players : Bukkit.getOnlinePlayers()) {
 				GeneralPlayer all = GeneralPlayer.get(players);
-				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner), "/checkinfo " + z.getName(), true);
+				all.sendClickMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.UNBAN_UNBANNED).replaceAll("%z", z.getName()).replaceAll("%p", unbanner), "/checkinfo " + z.getName(), true);
 			}
 		}
 	}

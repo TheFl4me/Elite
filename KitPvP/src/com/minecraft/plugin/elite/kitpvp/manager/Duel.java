@@ -1,13 +1,12 @@
-package com.minecraft.plugin.elite.kitpvp.manager.duel;
+package com.minecraft.plugin.elite.kitpvp.manager;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.database.Database;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
-import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelGUI;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.DuelSetup;
+import com.minecraft.plugin.elite.kitpvp.manager.custom.DuelGUI;
+import com.minecraft.plugin.elite.kitpvp.manager.custom.DuelSetup;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -72,12 +71,8 @@ public class Duel {
 					p.getPlayer().closeInventory();
 					p.getPlayer().setGameMode(GameMode.SURVIVAL);
 					p.clear();
-					p.clearTools();
-					KitPlayer kp = KitPlayer.get(p.getUniqueId());
-					if (kp != null) {
-						kp.addDefaults(true);
-						kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
-					}
+					p.enableKit();
+					p.setItem(GeneralPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
 				}
 				this.start();
 			}
@@ -97,12 +92,8 @@ public class Duel {
 			p.getPlayer().closeInventory();
 			p.getPlayer().setGameMode(GameMode.SURVIVAL);
 			p.clear();
-			p.clearTools();
-			KitPlayer kp = KitPlayer.get(p.getUniqueId());
-			if (kp != null) {
-				kp.addDefaults(true);
-				kp.setItem(KitPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
-			}
+			p.enableKit();
+			p.setItem(GeneralPlayer.SlotType.SWORD, new ItemStack(Material.DIAMOND_SWORD));
 
 			DuelRequest request = DuelManager.getRequest(p);
 			if(request != null)

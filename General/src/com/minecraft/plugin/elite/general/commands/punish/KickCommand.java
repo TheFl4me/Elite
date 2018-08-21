@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -30,24 +29,24 @@ public class KickCommand extends GeneralCommand {
 					StringBuilder reason = new StringBuilder();
 					for(int i = 1; i < args.length; i++)
 						 reason.append(args[i]).append(" ");
-					final String kick = z.getLanguage().get(GeneralLanguage.KICK_SCREEN)
+					final String kick = z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KICK_SCREEN)
 							.replaceAll("%reason", reason.toString());
 					z.getPlayer().kickPlayer(kick);
 					for(Player all : Bukkit.getOnlinePlayers())
-						all.sendMessage(GeneralPlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
+						all.sendMessage(GeneralPlayer.get(all).getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KICK_KICKED)
 								.replaceAll("%z", z.getName())
 								.replaceAll("%p", cs.getName()));
 					return true;
 				} else {
-					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NO_PERMISSION));
+					cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KICK_NO_PERMISSION));
 					return true;
 				}
 			} else {
-				cs.sendMessage(this.getLanguage().get(GeneralLanguage.NO_TARGET));
+				cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET));
 				return true;
 			}
 		} else {
-			cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_USAGE));
+			cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KICK_USAGE));
 			return true;
 		}
 	}

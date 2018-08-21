@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -40,20 +39,20 @@ public class SupportCommand extends GeneralCommand implements TabCompleter {
 						SupportChatManager.sendRequest(p);
 						return true;
 				} else {
-					p.sendMessage(GeneralLanguage.SUPPORT_ALREADY);
+					p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_ALREADY);
 					return true;
 				}
 			} else {
-				p.sendMessage(GeneralLanguage.SUPPORT_COOLDOWN);
+				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_COOLDOWN);
 				return true;
 			}
-		} else if(args[0].equalsIgnoreCase("end") && args.length > 0) {
+		} else if(args[0].equalsIgnoreCase("end")) {
 			SupportChat chat = SupportChatManager.get(p);
 			if(chat != null) {
 				chat.end();
 				return true;
 			} else {
-				p.sendMessage(GeneralLanguage.SUPPORT_CHAT_NULL);
+				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_CHAT_NULL);
 				return true;
 			}
 		} else if(p.hasPermission(GeneralPermission.CHAT_SUPPORT_EXTRA) && args[0].equalsIgnoreCase("add") && args.length > 1) {
@@ -66,23 +65,23 @@ public class SupportCommand extends GeneralCommand implements TabCompleter {
 							chat.start();
 							return true;
 						} else {
-							p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SUPPORT_ALREADY).replaceAll("%z", z.getName()));
+							p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_ALREADY).replaceAll("%z", z.getName()));
 							return true;
 						}
 					} else {
-						p.sendMessage(GeneralLanguage.SUPPORT_SELF);
+						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_SELF);
 						return true;
 					}
 				} else {
-					p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SUPPORT_NO_REQUEST).replaceAll("%z", z.getName()));
+					p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_NO_REQUEST).replaceAll("%z", z.getName()));
 					return true;
 				}
 			} else {
-				p.sendMessage(GeneralLanguage.NO_TARGET);
+				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
 				return true;
 			}
 		} else {
-			p.sendMessage(GeneralLanguage.SUPPORT_USAGE);
+			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_USAGE);
 			return true;
 		}
 	}

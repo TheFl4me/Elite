@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.api.special;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.database.Database;
 import org.bukkit.Bukkit;
@@ -58,7 +57,7 @@ public class Message {
 
     public void send() {
         if (this.getTarget().isAFK())
-            this.getSender().getPlayer().sendMessage(this.getSender().getLanguage().get(GeneralLanguage.MSG_AFK)
+            this.getSender().getPlayer().sendMessage(this.getSender().getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MSG_AFK)
                     .replaceAll("%z", this.getTarget().getName()));
 
         reply.put(this.getSender().getUniqueId(), this.getTarget().getUniqueId());

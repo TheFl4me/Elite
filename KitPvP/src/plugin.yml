@@ -4,10 +4,6 @@ version: 8.7.11
 main: com.minecraft.plugin.elite.kitpvp.KitPvP
 depend: [General, WorldEdit, WorldGuard]
 commands:
-    freekits:
-    kit:
-    kitinfo:
-      aliases: [checkkit]
     setduelspawn:
     setduellocation:
       aliases: [setduelloc]

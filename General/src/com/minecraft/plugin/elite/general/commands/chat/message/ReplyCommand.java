@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.chat.message;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -31,15 +30,15 @@ public class ReplyCommand extends GeneralCommand {
                     return true;
                 } else {
                     Message.remove(p);
-                    p.sendMessage(GeneralLanguage.MSG_PARTNER_LEFT);
+                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.MSG_PARTNER_LEFT);
                     return true;
                 }
             } else {
-                p.sendMessage(GeneralLanguage.MSG_REPLY_NULL);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.MSG_REPLY_NULL);
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.MSG_USAGE_REPLY);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.MSG_USAGE_REPLY);
             return true;
         }
     }

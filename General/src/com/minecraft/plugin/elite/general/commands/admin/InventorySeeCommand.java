@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -26,15 +25,15 @@ public class InventorySeeCommand extends GeneralCommand {
                     p.getPlayer().openInventory(inv);
                     return true;
                 } else {
-                    p.sendMessage(GeneralLanguage.NO_TARGET);
+                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
                     return true;
                 }
             } else {
-                p.sendMessage(GeneralLanguage.INVENTORY_SEE_USAGE);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVENTORY_SEE_USAGE);
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.NOT_ADMIN_MODE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NOT_ADMIN_MODE);
             return true;
         }
     }

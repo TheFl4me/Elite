@@ -226,6 +226,8 @@ public class Arena {
 								all.getPlayer().setLevel(0);
 								all.getPlayer().playSound(all.getPlayer().getLocation(), Sound.EXPLODE, 1, 1);
 								all.sendMessage(SurvivalGamesLanguage.ARENA_START);
+								all.setCanUseKit(true);
+								all.enableKit();
 							}
 							scheduleShrinking();
 							scheduleAirDrop();

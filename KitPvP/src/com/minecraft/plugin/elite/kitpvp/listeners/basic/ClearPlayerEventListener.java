@@ -2,15 +2,14 @@ package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
+import com.minecraft.plugin.elite.general.api.special.kits.KitSelectorTool;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
-import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.custom.CustomDuelSelector;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.normal.NormalDuelSelector;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.queue.DuelQueueTool;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.DuelTool;
-import com.minecraft.plugin.elite.kitpvp.manager.duel.tools.SpawnTool;
-import com.minecraft.plugin.elite.kitpvp.manager.kits.KitSelectorTool;
+import com.minecraft.plugin.elite.kitpvp.manager.custom.CustomDuelSelector;
+import com.minecraft.plugin.elite.kitpvp.manager.normal.NormalDuelSelector;
+import com.minecraft.plugin.elite.kitpvp.manager.queue.DuelQueueTool;
+import com.minecraft.plugin.elite.kitpvp.manager.tools.DuelTool;
+import com.minecraft.plugin.elite.kitpvp.manager.tools.SpawnTool;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -20,9 +19,7 @@ public class ClearPlayerEventListener implements Listener {
 	public void clearKit(ClearPlayerEvent e) {
 		GeneralPlayer p = GeneralPlayer.get(e.getPlayer().getPlayer());
 		if (p != null) {
-			KitPlayer kp = KitPlayer.get(p.getUniqueId());
-			if (kp != null)
-				kp.clearKit();
+			p.clearKit();
 			if(p.hasTool())
 				p.clearTools();
 			if(p.isInRegion(KitPvP.REGION_SPAWN)) {

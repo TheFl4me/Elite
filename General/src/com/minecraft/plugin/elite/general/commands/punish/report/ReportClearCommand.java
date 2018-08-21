@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -25,14 +24,14 @@ public class ReportClearCommand extends GeneralCommand {
             OfflinePlayer z = Bukkit.getOfflinePlayer(args[0]);
             if(!ReportManager.getReports(z.getUniqueId()).isEmpty()) {
                 ReportManager.clearReports(z.getUniqueId());
-                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.REPORT_CLEAR).replaceAll("%p", z.getName()));
+                p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_CLEAR).replaceAll("%p", z.getName()));
                 return true;
             } else {
-                p.sendMessage(GeneralLanguage.REPORT_CLEAR_EMPTY);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_CLEAR_EMPTY);
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.REPORT_CLEAR_USAGE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_CLEAR_USAGE);
             return true;
         }
     }

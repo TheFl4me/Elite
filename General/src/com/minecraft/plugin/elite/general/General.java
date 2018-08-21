@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Achievement;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
+import com.minecraft.plugin.elite.general.api.special.kits.Kit;
 import com.minecraft.plugin.elite.general.commands.*;
 import com.minecraft.plugin.elite.general.commands.admin.*;
 import com.minecraft.plugin.elite.general.commands.admin.mode.AdminCommand;
@@ -24,6 +25,9 @@ import com.minecraft.plugin.elite.general.commands.chat.message.SpyCommand;
 import com.minecraft.plugin.elite.general.commands.chat.message.TellCommand;
 import com.minecraft.plugin.elite.general.commands.clan.ClanChatCommand;
 import com.minecraft.plugin.elite.general.commands.clan.ClanCommand;
+import com.minecraft.plugin.elite.general.commands.kits.FreeKitsCommand;
+import com.minecraft.plugin.elite.general.commands.kits.KitCommand;
+import com.minecraft.plugin.elite.general.commands.kits.KitInfoCommand;
 import com.minecraft.plugin.elite.general.commands.party.PartyCommand;
 import com.minecraft.plugin.elite.general.commands.punish.KickCommand;
 import com.minecraft.plugin.elite.general.commands.punish.PunishCommand;
@@ -48,6 +52,8 @@ import com.minecraft.plugin.elite.general.listeners.antihack.SpamCheckEventListe
 import com.minecraft.plugin.elite.general.listeners.chat.ChatBlacklistListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatEventListener;
 import com.minecraft.plugin.elite.general.listeners.chat.ChatToggleEventListener;
+import com.minecraft.plugin.elite.general.listeners.kits.KitEventListener;
+import com.minecraft.plugin.elite.general.listeners.kits.KitSettingsEventListener;
 import com.minecraft.plugin.elite.general.listeners.menu.MenuGUIEventListener;
 import com.minecraft.plugin.elite.general.listeners.menu.MenuToolEventListener;
 import com.minecraft.plugin.elite.general.listeners.punish.*;
@@ -69,7 +75,9 @@ import org.bukkit.scoreboard.Team;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class General extends JavaPlugin {
@@ -90,6 +98,8 @@ public class General extends JavaPlugin {
     public static final String DB_MUTES = "mutes";
     public static final String DB_MUTE_HISTORY = "mutehistory";
     public static final String DB_REPORTS = "reports";
+    public static final String DB_KITS = "kits";
+    public static final String DB_SETTINGS = "kitsettings";
 
     public static final  List<String> STAFF_SLOTS = Arrays.asList("server-owner", "admin-1", "admin-2", "admin-3", "modplus-1", "modplus-2", "modplus-3", "mod-1", "mod-2", "mod-3", "mod-4", "mod-5", "mod-6", "mod-7", "trialmod-1", "trialmod-2", "trialmod-3", "supporter-1", "supporter-2", "supporter-3", "supporter-4", "supporter-5", "builder-1", "builder-2", "builder-3");
 
@@ -113,12 +123,18 @@ public class General extends JavaPlugin {
 
     public void onDisable() {
 
+        KitEventListener kitListener = new KitEventListener();
+        for(Player all : Bukkit.getOnlinePlayers()) {
+            GeneralPlayer p = GeneralPlayer.get(all);
+            kitListener.cleanUp(p);
+        }
+
         removeScoreboard();
         for (Player players : Bukkit.getOnlinePlayers()) {
             Scoreboard board = players.getScoreboard();
             board.getTeams().forEach(Team::unregister);
             GeneralPlayer all = GeneralPlayer.get(players);
-            final String msg = all.getLanguage().get(GeneralLanguage.RELOAD);
+            final String msg = all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.RELOAD);
             all.getPlayer().kickPlayer(msg);
         }
         for (World world : Bukkit.getWorlds()) {
@@ -182,6 +198,9 @@ public class General extends JavaPlugin {
         new ReportClearCommand();
         new SilentCommand();
         new AlertsCommand();
+        new KitCommand();
+        new KitInfoCommand();
+        new FreeKitsCommand();
     }
 
     private void loadEvents() {
@@ -214,6 +233,8 @@ public class General extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ActionStoreEventListener(), this);
         getServer().getPluginManager().registerEvents(new CombatLogEventListener(), this);
         getServer().getPluginManager().registerEvents(new SpamCheckEventListener(), this);
+        getServer().getPluginManager().registerEvents(new KitEventListener(), this);
+        getServer().getPluginManager().registerEvents(new KitSettingsEventListener(), this);
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored", "ArraysAsListWithZeroOrOneArgument"})
@@ -412,6 +433,25 @@ public class General extends JavaPlugin {
                         + " date BIGINT NOT NULL);";
                 db.createTable(query, DB_REPORTS);
             }
+            if(!db.hasTable(DB_KITS)) {
+                String query = "CREATE TABLE " + DB_KITS + " (" +
+                        "uuid TEXT(50) NOT NULL);";
+                db.createTable(query, DB_KITS);
+            }
+            for(Kit kit : Kit.values())
+                if(!db.hasColumn(DB_KITS, kit.getName().toLowerCase()))
+                    db.execute("ALTER TABLE " + DB_KITS + " ADD " + kit.getName().toLowerCase() + " INT NOT NULL DEFAULT 0");
+
+            if(!db.hasTable(DB_SETTINGS)) {
+                String query = "CREATE TABLE " + DB_SETTINGS + " (" +
+                        "uuid TEXT(50) NOT NULL," +
+                        "sword INT NOT NULL DEFAULT 0," +
+                        "kititem INT NOT NULL DEFAULT 0," +
+                        "redmushroom INT NOT NULL DEFAULT 0," +
+                        "brownmushroom INT NOT NULL DEFAULT 0," +
+                        "bowl INT NOT NULL DEFAULT 0);";
+                db.createTable(query, DB_SETTINGS);
+            }
 
             System.out.println(prefix + " Set up done!");
         } catch (SQLException e) {
@@ -426,6 +466,22 @@ public class General extends JavaPlugin {
 
     public static Database getDB() {
         return db;
+    }
+
+    private static Collection<Kit> free_kits = new ArrayList<>();
+
+    public static Collection<Kit> getFreeKits() {
+        return free_kits;
+    }
+
+    public static void setAllKitsFree(boolean free) {
+        for (Kit kit : Kit.values())
+            if (free) {
+                if (!free_kits.contains(kit)) {
+                    free_kits.add(kit);
+                }
+            } else
+                 free_kits.remove(kit);
     }
 
     public static void removeScoreboard() {

@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.punish.mute;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
@@ -81,12 +80,12 @@ public class MuteManager {
 		db.execute("INSERT INTO " + General.DB_MUTES + " (target, id, tempmute, time, muter, reason, details, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
 				target.getUniqueId(), id, (reason.isTemp() ? 1: 0), time, muterName, reason, muteDetails.trim(), System.currentTimeMillis());
 
-		System.out.println(Language.ENGLISH.get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName()));
+		System.out.println(Language.ENGLISH.get(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName()));
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
-			String msg = all.getLanguage().get(GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName());
+			String msg = all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_MUTED).replaceAll("%z", target.getName());
 			if(all.hasPermission(GeneralPermission.PUNISH_INFO_CHECK))
-				all.sendHoverMessage(msg, mute.getInfo(GeneralLanguage.MUTE_INFO, all.getLanguage()));
+				all.sendHoverMessage(msg, mute.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_INFO, all.getLanguage()));
 			else
 				all.getPlayer().sendMessage(msg);
 		}
@@ -162,10 +161,10 @@ public class MuteManager {
 			mutes.remove(z.getUniqueId());
 			temporaryMutes.remove(z.getUniqueId());
 
-			System.out.println(Language.ENGLISH.get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
+			System.out.println(Language.ENGLISH.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter));
 			for(Player players : Bukkit.getOnlinePlayers()) {
 				GeneralPlayer all = GeneralPlayer.get(players);
-				all.sendClickMessage(all.getLanguage().get(GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter), "/checkinfo " + z.getName(), true);
+				all.sendClickMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.UNMUTE_UNMUTED).replaceAll("%z", z.getName()).replaceAll("%p", unmuter), "/checkinfo " + z.getName(), true);
 			}
 		}
 	}

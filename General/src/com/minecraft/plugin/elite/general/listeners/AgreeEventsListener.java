@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import org.bukkit.entity.Player;
@@ -20,8 +19,8 @@ public class AgreeEventsListener implements Listener {
         Server server = Server.get();
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.isPendingAgree()) {
-            p.sendTitle(GeneralLanguage.RULES_TITLE, 1, 20, 1);
-            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.RULES_AGREED_NOT)
+            p.sendTitle(com.minecraft.plugin.elite.general.GeneralLanguage.RULES_TITLE, 1, 20, 1);
+            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.RULES_AGREED_NOT)
                     .replaceAll("%domain", server.getDomain()));
             e.setCancelled(true);
         }

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -23,7 +22,7 @@ public class ChatClearCommand extends GeneralCommand {
             if (!z.hasPermission(GeneralPermission.CHAT_CLEAR_BYPASS))
                 for (int i = 0; i < 100; i++)
                     z.getPlayer().sendMessage(" ");
-            z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CHAT_CLEAR).replaceAll("%p", p.getChatName()));
+            z.getPlayer().sendMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_CLEAR).replaceAll("%p", p.getChatName()));
         }
         return true;
     }

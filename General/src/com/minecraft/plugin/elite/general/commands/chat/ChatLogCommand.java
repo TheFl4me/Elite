@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
@@ -36,7 +35,7 @@ public class ChatLogCommand extends GeneralCommand {
             List<String> messages = new ArrayList<>();
             Database db = General.getDB();
             db.execute("DELETE FROM " + General.DB_CHAT_LOGS + " WHERE date < ?", System.currentTimeMillis() - 604800000L);
-            p.sendMessage(GeneralLanguage.DB_CHECK);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK);
             try {
                 ResultSet res = db.select(General.DB_CHAT_LOGS, "uuid", z.getUniqueId().toString());
                 logs.append(ChatColor.RED + General.SPACER + "\n");
@@ -53,12 +52,12 @@ public class ChatLogCommand extends GeneralCommand {
                 cs.sendMessage(logs.toString());
                 return true;
             } catch (SQLException e) {
-                p.sendMessage(GeneralLanguage.DB_CHECK_FAIL);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK_FAIL);
                 e.printStackTrace();
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.CHAT_LOG_USAGE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_LOG_USAGE);
             return true;
         }
     }

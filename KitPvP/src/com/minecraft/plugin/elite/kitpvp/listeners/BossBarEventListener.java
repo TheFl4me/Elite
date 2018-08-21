@@ -3,7 +3,6 @@ package com.minecraft.plugin.elite.kitpvp.listeners;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.special.BossBar;
 import com.minecraft.plugin.elite.kitpvp.KitPvP;
-import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,26 +29,21 @@ public class BossBarEventListener implements Listener {
                 if(nearest == null || p.getPlayer().getLocation().distance(near.getPlayer().getLocation()) < p.getPlayer().getLocation().distance(nearest.getPlayer().getLocation()))
                     nearest = near;
 
-            if(nearest != null) {
-                KitPlayer kz = KitPlayer.get(nearest.getUniqueId());
-                if (kz != null) {
-                    if(!nearest.isAdminMode() && !nearest.isWatching()) {
-                        String text = null;
-                        if(p.isInRegion(KitPvP.REGION_DUEL)) {
-                            text = Long.toString(nearest.getELO()) + " ELO";
-                        } else if(kz.hasKit()) {
-                            text = kz.getKit().getName();
-                        }
+            if(nearest != null && !nearest.isAdminMode() && !nearest.isWatching()) {
+                String text = null;
+                if(p.isInRegion(KitPvP.REGION_DUEL)) {
+                    text = Long.toString(nearest.getELO()) + " ELO";
+                } else if(nearest.hasKit()) {
+                    text = nearest.getKit().getName();
+                }
 
-                        if(text != null) {
-                            BossBar bar = BossBar.get(p);
-                            if(bar == null) {
-                                BossBar newBar = new BossBar(p);
-                                newBar.show(nearest.getName() + " - " + text, 10);
-                            } else {
-                                bar.changeTo(nearest.getName() + " - " + text, 10);
-                            }
-                        }
+                if(text != null) {
+                    BossBar bar = BossBar.get(p);
+                    if(bar == null) {
+                        BossBar newBar = new BossBar(p);
+                        newBar.show(nearest.getName() + " - " + text, 10);
+                    } else {
+                        bar.changeTo(nearest.getName() + " - " + text, 10);
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -19,33 +18,32 @@ public class ClearCommand extends GeneralCommand {
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length == 0) {
             p.clear();
-            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLEAR)
+            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLEAR)
                     .replaceAll("%p", p.getChatName()));
             return true;
-        } else if (args.length > 0) {
+        } else {
             GeneralPlayer z = GeneralPlayer.get(args[0]);
             if (z != null) {
                 if (p.hasPermission(GeneralPermission.CLEAR_OTHER)) {
                     if (p.getRank().ordinal() > z.getRank().ordinal()) {
                         z.clear();
-                        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLEAR)
+                        p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLEAR)
                                 .replaceAll("%p", z.getChatName()));
                         return true;
                     } else {
-                        p.sendMessage(GeneralLanguage.CLEAR_NO_PERMISSION);
+                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLEAR_NO_PERMISSION);
                         return true;
                     }
                 } else {
                     p.clear();
-                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLEAR)
+                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLEAR)
                             .replaceAll("%p", p.getChatName()));
                     return true;
                 }
             } else {
-                p.sendMessage(GeneralLanguage.NO_TARGET);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
                 return true;
             }
         }
-        return true;
     }
 }

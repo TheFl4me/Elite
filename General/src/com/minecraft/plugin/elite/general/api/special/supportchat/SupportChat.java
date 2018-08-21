@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.api.special.supportchat;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 
 public class SupportChat {
@@ -16,15 +15,15 @@ public class SupportChat {
 	
 	public void start() {
 		SupportChatManager.removeRequest(this.getPlayer());
-		this.getStaff().getPlayer().sendMessage(this.getStaff().getLanguage().get(GeneralLanguage.SUPPORT_CONFIRMED_STAFF)
+		this.getStaff().getPlayer().sendMessage(this.getStaff().getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_CONFIRMED_STAFF)
 				.replaceAll("%z", this.getPlayer().getChatName()));
-		this.getPlayer().getPlayer().sendMessage(this.getPlayer().getLanguage().get(GeneralLanguage.SUPPORT_CONFIRMED_YOU)
+		this.getPlayer().getPlayer().sendMessage(this.getPlayer().getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_CONFIRMED_YOU)
 				.replaceAll("%staff", this.getStaff().getChatName()));
 	}
 	
 	public void end() {
-		this.getStaff().sendMessage(GeneralLanguage.SUPPORT_END);
-		this.getPlayer().sendMessage(GeneralLanguage.SUPPORT_END);
+		this.getStaff().sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_END);
+		this.getPlayer().sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_END);
 		SupportChatManager.remove(this);
 	}
 	

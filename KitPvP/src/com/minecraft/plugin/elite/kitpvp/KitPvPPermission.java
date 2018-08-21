@@ -7,11 +7,7 @@ public enum KitPvPPermission implements PermissionNode {
     DUEL_SET_LOCATION("duel.set.location"),
     DUEL_SET_SPAWN("duel.set.spawn"),
 
-    HOLOGRAM_SET("hologram"),
-
-    KIT_FREE("kit.free"),
-    KIT("kit"),
-    KIT_INFO("kit.info");
+    HOLOGRAM_SET("hologram");
 
     private String string;
 

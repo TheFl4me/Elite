@@ -2,6 +2,7 @@ package com.minecraft.plugin.elite.survivalgames.listeners.basic;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
+import com.minecraft.plugin.elite.general.api.special.kits.KitSelectorTool;
 import com.minecraft.plugin.elite.general.api.special.menu.MenuTool;
 import com.minecraft.plugin.elite.survivalgames.manager.Lobby;
 import com.minecraft.plugin.elite.survivalgames.manager.alive.PlayerTool;
@@ -15,10 +16,14 @@ public class ClearPlayerEventListener implements Listener {
     public void onClear(ClearPlayerEvent e) {
         GeneralPlayer p = e.getPlayer();
         Lobby lobby = Lobby.get();
+        if (p.hasKit())
+            p.clearKit();
         if(p.hasTool())
             p.clearTools();
-        if(lobby.isActive())
+        if(lobby.isActive()) {
             p.giveTool(new MenuTool(p.getLanguage()));
+            p.giveTool(new KitSelectorTool(p.getLanguage()));
+        }
         if(p.isAdminMode() || p.isWatching()) {
             p.giveTool(new PlayerTool(p.getLanguage()));
         }

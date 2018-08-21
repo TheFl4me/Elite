@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
@@ -23,9 +22,9 @@ public class PvPToggleCommand extends GeneralCommand {
         server.setPvP(!server.pvpIsEnabled());
         for(Player all : Bukkit.getOnlinePlayers()) {
             if (server.pvpIsEnabled())
-                GeneralPlayer.get(all).sendMessage(GeneralLanguage.PVP_ENABLED);
+                GeneralPlayer.get(all).sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.PVP_ENABLED);
             else
-                GeneralPlayer.get(all).sendMessage(GeneralLanguage.PVP_DISABLED);
+                GeneralPlayer.get(all).sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.PVP_DISABLED);
         }
         return true;
     }

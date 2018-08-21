@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.punish.mute;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.enums.Language;
@@ -23,12 +22,12 @@ public class TempMute extends Mute implements Temporary {
 	}
 
 	public String getMuteMessage() {
-		return GeneralPlayer.get(this.getTarget().getUniqueId()).getLanguage().get(GeneralLanguage.MUTE_MUTED_ON_TALK);
+		return GeneralPlayer.get(this.getTarget().getUniqueId()).getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_MUTED_ON_TALK);
 	}
 
 	public String getMuteDisplayMessage(Language lang) {
 		Server server = Server.get();
-		return lang.get(GeneralLanguage.MUTE_DISPLAY)
+		return lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_DISPLAY)
 				.replaceAll("%id", this.getUniqueId().toString())
 				.replaceAll("%reason", this.getReason().toString())
 				.replaceAll("%duration", server.getTime(this.getTime(), lang))

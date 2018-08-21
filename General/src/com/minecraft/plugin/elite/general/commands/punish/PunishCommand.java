@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -48,7 +47,7 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
             boolean canBan = true;
             Database db = General.getDB();
             if(!db.containsValue(General.DB_PLAYERS, "uuid", target.getUniqueId().toString())) {
-                cs.sendMessage(this.getLanguage().get(GeneralLanguage.NEVER_JOINED));
+                cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.NEVER_JOINED));
                 return true;
             }
             if(cs instanceof Player) {
@@ -60,7 +59,7 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
                 PunishReason reason = PunishReason.get(args[1]);
                 if(reason != null) {
                     if(reason.getType() == PunishReason.PunishType.BAN && !cs.hasPermission(GeneralPermission.PUNISH_BAN.toString())) {
-                        cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_BAN_NO_PERMISSION));
+                        cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.PUNISH_BAN_NO_PERMISSION));
                         return true;
                     }
                     StringBuilder details = new StringBuilder();
@@ -69,16 +68,16 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
                     PunishManager.punish(cs.getName(), target, reason, details.toString());
                     return true;
                 } else {
-                    cs.sendMessage(this.getLanguage().get(GeneralLanguage.ARG_INVALID)
+                    cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ARG_INVALID)
                             .replaceAll("%arg", args[1]));
                     return true;
                 }
             } else {
-                cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_NO_PERMISSION));
+                cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.PUNISH_NO_PERMISSION));
                 return true;
             }
         } else {
-            cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_USAGE));
+            cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.PUNISH_USAGE));
             return true;
         }
     }

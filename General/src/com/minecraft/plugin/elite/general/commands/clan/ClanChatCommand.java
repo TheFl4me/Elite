@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.clan;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -32,11 +31,11 @@ public class ClanChatCommand extends GeneralCommand {
                 db.execute("INSERT INTO " + General.DB_CHAT_LOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", System.currentTimeMillis(), p.getUniqueId(), p.getName(), message.toString(), "clan");
                 return true;
             } else {
-                p.sendMessage(GeneralLanguage.CLAN_NONE);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.CLAN_CHAT_USAGE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_CHAT_USAGE);
             return true;
         }
     }

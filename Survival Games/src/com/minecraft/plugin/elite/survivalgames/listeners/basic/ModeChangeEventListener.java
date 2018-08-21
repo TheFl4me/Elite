@@ -17,8 +17,8 @@ public class ModeChangeEventListener implements Listener {
 	public void onAdminChange(ModeChangeEvent e) {
 		GeneralPlayer p = e.getPlayer();
 		Lobby lobby = Lobby.get();
+		p.clear();
 		if(!e.isToMode()) {
-			p.clear();
 			if(lobby.isActive()) {
 				if(lobby.isFull()) {
 					if(lobby.hasNonPremiumPlayer()) {
@@ -30,7 +30,6 @@ public class ModeChangeEventListener implements Listener {
 					lobby.addPlayer(p);
 			}
 		} else {
-			p.clear();
 			if(!lobby.isActive()) {
 				Arena arena = lobby.getArena();
 				if(arena.getPlayers().contains(p))

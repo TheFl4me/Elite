@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.punish;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -25,14 +24,14 @@ public class UnmuteCommand extends GeneralCommand {
 			if(PunishManager.isMuted(z.getUniqueId())) {
 				MuteManager.unmutePlayer(cs.getName(), z);
 				if(z.isOnline())
-					GeneralPlayer.get(z.getUniqueId()).sendMessage(GeneralLanguage.UNMUTE_UNMUTED_YOU);
+					GeneralPlayer.get(z.getUniqueId()).sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.UNMUTE_UNMUTED_YOU);
 				return true;
 			} else {
-				cs.sendMessage(this.getLanguage().get(GeneralLanguage.UNMUTE_NOT_MUTED).replaceAll("%z", z.getName()));
+				cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.UNMUTE_NOT_MUTED).replaceAll("%z", z.getName()));
 				return true;
 			}
 		}  else {
-			cs.sendMessage(this.getLanguage().get(GeneralLanguage.UNMUTE_USAGE));
+			cs.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.UNMUTE_USAGE));
 			return true;
 		}	
 	}

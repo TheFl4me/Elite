@@ -75,7 +75,7 @@ public class JoinQuitEventsListener implements Listener {
             Clan allClan = all.getClan();
             Clan clan = p.getClan();
             if (clan != null && clan.equals(allClan) && !p.isInvis()) {
-                all.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.LEFT)
+                all.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.LEFT)
                         .replaceAll("%p", p.getName()));
             }
         }

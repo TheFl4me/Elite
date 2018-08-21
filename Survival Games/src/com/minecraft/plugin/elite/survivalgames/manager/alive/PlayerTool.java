@@ -8,6 +8,6 @@ import org.bukkit.Material;
 public class PlayerTool extends Tool {
 
     public PlayerTool(Language lang) {
-        super(lang.get(SurvivalGamesLanguage.PLAYERS_GUI_TITLE), Material.PAPER, 0);
+        super(lang.get(SurvivalGamesLanguage.PLAYERS_GUI_TITLE), Material.PAPER, 8);
     }
 }

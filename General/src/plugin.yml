@@ -77,3 +77,7 @@ commands:
       aliases: [repclear, repcl, clearreports, clearrep, clrep]
     silent:
     alerts:
+    freekits:
+    kit:
+    kitinfo:
+      aliases: [checkkit]

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -21,17 +20,16 @@ public class PingCommand extends GeneralCommand {
         if (args.length == 0) {
             sendPingInfo(p, p);
             return true;
-        } else if (args.length > 0) {
+        } else {
             GeneralPlayer z = GeneralPlayer.get(args[0]);
             if (z != null) {
                 sendPingInfo(p, z);
                 return true;
             } else {
-                p.sendMessage(GeneralLanguage.NO_TARGET);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
                 return true;
             }
         }
-        return true;
     }
 
     private void sendPingInfo(GeneralPlayer p, GeneralPlayer z) {
@@ -43,7 +41,7 @@ public class PingCommand extends GeneralCommand {
             color = ChatColor.GOLD;
         else
             color = ChatColor.RED;
-        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PING)
+        p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.PING)
                 .replaceAll("%z", z.getName())
                 .replaceAll("%ping", color + Integer.toString(ping)));
     }

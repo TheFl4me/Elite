@@ -1,12 +1,10 @@
-package com.minecraft.plugin.elite.kitpvp.commands;
+package com.minecraft.plugin.elite.general.commands.kits;
 
 import com.minecraft.plugin.elite.general.GeneralLanguage;
+import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
-import com.minecraft.plugin.elite.kitpvp.KitPvPLanguage;
-import com.minecraft.plugin.elite.kitpvp.KitPvPPermission;
-import com.minecraft.plugin.elite.kitpvp.manager.KitPlayer;
-import com.minecraft.plugin.elite.kitpvp.manager.kits.Kit;
+import com.minecraft.plugin.elite.general.api.special.kits.Kit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +12,7 @@ import org.bukkit.entity.Player;
 public class KitInfoCommand extends GeneralCommand {
 
 	public KitInfoCommand() {
-		super("kitinfo", KitPvPPermission.KIT_INFO, false);
+		super("kitinfo", GeneralPermission.KIT_INFO, false);
 	}
 
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
@@ -22,16 +20,16 @@ public class KitInfoCommand extends GeneralCommand {
 		GeneralPlayer p = GeneralPlayer.get((Player)cs);
 		if(p.isAdminMode()) {
 			if(args.length > 0) {
-				KitPlayer z = KitPlayer.get(args[0]);
+				GeneralPlayer z = GeneralPlayer.get(args[0]);
 				if(z != null) {
 					Kit kit = z.getKit();
 					if(kit != null) {
-						p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_INFO)
+						p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.KIT_INFO)
 								.replaceAll("%z", z.getName())
 								.replaceAll("%kit", kit.getName()));
 						return true;
 					} else {
-						p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.KIT_INFO_NONE)
+						p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.KIT_INFO_NONE)
 								.replaceAll("%z", z.getName()));
 						return true;
 					}
@@ -40,7 +38,7 @@ public class KitInfoCommand extends GeneralCommand {
 					return true;
 				}
 			} else {
-				p.sendMessage(KitPvPLanguage.KIT_INFO_USAGE);
+				p.sendMessage(GeneralLanguage.KIT_INFO_USAGE);
 				return true;
 			}
 		} else {

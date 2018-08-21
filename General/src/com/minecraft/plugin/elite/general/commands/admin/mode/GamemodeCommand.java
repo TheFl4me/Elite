@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -43,18 +42,18 @@ public class GamemodeCommand extends GeneralCommand implements TabCompleter {
                 case SPECTATOR:
                     p.getPlayer().setGameMode(GameMode.CREATIVE);
             }
-            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.GAMEMODE_SET_YOU)
+            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.GAMEMODE_SET_YOU)
                     .replaceAll("%gm", p.getPlayer().getGameMode().toString()));
             return true;
         } else if (args.length == 1) {
             setGameMode(p, args[0]);
             return true;
-        } else if (args.length > 1) {
+        } else {
             GeneralPlayer z = GeneralPlayer.get(args[1]);
             if (z != null) {
                 if (p.hasPermission(GeneralPermission.MODE_GAME_OTHER) && p.getRank().ordinal() > z.getRank().ordinal()) {
                     setGameMode(z, args[0]);
-                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.GAMEMODE_SET_OTHER)
+                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.GAMEMODE_SET_OTHER)
                             .replaceAll("%p", z.getChatName())
                             .replaceAll("%gm", z.getPlayer().getGameMode().toString()));
                     return true;
@@ -63,11 +62,10 @@ public class GamemodeCommand extends GeneralCommand implements TabCompleter {
                     return true;
                 }
             } else {
-                p.sendMessage(GeneralLanguage.NO_TARGET);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
                 return true;
             }
         }
-        return true;
     }
 
     private void setGameMode(GeneralPlayer p, String gm) {
@@ -97,7 +95,7 @@ public class GamemodeCommand extends GeneralCommand implements TabCompleter {
                 p.getPlayer().setGameMode(GameMode.SPECTATOR);
                 break;
             default:
-                p.sendMessage(GeneralLanguage.GAMEMODE_USAGE);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.GAMEMODE_USAGE);
         }
         switch (gm.toLowerCase()) {
             case "survival":
@@ -108,7 +106,7 @@ public class GamemodeCommand extends GeneralCommand implements TabCompleter {
             case "1":
             case "2":
             case "3":
-                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.GAMEMODE_SET_YOU)
+                p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.GAMEMODE_SET_YOU)
                         .replaceAll("%gm", p.getPlayer().getGameMode().toString()));
         }
     }

@@ -540,6 +540,155 @@ public class LanguageEventListener implements Listener {
                 lang.addLangNode(GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS, Prefix.SUPPORTER.getColor() + "Supporters");
                 lang.addLangNode(GeneralLanguage.MENU_GUI_STAFF_BUILDERS, Prefix.BUILDER.getColor() + "Builders");
                 lang.addLangNode(GeneralLanguage.MENU_GUI_STAFF_YOU, "You?");
+
+                lang.addLangNode(GeneralLanguage.KIT_UNLOCKED, "&7You can now buy the &6%kit &7kit.");
+
+                lang.addLangNode(GeneralLanguage.KIT_GIVE, "&aYou are now a %kit.");
+                lang.addLangNode(GeneralLanguage.KIT_NO_PERMISSION, "&cYou do not own this kit!\n&cDo &f/kit &cto see all kits.");
+                lang.addLangNode(GeneralLanguage.KIT_ERROR_ALREADY, "&cYou already have a kit!");
+                lang.addLangNode(GeneralLanguage.KIT_ERROR_NULL, "&cThis kit does not exist.");
+                lang.addLangNode(GeneralLanguage.KIT_ERROR_MODE, "&4You cannot choose a kit whilst you are in ADMIN/WATCH/INVIS mode!");
+                lang.addLangNode(GeneralLanguage.KIT_ERROR_LOCKED, "&cThis kit is locked until you reach level %level!");
+                lang.addLangNode(GeneralLanguage.KIT_COOLDOWN, "&cYou are still on cooldown for another %seconds seconds!");
+
+                lang.addLangNode(GeneralLanguage.KIT_INFO, "&7%z is using the %kit kit.");
+                lang.addLangNode(GeneralLanguage.KIT_INFO_NONE, "&c%z is not using any kit.");
+                lang.addLangNode(GeneralLanguage.KIT_INFO_USAGE, lang.get(GeneralLanguage.SYNTAX) + "/kitinfo <player>");
+
+                lang.addLangNode(GeneralLanguage.KIT_FREE_TRUE, "&c&l&kAAA&r&bAll kits are now &b&oFREE&r&b!&r&c&l&kAAA");
+                lang.addLangNode(GeneralLanguage.KIT_FREE_FALSE, "&cAll kits are no longer free.");
+
+                lang.addLangNode(GeneralLanguage.PHANTOM_WARNING, "&l%p is not fly hacking!\n&lHe is using the Phantom kit!");
+                lang.addLangNode(GeneralLanguage.PHANTOM_FLIGHT_TIME, "&c%seconds seconds of flight remaining.");
+                lang.addLangNode(GeneralLanguage.ENDERMAGE_WARNING, "&cYou have been &c&lENDERMAGED&r&c!\n&cYou have 5 seconds of invincibility.");
+                lang.addLangNode(GeneralLanguage.ROGUE_BLOCKING, "&cIt seems that a nearby player is disabling your kit ability...");
+
+                lang.addLangNode(GeneralLanguage.TITAN_NEED_CHARGE, "&cTitan mode needs to be charged for 30 seconds before it can be used again.");
+                lang.addLangNode(GeneralLanguage.TITAN_CHARGE_START, "&aTitan mode is charging...");
+                lang.addLangNode(GeneralLanguage.TITAN_CHARGE_COMPLETE, "&aTitan mode is now fully charged again!");
+                lang.addLangNode(GeneralLanguage.TITAN_CHARGE_ABORT, "&cTitan mode charging has been aborted.");
+                lang.addLangNode(GeneralLanguage.TITAN_ENABLE, "&6You are now in Titan mode!");
+                lang.addLangNode(GeneralLanguage.TITAN_ALREADY, "&cYou are already in Titan mode!");
+                lang.addLangNode(GeneralLanguage.TITAN_DISABLE, "&cTitan mode has been used up...");
+                lang.addLangNode(GeneralLanguage.TITAN_HIT, "&cYou are fighting a Titan.. RUN AWAY!");
+
+                lang.addLangNode(GeneralLanguage.REPULSE_LVL, "&7Repulse Level: &6%lvl");
+                lang.addLangNode(GeneralLanguage.REPULSE_REPULSED, "&cAn invisible force has repulsed you!");
+
+                lang.addLangNode(GeneralLanguage.GLADIATOR_START, "&aYou have been forced into a shadow game by a Gladiator!");
+
+                lang.addLangNode(GeneralLanguage.KIT_GUI_BACK, "&aBack");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_ABILITY, "&aAbility\n%ability");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_DESCRIPTION, "&eDescription\n%description");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_ITEMS, "&fStarting items");
+
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SELECTOR_TITLE, "&cKit Selector");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SELECTOR_LOCKED, "&7Unlock at level %level");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SELECTOR_SELECT, "&cPlay with this kit");
+
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SHOP_TITLE, "&6Shop");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SHOP_INFERIOR_LEVEL, "&4LEVEL TOO LOW\n" +
+                        " \n" +
+                        "&7This kit can only be bought\n" +
+                        "&7at level &e%level &7if using normal tokens.");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SHOP_BUY_NORMAL_TOKEN, "&aBUY KIT\n" +
+                        " \n" +
+                        "&bPrice: &6%price &btoken(s)\n" +
+                        " \n" +
+                        "&bYou have &a%tokens &btoken(s)");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SHOP_INFERIOR_TOKENS, "&cNOT ENOUGH TOKENS\n" +
+                        " \n" +
+                        "&bPrice: &6%price &btoken(s)\n" +
+                        " \n" +
+                        "&bYou have &c%tokens &btoken(s)");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN, "&aPermanently unlock\n" +
+                        " \n" +
+                        "&cPrice: &61 prestige token\n" +
+                        " \n" +
+                        "&cYou have &b%prestigetokens &cprestige token(s)");
+
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SETTINGS_TITLE, "&cInventory Organisation");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SETTINGS_ITEM_KIT, "&6Kit Item");
+                lang.addLangNode(GeneralLanguage.KIT_GUI_SETTINGS_ITEM_INFO, "&aINFO:\n" +
+                        "&7Drag the items to your desired slot.\n" +
+                        "\n" +
+                        "&eTop Row = HotBar\n" +
+                        "\n" +
+                        "&7To save the inventory state\n" +
+                        "&7simply close your inventory.");
+
+                lang.addLangNode(GeneralLanguage.KIT_BACKUP_ITEM, "&aBackup");
+                lang.addLangNode(GeneralLanguage.KIT_KANGAROO_ITEM, "&6Double Jump");
+                lang.addLangNode(GeneralLanguage.KIT_THOR_ITEM, "Mjolnir");
+                lang.addLangNode(GeneralLanguage.KIT_ENDERMAGE_ITEM, "&5Portal");
+                lang.addLangNode(GeneralLanguage.KIT_REAPER_ITEM, "&0Death Scythe");
+                lang.addLangNode(GeneralLanguage.KIT_GRANDPA_ITEM, "Big Bertha");
+                lang.addLangNode(GeneralLanguage.KIT_TITAN_ITEM, "&aTitan Mode");
+                lang.addLangNode(GeneralLanguage.KIT_GLADIATOR_ITEM, "&cShadow Game");
+                lang.addLangNode(GeneralLanguage.KIT_REPULSE_ITEM, "&cAlmighty Push");
+
+                lang.addLangNode(GeneralLanguage.KIT_PVP_DESCRIPTION, "Gain 20% more exp for every kill");
+                lang.addLangNode(GeneralLanguage.KIT_PVP_ABILITY, "- 20% more kill exp");
+                lang.addLangNode(GeneralLanguage.KIT_ARCHER_DESCRIPTION, "Whenever you hit someone with an arrow\nyou will get the arrow back.");
+                lang.addLangNode(GeneralLanguage.KIT_ARCHER_ABILITY, "- +1 Arrow for every arrow hit");
+                lang.addLangNode(GeneralLanguage.KIT_BACKUP_DESCRIPTION, "You can choose a kit whenever you want\nby clicking the book.");
+                lang.addLangNode(GeneralLanguage.KIT_BACKUP_ABILITY, "- Open another Kit GUI");
+                lang.addLangNode(GeneralLanguage.KIT_FISHERMAN_DESCRIPTION, "Whenever you wield someone in with your\nfishing rod they will be teleported to you");
+                lang.addLangNode(GeneralLanguage.KIT_FISHERMAN_ABILITY, "- Teleport other players to you");
+                lang.addLangNode(GeneralLanguage.KIT_KANGAROO_DESCRIPTION, "You can make really high jumps\nby clicking the rocket, or you can\nmake big jumps forward when sneaking\nand clicking the rocket at the same time.");
+                lang.addLangNode(GeneralLanguage.KIT_KANGAROO_ABILITY, "- Double jump upwards\n- Double jump forwards");
+                lang.addLangNode(GeneralLanguage.KIT_PHANTOM_DESCRIPTION, "You can fly for 5 seconds when clicking\nthe feather in your inventory.\nThis kit has a 60 second cooldown\nafter each use. You also have\nleather armor whilst flying");
+                lang.addLangNode(GeneralLanguage.KIT_PHANTOM_ABILITY,"- Temporary flying\n- Leather armor");
+                lang.addLangNode(GeneralLanguage.KIT_THOR_DESCRIPTION, "Whenever you click a block with your\nwooden axe, a lightning will appear\non the highest block of the\nclicked block location.");
+                lang.addLangNode(GeneralLanguage.KIT_THOR_ABILITY, "- Summon thunder\n- Immune to thunder");
+                lang.addLangNode(GeneralLanguage.KIT_TURTLE_DESCRIPTION, "While sneaking you can only take a\nmaximum amount of 1 heart per damage.\nIf you sneak and block with your\nsword at the same time you will\nonly take a maximum amount of\n0.5 hearts per damage.\nYou cannot hit whilst sneaking.");
+                lang.addLangNode(GeneralLanguage.KIT_TURTLE_ABILITY, "- Max 1 heart damage when sneaking\n- Max 1/2 heart damage when sneaking + blocking sword");
+                lang.addLangNode(GeneralLanguage.KIT_ANCHOR_DESCRIPTION, "You will not receive knockback\nwhen hit by another player\n, and they wont get any knockback\nether when you hit them");
+                lang.addLangNode(GeneralLanguage.KIT_ANCHOR_ABILITY, "- Receive no knockback\n- give no knockback");
+                lang.addLangNode(GeneralLanguage.KIT_VIPER_DESCRIPTION, "Whenever you hit a player you\nhave a 33% chance of giving them\npoison 2 for 3 seconds");
+                lang.addLangNode(GeneralLanguage.KIT_VIPER_ABILITY, "- Give poison 2 to other players");
+                lang.addLangNode(GeneralLanguage.KIT_SNAIL_DESCRIPTION, "Whenever you hit a player you\nhave a 33% chance of giving them\nslowness 2 for 5 seconds");
+                lang.addLangNode(GeneralLanguage.KIT_SNAIL_ABILITY,"- Give slowness 2 to other players");
+                lang.addLangNode(GeneralLanguage.KIT_STOMPER_DESCRIPTION, "Whenever you land close to another player,\nyour fall damage amount will be transferred\nto them.\nYou will receive max. 2 hearts fall damage");
+                lang.addLangNode(GeneralLanguage.KIT_STOMPER_ABILITY, "- Transfer fall damage\n- Max. 2 hearts fall damage");
+                lang.addLangNode(GeneralLanguage.KIT_ENDERMAGE_DESCRIPTION, "You can teleport player above and/or beneath\nyou to a specified location.");
+                lang.addLangNode(GeneralLanguage.KIT_ENDERMAGE_ABILITY, "- Teleport players & yourself to a location");
+                lang.addLangNode(GeneralLanguage.KIT_ROGUE_DESCRIPTION, "Cast a deadly sphere in which\nall kits will be disabled.");
+                lang.addLangNode(GeneralLanguage.KIT_ROGUE_ABILITY, "- Kits will not work within a 10 block radius of you.");
+                lang.addLangNode(GeneralLanguage.KIT_NEO_DESCRIPTION, "Projectiles have zero effect on you,\nwhoever dares throwing one at you\nwill be hit back by their own power.");
+                lang.addLangNode(GeneralLanguage.KIT_NEO_ABILITY, "- Projectiles have no effect on you\n- Projectiles will bounce of you at the same velocity with which they hit you");
+                lang.addLangNode(GeneralLanguage.KIT_MONK_DESCRIPTION, "Create panic and confusion amongst\nyour enemies to slay them.");
+                lang.addLangNode(GeneralLanguage.KIT_MONK_ABILITY, "- Switch the item which your enemy is holding in his hand\n- 5 second cooldown");
+                lang.addLangNode(GeneralLanguage.KIT_SURPRISE_DESCRIPTION, "Infinite and uncontrollable power is your motto.");
+                lang.addLangNode(GeneralLanguage.KIT_SURPRISE_ABILITY, "- Get a random kit (including kits which you do not own)");
+                lang.addLangNode(GeneralLanguage.KIT_POSEIDON_DESCRIPTION, "Fear the god of the 7 seas!\nAll whom dare attack you in your homeland\nwill be slain without mercy!");
+                lang.addLangNode(GeneralLanguage.KIT_POSEIDON_ABILITY, "- Strength 2 whilst in water\n- Speed 2 whilst in water\n- Regeneration 2 whilst in Water\n- Water breathing whilst in water");
+                lang.addLangNode(GeneralLanguage.KIT_NINJA_DESCRIPTION, "Attack your enemies from the shadows\nand they will never know what hit them");
+                lang.addLangNode(GeneralLanguage.KIT_NINJA_ABILITY, "- 10 second window after hitting an enemy\n  in which you can sneak to teleport to them.\n- 10 second cooldown after each teleport");
+                lang.addLangNode(GeneralLanguage.KIT_SWITCHER_DESCRIPTION, "The ultimate trapping kit!\nIf you like camping + sneaking on a tower\nto kill your enemy, then this\nkit was made for you!");
+                lang.addLangNode(GeneralLanguage.KIT_SWITCHER_ABILITY, "- Throw a snowball on a player to switch position with him\n- 10 second cooldown after every throw attempt");
+                lang.addLangNode(GeneralLanguage.KIT_MAGMA_DESCRIPTION, "Become the most feared pyro-technician!");
+                lang.addLangNode(GeneralLanguage.KIT_MAGMA_ABILITY, "- 33% chance of setting a player on fire");
+                lang.addLangNode(GeneralLanguage.KIT_REAPER_DESCRIPTION, "You literally become DEATH\nA single touch of your scythe is enough\nto make a player wither away.");
+                lang.addLangNode(GeneralLanguage.KIT_REAPER_ABILITY, "- Give Wither 2 effect to players with your scythe.");
+                lang.addLangNode(GeneralLanguage.KIT_FROSTY_DESCRIPTION, "(Song)\n\nFrosty the Snowman\nWas a jolly happy soul\nWith a corncob pipe and a button nose\nAnd two eyes made out of coal[..]");
+                lang.addLangNode(GeneralLanguage.KIT_FROSTY_ABILITY, "- Speed 4 when on snow\n- Regeneration 1 when on snow");
+                lang.addLangNode(GeneralLanguage.KIT_GRANDPA_DESCRIPTION, "Did you ever want to become a old bag of bones,\nyell at kits running on your lawn,\nand have a cane that can whoop some serious a**?\nThen this is THE kit for you.");
+                lang.addLangNode(GeneralLanguage.KIT_GRANDPA_ABILITY, "- Get a stick with Knockback 2");
+                lang.addLangNode(GeneralLanguage.KIT_TITAN_DESCRIPTION, "The overlord of all\nmystical creatures. Nothing can damage you\nwhen you go full on Titan.");
+                lang.addLangNode(GeneralLanguage.KIT_TITAN_ABILITY, "- Don't receive any damage for 10 seconds\n- Sneak for 30 seconds to charge up again\n- You cannot hit entities whilst charging up");
+                lang.addLangNode(GeneralLanguage.KIT_TANK_DESCRIPTION, "F**k those teaming a**h*les!\nSeriously, F*CK'EM UP!\nWith this Kit you can.");
+                lang.addLangNode(GeneralLanguage.KIT_TANK_ABILITY, "- Immune to all explosive damage\n- Whenever you kill someone they explode");
+                lang.addLangNode(GeneralLanguage.KIT_BERSERKER_DESCRIPTION, "The feeling of joy mixed with rage\nwhenever you kill a player in team\nhas never been this strong.");
+                lang.addLangNode(GeneralLanguage.KIT_BERSERKER_ABILITY, "- Get Strength 2 for 2 seconds after killing a player\n- Get Nausea 4 for 2 seconds after killing a player");
+                lang.addLangNode(GeneralLanguage.KIT_HULK_DESCRIPTION, "Take my word for it\nwhen I tell you that there isn't\na better trolling kit out there.");
+                lang.addLangNode(GeneralLanguage.KIT_HULK_ABILITY, "- Pick up a player and carry them around\n- Throw away players which you picked up");
+                lang.addLangNode(GeneralLanguage.KIT_RAIJIN_DESCRIPTION, "Throw you arrows wherever you want\nto teleport to in an instant!");
+                lang.addLangNode(GeneralLanguage.KIT_RAIJIN_ABILITY, "- Throw arrows\n- Sneak to teleport to your last thrown arrow\n- 10 second cooldown after throwing an arrow");
+                lang.addLangNode(GeneralLanguage.KIT_GLADIATOR_DESCRIPTION, "Divide to concur has never been this true.\nDestroy teams by taking them on one by one.");
+                lang.addLangNode(GeneralLanguage.KIT_GLADIATOR_ABILITY, "- Teleport your self and another player\n  into a glass cage at Y = 120\n- 5 seconds of damage resistance after you win the duel");
+                lang.addLangNode(GeneralLanguage.KIT_CANNIBAL_DESCRIPTION, "- You know that moment when you have been chasing\nsome scrub around the entire map and you wish\nthat you could just find them irl\nand beat THE LIVING SH*T out of them?\nWell that's not gonna happen.\nBut at least with this Kit the chase will\ncome to a quick brutal end.");
+                lang.addLangNode(GeneralLanguage.KIT_CANNIBAL_ABILITY, "- 33% chance of giving food poisoning to players when you hit them.\nWhen you hit players you steal half a hunger bar from them.");
                 break;
             case GERMAN:
                 break;

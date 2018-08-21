@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.commands;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
@@ -27,11 +26,11 @@ public class StatsCommand extends GeneralCommand {
 
         Database db = General.getDB();
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
-        p.sendMessage(GeneralLanguage.DB_CHECK);
+        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK);
         Server server = Server.get();
         DecimalFormat df = new DecimalFormat("0.00");
         if(args.length == 0) {
-            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.STATS)
+            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.STATS)
                     .replaceAll("%player", p.getName())
                     .replaceAll("%level", Integer.toString(p.getLevel()))
                     .replaceAll("%prestige", Integer.toString(p.getPrestige()))
@@ -56,7 +55,7 @@ public class StatsCommand extends GeneralCommand {
                             kdr = Double.toString(0.0);
                         else
                             kdr = df.format((double) res.getInt("kills") / (double) res.getInt("deaths"));
-                        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.STATS)
+                        p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.STATS)
                                 .replaceAll("%player", z.getName())
                                 .replaceAll("%level", Integer.toString(res.getInt("level")))
                                 .replaceAll("%prestige", Integer.toString(res.getInt("prestige")))
@@ -71,11 +70,11 @@ public class StatsCommand extends GeneralCommand {
                     }
                     return true;
                 } else {
-                    p.sendMessage(GeneralLanguage.NEVER_JOINED);
+                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NEVER_JOINED);
                     return true;
                 }
             } catch (Exception e) {
-                p.sendMessage(GeneralLanguage.DB_CHECK_FAIL);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK_FAIL);
                 e.printStackTrace();
                 return true;
             }

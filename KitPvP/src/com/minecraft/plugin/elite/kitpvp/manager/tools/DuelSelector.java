@@ -1,4 +1,4 @@
-package com.minecraft.plugin.elite.kitpvp.manager.duel.tools;
+package com.minecraft.plugin.elite.kitpvp.manager.tools;
 
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import org.bukkit.Material;

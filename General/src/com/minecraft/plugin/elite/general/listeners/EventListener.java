@@ -5,6 +5,7 @@ import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.antihack.alert.AlertManager;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.events.stats.LevelChangeEvent;
+import com.minecraft.plugin.elite.general.api.special.kits.Kit;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
@@ -60,6 +61,10 @@ public class EventListener implements Listener {
         if (e.isLevelUp()) {
             p.setTokens(p.getTokens() + 1);
             p.sendTitle(p.getLanguage().get(GeneralLanguage.LEVEL_UP), 1, 20, 3);
+            for(Kit kit : Kit.values())
+                if(kit.getLevel() == e.getNewLevel())
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.KIT_UNLOCKED)
+                            .replaceAll("%kit", kit.getName()));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -34,22 +33,22 @@ public class SpeedCommand extends GeneralCommand implements TabCompleter {
                 int speed = Integer.parseInt(args[0]);
                 String speedMsg;
                 if (p.getPlayer().isOnGround()) {
-                    speedMsg = p.getLanguage().get(GeneralLanguage.SPEED_WALK)
+                    speedMsg = p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SPEED_WALK)
                             .replaceAll("%speed", Integer.toString(speed));
                     p.getPlayer().setWalkSpeed((float) speed / 10.0f);
                 } else {
-                    speedMsg = p.getLanguage().get(GeneralLanguage.SPEED_FLY)
+                    speedMsg = p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SPEED_FLY)
                             .replaceAll("%speed", Integer.toString(speed));
                     p.getPlayer().setFlySpeed((float) speed / 10.0f);
                 }
                 p.getPlayer().setAllowFlight((float) speed / 10.0f < 3);
                 p.getPlayer().sendMessage(speedMsg);
             } catch (IllegalArgumentException e) {
-                p.sendMessage(GeneralLanguage.SPEED_USAGE);
+                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SPEED_USAGE);
                 return true;
             }
         } else {
-            p.sendMessage(GeneralLanguage.SPEED_USAGE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SPEED_USAGE);
             return true;
         }
         return true;

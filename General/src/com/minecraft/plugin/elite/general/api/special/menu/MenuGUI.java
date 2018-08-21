@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.api.special.menu;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
@@ -20,11 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MenuGUI extends GUI {
@@ -36,7 +31,7 @@ public class MenuGUI extends GUI {
 	private ItemStack back() {
 		Server server = Server.get();
 		ItemStack back = new ItemStack(Material.SUGAR);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
 		return back;
 	}
 
@@ -48,27 +43,27 @@ public class MenuGUI extends GUI {
 	}
 
 	public Inventory main() {
-		this.build(45, GeneralLanguage.MENU_GUI_TITLE);
+		this.build(45, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_TITLE);
 
 		Server server = Server.get();
 		
 		ItemStack staff = new ItemStack(Material.IRON_CHESTPLATE);
-		server.rename(staff, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF));
+		server.rename(staff, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF));
 		
 		ItemStack achievements = new ItemStack(Material.PAINTING);
-		server.rename(achievements, this.getLanguage().get(GeneralLanguage.MENU_GUI_ACHIEVEMENTS));
+		server.rename(achievements, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_ACHIEVEMENTS));
 		
 		ItemStack faq = new ItemStack(Material.BOOK);
-		server.rename(faq, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ));
+		server.rename(faq, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ));
 		
 		ItemStack applications = new ItemStack(Material.BOOK_AND_QUILL);
-		server.rename(applications, this.getLanguage().get(GeneralLanguage.MENU_GUI_APPLICATION));
+		server.rename(applications, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION));
 		
 		ItemStack stats = new ItemStack(Material.DIAMOND_SWORD);
-		server.rename(stats, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS));
+		server.rename(stats, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS));
 		
 		ItemStack update = new ItemStack(Material.PAPER);
-		server.rename(update, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE));
+		server.rename(update, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(10, staff);
@@ -81,20 +76,20 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory application() {
-		this.build(27, GeneralLanguage.MENU_GUI_APPLICATION);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION);
 		Server server = Server.get();
 		
 		ItemStack where = new ItemStack(Material.COMPASS);
-		server.rename(where, this.getLanguage().get(GeneralLanguage.MENU_GUI_APPLICATION_APPLY));
+		server.rename(where, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION_APPLY));
 		
 		ItemStack mod = new ItemStack(Material.DIAMOND_SWORD);
-		server.rename(mod, this.getLanguage().get(GeneralLanguage.MENU_GUI_APPLICATION_MOD));
+		server.rename(mod, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION_MOD));
 
 		ItemStack supp = new ItemStack(Material.DIAMOND_AXE);
-		server.rename(supp, this.getLanguage().get(GeneralLanguage.MENU_GUI_APPLICATION_SUPPORTER));
+		server.rename(supp, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION_SUPPORTER));
 		
 		ItemStack builder = new ItemStack(Material.DIAMOND_PICKAXE);
-		server.rename(builder, this.getLanguage().get(GeneralLanguage.MENU_GUI_APPLICATION_BUILDER));
+		server.rename(builder, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_APPLICATION_BUILDER));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, this.back());
@@ -107,7 +102,7 @@ public class MenuGUI extends GUI {
 	
 	public Inventory stats(GeneralPlayer p) {
 
-		this.build(27, GeneralLanguage.MENU_GUI_STATS);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS);
 		Server server = Server.get();
     	
     	//load the xp bar
@@ -123,7 +118,7 @@ public class MenuGUI extends GUI {
     	
     	Clan clan = p.getClan();
     	ItemStack head = server.playerHead(p.getName());
-		server.rename(head, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_GENERAL)
+		server.rename(head, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS_GENERAL)
 				.replaceAll("%rank", p.getRank().getDisplayName())
 				.replaceAll("%clan", (clan == null ? "" : clan.getName()))
 				.replaceAll("%prestige", Integer.toString(p.getPrestige()))
@@ -133,23 +128,23 @@ public class MenuGUI extends GUI {
 
     	DecimalFormat format = new DecimalFormat("0.00");
     	ItemStack pvp = new ItemStack(Material.DIAMOND_SWORD);
-		server.rename(pvp, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_ACTIVITY)
+		server.rename(pvp, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS_ACTIVITY)
 				.replaceAll("%kills", Long.toString(p.getKills()))
 				.replaceAll("%deaths", Long.toString(p.getDeaths()))
 				.replaceAll("%kdr", format.format(p.getKDR()))
 				.replaceAll("%elo", Long.toString(p.getELO())));
 		
 		ItemStack time = new ItemStack(Material.WATCH);
-		server.rename(time, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_TIME)
+		server.rename(time, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS_TIME)
 				.replaceAll("%firstjoin", server.getDate(p.getFirstJoin()))
 				.replaceAll("%lastjoin", server.getDate(p.getLastJoin()))
 				.replaceAll("%playtime", server.getTime(p.getPlayTime(), p.getLanguage())));
 		
 		ItemStack prestige = new ItemStack(Material.BLAZE_POWDER);
 		if(!p.isMasterPrestige() && p.getLevel() >= 55)
-			server.rename(prestige, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_PRESTIGE_SET));
+			server.rename(prestige, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS_PRESTIGE_SET));
 		else
-			server.rename(prestige, this.getLanguage().get(GeneralLanguage.MENU_GUI_STATS_PRESTIGE_LOCKED));
+			server.rename(prestige, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STATS_PRESTIGE_LOCKED));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, this.back());
@@ -161,37 +156,37 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory updateLog() {
-		this.build(27, GeneralLanguage.MENU_GUI_UPDATE);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE);
 		Server server = Server.get();
 
 		List<ItemStack> updates = new ArrayList<>();
 
 		ItemStack update1 = new ItemStack(Material.PAPER);
-		server.rename(update1, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_1));
+		server.rename(update1, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_1));
 		updates.add(update1);
 
 		ItemStack update2 = new ItemStack(Material.PAPER);
-		server.rename(update2, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_2));
+		server.rename(update2, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_2));
 		updates.add(update2);
 
 		ItemStack update3 = new ItemStack(Material.PAPER);
-		server.rename(update3, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_3));
+		server.rename(update3, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_3));
 		updates.add(update3);
 
 		ItemStack update4 = new ItemStack(Material.PAPER);
-		server.rename(update4, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_4));
+		server.rename(update4, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_4));
 		updates.add(update4);
 
 		ItemStack update5 = new ItemStack(Material.PAPER);
-		server.rename(update5, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_5));
+		server.rename(update5, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_5));
 		updates.add(update5);
 
 		ItemStack update6 = new ItemStack(Material.PAPER);
-		server.rename(update6, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_6));
+		server.rename(update6, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_6));
 		updates.add(update6);
 
 		ItemStack update7 = new ItemStack(Material.PAPER);
-		server.rename(update7, this.getLanguage().get(GeneralLanguage.MENU_GUI_UPDATE_7));
+		server.rename(update7, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_UPDATE_7));
 		updates.add(update7);
 
 		this.fill(this.glass());
@@ -204,7 +199,7 @@ public class MenuGUI extends GUI {
 	public Inventory achievements(GeneralPlayer p, int page) {
 		List<Achievement> achievements = new ArrayList<>();
 		Collections.addAll(achievements, Achievement.values());
-		this.buildPageType(GeneralLanguage.MENU_GUI_ACHIEVEMENTS, page, achievements.size(), this.glass());
+		this.buildPageType(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_ACHIEVEMENTS, page, achievements.size(), this.glass());
 		Server server = Server.get();
 
 		for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
@@ -230,26 +225,26 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory faqMain() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ);
 		Server server = Server.get();
 		
 		ItemStack rules = new ItemStack(Material.BOOK, 4);
-		server.rename(rules, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_RULES));
+		server.rename(rules, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES));
 		
 		ItemStack levels = new ItemStack(Material.BOOK, 7);
-		server.rename(levels, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS));
+		server.rename(levels, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS));
 		
 		ItemStack store = new ItemStack(Material.BOOK);
-		server.rename(store, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_STORE));
+		server.rename(store, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_STORE));
 		
 		ItemStack ts = new ItemStack(Material.BOOK, 3);
-		server.rename(ts, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK));
+		server.rename(ts, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK));
 		
 		ItemStack unban = new ItemStack(Material.BOOK, 3);
-		server.rename(unban, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_UNBAN));
+		server.rename(unban, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_UNBAN));
 		
 		ItemStack contact = server.playerHead("MHF_QUESTION");
-		server.rename(contact,this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_SUPPORT));
+		server.rename(contact,this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_SUPPORT));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, this.back());
@@ -263,23 +258,23 @@ public class MenuGUI extends GUI {
 	}
 
 	public Inventory faqRules() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ_RULES);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES);
 		Server server = Server.get();
 
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
 
 		ItemStack mods = new ItemStack(Material.PAPER);
-		server.rename(mods, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_RULES_MODS));
+		server.rename(mods, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES_MODS));
 
 		ItemStack chat = new ItemStack(Material.PAPER);
-		server.rename(chat, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_RULES_CHAT));
+		server.rename(chat, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES_CHAT));
 
 		ItemStack team = new ItemStack(Material.PAPER);
-		server.rename(team, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_RULES_TEAMS));
+		server.rename(team, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES_TEAMS));
 
 		ItemStack more = new ItemStack(Material.PAPER);
-		server.rename(more, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_RULES_TERMS));
+		server.rename(more, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_RULES_TERMS));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, back);
@@ -291,32 +286,32 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory faqLevels() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ_LEVELS);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS);
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
 		
 		ItemStack levels = new ItemStack(Material.PAPER);
-		server.rename(levels, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_LEVELS));
+		server.rename(levels, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_LEVELS));
 		
 		ItemStack prestiges = new ItemStack(Material.PAPER);
-		server.rename(prestiges, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE));
+		server.rename(prestiges, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE));
 		
 		ItemStack tokens = new ItemStack(Material.PAPER);
-		server.rename(tokens, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_TOKENS));
+		server.rename(tokens, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_TOKENS));
 		
 		ItemStack prestigeChange = new ItemStack(Material.PAPER);
-		server.rename(prestigeChange, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE_CHANGE));
+		server.rename(prestigeChange, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE_CHANGE));
 		
 		ItemStack maxLevel = new ItemStack(Material.PAPER);
-		server.rename(maxLevel, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_LEVEL_MAX));
+		server.rename(maxLevel, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_LEVEL_MAX));
 		
 		ItemStack maxPrestige = new ItemStack(Material.PAPER);
-		server.rename(maxPrestige, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE_MAX));
+		server.rename(maxPrestige, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_PRESTIGE_MAX));
 		
 		ItemStack colors = new ItemStack(Material.PAPER);
-		server.rename(colors, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_LEVELS_COLORS));
+		server.rename(colors, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_LEVELS_COLORS));
 
 		this.fill(this.glass());
 		this.getInventory().setItem(4, back);
@@ -331,14 +326,14 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory faqStore() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ_STORE);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_STORE);
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
     	
     	ItemStack where = new ItemStack(Material.PAPER);
-    	server.rename(where, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_STORE_KITS));
+    	server.rename(where, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_STORE_KITS));
 
 		this.fill(this.glass());
     	this.getInventory().setItem(4, back);
@@ -347,20 +342,20 @@ public class MenuGUI extends GUI {
 	}
 	
 	public Inventory faqTeamspeak() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK);
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
     	
     	ItemStack what = new ItemStack(Material.PAPER);
-    	server.rename(what, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_WHAT));
+    	server.rename(what, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_WHAT));
     	
     	ItemStack where = new ItemStack(Material.PAPER);
-    	server.rename(where, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_WHERE));
+    	server.rename(where, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_WHERE));
     	
     	ItemStack ip = new ItemStack(Material.PAPER);
-    	server.rename(ip, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_IP)
+    	server.rename(ip, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_TEAMSPEAK_IP)
 				.replaceAll("%name", server.getName()));
 
 		this.fill(this.glass());
@@ -372,20 +367,20 @@ public class MenuGUI extends GUI {
 	}
 	
     public Inventory faqUnban() {
-		this.build(27, GeneralLanguage.MENU_GUI_FAQ_UNBAN);
+		this.build(27, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_UNBAN);
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(GeneralLanguage.MENU_GUI_BACK));
+		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_BACK));
     	
     	ItemStack unban = new ItemStack(Material.PAPER);
-    	server.rename(unban, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_UNBAN_UNBAN));
+    	server.rename(unban, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_UNBAN_UNBAN));
     	
     	ItemStack unmute = new ItemStack(Material.PAPER);
-    	server.rename(unmute, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_UNBAN_UNMUTE));
+    	server.rename(unmute, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_UNBAN_UNMUTE));
     	
     	ItemStack buy = new ItemStack(Material.PAPER);
-    	server.rename(buy, this.getLanguage().get(GeneralLanguage.MENU_GUI_FAQ_UNBAN_WHERE));
+    	server.rename(buy, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_FAQ_UNBAN_WHERE));
 
 		this.fill(this.glass());
     	this.getInventory().setItem(4, back);
@@ -396,11 +391,11 @@ public class MenuGUI extends GUI {
 	}
     
     public Inventory staffMain(String name) {
-		this.build(54, GeneralLanguage.MENU_GUI_STAFF);
+		this.build(54, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF);
 		Server server = Server.get();
 
 		StringBuilder builder = new StringBuilder();
-		builder.append(this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_PREFIX));
+		builder.append(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_PREFIX));
 		for(Rank rank : Rank.values())
 			builder.append("\n" + rank.getPrefix().getColor() + name + ChatColor.GRAY + " = " + rank.getDisplayName());
 		ItemStack ranks = new ItemStack(Material.SIGN);
@@ -417,7 +412,7 @@ public class MenuGUI extends GUI {
 	}
     
     public Inventory staffAdmin() {
-		this.build(54, GeneralLanguage.MENU_GUI_STAFF_ADMINS);
+		this.build(54, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_ADMINS);
 		Server server = Server.get();
 		Database db = General.getDB();
 
@@ -440,7 +435,7 @@ public class MenuGUI extends GUI {
 	}
 
     public Inventory staffMod() {
-		this.build(54, GeneralLanguage.MENU_GUI_STAFF_MODS);
+		this.build(54, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_MODS);
 		Server server = Server.get();
 		Database db = General.getDB();
 		
@@ -475,7 +470,7 @@ public class MenuGUI extends GUI {
 	}
 
 	public Inventory staffSupporter() {
-		this.build(54, GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS);
+		this.build(54, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS);
 		Server server = Server.get();
 		Database db = General.getDB();
 
@@ -499,7 +494,7 @@ public class MenuGUI extends GUI {
 	}
     
     public Inventory staffBuilder() {
-		this.build(54, GeneralLanguage.MENU_GUI_STAFF_BUILDERS);
+		this.build(54, com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_BUILDERS);
 		Server server = Server.get();
 		Database db = General.getDB();
 
@@ -524,14 +519,14 @@ public class MenuGUI extends GUI {
 		Database db = General.getDB();
     	Server server = Server.get();
 		ItemStack head = new ItemStack(Material.BARRIER);
-		server.rename(head, this.getLanguage().get(GeneralLanguage.DB_CHECK_FAIL));
+		server.rename(head, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK_FAIL));
 		try {
 			ResultSet res = db.select(General.DB_STAFF, "rank", rank);
 			if(res.next()) {
 				String StringUUID = res.getString("uuid");
 				if(StringUUID.equalsIgnoreCase("You?")) {
 					head = server.playerHead("MHF_Question");
-					server.rename(head, prefix.getColor() + this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_YOU) + "\n&7Click to apply");
+					server.rename(head, prefix.getColor() + this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_YOU) + "\n&7Click to apply");
 					return head;
 				} else {
 					UUID uuid = UUID.fromString(StringUUID);
@@ -556,35 +551,35 @@ public class MenuGUI extends GUI {
     private ItemStack staff() {
     	Server server = Server.get();
 		ItemStack Staff = new ItemStack(Material.STAINED_GLASS, 1);
-		server.rename(Staff, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF));
+		server.rename(Staff, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF));
 		return Staff;
 	}
 	
 	private ItemStack admin() {
 		Server server = Server.get();
 		ItemStack Admin = new ItemStack(Material.STAINED_GLASS, 1, Prefix.ADMIN.getHexadecimal());
-		server.rename(Admin, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_ADMINS));
+		server.rename(Admin, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_ADMINS));
 		return Admin;
 	}
 	
 	private ItemStack mod() {
 		Server server = Server.get();
 		ItemStack Mod = new ItemStack(Material.STAINED_GLASS, 1, Prefix.MOD.getHexadecimal());
-		server.rename(Mod, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_MODS));
+		server.rename(Mod, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_MODS));
 		return Mod;
 	}
 
 	private ItemStack supporter() {
 		Server server = Server.get();
 		ItemStack supp = new ItemStack(Material.STAINED_GLASS, 1, Prefix.SUPPORTER.getHexadecimal());
-		server.rename(supp, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS));
+		server.rename(supp, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_SUPPORTERS));
 		return supp;
 	}
 	
 	private ItemStack builder() {
 		Server server = Server.get();
 		ItemStack Builder = new ItemStack(Material.STAINED_GLASS, 1, Prefix.BUILDER.getHexadecimal());
-		server.rename(Builder, this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_BUILDERS));
+		server.rename(Builder, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MENU_GUI_STAFF_BUILDERS));
 		return Builder;
 	}
 	

@@ -1,9 +1,13 @@
 package com.minecraft.plugin.elite.general.listeners;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.Tool;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEntityEvent;
 import com.minecraft.plugin.elite.general.api.events.tool.ToolClickEvent;
+import com.minecraft.plugin.elite.general.api.special.kits.Kit;
+import com.minecraft.plugin.elite.general.api.special.kits.KitGUI;
+import com.minecraft.plugin.elite.general.api.special.kits.KitSelectorTool;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -130,6 +134,43 @@ public class ToolEventListener implements Listener {
                         e.setCancelled(true);
                         break;
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void kitToolClick(ToolClickEvent e) {
+        GeneralPlayer p = e.getPlayer();
+        if(e.getTool() instanceof KitSelectorTool) {
+            if(p.isAdminMode() || p.isWatching()) {
+                p.sendMessage(GeneralLanguage.KIT_ERROR_MODE);
+                return;
+            }
+            KitGUI kitgui = new KitGUI(p.getLanguage());
+            p.openGUI(kitgui, kitgui.selector(p, 1));
+        }
+    }
+
+    @EventHandler
+    public void onKitItemDrop(PlayerDropItemEvent e) {
+        GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
+        if(p.hasKit())
+            for(Kit kit : Kit.values())
+                if(p.hasKit(kit) && kit.getItem() != null)
+                    if(e.getItemDrop().getItemStack().getType() == kit.getItem().getType())
+                        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDeathRemoveKitItem(PlayerDeathEvent e) {
+        GeneralPlayer p = GeneralPlayer.get(e.getEntity().getPlayer());
+        if(p != null && p.hasKit()) {
+            for(Kit kit : Kit.values()) {
+                if(p.hasKit(kit)) {
+                    List<ItemStack> list = e.getDrops();
+                    list.removeIf(drop -> kit.getItem() != null && kit.getItem().getType().equals(drop.getType()));
+                    break;
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -19,7 +18,7 @@ public class AdminCommand extends GeneralCommand {
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (!p.isWatching()) {
             p.setAdminMode(!p.isAdminMode());
-            String msg = p.getLanguage().get(GeneralLanguage.GAMEMODE_SET_YOU);
+            String msg = p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.GAMEMODE_SET_YOU);
             if (p.isAdminMode())
                 msg = msg.replaceAll("%gm", "ADMIN");
             else
@@ -27,7 +26,7 @@ public class AdminCommand extends GeneralCommand {
             p.getPlayer().sendMessage(msg);
             return true;
         } else {
-            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.MODE_STILL_WATCH));
+            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.MODE_STILL_WATCH));
             return true;
         }
     }

@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.api;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerAttack;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerClick;
@@ -14,6 +13,8 @@ import com.minecraft.plugin.elite.general.api.enums.Prefix;
 import com.minecraft.plugin.elite.general.api.enums.Rank;
 import com.minecraft.plugin.elite.general.api.events.ClearPlayerEvent;
 import com.minecraft.plugin.elite.general.api.events.InvisChangeEvent;
+import com.minecraft.plugin.elite.general.api.events.kits.KitChangeEvent;
+import com.minecraft.plugin.elite.general.api.events.kits.KitEnableEvent;
 import com.minecraft.plugin.elite.general.api.events.mode.AdminModeChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.mode.WatchModeChangeEvent;
 import com.minecraft.plugin.elite.general.api.events.stats.ELOChangeEvent;
@@ -25,6 +26,7 @@ import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
 import com.minecraft.plugin.elite.general.api.special.PlayerHit;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
 import com.minecraft.plugin.elite.general.api.special.clan.ClanManager;
+import com.minecraft.plugin.elite.general.api.special.kits.Kit;
 import com.minecraft.plugin.elite.general.api.special.party.Party;
 import com.minecraft.plugin.elite.general.api.special.party.PartyManager;
 import com.minecraft.plugin.elite.general.database.Database;
@@ -92,6 +94,12 @@ public class GeneralPlayer {
 	private BukkitRunnable combatLogTask;
 	private BukkitRunnable knockbackTask;
 	private long invalid;
+
+	private int cooldownTime;
+	private BukkitRunnable cooldownTask;
+	private Kit kit;
+	private boolean canUseKit;
+	private boolean editing;
 
 	public static GeneralPlayer get(Player player) {
 		return get(player.getUniqueId());
@@ -161,6 +169,12 @@ public class GeneralPlayer {
 		this.combatLogTask = null;
 		this.knockbackTask = null;
 
+		this.cooldownTime = 0;
+		this.cooldownTask = null;
+		this.kit = null;
+		this.canUseKit = false;
+		this.editing = false;
+
 		Database db = General.getDB();
 		try {
 			ResultSet res = db.select(General.DB_PLAYERS, "uuid", this.getUniqueId().toString());
@@ -198,6 +212,16 @@ public class GeneralPlayer {
 			db.execute("INSERT INTO " + General.DB_ACHIEVEMENTS + " (uuid) VALUES (?);", this.getUniqueId());
 			for (Achievement achievement : Achievement.values())
 				db.update(General.DB_ACHIEVEMENTS, achievement.toString().toLowerCase(), 0, "uuid", this.getUniqueId());
+		}
+
+		if(!db.containsValue(General.DB_KITS, "uuid", this.getUniqueId().toString())) {
+			db.execute("INSERT INTO " + General.DB_KITS + " (uuid) VALUES (?);", this.getUniqueId());
+			for (Kit kit : Kit.values())
+				db.update(General.DB_KITS, kit.getName().toLowerCase(), 0, "uuid", this.getUniqueId());
+		}
+
+		if(!db.containsValue(General.DB_SETTINGS, "uuid", this.getUniqueId().toString())) {
+			db.execute("INSERT INTO " + General.DB_SETTINGS + " (uuid, sword, kititem, redmushroom, brownmushroom, bowl) VALUES (?, ?, ?, ?, ?, ?);", this.getUniqueId(), 0, 1, 15, 16, 17);
 		}
 
 		this.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
@@ -375,9 +399,9 @@ public class GeneralPlayer {
 
 	    CraftPlayer craftplayer = (CraftPlayer) this.getPlayer();
 		PlayerConnection connection = craftplayer.getHandle().playerConnection;
-		String header_text = this.getLanguage().get(GeneralLanguage.HEADER)
+		String header_text = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.HEADER)
 				.replaceAll("%domain", server.getDomain());
-		String footer_text = this.getLanguage().get(GeneralLanguage.FOOTER)
+		String footer_text = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.FOOTER)
 				.replaceAll("%ranks", ranks.toString().substring(0, ranks.toString().length() - 3));
 
 		IChatBaseComponent header = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + header_text + "\"}");
@@ -521,7 +545,7 @@ public class GeneralPlayer {
 			this.getPlayer().getInventory().setArmorContents(null);
 			for(PotionEffect effect : this.getPlayer().getActivePotionEffects())
 				this.getPlayer().removePotionEffect(effect.getType());
-			this.sendMessage(GeneralLanguage.WATCH_WATCHING);
+			this.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.WATCH_WATCHING);
 			this.getPlayer().setHealth(20);
 			this.getPlayer().setFoodLevel(20);
 		}
@@ -539,7 +563,7 @@ public class GeneralPlayer {
 		else {
 			this.invis = false;
 			this.setInvisTo(null);
-			this.sendMessage(GeneralLanguage.INVIS_VIS);
+			this.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_VIS);
 			for (Player players : Bukkit.getOnlinePlayers())
 				players.showPlayer(this.getPlayer());
 			InvisChangeEvent event = new InvisChangeEvent(this, false);
@@ -550,7 +574,7 @@ public class GeneralPlayer {
 	public void setInvis(Rank rank) {
 		this.setInvisTo(rank);
 		this.invis = true;
-		String msg = this.getLanguage().get(GeneralLanguage.INVIS_INVIS).replaceAll("%rank", this.getInvisTo().getDisplayName().toUpperCase());
+		String msg = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_INVIS).replaceAll("%rank", this.getInvisTo().getDisplayName().toUpperCase());
 		this.getPlayer().sendMessage(msg);
 		for (Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
@@ -578,7 +602,7 @@ public class GeneralPlayer {
 	    	public void run() {
 	    		if(!p.isAFK()) {
 	    			p.setAFK(true);
-	    			p.sendMessage(GeneralLanguage.AFK_TRUE);
+	    			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.AFK_TRUE);
 	    		}
 	    	}
 	    };
@@ -933,7 +957,7 @@ public class GeneralPlayer {
 				double exp = damagePerPlayer.get(uuid) * ((this.getPrestige() + 1) * 100) / totalDamage;
 				double percent = damagePerPlayer.get(uuid) * 100 / totalDamage;
 				z.addExp(Math.round(exp));
-				z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.DAMAGE_PERCENT)
+				z.getPlayer().sendMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.DAMAGE_PERCENT)
 						.replaceAll("%percent", df.format(percent))
 						.replaceAll("%player", this.getChatName()));
 			}
@@ -1000,7 +1024,7 @@ public class GeneralPlayer {
 	public void giveAchievement(Achievement achievement) {
 		Database db = General.getDB();
 		db.update(General.DB_ACHIEVEMENTS, achievement.toString().toLowerCase(), 1, "uuid", this.getUniqueId());
-		this.getPlayer().sendMessage(this.getLanguage().get(GeneralLanguage.ACHIEVEMENT_UNLOCKED).replaceAll("%achievement", achievement.getName(this.getLanguage())));
+		this.getPlayer().sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ACHIEVEMENT_UNLOCKED).replaceAll("%achievement", achievement.getName(this.getLanguage())));
 		this.getPlayer().playSound(this.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
 		this.addExp(achievement.getExp());
 		this.addTokens(achievement.getTokens());
@@ -1047,7 +1071,7 @@ public class GeneralPlayer {
 				GeneralPlayer p = get(getUniqueId());
 				if(p != null)
 					if (p.isCombatLog()) {
-						p.sendMessage(GeneralLanguage.COMBATLOG_SAFE);
+						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.COMBATLOG_SAFE);
 						p.getCombatLogTask().cancel();
 						p.setCombatLogTask(null);
 					}
@@ -1197,5 +1221,236 @@ public class GeneralPlayer {
 
 	public void setCanSpeed(boolean speed) {
 		this.canSpeed = speed;
+	}
+
+	public int getCooldownTime() {
+		return this.cooldownTime;
+	}
+
+	public void setCooldownTime(int seconds) {
+		this.cooldownTime = seconds;
+		this.sendActionBar((seconds > 0 ? ChatColor.RED.toString() + ChatColor.BOLD + Integer.toString(seconds) : " "));
+	}
+
+	public BukkitRunnable getCooldownTask() {
+		return this.cooldownTask;
+	}
+
+	public boolean hasCooldown() {
+		return this.cooldownTask != null;
+	}
+
+	public void startCooldown(int seconds) {
+		this.setCooldownTime(seconds);
+		this.cooldownTask = new BukkitRunnable() {
+			public void run() {
+				if(hasCooldown()) {
+					final int index = getCooldownTime();
+					setCooldownTime(index - 1);
+					if(getCooldownTime() <= 0)
+						stopCooldown();
+				}
+			}
+		};
+		this.cooldownTask.runTaskTimer(General.getPlugin(), 0, 20);
+	}
+
+	public void stopCooldown() {
+		if(this.getCooldownTask() != null)
+			this.getCooldownTask().cancel();
+		this.cooldownTime = 0;
+		this.cooldownTask = null;
+	}
+
+	public boolean isNearRogue() {
+		for(Entity ent : this.getPlayer().getNearbyEntities(10, 10, 10)) {
+			if(ent instanceof Player) {
+				GeneralPlayer z = GeneralPlayer.get((Player) ent);
+				if(z.hasKit(Kit.ROGUE))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	public Kit getKit() {
+		return this.kit;
+	}
+
+	public boolean hasKit() {
+		return this.kit != null;
+	}
+
+	public boolean hasKit(Kit kit) {
+		return this.getKit() != null && this.getKit() == kit;
+	}
+
+	public boolean hasKitPermission(Kit kit) {
+		return kit.getPermissionType(this.getUniqueId()) > 0 || this.isMasterPrestige() || General.getFreeKits().contains(kit);
+	}
+
+	public void setKit(Kit kit) {
+		this.kit = kit;
+	}
+
+	public void clearKit() {
+		if(this.hasKit()) {
+			if(this.hasKit(Kit.PHANTOM)) {
+				this.getPlayer().setFlying(false);
+				this.getPlayer().setAllowFlight(false);
+			}
+			this.stopCooldown();
+			this.setKit(null);
+
+			this.setCanFly(false);
+			this.setCanSpeed(false);
+		}
+	}
+
+	public void giveKit(Kit kit) {
+		KitChangeEvent event = new KitChangeEvent(this, this.getKit(), kit);
+		Bukkit.getPluginManager().callEvent(event);
+
+		this.clearKit();
+		this.setKit(kit);
+
+		switch(kit) {
+			case KANGAROO:
+			case PHANTOM:
+				this.setCanFly(true);
+				this.setCanSpeed(true);
+				break;
+		}
+
+		this.getPlayer().sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GIVE)
+				.replaceAll("%kit", kit.getName()));
+	}
+
+	public void enableKit() {
+		if (this.hasTool())
+			this.clearTools();
+		this.getPlayer().getInventory().clear();
+
+		if (this.getKit() == null)
+			this.giveKit(Kit.PVP);
+
+		if(this.getKit() == Kit.SURPRISE) {
+			Random r = new Random();
+			int i = r.nextInt(Kit.values().length - 1);
+			this.giveKit(Kit.values()[i]);
+		}
+
+		this.getPlayer().setGameMode(GameMode.SURVIVAL);
+		this.getPlayer().getActivePotionEffects().clear();
+		this.getPlayer().getInventory().setArmorContents(null);
+		this.getPlayer().setFoodLevel(20);
+		this.getPlayer().setHealth(20);
+		this.getPlayer().setMaxHealth(20);
+		this.getPlayer().setExp(0);
+		this.getPlayer().setLevel(0);
+
+		Server server = Server.get();
+		ItemStack item = this.getKit().getItem();
+		if(item != null) {
+			String name = this.getKit().getItemName(this.getLanguage());
+			if(name != null)
+				server.rename(item, name);
+			this.setItem(SlotType.KIT_ITEM, item);
+		}
+		if(this.getKit() == Kit.ARCHER)
+			this.getPlayer().getInventory().addItem(new ItemStack(Material.ARROW, 10));
+
+		KitEnableEvent event = new KitEnableEvent(this, this.getKit());
+		Bukkit.getPluginManager().callEvent(event);
+	}
+
+	public boolean canUseKit() {
+		return this.canUseKit;
+	}
+
+	public void setCanUseKit(boolean bool) {
+		this.canUseKit = bool;
+	}
+
+	public int getSlot(SlotType mat) {
+		Database db = General.getDB();
+		try {
+			ResultSet res = db.select(General.DB_SETTINGS, "uuid", this.getUniqueId().toString());
+			if(res.next()) {
+				switch(mat) {
+					case SWORD:
+						return res.getInt("sword");
+					case KIT_ITEM:
+						return res.getInt("kititem");
+					case RED_MUSHROOM:
+						return res.getInt("redmushroom");
+					case BROWN_MUSHROOM:
+						return res.getInt("brownmushroom");
+					case BOWL:
+						return res.getInt("bowl");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		switch(mat) {
+			case SWORD:
+				return 0;
+			case KIT_ITEM:
+				return 1;
+			case RED_MUSHROOM:
+				return 15;
+			case BROWN_MUSHROOM:
+				return 16;
+			case BOWL:
+				return 17;
+			default:
+				return 0;
+		}
+	}
+
+	public void setSlot(Material mat, int id) {
+		Database db = General.getDB();
+		String column = null;
+		switch(mat) {
+			case STONE_SWORD:
+				column = "sword";
+				break;
+			case NETHER_STAR:
+				column = "kititem";
+				break;
+			case RED_MUSHROOM:
+				column = "redmushroom";
+				break;
+			case BROWN_MUSHROOM:
+				column = "brownmushroom";
+				break;
+			case BOWL:
+				column = "bowl";
+				break;
+		}
+		if(column != null) {
+			db.update(General.DB_SETTINGS, column, id, "uuid", this.getUniqueId());
+		}
+	}
+
+	public void setItem(SlotType slot, ItemStack item) {
+		this.getPlayer().getInventory().setItem(this.getSlot(slot), item);
+	}
+
+	public void setEditing(boolean editing) {
+		this.editing = editing;
+	}
+
+	public boolean isEditing() {
+		return this.editing;
+	}
+
+	public enum SlotType {
+		SWORD,
+		KIT_ITEM,
+		RED_MUSHROOM,
+		BROWN_MUSHROOM,
+		BOWL,
 	}
 }

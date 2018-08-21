@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -18,7 +17,7 @@ public class WatchCommand extends GeneralCommand {
 
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (p.isAdminMode()) {
-            p.sendMessage(GeneralLanguage.MODE_STILL_ADMIN);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.MODE_STILL_ADMIN);
             return true;
         }
         p.setWatching(!p.isWatching());

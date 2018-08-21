@@ -1,6 +1,8 @@
 package com.minecraft.plugin.elite.kitpvp.listeners.basic;
 
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
+import com.minecraft.plugin.elite.general.api.events.kits.KitChangeEvent;
+import com.minecraft.plugin.elite.kitpvp.KitPvP;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,5 +22,10 @@ public class ScoreboardEventListener implements Listener {
     public void clearTagOnQuit(PlayerQuitEvent e) {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         p.clearTag();
+    }
+
+    @EventHandler
+    public void onKitChange(KitChangeEvent e) {
+        KitPvP.updateScoreboard();
     }
 }

@@ -68,7 +68,11 @@ public enum GeneralPermission implements PermissionNode {
     HELP("help"),
     LANGUAGE("language"),
     STATS("stats"),
-    SUICIDE("suicide");
+    SUICIDE("suicide"),
+
+    KIT_FREE("kit.free"),
+    KIT("kit"),
+    KIT_INFO("kit.info");
 
     private String string;
 

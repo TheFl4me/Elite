@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.survivalgames.manager;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.survivalgames.SurvivalGames;
@@ -113,9 +112,10 @@ public class Lobby {
 	
 	public void addPlayer(GeneralPlayer p) {
 		this.players.add(p);
+		p.setCanUseKit(false);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
-			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.JOINED).replaceAll("%p", p.getName()));
+			all.getPlayer().sendMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.JOINED).replaceAll("%p", p.getName()));
 		}
 		if(!this.hasStartedCountdown() && this.getPlayers().size() >= this.neededPlayersToStart() && !this.isFull()) {
 			this.startCountDown(60);
@@ -130,7 +130,7 @@ public class Lobby {
 		this.players.remove(p);
 		for(Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
-			all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.LEFT).replaceAll("%p", p.getName()));
+			all.getPlayer().sendMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.LEFT).replaceAll("%p", p.getName()));
 		}
 		if(this.hasStartedCountdown() && this.getPlayers().size() < this.neededPlayersToStart()) {
 			this.endCountdown();
@@ -199,7 +199,9 @@ public class Lobby {
         					Location loc = arena.getPods().get(i);			
         					loc.setDirection(arena.getCenter().toVector().subtract(loc.toVector()));
         					p.getPlayer().teleport(loc);
-        					p.clear();
+							if (p.hasTool())
+								p.clearTools();
+							p.getPlayer().getInventory().clear();
         					arena.addPlayer(p);
         				}
 						lobby.endCountdown();

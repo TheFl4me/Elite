@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.listeners;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.event.EventHandler;
@@ -14,7 +13,7 @@ public class AFKEventsListener implements Listener {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.isAFK()) {
             p.setAFK(false);
-            p.sendMessage(GeneralLanguage.AFK_FALSE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.AFK_FALSE);
         }
         if (p.isPendingAFK()) {
             p.stopAFKPendingTimer();
@@ -27,7 +26,7 @@ public class AFKEventsListener implements Listener {
         GeneralPlayer p = GeneralPlayer.get(e.getPlayer());
         if (p.isAFK()) {
             p.setAFK(false);
-            p.sendMessage(GeneralLanguage.AFK_FALSE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.AFK_FALSE);
         }
         if (p.isPendingAFK()) {
             p.stopAFKPendingTimer();
@@ -41,7 +40,7 @@ public class AFKEventsListener implements Listener {
         String message = e.getMessage().toLowerCase();
         if (p.isAFK()) {
             p.setAFK(false);
-            p.sendMessage(GeneralLanguage.AFK_FALSE);
+            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.AFK_FALSE);
         }
         if (p.isPendingAFK()) {
             p.stopAFKPendingTimer();

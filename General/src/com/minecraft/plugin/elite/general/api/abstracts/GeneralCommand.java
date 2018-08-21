@@ -1,6 +1,5 @@
 package com.minecraft.plugin.elite.general.api.abstracts;
 
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
@@ -65,7 +64,7 @@ public abstract class GeneralCommand implements CommandExecutor {
             if(this.isConsoleCmd()) {
                 return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(this.getLanguage().get(GeneralLanguage.ONLY_PLAYER));
+                sender.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ONLY_PLAYER));
                 return true;
             }
         } else if(sender instanceof Player) {
@@ -73,7 +72,7 @@ public abstract class GeneralCommand implements CommandExecutor {
             if (this.hasPermission(sender)) {
                 return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(this.getLanguage().get(GeneralLanguage.NO_PERMISSION));
+                sender.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.NO_PERMISSION));
                 return true;
             }
         } else {

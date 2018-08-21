@@ -1,7 +1,6 @@
 package com.minecraft.plugin.elite.general.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
-import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
@@ -19,11 +18,7 @@ import com.minecraft.plugin.elite.general.punish.mute.MuteManager;
 import com.minecraft.plugin.elite.general.punish.mute.PastMute;
 import com.minecraft.plugin.elite.general.punish.report.Report;
 import com.minecraft.plugin.elite.general.punish.report.ReportManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.SkullType;
+import org.bukkit.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -135,14 +130,14 @@ public class InfoGUI extends GUI {
 
         ResultSet res = db.select(General.DB_PLAYERS, "uuid", this.getPlayer().getUniqueId().toString());
         if(res.next()) {
-            server.rename(admin, this.getLanguage().get(GeneralLanguage.INFO_GUI_ADMIN)
+            server.rename(admin, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_ADMIN)
                     .replaceAll("%ip", res.getString("ip"))
                     .replaceAll("%rank", Rank.get(this.getPlayer()).getDisplayName())
                     .replaceAll("%uuid", this.getPlayer().getUniqueId().toString())
                     .replaceAll("%sentreports", Long.toString(PunishManager.getSentReports(this.getPlayer().getUniqueId())))
                     .replaceAll("%truereports", Long.toString(PunishManager.getTrueSentReports(this.getPlayer().getUniqueId()))));
 
-            server.rename(time, this.getLanguage().get(GeneralLanguage.INFO_GUI_TIME)
+            server.rename(time, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_TIME)
                     .replaceAll("%joindate", server.getDate(res.getLong("firstjoin")))
                     .replaceAll("%lastonline", server.getDate(res.getLong("lastjoin")))
                     .replaceAll("%playtime", server.getTime(res.getLong("playtime"), this.getLanguage())));
@@ -157,7 +152,7 @@ public class InfoGUI extends GUI {
             else
                 kdr = df.format((double) res.getInt("kills") / (double) res.getInt("deaths"));
 
-            server.rename(stats, this.getLanguage().get(GeneralLanguage.INFO_GUI_STATS)
+            server.rename(stats, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_STATS)
                     .replaceAll("%level", Integer.toString(res.getInt("level")))
                     .replaceAll("%elo", Long.toString(res.getLong("elo")))
                     .replaceAll("%prestige", Integer.toString(res.getInt("prestige")))
@@ -169,16 +164,16 @@ public class InfoGUI extends GUI {
         }
 
         ItemStack mutes = new ItemStack(Material.BOOK);
-        server.rename(mutes, this.getLanguage().get(GeneralLanguage.INFO_GUI_MUTES) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getMuteList().size()) + "]");
+        server.rename(mutes, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_MUTES) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getMuteList().size()) + "]");
 
         ItemStack bans = new ItemStack(Material.IRON_FENCE);
-        server.rename(bans, this.getLanguage().get(GeneralLanguage.INFO_GUI_BANS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getBanList().size()) + "]");
+        server.rename(bans, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_BANS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getBanList().size()) + "]");
 
         ItemStack reports = new ItemStack(Material.LAVA_BUCKET);
-        server.rename(reports, this.getLanguage().get(GeneralLanguage.INFO_GUI_REPORTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getReportList().size()) + "]");
+        server.rename(reports, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_REPORTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getReportList().size()) + "]");
 
         ItemStack alts = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
-        server.rename(alts, this.getLanguage().get(GeneralLanguage.INFO_GUI_ALTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getAltList().size()) + "]");
+        server.rename(alts, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_ALTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getAltList().size()) + "]");
 
         this.fill(this.glass());
         this.getInventory().setItem(12, head);
@@ -193,7 +188,7 @@ public class InfoGUI extends GUI {
     }
 
     public Inventory bans(int page) {
-        this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_BANS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getBanList().size(), this.glass());
+        this.buildPageType(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_BANS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getBanList().size(), this.glass());
 
         Server server = Server.get();
         Ban ban = BanManager.getBan(this.getPlayer().getUniqueId());
@@ -204,17 +199,17 @@ public class InfoGUI extends GUI {
             UUID id = this.getBanList().get(i);
             PastBan pastBan = BanManager.getPastBan(id);
             ItemStack block = new ItemStack(Material.BARRIER);
-            server.rename(block, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
+            server.rename(block, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_ERROR));
             try {
                 if(ban != null && id.equals(ban.getUniqueId())) {
                     block = new ItemStack(Material.GOLD_BLOCK);
-                    server.rename(block, ban.getInfo(GeneralLanguage.BAN_INFO, this.getLanguage()));
+                    server.rename(block, ban.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_INFO, this.getLanguage()));
                 } else if(pastBan != null){
                     if(pastBan.isTemp())
                         block = new ItemStack(Material.EMERALD_BLOCK);
                     else
                         block = new ItemStack(Material.DIAMOND_BLOCK);
-                    server.rename(block, pastBan.getInfo(GeneralLanguage.BAN_INFO_PAST, this.getLanguage()));
+                    server.rename(block, pastBan.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.BAN_INFO_PAST, this.getLanguage()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -225,7 +220,7 @@ public class InfoGUI extends GUI {
     }
 
     public Inventory mutes(int page) {
-        this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_MUTES) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getMuteList().size() , this.glass());
+        this.buildPageType(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_MUTES) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getMuteList().size() , this.glass());
 
         Server server = Server.get();
         Mute mute = MuteManager.getMute(this.getPlayer().getUniqueId());
@@ -236,17 +231,17 @@ public class InfoGUI extends GUI {
             UUID id = this.getMuteList().get(i);
             PastMute pastMute = MuteManager.getPastMute(id);
             ItemStack block = new ItemStack(Material.BARRIER);
-            server.rename(block, this.getLanguage().get(GeneralLanguage.INFO_GUI_ERROR));
+            server.rename(block, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_ERROR));
             try {
                 if(mute != null && id.equals(mute.getUniqueId())) {
                     block = new ItemStack(Material.GOLD_BLOCK);
-                    server.rename(block, mute.getInfo(GeneralLanguage.MUTE_INFO, this.getLanguage()));
+                    server.rename(block, mute.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_INFO, this.getLanguage()));
                 } else if(pastMute != null){
                     if(pastMute.isTemp())
                         block = new ItemStack(Material.EMERALD_BLOCK);
                     else
                         block = new ItemStack(Material.DIAMOND_BLOCK);
-                    server.rename(block, pastMute.getInfo(GeneralLanguage.MUTE_INFO_PAST, this.getLanguage()));
+                    server.rename(block, pastMute.getInfo(com.minecraft.plugin.elite.general.GeneralLanguage.MUTE_INFO_PAST, this.getLanguage()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -257,7 +252,7 @@ public class InfoGUI extends GUI {
     }
 
     public Inventory reports(int page) {
-        this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_REPORTS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getReportList().size(), this.glass());
+        this.buildPageType(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_REPORTS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getReportList().size(), this.glass());
 
         Server server = Server.get();
 
@@ -266,7 +261,7 @@ public class InfoGUI extends GUI {
                 break;
             Report report = this.getReportList().get(i);
             Material mat;
-            switch((GeneralLanguage) report.getReason()) {
+            switch((com.minecraft.plugin.elite.general.GeneralLanguage) report.getReason()) {
                 case REPORT_GUI_HACKING: mat = Material.DIAMOND_SWORD;
                     break;
                 case REPORT_GUI_BUG: mat = Material.TNT;
@@ -278,7 +273,7 @@ public class InfoGUI extends GUI {
                 default: mat = Material.BARRIER;
             }
             ItemStack rep = new ItemStack(mat);
-            server.rename(rep, this.getLanguage().get(GeneralLanguage.INFO_GUI_REPORTS_REPORT)
+            server.rename(rep, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_REPORTS_REPORT)
                     .replaceAll("%target", report.getTarget().getName())
                     .replaceAll("%reason", this.getLanguage().getOnlyFirstLine(report.getReason()))
                     .replaceAll("%reporter", report.getReporter().getName())
@@ -290,7 +285,7 @@ public class InfoGUI extends GUI {
     }
 
     public Inventory alts(int page) {
-        this.buildPageType(this.getLanguage().get(GeneralLanguage.INFO_GUI_ALTS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getAltList().size(), this.glass());
+        this.buildPageType(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_GUI_ALTS) + " - " + Rank.get(this.getPlayer()).getPrefix().getColor() + this.getPlayer().getName(), page, this.getAltList().size(), this.glass());
 
         Server server = Server.get();
 
