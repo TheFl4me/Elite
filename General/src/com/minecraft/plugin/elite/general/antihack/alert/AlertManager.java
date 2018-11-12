@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.antihack.alert;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -63,12 +64,12 @@ public class AlertManager {
             for (Player players : Bukkit.getOnlinePlayers()) {
                 GeneralPlayer all = GeneralPlayer.get(players);
                 if (all.canViewAlerts())
-                    all.getPlayer().sendMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ALERT_HACKS)
+                    all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.ALERT_HACKS)
                             .replaceAll("%p", p.getName())
                             .replaceAll("%hack", alert.toString())
                             .replaceAll("%chance", df.format(chance) + "%"));
             }
-            System.out.println(Language.ENGLISH.get(com.minecraft.plugin.elite.general.GeneralLanguage.ALERT_HACKS)
+            System.out.println(Language.ENGLISH.get(GeneralLanguage.ALERT_HACKS)
                     .replaceAll("%p", p.getName())
                     .replaceAll("%hack", alert.toString())
                     .replaceAll("%chance", df.format(chance) + "%"));

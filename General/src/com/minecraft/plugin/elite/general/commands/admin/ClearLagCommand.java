@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -22,7 +23,7 @@ public class ClearLagCommand extends GeneralCommand {
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
-        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLEAR_LAG);
+        p.sendMessage(GeneralLanguage.CLEAR_LAG);
         for (World world : Bukkit.getWorlds()) {
             List<Entity> entList = world.getEntities();
             entList.forEach((drops) -> {

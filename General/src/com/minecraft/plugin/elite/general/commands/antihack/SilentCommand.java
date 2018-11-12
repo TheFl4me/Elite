@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.antihack;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -18,9 +19,9 @@ public class SilentCommand extends GeneralCommand {
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         p.showAlerts(!p.canViewAlerts());
         if (p.canViewAlerts())
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SILENT_VIS);
+            p.sendMessage(GeneralLanguage.SILENT_VIS);
         else
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SILENT_HIDDEN);
+            p.sendMessage(GeneralLanguage.SILENT_HIDDEN);
         return true;
     }
 }

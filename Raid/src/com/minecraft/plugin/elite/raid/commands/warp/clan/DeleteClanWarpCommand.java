@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.raid.commands.warp.clan;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
@@ -31,7 +32,7 @@ public class DeleteClanWarpCommand extends GeneralCommand {
 						warp.delete();
 						return true;
 					} else {
-						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+						p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
 						return true;
 					}
 				} else {
@@ -39,7 +40,7 @@ public class DeleteClanWarpCommand extends GeneralCommand {
 					return true;
 				}
 			} else {
-				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+				p.sendMessage(GeneralLanguage.CLAN_NONE);
 				return true;
 			}
 		} else {

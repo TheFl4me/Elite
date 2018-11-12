@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -36,14 +37,14 @@ public class LanguageCommand extends GeneralCommand implements TabCompleter {
         if(args.length > 0) {
             try {
                 p.setLanguage(Language.valueOf(args[0].toUpperCase()));
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.LANGUAGE);
+                p.sendMessage(GeneralLanguage.LANGUAGE);
                 return true;
             } catch(IllegalArgumentException e) {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.LANGUAGE_NULL);
+                p.sendMessage(GeneralLanguage.LANGUAGE_NULL);
                 return true;
             }
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.LANGUAGE_USAGE);
+            p.sendMessage(GeneralLanguage.LANGUAGE_USAGE);
             return true;
         }
     }

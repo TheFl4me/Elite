@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.spawn;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -18,7 +19,7 @@ public class SetSpawnCommand extends GeneralCommand {
 
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         Location loc = p.getPlayer().getLocation();
-        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SPAWN_SET);
+        p.sendMessage(GeneralLanguage.SPAWN_SET);
         p.getPlayer().getWorld().setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         return true;
     }

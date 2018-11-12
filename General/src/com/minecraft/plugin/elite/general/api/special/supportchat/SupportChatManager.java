@@ -1,12 +1,17 @@
 package com.minecraft.plugin.elite.general.api.special.supportchat;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SupportChatManager {
@@ -24,11 +29,11 @@ public class SupportChatManager {
 
     public static void sendRequest(GeneralPlayer p) {
         requests.add(p.getUniqueId());
-        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_REQUEST_SENT);
+        p.sendMessage(GeneralLanguage.SUPPORT_REQUEST_SENT);
         for(Player staffs : Bukkit.getOnlinePlayers()) {
             GeneralPlayer staff = GeneralPlayer.get(staffs);
             if(staff.hasPermission(GeneralPermission.CHAT_SUPPORT_EXTRA))
-                staff.getPlayer().sendMessage(staff.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SUPPORT_REQUEST_STAFF).replaceAll("%p", p.getName()));
+                staff.getPlayer().sendMessage(staff.getLanguage().get(GeneralLanguage.SUPPORT_REQUEST_STAFF).replaceAll("%p", p.getName()));
         }
         Bukkit.getScheduler().runTaskLater(General.getPlugin(), () -> removeRequest(p), 6000L);
     }

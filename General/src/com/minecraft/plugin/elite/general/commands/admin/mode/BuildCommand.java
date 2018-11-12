@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -18,9 +19,9 @@ public class BuildCommand extends GeneralCommand {
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         p.setBuilding(!p.isBuilding());
         if (p.isBuilding())
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.BUILD_ENABLED);
+            p.sendMessage(GeneralLanguage.BUILD_ENABLED);
         else
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.BUILD_DISABLED);
+            p.sendMessage(GeneralLanguage.BUILD_DISABLED);
         return true;
     }
 }

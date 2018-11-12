@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -25,7 +26,7 @@ public class CheckInfoCommand extends GeneralCommand {
 
 		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		if(args.length == 1) {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK);
+			p.sendMessage(GeneralLanguage.DB_CHECK);
 			Database db = General.getDB();
 			OfflinePlayer z =  Bukkit.getOfflinePlayer(args[0]);
 			if(z != null && db.containsValue(General.DB_PLAYERS, "uuid", z.getUniqueId().toString())) {
@@ -34,16 +35,16 @@ public class CheckInfoCommand extends GeneralCommand {
 					p.openGUI(gui, gui.info());
 					return true;
 				} catch(SQLException e) {
-					p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.DB_CHECK_FAIL);
+					p.sendMessage(GeneralLanguage.DB_CHECK_FAIL);
 					e.printStackTrace();
 					return true;
 				}
 			} else {
-				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NEVER_JOINED);
+				p.sendMessage(GeneralLanguage.NEVER_JOINED);
 				return true;
 			}
 		} else {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INFO_USAGE);
+			p.sendMessage(GeneralLanguage.INFO_USAGE);
 			return true;
 		}
 	}

@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.clan;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -46,18 +47,18 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                             clan.saveToDB();
                             clan.add(p.getUniqueId());
                             clan.setRank(p.getUniqueId(), Clan.ClanRank.CREATOR);
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_CREATED);
+                            p.sendMessage(GeneralLanguage.CLAN_CREATED);
                             return true;
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_EXIST);
+                            p.sendMessage(GeneralLanguage.CLAN_EXIST);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NAME_MAX_SIZE);
+                        p.sendMessage(GeneralLanguage.CLAN_NAME_MAX_SIZE);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_HAS_CLAN);
+                    p.sendMessage(GeneralLanguage.CLAN_HAS_CLAN);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("delete")) {
@@ -67,16 +68,16 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         for (UUID uuid : clan.getMembers()) {
                             GeneralPlayer z = GeneralPlayer.get(uuid);
                             if (z != null)
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_DELETED);
+                                p.sendMessage(GeneralLanguage.CLAN_DELETED);
                         }
                         clan.delete();
                         return true;
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                        p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("info")) {
@@ -93,7 +94,7 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     p.getPlayer().sendMessage(info.toString());
                     return true;
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_EXIST_NOT);
+                    p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("invite")) {
@@ -105,32 +106,32 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         if (clan.isMod(p.getUniqueId())) {
                             if (!clan.hasInvited(offlinePlayer.getUniqueId())) {
                                 Rank rank = Rank.get(offlinePlayer);
-                                String inviteMsgSent = p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_SENT)
+                                String inviteMsgSent = p.getLanguage().get(GeneralLanguage.CLAN_INVITE_SENT)
                                         .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName());
                                 p.getPlayer().sendMessage(inviteMsgSent);
                                 if (offlinePlayer.isOnline()) {
                                     GeneralPlayer z = GeneralPlayer.get(offlinePlayer.getUniqueId());
-                                    z.getPlayer().sendMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_RECEIVED).replaceAll("%clan", clan.getName()));
-                                    z.sendClickMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_ACCEPT).replaceAll("%clan", clan.getName()), "/clan accept " + clan.getName(), false);
-                                    z.sendClickMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_DENY).replaceAll("%clan", clan.getName()), "/clan deny " + clan.getName(), false);
+                                    z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED).replaceAll("%clan", clan.getName()));
+                                    z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_ACCEPT).replaceAll("%clan", clan.getName()), "/clan accept " + clan.getName(), false);
+                                    z.sendClickMessage(z.getLanguage().get(GeneralLanguage.CLAN_INVITE_RECEIVED_CLICK_DENY).replaceAll("%clan", clan.getName()), "/clan deny " + clan.getName(), false);
                                 }
                                 new ClanInvite(p.getUniqueId(), offlinePlayer.getUniqueId(), clan);
                                 return true;
                             } else {
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_ALREADY);
+                                p.sendMessage(GeneralLanguage.CLAN_INVITE_ALREADY);
                                 return true;
                             }
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                            p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                        p.sendMessage(GeneralLanguage.CLAN_NONE);
                         return true;
                     }
 
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_HAS_CLAN);
+                    p.sendMessage(GeneralLanguage.CLAN_HAS_CLAN);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("uninvite")) {
@@ -142,20 +143,20 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         if (invite != null) {
                             invite.delete();
                             Rank rank = Rank.get(offlinePlayer);
-                            String uninvite = p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_REVOKED)
+                            String uninvite = p.getLanguage().get(GeneralLanguage.CLAN_INVITE_REVOKED)
                                     .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName());
                             p.getPlayer().sendMessage(uninvite);
                             return true;
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_NOT_OTHER);
+                            p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_OTHER);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                        p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("accept")) {
@@ -165,20 +166,20 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         ClanInvite invite = ClanManager.getInvite(p.getUniqueId(), clan);
                         if (invite != null) {
                             clan.add(p.getUniqueId());
-                            p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_ACCEPT)
+                            p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_INVITE_ACCEPT)
                                     .replaceAll("%clan", clan.getName()));
                             invite.delete();
                             return true;
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_NOT_YOU);
+                            p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_YOU);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_EXIST_NOT);
+                        p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_HAS_CLAN);
+                    p.sendMessage(GeneralLanguage.CLAN_HAS_CLAN);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("deny")) {
@@ -186,16 +187,16 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                 if (clan != null) {
                     ClanInvite invite = ClanManager.getInvite(p.getUniqueId(), clan);
                     if (invite != null) {
-                        p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_DENY)
+                        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_INVITE_DENY)
                                 .replaceAll("%clan", clan.getName()));
                         invite.delete();
                         return true;
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_INVITE_NOT_YOU);
+                        p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_YOU);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_EXIST_NOT);
+                    p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("promote")) {
@@ -208,28 +209,28 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                             if (clan.isNormal(offlinePlayer.getUniqueId())) {
                                 clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.MOD);
                                 Rank rank = Rank.get(offlinePlayer);
-                                p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_PROMOTED)
+                                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
                                         .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 if (offlinePlayer.isOnline()) {
                                     GeneralPlayer z = GeneralPlayer.get(offlinePlayer.getUniqueId());
-                                    z.getPlayer().sendMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_PROMOTED)
+                                    z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.CLAN_PROMOTED)
                                             .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 }
                                 return true;
                             } else {
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_PROMOTED_ALREADY);
+                                p.sendMessage(GeneralLanguage.CLAN_PROMOTED_ALREADY);
                                 return true;
                             }
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NOT_SAME);
+                            p.sendMessage(GeneralLanguage.CLAN_NOT_SAME);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                        p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("demote")) {
@@ -242,26 +243,26 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                             if (clan.isMod(offlinePlayer.getUniqueId())) {
                                 clan.setRank(offlinePlayer.getUniqueId(), Clan.ClanRank.NORMAL);
                                 Rank rank = Rank.get(offlinePlayer);
-                                p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_DEMOTED)
+                                p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
                                         .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 if (offlinePlayer.isOnline())
-                                    ((Player) offlinePlayer).sendMessage(GeneralPlayer.get(offlinePlayer.getUniqueId()).getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_DEMOTED)
+                                    ((Player) offlinePlayer).sendMessage(GeneralPlayer.get(offlinePlayer.getUniqueId()).getLanguage().get(GeneralLanguage.CLAN_DEMOTED)
                                             .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName()));
                                 return true;
                             } else {
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_DEMOTED_ALREADY);
+                                p.sendMessage(GeneralLanguage.CLAN_DEMOTED_ALREADY);
                                 return true;
                             }
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NOT_SAME);
+                            p.sendMessage(GeneralLanguage.CLAN_NOT_SAME);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                        p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("kick")) {
@@ -276,28 +277,28 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                                 for(UUID uuid : clan.getMembers()) {
                                     GeneralPlayer all = GeneralPlayer.get(uuid);
                                     if(all != null)
-                                        all.getPlayer().sendMessage(all.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_KICKED)
+                                        all.getPlayer().sendMessage(all.getLanguage().get(GeneralLanguage.CLAN_KICKED)
                                                 .replaceAll("%p", Rank.get(offlinePlayer).getPrefix().getColor() + offlinePlayer.getName()));
                                 }
                                 return true;
                             } else {
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_HIGHER_RANK);
+                                p.sendMessage(GeneralLanguage.CLAN_HIGHER_RANK);
                                 return true;
                             }
                         } else {
-                            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NOT_SAME);
+                            p.sendMessage(GeneralLanguage.CLAN_NOT_SAME);
                             return true;
                         }
                     } else {
-                        p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_RANK_ERROR);
+                        p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
                     }
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_USAGE);
+                p.sendMessage(GeneralLanguage.CLAN_USAGE);
                 return true;
             }
         } else if (args.length > 0) {
@@ -308,28 +309,28 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         for(UUID uuid : clan.getMembers()) {
                             GeneralPlayer all = GeneralPlayer.get(uuid);
                             if(all != null)
-                                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_DELETED);
+                                p.sendMessage(GeneralLanguage.CLAN_DELETED);
                         }
                         clan.delete();
                         return true;
                     }
                     clan.remove(p.getUniqueId());
-                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_LEAVE)
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_LEAVE)
                             .replaceAll("%clan", clan.getName()));
                     return true;
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+                    p.sendMessage(GeneralLanguage.CLAN_NONE);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("help")) {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_HELP);
+                p.sendMessage(GeneralLanguage.CLAN_HELP);
                 return true;
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_USAGE);
+                p.sendMessage(GeneralLanguage.CLAN_USAGE);
                 return true;
             }
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_USAGE);
+            p.sendMessage(GeneralLanguage.CLAN_USAGE);
             return true;
         }
     }

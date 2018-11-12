@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.listeners;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class PvPToggleEventListener implements Listener {
             GeneralPlayer p = GeneralPlayer.get((Player) e.getEntity());
             Server server = Server.get();
             if (!server.pvpIsEnabled()) {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.PVP_DISABLED_ON_HIT);
+                p.sendMessage(GeneralLanguage.PVP_DISABLED_ON_HIT);
                 e.setCancelled(true);
             }
         }

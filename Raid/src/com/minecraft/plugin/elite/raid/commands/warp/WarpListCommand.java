@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.raid.commands.warp;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
 import com.minecraft.plugin.elite.general.api.special.clan.Clan;
@@ -49,7 +50,7 @@ public class WarpListCommand extends GeneralCommand {
 					p.getPlayer().sendMessage(warps);
 					return true;
 				} else {
-					p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CLAN_NONE);
+					p.sendMessage(GeneralLanguage.CLAN_NONE);
 					return true;
 				}
 			} else if(args[0].equalsIgnoreCase("private")) {

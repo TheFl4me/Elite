@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -24,7 +25,7 @@ public class ReportCommand extends GeneralCommand {
 				if(!p.getUniqueId().equals(z.getUniqueId())) {
 					if(!z.isSupporter()) {
 						if(ReportEventListener.reportedPlayer.containsKey(p.getUniqueId()) && ReportEventListener.reportedPlayer.get(p.getUniqueId()).equals(z.getUniqueId())) {
-							p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_COOLDOWN);
+							p.sendMessage(GeneralLanguage.REPORT_COOLDOWN);
 							return true;
 						} else {								
 							ReportGUI report = new ReportGUI(p.getLanguage());
@@ -32,19 +33,19 @@ public class ReportCommand extends GeneralCommand {
 							return true;
 						}
 					} else {
-						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_ERROR_STAFF);
+						p.sendMessage(GeneralLanguage.REPORT_ERROR_STAFF);
 						return true;
 					}
 				} else {
-					p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_ERROR_SELF);
+					p.sendMessage(GeneralLanguage.REPORT_ERROR_SELF);
 					return true;
 				}
 			} else {
-				p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_NOT_ONLINE);
+				p.sendMessage(GeneralLanguage.REPORT_NOT_ONLINE);
 				return true;
 			}
 		} else {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_USAGE);
+			p.sendMessage(GeneralLanguage.REPORT_USAGE);
 			return true;
 		}
 	}

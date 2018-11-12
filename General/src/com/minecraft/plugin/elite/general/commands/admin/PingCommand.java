@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -26,7 +27,7 @@ public class PingCommand extends GeneralCommand {
                 sendPingInfo(p, z);
                 return true;
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
+                p.sendMessage(GeneralLanguage.NO_TARGET);
                 return true;
             }
         }
@@ -41,7 +42,7 @@ public class PingCommand extends GeneralCommand {
             color = ChatColor.GOLD;
         else
             color = ChatColor.RED;
-        p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.PING)
+        p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PING)
                 .replaceAll("%z", z.getName())
                 .replaceAll("%ping", color + Integer.toString(ping)));
     }

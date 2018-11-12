@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.party;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -27,11 +28,11 @@ public class PartyChatCommand extends GeneralCommand {
                 party.sendMessage(message.toString(), p);
                 return true;
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.PARTY_NONE_YOU);
+                p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
                 return true;
             }
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.PARTY_CHAT_USAGE);
+            p.sendMessage(GeneralLanguage.PARTY_CHAT_USAGE);
             return true;
         }
     }

@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.punish.report;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -20,11 +21,11 @@ public class ReportListCommand extends GeneralCommand {
 		GeneralPlayer p = GeneralPlayer.get((Player) cs);
 		String list = ReportManager.getReportList(true, p.getLanguage());
 		if(list != null) {
-			p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_LIST)
+			p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.REPORT_LIST)
 					.replaceAll("%list", list));
 			return true;
 		} else {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.REPORT_ERROR_NONE);
+			p.sendMessage(GeneralLanguage.REPORT_ERROR_NONE);
 			return true;
 		}
 	}

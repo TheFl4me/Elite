@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.api;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerAttack;
 import com.minecraft.plugin.elite.general.antihack.hacks.PlayerClick;
@@ -35,9 +36,19 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.*;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketDataSerializer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -54,9 +65,14 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.*;
-
-import com.minecraft.plugin.elite.general.api.enums.Achievement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 
 public class GeneralPlayer {
 
@@ -399,9 +415,9 @@ public class GeneralPlayer {
 
 	    CraftPlayer craftplayer = (CraftPlayer) this.getPlayer();
 		PlayerConnection connection = craftplayer.getHandle().playerConnection;
-		String header_text = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.HEADER)
+		String header_text = this.getLanguage().get(GeneralLanguage.HEADER)
 				.replaceAll("%domain", server.getDomain());
-		String footer_text = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.FOOTER)
+		String footer_text = this.getLanguage().get(GeneralLanguage.FOOTER)
 				.replaceAll("%ranks", ranks.toString().substring(0, ranks.toString().length() - 3));
 
 		IChatBaseComponent header = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + header_text + "\"}");
@@ -545,7 +561,7 @@ public class GeneralPlayer {
 			this.getPlayer().getInventory().setArmorContents(null);
 			for(PotionEffect effect : this.getPlayer().getActivePotionEffects())
 				this.getPlayer().removePotionEffect(effect.getType());
-			this.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.WATCH_WATCHING);
+			this.sendMessage(GeneralLanguage.WATCH_WATCHING);
 			this.getPlayer().setHealth(20);
 			this.getPlayer().setFoodLevel(20);
 		}
@@ -563,7 +579,7 @@ public class GeneralPlayer {
 		else {
 			this.invis = false;
 			this.setInvisTo(null);
-			this.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_VIS);
+			this.sendMessage(GeneralLanguage.INVIS_VIS);
 			for (Player players : Bukkit.getOnlinePlayers())
 				players.showPlayer(this.getPlayer());
 			InvisChangeEvent event = new InvisChangeEvent(this, false);
@@ -574,7 +590,7 @@ public class GeneralPlayer {
 	public void setInvis(Rank rank) {
 		this.setInvisTo(rank);
 		this.invis = true;
-		String msg = this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_INVIS).replaceAll("%rank", this.getInvisTo().getDisplayName().toUpperCase());
+		String msg = this.getLanguage().get(GeneralLanguage.INVIS_INVIS).replaceAll("%rank", this.getInvisTo().getDisplayName().toUpperCase());
 		this.getPlayer().sendMessage(msg);
 		for (Player players : Bukkit.getOnlinePlayers()) {
 			GeneralPlayer all = GeneralPlayer.get(players);
@@ -602,7 +618,7 @@ public class GeneralPlayer {
 	    	public void run() {
 	    		if(!p.isAFK()) {
 	    			p.setAFK(true);
-	    			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.AFK_TRUE);
+	    			p.sendMessage(GeneralLanguage.AFK_TRUE);
 	    		}
 	    	}
 	    };
@@ -957,7 +973,7 @@ public class GeneralPlayer {
 				double exp = damagePerPlayer.get(uuid) * ((this.getPrestige() + 1) * 100) / totalDamage;
 				double percent = damagePerPlayer.get(uuid) * 100 / totalDamage;
 				z.addExp(Math.round(exp));
-				z.getPlayer().sendMessage(z.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.DAMAGE_PERCENT)
+				z.getPlayer().sendMessage(z.getLanguage().get(GeneralLanguage.DAMAGE_PERCENT)
 						.replaceAll("%percent", df.format(percent))
 						.replaceAll("%player", this.getChatName()));
 			}
@@ -1024,7 +1040,7 @@ public class GeneralPlayer {
 	public void giveAchievement(Achievement achievement) {
 		Database db = General.getDB();
 		db.update(General.DB_ACHIEVEMENTS, achievement.toString().toLowerCase(), 1, "uuid", this.getUniqueId());
-		this.getPlayer().sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ACHIEVEMENT_UNLOCKED).replaceAll("%achievement", achievement.getName(this.getLanguage())));
+		this.getPlayer().sendMessage(this.getLanguage().get(GeneralLanguage.ACHIEVEMENT_UNLOCKED).replaceAll("%achievement", achievement.getName(this.getLanguage())));
 		this.getPlayer().playSound(this.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
 		this.addExp(achievement.getExp());
 		this.addTokens(achievement.getTokens());
@@ -1071,7 +1087,7 @@ public class GeneralPlayer {
 				GeneralPlayer p = get(getUniqueId());
 				if(p != null)
 					if (p.isCombatLog()) {
-						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.COMBATLOG_SAFE);
+						p.sendMessage(GeneralLanguage.COMBATLOG_SAFE);
 						p.getCombatLogTask().cancel();
 						p.setCombatLogTask(null);
 					}
@@ -1322,7 +1338,7 @@ public class GeneralPlayer {
 				break;
 		}
 
-		this.getPlayer().sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GIVE)
+		this.getPlayer().sendMessage(this.getLanguage().get(GeneralLanguage.KIT_GIVE)
 				.replaceAll("%kit", kit.getName()));
 	}
 

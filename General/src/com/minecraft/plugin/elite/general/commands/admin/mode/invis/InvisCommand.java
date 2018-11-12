@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode.invis;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -54,7 +55,7 @@ public class InvisCommand extends GeneralCommand implements TabCompleter {
                     break;
                 case "media": setInvis(p, Rank.MEDIA);
                     break;
-                default: p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_USAGE);
+                default: p.sendMessage(GeneralLanguage.INVIS_USAGE);
             }
         }
         return true;
@@ -64,8 +65,8 @@ public class InvisCommand extends GeneralCommand implements TabCompleter {
         if (p.getRank().ordinal() > rank.ordinal())
             p.setInvis(rank);
         else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_NO_PERMISSION);
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_USAGE);
+            p.sendMessage(GeneralLanguage.INVIS_NO_PERMISSION);
+            p.sendMessage(GeneralLanguage.INVIS_USAGE);
         }
     }
 }

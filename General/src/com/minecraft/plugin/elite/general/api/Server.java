@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.api;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.enums.Unit;
 import org.bukkit.Bukkit;
@@ -133,36 +134,36 @@ public class Server {
         StringBuilder sb = new StringBuilder(40);
         long years = sec / unitYears;
         if (years > 0) {
-            sb.append(years + (years == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_YEAR) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_YEAR_PLURAL)));
+            sb.append(years + (years == 1 ? lang.get(GeneralLanguage.UNIT_YEAR) : lang.get(GeneralLanguage.UNIT_YEAR_PLURAL)));
             sec -= years * unitYears;
         }
         long months = sec / unitMonths;
         if (months > 0) {
-            sb.append(months + (months == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_MONTH) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_MONTH_PLURAL)));
+            sb.append(months + (months == 1 ? lang.get(GeneralLanguage.UNIT_MONTH) : lang.get(GeneralLanguage.UNIT_MONTH_PLURAL)));
             sec -= months * unitMonths;
         }
         long weeks = sec / unitWeeks;
         if (weeks > 0) {
-            sb.append(weeks + (weeks == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_WEEK) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_WEEK_PLURAL)));
+            sb.append(weeks + (weeks == 1 ? lang.get(GeneralLanguage.UNIT_WEEK) : lang.get(GeneralLanguage.UNIT_WEEK_PLURAL)));
             sec -= weeks * unitWeeks;
         }
         long days = sec / unitDays;
         if (days > 0) {
-            sb.append(days + (days == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_DAY) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_DAY_PLURAL)));
+            sb.append(days + (days == 1 ? lang.get(GeneralLanguage.UNIT_DAY) : lang.get(GeneralLanguage.UNIT_DAY_PLURAL)));
             sec -= days * unitDays;
         }
         long hours = sec / unitHours;
         if (hours > 0) {
-            sb.append(hours + (hours == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_HOUR) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_HOUR_PLURAL)));
+            sb.append(hours + (hours == 1 ? lang.get(GeneralLanguage.UNIT_HOUR) : lang.get(GeneralLanguage.UNIT_HOUR_PLURAL)));
             sec -= hours * unitHours;
         }
         long minutes = sec / unitMin;
         if (minutes > 0) {
-            sb.append(minutes + (minutes == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_MINUTE) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_MINUTE_PLURAL)));
+            sb.append(minutes + (minutes == 1 ? lang.get(GeneralLanguage.UNIT_MINUTE) : lang.get(GeneralLanguage.UNIT_MINUTE_PLURAL)));
             sec -= minutes * unitMin;
         }
         if (sec > 0) {
-            sb.append(sec + (sec == 1 ? lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_SECOND) : lang.get(com.minecraft.plugin.elite.general.GeneralLanguage.UNIT_SECOND_PLURAL)));
+            sb.append(sec + (sec == 1 ? lang.get(GeneralLanguage.UNIT_SECOND) : lang.get(GeneralLanguage.UNIT_SECOND_PLURAL)));
         }
         if (sb.length() > 1) {
             sb.replace(sb.length() - 1, sb.length(), "");

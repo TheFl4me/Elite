@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.punish.info;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -28,7 +29,7 @@ public class IPInfoCommand extends GeneralCommand {
 			p.getPlayer().sendMessage(info);
 			return true;
 		} else {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.IP_USAGE);
+			p.sendMessage(GeneralLanguage.IP_USAGE);
 			return true;
 		}
 	}	

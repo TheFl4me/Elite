@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.antihack;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.antihack.alert.Alert;
 import com.minecraft.plugin.elite.general.antihack.alert.AlertManager;
@@ -29,7 +30,7 @@ public class AlertsCommand extends GeneralCommand {
             if (z != null) {
                 List<Alert> list = AlertManager.getAll(z);
                 if (list.isEmpty()) {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.ALERT_NONE);
+                    p.sendMessage(GeneralLanguage.ALERT_NONE);
                     return true;
                 } else {
                     Collection<AlertType> typeList = new ArrayList<>();
@@ -39,16 +40,16 @@ public class AlertsCommand extends GeneralCommand {
                         cleanList.add(alert);
                     });
                     List<String> finalList = cleanList.stream().map(alert -> alert.toString() + "(" + Integer.toString(alert.getDetections()) + ")").collect(Collectors.toList());
-                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ALERT_LIST)
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.ALERT_LIST)
                             .replaceAll("%alerts", finalList.toString()));
                     return true;
                 }
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
+                p.sendMessage(GeneralLanguage.NO_TARGET);
                 return true;
             }
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.ALERT_USAGE);
+            p.sendMessage(GeneralLanguage.ALERT_USAGE);
             return true;
         }
     }

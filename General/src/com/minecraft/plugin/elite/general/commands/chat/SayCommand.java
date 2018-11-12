@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -26,7 +27,7 @@ public class SayCommand extends GeneralCommand {
             Bukkit.broadcastMessage("\n  \n  " + p.getChatName() + " > " + ChatColor.RESET + message.toString() + "\n  \n  ");
             return true;
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SAY_USAGE);
+            p.sendMessage(GeneralLanguage.SAY_USAGE);
             return true;
         }
     }

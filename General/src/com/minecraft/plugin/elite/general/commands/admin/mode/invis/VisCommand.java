@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin.mode.invis;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -17,7 +18,7 @@ public class VisCommand extends GeneralCommand {
 
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (!p.isInvis()) {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.INVIS_VIS_ALREADY);
+            p.sendMessage(GeneralLanguage.INVIS_VIS_ALREADY);
             return true;
         }
         p.setInvis(false);

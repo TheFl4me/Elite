@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.antihack;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.punish.PunishManager;
@@ -8,7 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class SpamCheck {
 
@@ -84,7 +89,7 @@ public class SpamCheck {
         }
         if (isSpamming) {
             if (GeneralPlayer.get(p.getUniqueId()).canBypassChecks()) {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SPAM_CHECK_STAFF);
+                p.sendMessage(GeneralLanguage.SPAM_CHECK_STAFF);
             } else {
                 PunishManager.punish("System - SpamCheck", Bukkit.getOfflinePlayer(this.getPlayer().getUniqueId()), PunishReason.CHAT_SPAM, "Detected spamming chat by SpamCheck.");
                 this.clear();

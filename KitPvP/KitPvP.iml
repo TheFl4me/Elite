@@ -7,22 +7,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/craftbukkit-1.8.8.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/craftbukkit-1.8.8.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="General" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/worldedit-bukkit-6.1.jar!/" />
+          <root url="jar://$USER_HOME$/OneDrive/Utils/java/1.8.8/craftbukkit-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/OneDrive/Utils/java/1.8.8/craftbukkit-1.8.8.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Utils/java/worldedit-bukkit-6.1.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -31,7 +31,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/OneDrive/Java/MC/1.8.8/worldguard-6.2.1.jar!/" />
+          <root url="jar://$USER_HOME$/OneDrive/Utils/java/worldguard-bukkit-6.2.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

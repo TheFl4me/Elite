@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.chat;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
@@ -21,10 +22,10 @@ public class ChatToggleCommand extends GeneralCommand {
         server.setChat(!server.chatIsEnabled());
         if (server.chatIsEnabled())
             for(Player players : Bukkit.getOnlinePlayers())
-                GeneralPlayer.get(players).sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_ENABLED);
+                GeneralPlayer.get(players).sendMessage(GeneralLanguage.CHAT_ENABLED);
         else
             for(Player players : Bukkit.getOnlinePlayers())
-                GeneralPlayer.get(players).sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_DISABLED);
+                GeneralPlayer.get(players).sendMessage(GeneralLanguage.CHAT_DISABLED);
         return true;
     }
 }

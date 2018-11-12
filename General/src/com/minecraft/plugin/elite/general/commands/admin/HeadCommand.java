@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
@@ -24,7 +25,7 @@ public class HeadCommand extends GeneralCommand {
             inv.addItem(server.playerHead(args[0]));
             return true;
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.HEAD_USAGE);
+            p.sendMessage(GeneralLanguage.HEAD_USAGE);
             return true;
         }
     }

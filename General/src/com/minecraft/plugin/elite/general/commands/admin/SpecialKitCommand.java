@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.admin;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -46,41 +47,41 @@ public class SpecialKitCommand extends GeneralCommand implements TabCompleter {
                             }
                         }
                     });
-                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_APPLY)
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SKIT_APPLY)
                             .replaceAll("%skit", skit.getName()));
                     return true;
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_NULL);
+                    p.sendMessage(GeneralLanguage.SKIT_NULL);
                     return true;
                 }
             } catch (IllegalArgumentException e) {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_USAGE);
+                p.sendMessage(GeneralLanguage.SKIT_USAGE);
                 return true;
             }
         else if (args.length > 1)
             if (args[0].equalsIgnoreCase("create")) {
                 if (SKitManager.get(args[1]) == null) {
                     new SKit(args[1], p.getPlayer().getInventory().getContents());
-                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_CREATE)
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SKIT_CREATE)
                             .replaceAll("%skit", args[1]));
                     return true;
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_EXISTS);
+                    p.sendMessage(GeneralLanguage.SKIT_EXISTS);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("delete")) {
                 SKit skit = SKitManager.get(args[1]);
                 if (skit != null) {
-                    p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_DELETE)
+                    p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SKIT_DELETE)
                             .replaceAll("%skit", skit.getName()));
                     skit.delete();
                     return true;
                 } else {
-                    p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_NULL);
+                    p.sendMessage(GeneralLanguage.SKIT_NULL);
                     return true;
                 }
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_USAGE);
+                p.sendMessage(GeneralLanguage.SKIT_USAGE);
                 return true;
             }
         else if (args.length > 0 && args[0].equalsIgnoreCase("list")) {
@@ -99,7 +100,7 @@ public class SpecialKitCommand extends GeneralCommand implements TabCompleter {
             p.getPlayer().sendMessage(list.toString());
             return true;
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.SKIT_USAGE);
+            p.sendMessage(GeneralLanguage.SKIT_USAGE);
             return true;
         }
     }

@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.api.special.kits;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.Server;
 import com.minecraft.plugin.elite.general.api.abstracts.GUI;
@@ -33,14 +34,14 @@ public class KitGUI extends GUI {
 				kits.add(kit);
 
 
-		this.buildPageType(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SELECTOR_TITLE, page, kits.size(), this.glass());
+		this.buildPageType(GeneralLanguage.KIT_GUI_SELECTOR_TITLE, page, kits.size(), this.glass());
 		Server server = Server.get();
 		
 		ItemStack shop = new ItemStack(Material.GOLD_INGOT);
-		server.rename(shop, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_TITLE));
+		server.rename(shop, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_TITLE));
 
 		ItemStack settings = new ItemStack(Material.REDSTONE_COMPARATOR);
-		server.rename(settings, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SETTINGS_TITLE));
+		server.rename(settings, this.getLanguage().get(GeneralLanguage.KIT_GUI_SETTINGS_TITLE));
 
 		for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
 			if(i >= kits.size())
@@ -48,7 +49,7 @@ public class KitGUI extends GUI {
 			Kit kit = kits.get(i);
 			ItemStack item = kit.getIcon(ChatColor.GREEN);
 			if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige() && !General.getFreeKits().contains(kit))
-				server.rename(item, item.getItemMeta().getDisplayName() + "\n" + this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SELECTOR_LOCKED).replaceAll("%level", Integer.toString(kit.getLevel())));
+				server.rename(item, item.getItemMeta().getDisplayName() + "\n" + this.getLanguage().get(GeneralLanguage.KIT_GUI_SELECTOR_LOCKED).replaceAll("%level", Integer.toString(kit.getLevel())));
 			this.getInventory().addItem(item);
 		}
 		this.getInventory().setItem(3, settings);
@@ -62,30 +63,30 @@ public class KitGUI extends GUI {
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.SUGAR);
-		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_BACK));
+		server.rename(back, this.getLanguage().get(GeneralLanguage.KIT_GUI_BACK));
     	
     	ItemStack description = new ItemStack(Material.BOOK);
-    	server.rename(description, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
+    	server.rename(description, this.getLanguage().get(GeneralLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
 		
 		ItemStack ability = new ItemStack(Material.COMPASS);
-		server.rename(ability, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
+		server.rename(ability, this.getLanguage().get(GeneralLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
 		
 		ItemStack start = new ItemStack(Material.SIGN);
-		server.rename(start, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_ITEMS));
+		server.rename(start, this.getLanguage().get(GeneralLanguage.KIT_GUI_ITEMS));
 
 		ItemStack play;
 
 		if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel() && !p.isMasterPrestige() && !General.getFreeKits().contains(kit)) {
 			if(p.getPrestigeTokens() > 0) {
 				play = new ItemStack(Material.DIAMOND);
-				server.rename(play, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN)
+				server.rename(play, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN)
 						.replaceAll("%prestigetokens", Long.toString(p.getPrestigeTokens())));
 			} else {
 				play = this.glass();
 			}
 		} else {
 			play = new ItemStack(Material.FLINT_AND_STEEL);
-			server.rename(play, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SELECTOR_SELECT));
+			server.rename(play, this.getLanguage().get(GeneralLanguage.KIT_GUI_SELECTOR_SELECT));
 		}
 
 		this.fill(this.glass());
@@ -104,12 +105,12 @@ public class KitGUI extends GUI {
 			if(!p.hasKitPermission(kit) && kit.getIcon(ChatColor.GOLD) != null)
 				kits.add(kit);
 
-		this.buildPageType(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_TITLE, page, kits.size(), this.glass());
+		this.buildPageType(GeneralLanguage.KIT_GUI_SHOP_TITLE, page, kits.size(), this.glass());
 
 		Server server = Server.get();
 		
 		ItemStack kitSelector = new ItemStack(Material.CHEST);
-		server.rename(kitSelector, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SELECTOR_TITLE));
+		server.rename(kitSelector, this.getLanguage().get(GeneralLanguage.KIT_GUI_SELECTOR_TITLE));
 
 		for(int i = this.getLastSlot(page); i < this.getNextSlot(page); i++) {
 			if(i >= kits.size())
@@ -117,7 +118,7 @@ public class KitGUI extends GUI {
 			Kit kit = kits.get(i);
 			if(p.getLevel() < kit.getLevel()) {
 				ItemStack item = kit.getIcon(ChatColor.GOLD);
-				server.rename(item, item.getItemMeta().getDisplayName() + "\n" + this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SELECTOR_LOCKED).replaceAll("%level", Integer.toString(kit.getLevel())));
+				server.rename(item, item.getItemMeta().getDisplayName() + "\n" + this.getLanguage().get(GeneralLanguage.KIT_GUI_SELECTOR_LOCKED).replaceAll("%level", Integer.toString(kit.getLevel())));
 				this.getInventory().addItem(item);
 			} else
 				this.getInventory().addItem(kit.getIcon(ChatColor.GOLD));
@@ -132,33 +133,33 @@ public class KitGUI extends GUI {
 		Server server = Server.get();
 		
 		ItemStack back = new ItemStack(Material.REDSTONE);
-		server.rename(back, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_BACK));
+		server.rename(back, this.getLanguage().get(GeneralLanguage.KIT_GUI_BACK));
 
 		ItemStack description = new ItemStack(Material.BOOK);
-		server.rename(description, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
+		server.rename(description, this.getLanguage().get(GeneralLanguage.KIT_GUI_DESCRIPTION).replaceAll("%description", kit.getDescription(this.getLanguage())));
 
 		ItemStack ability = new ItemStack(Material.COMPASS);
-		server.rename(ability, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
+		server.rename(ability, this.getLanguage().get(GeneralLanguage.KIT_GUI_ABILITY).replaceAll("%ability", kit.getAbility(this.getLanguage())));
 
 		ItemStack start = new ItemStack(Material.SIGN);
-		server.rename(start, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_ITEMS));
+		server.rename(start, this.getLanguage().get(GeneralLanguage.KIT_GUI_ITEMS));
 		
 		ItemStack buy = new ItemStack(Material.GOLD_INGOT);
 
 		if(p.getLevel() < kit.getLevel())
-			server.rename(buy, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_INFERIOR_LEVEL)
+			server.rename(buy, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_INFERIOR_LEVEL)
 					.replaceAll("%level", Integer.toString(kit.getLevel())));
 		else if(p.getTokens() >= (long) kit.getPrice())
-			server.rename(buy, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_BUY_NORMAL_TOKEN)
+			server.rename(buy, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_BUY_NORMAL_TOKEN)
 					.replaceAll("%price", Integer.toString(kit.getPrice()))
 					.replaceAll("%tokens", Long.toString(p.getTokens())));
 		else
-			server.rename(buy, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_INFERIOR_TOKENS)
+			server.rename(buy, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_INFERIOR_TOKENS)
 					.replaceAll("%price", Integer.toString(kit.getPrice()))
 					.replaceAll("%tokens", Long.toString(p.getTokens())));
 		
 		ItemStack prestige = new ItemStack(Material.DIAMOND);
-		server.rename(prestige, this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN)
+		server.rename(prestige, this.getLanguage().get(GeneralLanguage.KIT_GUI_SHOP_BUY_PRESTIGE_TOKEN)
 				.replaceAll("%prestigetokens", Long.toString(p.getPrestigeTokens())));
 		
 		this.fill(this.glass());

@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.commands.kits;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -38,11 +39,11 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 
 		GeneralPlayer p = GeneralPlayer.get((Player)cs);
 		if(p.isInvis() || p.isAdminMode()) {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_ERROR_MODE);
+			p.sendMessage(GeneralLanguage.KIT_ERROR_MODE);
 			return true;
 		}
 		if(p.hasKit() && p.canUseKit()) {
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_ERROR_ALREADY);
+			p.sendMessage(GeneralLanguage.KIT_ERROR_ALREADY);
 			return true;
 		}
 		if(args.length == 0) {
@@ -54,18 +55,18 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 				if(args[0].equalsIgnoreCase(kit.getName())) {
 					if(p.hasKitPermission(kit)) {
 						if(kit.getPermissionType(p.getUniqueId()) == 1 && p.getLevel() < kit.getLevel()) {
-							p.getPlayer().sendMessage(p.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_ERROR_LOCKED)
+							p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.KIT_ERROR_LOCKED)
 									.replaceAll("%level", Integer.toString(kit.getLevel())));
 						} else {
 							p.giveKit(kit);
 						}
 					} else {
-						p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_NO_PERMISSION);
+						p.sendMessage(GeneralLanguage.KIT_NO_PERMISSION);
 					}
 					return true;
 				}
 			}
-			p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.KIT_ERROR_NULL);
+			p.sendMessage(GeneralLanguage.KIT_ERROR_NULL);
 			return true;
 		}
 	}

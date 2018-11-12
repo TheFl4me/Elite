@@ -1,6 +1,7 @@
 package com.minecraft.plugin.elite.general.listeners.chat;
 
 import com.minecraft.plugin.elite.general.General;
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -21,14 +22,14 @@ public class ChatBlacklistListener implements Listener {
         cfg.getStringList("blacklist").forEach((insult) -> {
             if(msg.contains(insult.toLowerCase())) {
                 e.setCancelled(true);
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_SWEAR);
+                p.sendMessage(GeneralLanguage.CHAT_SWEAR);
             }
         });
 
         cfg.getStringList("links").forEach((link) -> {
             if(msg.contains(link.toLowerCase())) {
                 e.setCancelled(true);
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.CHAT_LINKS);
+                p.sendMessage(GeneralLanguage.CHAT_LINKS);
             }
         });
     }

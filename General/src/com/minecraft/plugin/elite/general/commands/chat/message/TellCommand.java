@@ -1,5 +1,6 @@
 package com.minecraft.plugin.elite.general.commands.chat.message;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.GeneralPermission;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.abstracts.GeneralCommand;
@@ -27,11 +28,11 @@ public class TellCommand extends GeneralCommand {
                 msg.send();
                 return true;
             } else {
-                p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.NO_TARGET);
+                p.sendMessage(GeneralLanguage.NO_TARGET);
                 return true;
             }
         } else {
-            p.sendMessage(com.minecraft.plugin.elite.general.GeneralLanguage.MSG_USAGE_TELL);
+            p.sendMessage(GeneralLanguage.MSG_USAGE_TELL);
             return true;
         }
     }

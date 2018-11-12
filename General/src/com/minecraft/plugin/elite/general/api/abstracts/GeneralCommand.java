@@ -1,11 +1,16 @@
 package com.minecraft.plugin.elite.general.api.abstracts;
 
+import com.minecraft.plugin.elite.general.GeneralLanguage;
 import com.minecraft.plugin.elite.general.api.GeneralPlayer;
 import com.minecraft.plugin.elite.general.api.enums.Language;
 import com.minecraft.plugin.elite.general.api.interfaces.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -64,7 +69,7 @@ public abstract class GeneralCommand implements CommandExecutor {
             if(this.isConsoleCmd()) {
                 return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.ONLY_PLAYER));
+                sender.sendMessage(this.getLanguage().get(GeneralLanguage.ONLY_PLAYER));
                 return true;
             }
         } else if(sender instanceof Player) {
@@ -72,7 +77,7 @@ public abstract class GeneralCommand implements CommandExecutor {
             if (this.hasPermission(sender)) {
                 return this.execute(sender, cmd, args);
             } else {
-                sender.sendMessage(this.getLanguage().get(com.minecraft.plugin.elite.general.GeneralLanguage.NO_PERMISSION));
+                sender.sendMessage(this.getLanguage().get(GeneralLanguage.NO_PERMISSION));
                 return true;
             }
         } else {
