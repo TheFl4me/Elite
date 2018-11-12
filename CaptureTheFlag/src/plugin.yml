@@ -1,6 +1,0 @@
-name: CaptureTheFlag
-author: TheFl4me
-version: 0.0.0
-depend: [General, NoHax]
-main: com.minecraft.plugin.elite.general.CaptureTheFlag
-commands:
