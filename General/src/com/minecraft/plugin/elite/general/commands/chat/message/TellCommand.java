@@ -26,14 +26,12 @@ public class TellCommand extends GeneralCommand {
                     message.append(args[i]).append(" ");
                 Message msg = new Message(p, z, message.toString());
                 msg.send();
-                return true;
             } else {
                 p.sendMessage(GeneralLanguage.NO_TARGET);
-                return true;
             }
         } else {
             p.sendMessage(GeneralLanguage.MSG_USAGE_TELL);
-            return true;
         }
+        return true;
     }
 }

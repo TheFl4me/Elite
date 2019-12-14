@@ -33,16 +33,14 @@ public class WarpCommand extends GeneralCommand {
 			Warp warp = WarpManager.get(args[0], p);
 			if(warp == null) {
 				p.sendMessage(RaidLanguage.WARP_NULL);
-				return true;
-			} else {
+            } else {
 				p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.WARP_ANNOUNCE).replaceAll("%warp", warp.getName()));
 				p.sendMessage(RaidLanguage.WARP_NOT_MOVE);
 				warp.teleport(p);
-				return true;
-			}
+            }
 		} else {
 			p.sendMessage(RaidLanguage.WARP_USAGE);
-			return true;
 		}
+		return true;
 	}
 }

@@ -27,10 +27,9 @@ public class IPInfoCommand extends GeneralCommand {
 					"" + mainColor + "Location: " + secondColor + "https://geoiptool.com/en/?ip=" + args[0] + "\n" +
 					"" + mainColor + General.SPACER;
 			p.getPlayer().sendMessage(info);
-			return true;
-		} else {
+        } else {
 			p.sendMessage(GeneralLanguage.IP_USAGE);
-			return true;
-		}
-	}	
+        }
+        return true;
+    }
 }

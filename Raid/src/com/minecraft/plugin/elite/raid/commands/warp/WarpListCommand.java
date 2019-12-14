@@ -48,12 +48,11 @@ public class WarpListCommand extends GeneralCommand {
 							"" + ChatColor.GRAY + list.toString() + "\n" +
 							"" + ChatColor.GOLD + General.SPACER;
 					p.getPlayer().sendMessage(warps);
-					return true;
-				} else {
+                } else {
 					p.sendMessage(GeneralLanguage.CLAN_NONE);
-					return true;
-				}
-			} else if(args[0].equalsIgnoreCase("private")) {
+                }
+                return true;
+            } else if(args[0].equalsIgnoreCase("private")) {
 				Collection<String> list = new ArrayList<>();
 				for(Warp warp : WarpManager.getPlayerWarps(p))
 					list.add(warp.getName());

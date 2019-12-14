@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/KitPvP/KitPvP.iml" filepath="$PROJECT_DIR$/KitPvP/KitPvP.iml" />
       <module fileurl="file://$PROJECT_DIR$/Raid/Raid.iml" filepath="$PROJECT_DIR$/Raid/Raid.iml" />
       <module fileurl="file://$PROJECT_DIR$/Survival Games/Survival Games.iml" filepath="$PROJECT_DIR$/Survival Games/Survival Games.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Survival Games/Vanilla.iml" filepath="$PROJECT_DIR$/Survival Games/Vanilla.iml" />
     </modules>
   </component>
 </project>

@@ -108,7 +108,7 @@ public class LanguageEventListener implements Listener {
 
                 lang.addLangNode(GeneralLanguage.GAMEMODE_SET_OTHER, "&7%p&7 is now in &f%gm &7mode.");
                 lang.addLangNode(GeneralLanguage.GAMEMODE_SET_YOU, "&7You are now in &f%gm &7mode.");
-                lang.addLangNode(GeneralLanguage.GAMEMODE_USAGE, "/gamemode <gamemode> [mode]");
+                lang.addLangNode(GeneralLanguage.GAMEMODE_USAGE, "/gamemode <gamemode> [player]");
 
                 lang.addLangNode(GeneralLanguage.BUILD_ENABLED, "&aYou are able to build now.");
                 lang.addLangNode(GeneralLanguage.BUILD_DISABLED, "&aYou are no longer able to build now.");

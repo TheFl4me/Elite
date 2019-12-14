@@ -74,8 +74,8 @@ public class Arena {
 				this.maxSize = coordinates.getInt("maxsize");
 				double y = coordinates.getDouble("pody");
 				for(int i = 0; i < 24; i++) {
-					double x = coordinates.getDouble("pod" + Integer.toString(i + 1) + "x");
-					double z = coordinates.getDouble("pod" + Integer.toString(i + 1) + "z");
+					double x = coordinates.getDouble("pod" + (i + 1) + "x");
+					double z = coordinates.getDouble("pod" + (i + 1) + "z");
 					Location loc = new Location(world, x, y, z);
 					locList.add(loc);
 				}
@@ -408,7 +408,7 @@ public class Arena {
 			Score playersTitle = obj.getScore(p.getLanguage().get(SurvivalGamesLanguage.SCOREBOARD_PLAYERS));
 			playersTitle.setScore(1);
 
-			Score playerCount = obj.getScore(color + Integer.toString(this.getPlayers().size()) + "/" + Integer.toString(this.getStartPlayerSize()));
+			Score playerCount = obj.getScore(color + Integer.toString(this.getPlayers().size()) + "/" + this.getStartPlayerSize());
 			playerCount.setScore(0);
 		}
 	}

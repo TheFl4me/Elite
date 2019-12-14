@@ -23,10 +23,9 @@ public class HeadCommand extends GeneralCommand {
             Server server = Server.get();
             Inventory inv = p.getPlayer().getInventory();
             inv.addItem(server.playerHead(args[0]));
-            return true;
         } else {
             p.sendMessage(GeneralLanguage.HEAD_USAGE);
-            return true;
         }
+        return true;
     }
 }

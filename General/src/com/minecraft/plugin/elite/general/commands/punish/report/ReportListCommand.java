@@ -15,7 +15,6 @@ public class ReportListCommand extends GeneralCommand {
 		super("reportlist", GeneralPermission.PUNISH_REPORT_LIST, false);
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
 		GeneralPlayer p = GeneralPlayer.get((Player) cs);
@@ -23,10 +22,9 @@ public class ReportListCommand extends GeneralCommand {
 		if(list != null) {
 			p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.REPORT_LIST)
 					.replaceAll("%list", list));
-			return true;
 		} else {
 			p.sendMessage(GeneralLanguage.REPORT_ERROR_NONE);
-			return true;
 		}
+		return true;
 	}
 }

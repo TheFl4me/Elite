@@ -51,12 +51,11 @@ public class SupportCommand extends GeneralCommand implements TabCompleter {
 			SupportChat chat = SupportChatManager.get(p);
 			if(chat != null) {
 				chat.end();
-				return true;
-			} else {
+            } else {
 				p.sendMessage(GeneralLanguage.SUPPORT_CHAT_NULL);
-				return true;
-			}
-		} else if(p.hasPermission(GeneralPermission.CHAT_SUPPORT_EXTRA) && args[0].equalsIgnoreCase("add") && args.length > 1) {
+            }
+            return true;
+        } else if(p.hasPermission(GeneralPermission.CHAT_SUPPORT_EXTRA) && args[0].equalsIgnoreCase("add") && args.length > 1) {
 			GeneralPlayer z = GeneralPlayer.get(args[1]);
 			if(z != null) {
 				if(SupportChatManager.hasSentRequest(z)) {

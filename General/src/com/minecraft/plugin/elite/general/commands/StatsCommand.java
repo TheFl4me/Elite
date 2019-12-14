@@ -51,7 +51,7 @@ public class StatsCommand extends GeneralCommand {
                     if (res.next()) {
                         String kdr;
                         if (res.getInt("deaths") == 0)
-                            kdr = Double.toString((double) res.getInt("kills"));
+                            kdr = Double.toString(res.getInt("kills"));
                         else if (res.getInt("kills") == 0)
                             kdr = Double.toString(0.0);
                         else

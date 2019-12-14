@@ -67,19 +67,16 @@ public class PunishCommand extends GeneralCommand implements TabCompleter {
                     for(int i = 2; i < args.length; i++)
                         details.append(args[i]).append(" ");
                     PunishManager.punish(cs.getName(), target, reason, details.toString());
-                    return true;
                 } else {
                     cs.sendMessage(this.getLanguage().get(GeneralLanguage.ARG_INVALID)
                             .replaceAll("%arg", args[1]));
-                    return true;
                 }
             } else {
                 cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_NO_PERMISSION));
-                return true;
             }
         } else {
             cs.sendMessage(this.getLanguage().get(GeneralLanguage.PUNISH_USAGE));
-            return true;
         }
+        return true;
     }
 }

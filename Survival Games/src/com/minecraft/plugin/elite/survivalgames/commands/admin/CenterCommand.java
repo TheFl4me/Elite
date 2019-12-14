@@ -30,10 +30,9 @@ public class CenterCommand extends GeneralCommand {
 			db.update(SurvivalGames.DB_ARENAS, "centery", loc.getY(), "name", arena.getName());
 			db.update(SurvivalGames.DB_ARENAS, "centerz", loc.getZ(), "name", arena.getName());
 			p.sendMessage(SurvivalGamesLanguage.CENTER_SET);
-			return true;
-		} else {
+        } else {
 			p.sendMessage(SurvivalGamesLanguage.ARENA_NULL);
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 }

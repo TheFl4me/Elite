@@ -71,11 +71,10 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                                 invite.delete();
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_REVOKED)
                                         .replaceAll("%p", invite.getInvited().getName()));
-                                return true;
                             } else {
                                 p.sendMessage(GeneralLanguage.PARTY_INVITE_NULL);
-                                return true;
                             }
+                            return true;
                         } else {
                             p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
                             return true;
@@ -94,15 +93,13 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_ACCEPT)
                                         .replaceAll("%p", party.getCreator().getName()));
                                 invite.delete();
-                                return true;
                             } else {
                                 p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                                return true;
                             }
                         } else {
                             p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                            return true;
                         }
+                        return true;
                     } else {
                         p.sendMessage(GeneralLanguage.PARTY_ALREADY);
                         return true;
@@ -115,15 +112,13 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                             p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_INVITE_DENY)
                                     .replaceAll("%p", party.getCreator().getName()));
                             invite.delete();
-                            return true;
                         } else {
                             p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                            return true;
                         }
                     } else {
                         p.sendMessage(GeneralLanguage.PARTY_INVITE_NOT_YOU);
-                        return true;
                     }
+                    return true;
                 } else if (args[0].equalsIgnoreCase("kick")) {
                     Party party = p.getParty();
                     if (party != null) {
@@ -133,11 +128,10 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                                 party.remove(z);
                                 p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.PARTY_KICKED)
                                         .replaceAll("%p", z.getName()));
-                                return true;
                             } else {
                                 p.sendMessage(GeneralLanguage.PARTY_NOT_SAME);
-                                return true;
                             }
+                            return true;
                         } else {
                             p.sendMessage(GeneralLanguage.PARTY_NOT_CREATOR);
                             return true;
@@ -167,11 +161,10 @@ public class PartyCommand extends GeneralCommand implements TabCompleter {
                         return true;
                     }
                     party.remove(p);
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
-                    return true;
                 }
+                return true;
             } else if (args[0].equalsIgnoreCase("create")) {
                 if (p.getParty() == null) {
                     new Party(p);

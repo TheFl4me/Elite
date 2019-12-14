@@ -33,14 +33,12 @@ public class ClearStaffCommand extends GeneralCommand implements TabCompleter {
                 db.update(General.DB_STAFF, "uuid", "You?", "rank", slot);
                 db.update(General.DB_STAFF, "role", "staff", "rank", slot);
                 cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_UPDATED));
-                return true;
             } else {
                 cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_NULL));
-                return true;
             }
         } else {
             cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_CLEAR_USAGE));
-            return true;
         }
+        return true;
     }
 }

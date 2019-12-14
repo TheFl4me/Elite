@@ -39,7 +39,7 @@ public enum Achievement {
     }
 
     public String getDisplay(Language lang) {
-        return lang.get(this.name) + "\n\n" + ChatColor.DARK_GRAY + "+" + Long.toString(this.getTokens()) + " Tokens\n" + ChatColor.DARK_GRAY + "+" + Long.toString(this.getExp()) + " Exp";
+        return lang.get(this.name) + "\n\n" + ChatColor.DARK_GRAY + "+" + this.getTokens() + " Tokens\n" + ChatColor.DARK_GRAY + "+" + this.getExp() + " Exp";
     }
 
     public long getExp() {
@@ -47,7 +47,7 @@ public enum Achievement {
     }
 
     public long getTokens() {
-        return (long) this.getDifficulty().getModifier();
+        return this.getDifficulty().getModifier();
     }
 
     public enum Difficulty {

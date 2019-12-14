@@ -92,11 +92,10 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     }
                     info.append(ChatColor.GOLD + General.SPACER);
                     p.getPlayer().sendMessage(info.toString());
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
-                    return true;
                 }
+                return true;
             } else if (args[0].equalsIgnoreCase("invite")) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                 Clan otherClan = ClanManager.get(offlinePlayer.getUniqueId());
@@ -146,11 +145,10 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                             String uninvite = p.getLanguage().get(GeneralLanguage.CLAN_INVITE_REVOKED)
                                     .replaceAll("%p", rank.getPrefix().getColor() + offlinePlayer.getName());
                             p.getPlayer().sendMessage(uninvite);
-                            return true;
                         } else {
                             p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_OTHER);
-                            return true;
                         }
+                        return true;
                     } else {
                         p.sendMessage(GeneralLanguage.CLAN_RANK_ERROR);
                         return true;
@@ -169,15 +167,13 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                             p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_INVITE_ACCEPT)
                                     .replaceAll("%clan", clan.getName()));
                             invite.delete();
-                            return true;
                         } else {
                             p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_YOU);
-                            return true;
                         }
                     } else {
                         p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
-                        return true;
                     }
+                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.CLAN_HAS_CLAN);
                     return true;
@@ -190,15 +186,13 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                         p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_INVITE_DENY)
                                 .replaceAll("%clan", clan.getName()));
                         invite.delete();
-                        return true;
                     } else {
                         p.sendMessage(GeneralLanguage.CLAN_INVITE_NOT_YOU);
-                        return true;
                     }
                 } else {
                     p.sendMessage(GeneralLanguage.CLAN_EXIST_NOT);
-                    return true;
                 }
+                return true;
             } else if (args[0].equalsIgnoreCase("promote")) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                 Clan clan = p.getClan();
@@ -317,11 +311,10 @@ public class ClanCommand extends GeneralCommand implements TabCompleter {
                     clan.remove(p.getUniqueId());
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.CLAN_LEAVE)
                             .replaceAll("%clan", clan.getName()));
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.CLAN_NONE);
-                    return true;
                 }
+                return true;
             } else if (args[0].equalsIgnoreCase("help")) {
                 p.sendMessage(GeneralLanguage.CLAN_HELP);
                 return true;

@@ -24,18 +24,15 @@ public class InventorySeeCommand extends GeneralCommand {
                 if (z != null) {
                     Inventory inv = z.getPlayer().getInventory();
                     p.getPlayer().openInventory(inv);
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.NO_TARGET);
-                    return true;
                 }
             } else {
                 p.sendMessage(GeneralLanguage.INVENTORY_SEE_USAGE);
-                return true;
             }
         } else {
             p.sendMessage(GeneralLanguage.NOT_ADMIN_MODE);
-            return true;
         }
+        return true;
     }
 }

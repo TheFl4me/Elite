@@ -28,12 +28,11 @@ public class ReplyCommand extends GeneralCommand {
                     Arrays.stream(args).forEach((arg) -> message.append(arg).append(" "));
                     Message msg = new Message(p, z, message.toString());
                     msg.send();
-                    return true;
                 } else {
                     Message.remove(p);
                     p.sendMessage(GeneralLanguage.MSG_PARTNER_LEFT);
-                    return true;
                 }
+                return true;
             } else {
                 p.sendMessage(GeneralLanguage.MSG_REPLY_NULL);
                 return true;

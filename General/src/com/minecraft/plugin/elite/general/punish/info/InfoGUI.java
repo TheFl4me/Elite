@@ -151,7 +151,7 @@ public class InfoGUI extends GUI {
             Clan clan = ClanManager.get(this.getPlayer().getUniqueId());
             DecimalFormat df = new DecimalFormat("0.00");
             if (res.getInt("deaths") == 0)
-                kdr = Double.toString((double) res.getInt("kills"));
+                kdr = Double.toString(res.getInt("kills"));
             else if (res.getInt("kills") == 0)
                 kdr = Double.toString(0.0);
             else
@@ -169,16 +169,16 @@ public class InfoGUI extends GUI {
         }
 
         ItemStack mutes = new ItemStack(Material.BOOK);
-        server.rename(mutes, this.getLanguage().get(GeneralLanguage.INFO_GUI_MUTES) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getMuteList().size()) + "]");
+        server.rename(mutes, this.getLanguage().get(GeneralLanguage.INFO_GUI_MUTES) + "\n" + ChatColor.GRAY + "[" + this.getMuteList().size() + "]");
 
         ItemStack bans = new ItemStack(Material.IRON_FENCE);
-        server.rename(bans, this.getLanguage().get(GeneralLanguage.INFO_GUI_BANS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getBanList().size()) + "]");
+        server.rename(bans, this.getLanguage().get(GeneralLanguage.INFO_GUI_BANS) + "\n" + ChatColor.GRAY + "[" + this.getBanList().size() + "]");
 
         ItemStack reports = new ItemStack(Material.LAVA_BUCKET);
-        server.rename(reports, this.getLanguage().get(GeneralLanguage.INFO_GUI_REPORTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getReportList().size()) + "]");
+        server.rename(reports, this.getLanguage().get(GeneralLanguage.INFO_GUI_REPORTS) + "\n" + ChatColor.GRAY + "[" + this.getReportList().size() + "]");
 
         ItemStack alts = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
-        server.rename(alts, this.getLanguage().get(GeneralLanguage.INFO_GUI_ALTS) + "\n" + ChatColor.GRAY + "[" + Integer.toString(this.getAltList().size()) + "]");
+        server.rename(alts, this.getLanguage().get(GeneralLanguage.INFO_GUI_ALTS) + "\n" + ChatColor.GRAY + "[" + this.getAltList().size() + "]");
 
         this.fill(this.glass());
         this.getInventory().setItem(12, head);

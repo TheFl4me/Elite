@@ -49,11 +49,10 @@ public class SpecialKitCommand extends GeneralCommand implements TabCompleter {
                     });
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SKIT_APPLY)
                             .replaceAll("%skit", skit.getName()));
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.SKIT_NULL);
-                    return true;
                 }
+                return true;
             } catch (IllegalArgumentException e) {
                 p.sendMessage(GeneralLanguage.SKIT_USAGE);
                 return true;
@@ -75,11 +74,10 @@ public class SpecialKitCommand extends GeneralCommand implements TabCompleter {
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.SKIT_DELETE)
                             .replaceAll("%skit", skit.getName()));
                     skit.delete();
-                    return true;
                 } else {
                     p.sendMessage(GeneralLanguage.SKIT_NULL);
-                    return true;
                 }
+                return true;
             } else {
                 p.sendMessage(GeneralLanguage.SKIT_USAGE);
                 return true;

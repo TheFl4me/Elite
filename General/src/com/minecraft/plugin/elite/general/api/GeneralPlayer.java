@@ -928,7 +928,7 @@ public class GeneralPlayer {
 		if(!this.isMasterPrestige() && !this.isMaxLevel()) {
 			long nextLevel = this.getRequiredExpForNextLevel(this.getLevel());
 			long remaining = exp;
-		    this.sendSubTitle("+" + Long.toString(exp) + " Exp", 1, 20, 3);
+		    this.sendSubTitle("+" + exp + " Exp", 1, 20, 3);
 			while(remaining > 0) {
 				if(nextLevel <= remaining) {
 					if(this.getLevel() + 1 == 55)  {
@@ -1245,7 +1245,7 @@ public class GeneralPlayer {
 
 	public void setCooldownTime(int seconds) {
 		this.cooldownTime = seconds;
-		this.sendActionBar((seconds > 0 ? ChatColor.RED.toString() + ChatColor.BOLD + Integer.toString(seconds) : " "));
+		this.sendActionBar((seconds > 0 ? ChatColor.RED.toString() + ChatColor.BOLD + seconds : " "));
 	}
 
 	public BukkitRunnable getCooldownTask() {
@@ -1410,8 +1410,6 @@ public class GeneralPlayer {
 			e.printStackTrace();
 		}
 		switch(mat) {
-			case SWORD:
-				return 0;
 			case KIT_ITEM:
 				return 1;
 			case RED_MUSHROOM:

@@ -30,14 +30,12 @@ public class ClanChatCommand extends GeneralCommand {
                 clan.sendMessage(message.toString(), p);
                 Database db = General.getDB();
                 db.execute("INSERT INTO " + General.DB_CHAT_LOGS + " (date, uuid, name, message, type) VALUES (?, ?, ?, ?, ?);", System.currentTimeMillis(), p.getUniqueId(), p.getName(), message.toString(), "clan");
-                return true;
             } else {
                 p.sendMessage(GeneralLanguage.CLAN_NONE);
-                return true;
             }
         } else {
             p.sendMessage(GeneralLanguage.CLAN_CHAT_USAGE);
-            return true;
         }
+        return true;
     }
 }

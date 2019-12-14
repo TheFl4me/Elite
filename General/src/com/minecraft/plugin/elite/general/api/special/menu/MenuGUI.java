@@ -128,7 +128,7 @@ public class MenuGUI extends GUI {
 				.replaceAll("%clan", (clan == null ? "" : clan.getName()))
 				.replaceAll("%prestige", Integer.toString(p.getPrestige()))
 				.replaceAll("%level", Integer.toString(p.getLevel()))
-				.replaceAll("%exp", ChatColor.GOLD + Long.toString((((p.getLevel() + 1) * 100) - p.getRequiredExpForNextLevel(p.getLevel()))) + exp.toString() + ChatColor.DARK_GRAY + Long.toString(p.getRequiredExpForNextLevel(p.getLevel())))
+				.replaceAll("%exp", ChatColor.GOLD + Long.toString((((p.getLevel() + 1) * 100) - p.getRequiredExpForNextLevel(p.getLevel()))) + exp.toString() + ChatColor.DARK_GRAY + p.getRequiredExpForNextLevel(p.getLevel()))
 				.replaceAll("%tokens", Long.toString(p.getTokens())));
 
     	DecimalFormat format = new DecimalFormat("0.00");
@@ -532,7 +532,6 @@ public class MenuGUI extends GUI {
 				if(StringUUID.equalsIgnoreCase("You?")) {
 					head = server.playerHead("MHF_Question");
 					server.rename(head, prefix.getColor() + this.getLanguage().get(GeneralLanguage.MENU_GUI_STAFF_YOU) + "\n&7Click to apply");
-					return head;
 				} else {
 					UUID uuid = UUID.fromString(StringUUID);
 					OfflinePlayer offp = Bukkit.getOfflinePlayer(uuid);
@@ -544,8 +543,8 @@ public class MenuGUI extends GUI {
 					else
 						status = "&7[&cOFFLINE&7]";
 					server.rename(head, prefix.getColor() + offp.getName() + "\n" + role(res.getString("role")) + "\n" + status);
-					return head;
 				}
+				return head;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -30,16 +30,15 @@ public class PodCommand extends GeneralCommand {
 					int index = Integer.parseInt(args[0]);
 					if(index > 0 && index < 25) {
 						Location loc = p.getPlayer().getLocation();
-						db.update(SurvivalGames.DB_ARENAS, "pod" + Integer.toString(index) + "x", loc.getX(), "name", arena.getName());
+						db.update(SurvivalGames.DB_ARENAS, "pod" + index + "x", loc.getX(), "name", arena.getName());
 						db.update(SurvivalGames.DB_ARENAS, "pody", loc.getY(), "name", arena.getName());
-						db.update(SurvivalGames.DB_ARENAS, "pod" + Integer.toString(index) + "z", loc.getZ(), "name", arena.getName());
+						db.update(SurvivalGames.DB_ARENAS, "pod" + index + "z", loc.getZ(), "name", arena.getName());
 						p.getPlayer().sendMessage(p.getLanguage().get(SurvivalGamesLanguage.POD_SET)
 								.replaceAll("%pod", args[0]));
-						return true;
 					} else {
 						p.sendMessage(SurvivalGamesLanguage.POD_USAGE);
-						return true;
 					}
+					return true;
 				} catch (IllegalArgumentException e) {
 					p.sendMessage(SurvivalGamesLanguage.POD_USAGE);
 					return true;

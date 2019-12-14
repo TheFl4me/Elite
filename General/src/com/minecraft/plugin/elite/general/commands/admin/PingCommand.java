@@ -20,17 +20,15 @@ public class PingCommand extends GeneralCommand {
         GeneralPlayer p = GeneralPlayer.get((Player) cs);
         if (args.length == 0) {
             sendPingInfo(p, p);
-            return true;
         } else {
             GeneralPlayer z = GeneralPlayer.get(args[0]);
             if (z != null) {
                 sendPingInfo(p, z);
-                return true;
             } else {
                 p.sendMessage(GeneralLanguage.NO_TARGET);
-                return true;
             }
         }
+        return true;
     }
 
     private void sendPingInfo(GeneralPlayer p, GeneralPlayer z) {

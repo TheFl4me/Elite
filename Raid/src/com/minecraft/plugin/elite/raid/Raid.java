@@ -38,6 +38,7 @@ public class Raid extends JavaPlugin {
 		plugin = this;
 		
 		Server server = new Server("Raid");
+
 		server.initiate();
 
 		loadDatabase();

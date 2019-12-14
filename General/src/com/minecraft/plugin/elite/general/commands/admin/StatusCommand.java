@@ -30,7 +30,7 @@ public class StatusCommand extends GeneralCommand {
         String status = mainColor + General.SPACER + "\n" +
                 "" + mainColor + "Online players: " + secColor + Bukkit.getOnlinePlayers().size() + "\n" +
                 "" + mainColor + "Pending tasks: " + secColor + Bukkit.getScheduler().getPendingTasks().size() + "\n" +
-                "" + mainColor + "TPS: " + secColor + Double.toString(server.getTPS()) + "\n" +
+                "" + mainColor + "TPS: " + secColor + server.getTPS() + "\n" +
                 "" + mainColor + "Entities (World = " + world.getName() + ": " + secColor + world.getEntities().size() + "\n" +
                 "" + mainColor + "Mobs (World = " + world.getName() + ": " + secColor + world.getEntitiesByClass(LivingEntity.class).size() + "\n" +
                 "" + mainColor + "Free memory: " + secColor + Runtime.getRuntime().freeMemory() / 1048576 + "MB" + "\n" +

@@ -63,12 +63,11 @@ public class TrackCommand extends GeneralCommand {
 			p.getPlayer().setCompassTarget(target);
 			p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.TRACK_CONFIRMED)
 					.replaceAll("%player", nearest.getChatName()));
-			return true;
-		} else {
+        } else {
 			p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.TRACK_NO_ENTITY_FOUND).replaceAll("%radius", Double.toString(range)));
-			return true;	
-		}
-	}
+        }
+        return true;
+    }
 	
 	private double getRange(Location loc, BlockFace face) {
 		Block under = loc.getBlock().getRelative(BlockFace.DOWN);

@@ -26,15 +26,13 @@ public class PartyChatCommand extends GeneralCommand {
                 StringBuilder message = new StringBuilder();
                 Arrays.stream(args).forEach((arg) -> message.append(arg).append(" "));
                 party.sendMessage(message.toString(), p);
-                return true;
             } else {
                 p.sendMessage(GeneralLanguage.PARTY_NONE_YOU);
-                return true;
             }
         } else {
             p.sendMessage(GeneralLanguage.PARTY_CHAT_USAGE);
-            return true;
         }
+        return true;
     }
 
 

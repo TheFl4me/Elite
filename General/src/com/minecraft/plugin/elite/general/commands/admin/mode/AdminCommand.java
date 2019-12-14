@@ -25,10 +25,9 @@ public class AdminCommand extends GeneralCommand {
             else
                 msg = msg.replaceAll("%gm", "PLAY");
             p.getPlayer().sendMessage(msg);
-            return true;
         } else {
             p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.MODE_STILL_WATCH));
-            return true;
         }
+        return true;
     }
 }

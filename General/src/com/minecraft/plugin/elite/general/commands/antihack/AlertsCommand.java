@@ -31,7 +31,6 @@ public class AlertsCommand extends GeneralCommand {
                 List<Alert> list = AlertManager.getAll(z);
                 if (list.isEmpty()) {
                     p.sendMessage(GeneralLanguage.ALERT_NONE);
-                    return true;
                 } else {
                     Collection<AlertType> typeList = new ArrayList<>();
                     Collection<Alert> cleanList = new ArrayList<>();
@@ -39,18 +38,16 @@ public class AlertsCommand extends GeneralCommand {
                         typeList.add(alert.getType());
                         cleanList.add(alert);
                     });
-                    List<String> finalList = cleanList.stream().map(alert -> alert.toString() + "(" + Integer.toString(alert.getDetections()) + ")").collect(Collectors.toList());
+                    List<String> finalList = cleanList.stream().map(alert -> alert.toString() + "(" + alert.getDetections() + ")").collect(Collectors.toList());
                     p.getPlayer().sendMessage(p.getLanguage().get(GeneralLanguage.ALERT_LIST)
                             .replaceAll("%alerts", finalList.toString()));
-                    return true;
                 }
             } else {
                 p.sendMessage(GeneralLanguage.NO_TARGET);
-                return true;
             }
         } else {
             p.sendMessage(GeneralLanguage.ALERT_USAGE);
-            return true;
         }
+        return true;
     }
 }

@@ -109,7 +109,7 @@ public class SpamCheck {
         return this.messages;
     }
 
-    public class ChatMessage {
+    public static class ChatMessage {
         public GeneralPlayer player;
         public long when;
         public String message;

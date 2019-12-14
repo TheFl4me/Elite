@@ -179,7 +179,7 @@ public class KitPvP extends JavaPlugin {
 			Score killsTitle = obj.getScore(p.getLanguage().get(KitPvPLanguage.SCOREBOARD_KILLS));
 			killsTitle.setScore(3);
 
-			Score killsValue = obj.getScore(color + Integer.toString(p.getKills()) + " (" + Integer.toString(p.getKillStreak()) + ")");
+			Score killsValue = obj.getScore(color + Integer.toString(p.getKills()) + " (" + p.getKillStreak() + ")");
 			killsValue.setScore(2);
 
 			Score deathsTitle = obj.getScore(p.getLanguage().get(KitPvPLanguage.SCOREBOARD_DEATHS));

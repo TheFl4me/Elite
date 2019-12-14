@@ -34,14 +34,12 @@ public class SetHologramCommand extends GeneralCommand {
                 p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.HOLOGRAM_SET)
                         .replaceAll("%holo", name));
                 KitPvP.reloadHolograms();
-                return true;
             } else {
                 p.sendMessage(KitPvPLanguage.HOLOGRAM_USAGE);
-                return true;
             }
         } else {
             p.sendMessage(KitPvPLanguage.HOLOGRAM_USAGE);
-            return true;
         }
+        return true;
     }
 }

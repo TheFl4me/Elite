@@ -25,10 +25,9 @@ public class StartCommand extends GeneralCommand {
 				lobby.setCountdownTime(10);
 			else
 				lobby.startCountDown(10);
-			return true;
-		} else {
+        } else {
 			p.sendMessage(SurvivalGamesLanguage.START_ALREADY);
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 }

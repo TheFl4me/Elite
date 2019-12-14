@@ -25,10 +25,9 @@ public class SayCommand extends GeneralCommand {
             StringBuilder message = new StringBuilder();
             Arrays.stream(args).forEach((arg) -> message.append(arg).append(" "));
             Bukkit.broadcastMessage("\n  \n  " + p.getChatName() + " > " + ChatColor.RESET + message.toString() + "\n  \n  ");
-            return true;
         } else {
             p.sendMessage(GeneralLanguage.SAY_USAGE);
-            return true;
         }
+        return true;
     }
 }

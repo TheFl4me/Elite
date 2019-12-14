@@ -44,18 +44,15 @@ public class SetMapCommand extends GeneralCommand implements TabCompleter {
 						all.getPlayer().sendMessage(all.getLanguage().get(SurvivalGamesLanguage.MAP_SET)
 								.replaceAll("%arena", arena.getName()));
 					}
-					return true;
-				} else {
+                } else {
 					p.sendMessage(SurvivalGamesLanguage.ARENA_NULL);
-					return true;
-				}
+                }
 			} else {
 				p.sendMessage(SurvivalGamesLanguage.START_ALREADY);
-				return true;
 			}
 		} else {
 			p.sendMessage(SurvivalGamesLanguage.MAP_SET_USAGE);
-			return true;
 		}
+		return true;
 	}
 }

@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class SpecialModeEventListener implements Listener {
@@ -130,14 +129,7 @@ public class SpecialModeEventListener implements Listener {
         GeneralPlayer p = GeneralPlayer.get(e.getEntity());
         if(p.isWatching() || p.isAdminMode()) {
             List<ItemStack> list = e.getDrops();
-            Iterator<ItemStack> i = list.iterator();
-            while(i.hasNext()) {
-                ItemStack item = i.next();
-                switch(item.getType()) {
-                    case GLASS:
-                        i.remove();
-                }
-            }
+            list.removeIf(item -> item.getType() == Material.GLASS);
         }
     }
 }

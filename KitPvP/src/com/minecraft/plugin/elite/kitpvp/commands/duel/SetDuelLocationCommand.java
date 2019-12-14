@@ -28,11 +28,10 @@ public class SetDuelLocationCommand extends GeneralCommand {
                     db.update(KitPvP.DB_DUEL, "locz", p.getPlayer().getLocation().getZ(), "location", "loc" + args[0]);
                     p.getPlayer().sendMessage(p.getLanguage().get(KitPvPLanguage.DUEL_SET_LOCATION_SET)
                             .replaceAll("%loc", args[0]));
-                    return true;
                 } else {
                     p.sendMessage(KitPvPLanguage.DUEL_SET_LOCATION_USAGE);
-                    return true;
                 }
+                return true;
             } catch (IllegalArgumentException e) {
                 p.sendMessage(KitPvPLanguage.DUEL_SET_LOCATION_USAGE);
                 return true;

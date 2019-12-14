@@ -69,11 +69,11 @@ public class PunishManager {
 		final double temp_c = 0D - modifier;
 		final double temp_d = modifier - 0.5D;
 
-		final double z = (temp_z < -10D ? -10D : temp_z);
-		final double a = (temp_a > 10D ? 10D : temp_a);
+		final double z = (Math.max(temp_z, -10D));
+		final double a = (Math.min(temp_a, 10D));
 		final double b = 0.9D;
-		final double c = (temp_c < -10D ? -10D : temp_c);
-		final double d = (temp_d > 10D ? 10D : temp_d);
+		final double c = (Math.max(temp_c, -10D));
+		final double d = (Math.min(temp_d, 10D));
 
 		final double y = a * Math.pow(b, z * x + c) + d;
 

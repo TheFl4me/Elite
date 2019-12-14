@@ -32,7 +32,7 @@ public class BossBarEventListener implements Listener {
             if(nearest != null && !nearest.isAdminMode() && !nearest.isWatching()) {
                 String text = null;
                 if(p.isInRegion(KitPvP.REGION_DUEL)) {
-                    text = Long.toString(nearest.getELO()) + " ELO";
+                    text = nearest.getELO() + " ELO";
                 } else if(nearest.hasKit()) {
                     text = nearest.getKit().getName();
                 }

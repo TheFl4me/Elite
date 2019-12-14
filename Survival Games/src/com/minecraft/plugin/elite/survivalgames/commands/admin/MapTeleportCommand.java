@@ -35,14 +35,12 @@ public class MapTeleportCommand extends GeneralCommand implements TabCompleter{
                 p.getPlayer().teleport(arena.getCenter());
                 p.getPlayer().sendMessage(p.getLanguage().get(SurvivalGamesLanguage.MAP_TELEPORT_CONFIRM)
                         .replaceAll("%arena", arena.getName()));
-                return true;
             } else {
                 p.sendMessage(SurvivalGamesLanguage.ARENA_NULL);
-                return true;
             }
         } else {
             p.sendMessage(SurvivalGamesLanguage.MAP_TELEPORT_USAGE);
-            return true;
         }
+        return true;
     }
 }

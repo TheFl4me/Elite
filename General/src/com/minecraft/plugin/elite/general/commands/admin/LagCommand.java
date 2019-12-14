@@ -16,7 +16,7 @@ public class LagCommand extends GeneralCommand {
     public boolean execute(CommandSender cs, Command cmd, String[] args) {
 
         Server server = Server.get();
-        cs.sendMessage(ChatColor.GRAY + "Server Lag: " + ChatColor.RESET + Double.toString(server.getLagPercentage()) + "%");
+        cs.sendMessage(ChatColor.GRAY + "Server Lag: " + ChatColor.RESET + server.getLagPercentage() + "%");
         return true;
     }
 }

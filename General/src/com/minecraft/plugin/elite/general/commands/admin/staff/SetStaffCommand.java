@@ -41,14 +41,12 @@ public class SetStaffCommand extends GeneralCommand implements TabCompleter {
                 db.update(General.DB_STAFF, "uuid", z.getUniqueId(), "rank", slot);
                 db.update(General.DB_STAFF, "role", role, "rank", slot);
                 cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_UPDATED));
-                return true;
             } else {
                 cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_NULL));
-                return true;
             }
         } else {
             cs.sendMessage(this.getLanguage().get(GeneralLanguage.STAFF_USAGE));
-            return true;
         }
+        return true;
     }
 }

@@ -49,8 +49,7 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 		if(args.length == 0) {
 			KitGUI gui = new KitGUI(p.getLanguage());
 			p.openGUI(gui, gui.selector(p, 1));
-			return true;
-		} else  {
+        } else  {
 			for(Kit kit : Kit.values()) {
 				if(args[0].equalsIgnoreCase(kit.getName())) {
 					if(p.hasKitPermission(kit)) {
@@ -67,7 +66,7 @@ public class KitCommand extends GeneralCommand implements TabCompleter {
 				}
 			}
 			p.sendMessage(GeneralLanguage.KIT_ERROR_NULL);
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 }

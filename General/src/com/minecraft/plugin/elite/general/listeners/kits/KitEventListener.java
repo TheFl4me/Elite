@@ -725,7 +725,7 @@ public class KitEventListener implements Listener {
 
 	@EventHandler
 	public void clearOnDeath(PlayerDeathEvent e) {
-		if(tpTo.values().contains(e.getEntity().getUniqueId())) {
+		if(tpTo.containsValue(e.getEntity().getUniqueId())) {
 			for(UUID uuid : tpTo.keySet()) {
 				if(tpTo.get(uuid).equals(e.getEntity().getUniqueId())) {
 					tpTo.remove(uuid);

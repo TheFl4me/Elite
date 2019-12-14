@@ -37,18 +37,15 @@ public class KickCommand extends GeneralCommand {
 						all.sendMessage(GeneralPlayer.get(all).getLanguage().get(GeneralLanguage.KICK_KICKED)
 								.replaceAll("%z", z.getName())
 								.replaceAll("%p", cs.getName()));
-					return true;
-				} else {
+                } else {
 					cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_NO_PERMISSION));
-					return true;
-				}
+                }
 			} else {
 				cs.sendMessage(this.getLanguage().get(GeneralLanguage.NO_TARGET));
-				return true;
 			}
 		} else {
 			cs.sendMessage(this.getLanguage().get(GeneralLanguage.KICK_USAGE));
-			return true;
 		}
+		return true;
 	}
 }

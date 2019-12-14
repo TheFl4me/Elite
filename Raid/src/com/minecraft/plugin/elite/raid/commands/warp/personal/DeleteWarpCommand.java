@@ -25,14 +25,12 @@ public class DeleteWarpCommand extends GeneralCommand {
 				p.getPlayer().sendMessage(p.getLanguage().get(RaidLanguage.WARP_DELETED)
 						.replaceAll("%warp", warp.getName()));
 				warp.delete();
-				return true;
-			} else {
+            } else {
 				p.sendMessage(RaidLanguage.WARP_NULL);
-				return true;
-			}
+            }
 		} else {
 			p.sendMessage(RaidLanguage.WARP_DELETE_USAGE);
-			return true;
 		}
+		return true;
 	}
 }
